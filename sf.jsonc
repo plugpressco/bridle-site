@@ -1,0 +1,9 @@
+{
+	"$schema": "https://spacefast.com/schemas/sf.json",
+	// Static landing page + one worker route (/api/waitlist) that writes to the Space's MySQL.
+	"runtime": {
+		"kind": "functions",
+		"database": true,
+		"compatibilityDate": "2026-07-01"
+	}
+}
