@@ -9,8 +9,8 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
 <link rel="apple-touch-icon" href="/icon-256.png">
-<link rel="preload" href="/fonts/gabarito-latin.woff2" as="font" type="font/woff2" crossorigin>
-<meta name="theme-color" content="#f4f4f1">
+<link rel="preload" href="/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#fcfcf9">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bridle.to/">
 <meta property="og:title" content="bridle: the support inbox for people who'd rather be building">
@@ -21,252 +21,318 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 @font-face {
-	font-family: "Gabarito";
-	src: url("/fonts/gabarito-latin.woff2") format("woff2");
-	font-weight: 400 900;
+	font-family: "Figtree";
+	src: url("/fonts/figtree-latin.woff2") format("woff2");
+	font-weight: 300 900;
 	font-display: swap;
 }
+@font-face {
+	font-family: "Geist Mono";
+	src: url("/fonts/geist-mono-latin.woff2") format("woff2");
+	font-weight: 400 500;
+	font-display: swap;
+}
+
+/* Brand tokens: the same names and values as the plugin app (rebrand/BRAND.md). */
 :root {
-	--bg: #f4f4f1;
-	--card: #ffffff;
-	--ink: #161614;
-	--ink-2: #45453f;
-	--grey: #8b8b84;
-	--line: #e7e7e1;
-	--sk: #ececE7;
-	--olive: #788c15;
-	--olive-ink: #5c6c0e;
-	--olive-soft: #ebf0d2;
-	--blue: #2f61cf;
-	--blue-soft: #e3ebfb;
-	--peach: #c4561c;
-	--peach-soft: #fde4d4;
-	--sand: #7a5a37;
-	--sand-soft: #f0e8dd;
-	--rose: #c2335f;
-	--rose-soft: #fbe2ea;
-	--display: "Gabarito", ui-rounded, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	--ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-	--mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+	--paper: #fcfcf9;
+	--cream: #efefe4;
+	--ink: #181818;
+	--secondary: #f5f5f2;
+	--accent: #efefe9;
+	--muted-foreground: #666666;
+	--gray: #909090;
+	--border: #e6e6e1;
+	--input: #d7d7d6;
+	--brand: #679eee;
+	--brand-ink: #2d6fcd;
+	--brand-soft: #edf3fd;
+	--ring: #81adec;
+	--note: #fff8e1;
+	--note-foreground: #6b5200;
+	--note-border: #f3e0a0;
+	--amber: #ffcf3f;
+	--radius: 8px;
+	--radius-card: 12px;
+	--font: "Figtree", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	/* Site-only */
+	--ink-2: #4a4a46;
+	--hair: 1px;
+	--noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 	--bleed: max(24px, calc((100vw - 1120px) / 2 + 24px));
 }
+@media (min-resolution: 2dppx) { :root { --hair: .5px; } }
+
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 var(--display); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 18px/1.55 var(--font); letter-spacing: .01em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .3; background-image: var(--noise); }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
-svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+::selection { background: rgb(129 173 236 / .45); }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
 /* ── Header ── */
-.top { display: flex; align-items: center; justify-content: space-between; height: 84px; }
-.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-weight: 800; font-size: 25px; letter-spacing: -0.02em; }
-.brand svg { width: 28px; height: 28px; color: var(--olive); }
-.ghost-btn { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-weight: 600; font-size: 15px; text-decoration: none; transition: border-color .2s; }
-.ghost-btn:hover { border-color: #cfcfc7; }
+.top { position: sticky; top: 0; z-index: 30; transition: background-color .3s, box-shadow .3s; }
+.top.scrolled { background: rgb(252 252 249 / .86); -webkit-backdrop-filter: saturate(1.3) blur(12px); backdrop-filter: saturate(1.3) blur(12px); box-shadow: 0 var(--hair) 0 var(--input); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 23px; font-weight: 500; letter-spacing: -0.03em; }
+.brand svg { width: 24px; height: 24px; color: var(--brand); }
+.go { text-decoration: none; font-size: 17px; white-space: nowrap; }
+.ar { display: inline-block; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.go:hover .ar { transform: translateX(3px); }
+
+/* ── Type ── */
+.two { margin: 0; font-weight: 360; letter-spacing: -0.026em; }
+.two span { display: block; text-wrap: balance; }
+.two .g { color: var(--gray); }
+.eyebrow { margin: 0 0 18px; font-size: 17px; color: var(--ink); }
+.lead { margin: 20px 0 0; font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 30em; }
+.nw { white-space: nowrap; }
 
 /* ── Hero ── */
-.hero { text-align: center; padding-top: 64px; padding-bottom: 56px; }
-.hero h1 { font-size: clamp(36px, 5.4vw, 60px); line-height: 1.08; letter-spacing: -0.015em; font-weight: 800; margin: 0 auto 20px; max-width: 13.5em; }
-.hero .sub { font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: var(--grey); margin: 0 auto 34px; max-width: 30em; }
-.signup { display: flex; gap: 10px; justify-content: center; max-width: 470px; margin: 0 auto; }
-.signup input[type=email] { flex: 1; min-width: 0; height: 54px; padding: 0 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; font: 500 17px var(--display); color: var(--ink); }
-.signup input[type=email]::placeholder { color: #b0b0a8; }
-.signup input[type=email]:focus { outline: none; border-color: var(--olive); box-shadow: 0 0 0 4px rgb(120 140 21 / .15); }
-.signup button { height: 54px; padding: 0 24px; border: 0; border-radius: 14px; background: var(--olive); color: #fff; font: 700 18px var(--display); cursor: pointer; white-space: nowrap; transition: background .2s, transform .1s; }
-.signup button:hover { background: #6a7c11; }
+.hero { text-align: center; padding-top: clamp(48px, 7vw, 88px); padding-bottom: 56px; }
+.hero h1 { font-size: clamp(38px, 5.2vw, 68px); line-height: 1.02; }
+.hero .lead { font-size: 19px; margin: 24px auto 34px; max-width: 29em; }
+.signup { display: flex; gap: 8px; justify-content: center; max-width: 452px; margin: 0 auto; }
+.signup input[type=email] { flex: 1; min-width: 0; height: 48px; padding: 0 16px; border: 1px solid var(--input); border-radius: 6px; background: #fff; font: 400 17px var(--font); letter-spacing: .01em; color: var(--ink); transition: border-color .2s, box-shadow .2s; }
+.signup input[type=email]::placeholder { color: #a8a8a8; }
+.signup input[type=email]:focus { outline: none; border-color: var(--ring); box-shadow: 0 0 0 3px rgb(129 173 236 / .28); }
+.signup button { height: 48px; padding: 0 20px; border: 0; border-radius: 6px; background: var(--ink); color: var(--paper); font: 450 17px var(--font); letter-spacing: .01em; cursor: pointer; white-space: nowrap; transition: background-color .2s, transform .1s; }
+.signup button:hover { background: #333331; }
 .signup button:active { transform: translateY(1px); }
 .signup button:disabled { opacity: .6; }
 .hp { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-.fine { font-size: 14px; color: var(--grey); margin: 14px 0 0; }
+.fine { font-size: 15px; color: var(--gray); margin: 14px 0 0; }
 .msg { font-size: 15px; margin: 12px 0 0; }
 .msg:empty { display: none; }
-.msg.ok { color: var(--olive-ink); font-weight: 600; }
-.msg.err { color: var(--peach); }
+.msg.ok { color: var(--brand-ink); }
+.msg.err { color: #c2410c; }
 
-/* ── Meadow frame (the backdrop for product shots) ── */
-.meadow { position: relative; overflow: hidden; border-radius: 34px; isolation: isolate; background:
-	radial-gradient(55% 75% at 12% 18%, #d6e67f 0%, transparent 62%),
-	radial-gradient(45% 65% at 88% 12%, #f7d68a 0%, transparent 62%),
-	radial-gradient(55% 75% at 78% 92%, #f2ae8c 0%, transparent 62%),
-	radial-gradient(45% 60% at 18% 98%, #a3bd4f 0%, transparent 62%),
-	radial-gradient(40% 50% at 52% 50%, #fbf3dc 0%, transparent 70%),
-	linear-gradient(120deg, #e9f0cc, #f8eed6 50%, #f5ddd0); }
-.meadow::before { content: ""; position: absolute; inset: -20%; z-index: -1; pointer-events: none;
-	background:
-		repeating-linear-gradient(116deg, rgb(255 255 255 / 0) 0 26px, rgb(255 255 255 / .42) 36px, rgb(255 255 255 / 0) 54px),
-		repeating-linear-gradient(116deg, rgb(110 130 15 / 0) 0 70px, rgb(110 130 15 / .16) 88px, rgb(110 130 15 / 0) 118px),
-		repeating-linear-gradient(116deg, rgb(240 140 90 / 0) 0 130px, rgb(240 140 90 / .14) 150px, rgb(240 140 90 / 0) 190px);
-	filter: blur(7px); }
-.meadow::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5; mix-blend-mode: multiply;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .42 0 0 0 0 .3 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+/* ── The envelope: a cream sheet whose flap folds open behind the product ── */
+.envelope { position: relative; overflow: hidden; border-radius: 22px; background: var(--noise), var(--cream); isolation: isolate; }
+.envelope .flap { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; filter: drop-shadow(0 12px 20px rgb(70 60 20 / .08)); }
+.shot { margin: 0 auto; max-width: 1072px; padding: 6% 7% 0; container-type: inline-size; }
+.shot .win { font-size: clamp(6.5px, 1.45cqw, 15px); border-radius: var(--radius-card) var(--radius-card) 0 0; border-bottom: 0; }
 
-.shot { margin: 0 auto; max-width: 1072px; padding: 6.5% 7% 0; container-type: inline-size; }
-.shot .win { font-size: clamp(6px, 1.62cqw, 15px); }
-
-/* ── App window (mirrors the plugin UI) ── */
-.win { font-family: var(--ui); color: #0a0a0a; background: #fff; border-radius: 1.1em 1.1em 0 0; box-shadow: 0 2em 5em -1.5em rgb(70 60 20 / .35), 0 0 0 1px rgb(0 0 0 / .05); overflow: hidden; text-align: left; line-height: 1.5; }
-.win-bar { display: flex; align-items: center; gap: .5em; height: 3.6em; padding: 0 1.1em; border-bottom: 1px solid #ededed; font-size: 1em; }
-.win-bar .logo { display: inline-flex; align-items: center; gap: .4em; font-weight: 600; font-size: 1.08em; padding: .3em .5em; }
-.win-bar .logo svg { width: 1.3em; height: 1.3em; color: var(--olive); }
-.win-bar .chev { color: #8a8a8a; width: .95em; height: .95em; }
-.kb { display: inline-flex; align-items: center; justify-content: center; height: 1.45em; min-width: 1.45em; padding: 0 .35em; border-radius: .3em; background: #f2f2f2; color: #777; font: 500 .78em var(--ui); }
-.scope { display: inline-flex; align-items: center; gap: .4em; margin-left: .4em; padding: .25em .6em; border-radius: .5em; color: #555; font-size: .92em; }
-.scope i { width: .55em; height: .55em; border-radius: 50%; background: var(--olive); }
-.win-bar .grow { flex: 1; }
-.search { display: inline-flex; align-items: center; gap: .5em; width: 15em; height: 2.3em; padding: 0 .7em; border-radius: .6em; background: #f5f5f5; color: #9a9a9a; font-size: .9em; }
+/* ── Product windows (mirror the plugin app) ── */
+.win { font-family: var(--font); letter-spacing: 0; color: var(--ink); background: #fff; border: 1px solid var(--border); border-radius: var(--radius-card); box-shadow: 0 1px 2px rgb(24 24 24 / .03), 0 2.4em 4.8em -2.4em rgb(60 52 20 / .22); overflow: hidden; text-align: left; line-height: 1.5; }
+.chrome { position: relative; display: flex; align-items: center; height: 2.9em; padding: 0 1em; background: var(--secondary); border-bottom: 1px solid var(--border); }
+.lights { display: flex; gap: .45em; }
+.lights i { width: .74em; height: .74em; border-radius: 50%; background: var(--input); }
+.url { position: absolute; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: .45em; height: 1.95em; padding: 0 1em; border-radius: .55em; background: #fff; border: 1px solid var(--border); color: var(--gray); font-size: .8em; white-space: nowrap; }
+.url svg { width: .95em; height: .95em; }
+.win-bar { display: flex; align-items: center; gap: .5em; height: 3.5em; padding: 0 1.1em; border-bottom: 1px solid var(--border); }
+.logo { display: inline-flex; align-items: center; gap: .4em; font-weight: 550; font-size: 1.05em; padding: .3em .45em; letter-spacing: -0.01em; }
+.logo svg { width: 1.25em; height: 1.25em; color: var(--brand); }
+.chev { color: var(--gray); width: .9em; height: .9em; }
+.kb { display: inline-flex; align-items: center; justify-content: center; height: 1.45em; min-width: 1.45em; padding: 0 .35em; border-radius: .3em; background: var(--secondary); border: 1px solid var(--border); color: var(--muted-foreground); font: 500 .76em var(--font); letter-spacing: 0; }
+.scope { display: inline-flex; align-items: center; gap: .4em; margin-left: .3em; padding: .25em .6em; color: var(--ink-2); font-size: .92em; }
+.scope i { width: .5em; height: .5em; border-radius: 50%; background: var(--brand); }
+.grow { flex: 1; }
+.search { display: inline-flex; align-items: center; gap: .5em; width: 15em; height: 2.3em; padding: 0 .7em; border-radius: var(--radius); background: var(--secondary); color: var(--gray); font-size: .9em; }
 .search .kb { margin-left: auto; background: #fff; }
-.me { width: 2em; height: 2em; border-radius: 50%; background: oklch(0.88 0.07 120); display: grid; place-items: center; font-size: .78em; font-weight: 600; color: #333; margin-left: .5em; }
-.win-body { padding: 2em 3.2em 0; }
-.win-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1em; }
-.win-head h3 { margin: 0; font-size: 1.7em; font-weight: 600; letter-spacing: -0.02em; }
-.focus { display: inline-flex; align-items: center; gap: .55em; height: 2.4em; padding: 0 .45em 0 1em; border: 1px solid #e6e6e6; border-radius: 999px; font-size: .92em; font-weight: 500; }
-.focus svg { width: 1.05em; height: 1.05em; }
-.lbl { font-size: .78em; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: #8a8a8a; margin: 1.3em 0 .4em .9em; }
-.r { display: flex; align-items: center; gap: .85em; padding: .7em .9em; border-radius: .7em; }
-.r.on { background: #f5f5f5; }
-.av { width: 2.5em; height: 2.5em; border-radius: 50%; display: grid; place-items: center; flex: none; font-size: .82em; font-weight: 500; color: rgb(0 0 0 / .72); background: oklch(0.9 0.06 var(--h, 200)); }
-.av.s { width: 2em; height: 2em; font-size: .72em; }
+.me { width: 2em; height: 2em; border-radius: 50%; background: #e4e0d2; display: grid; place-items: center; font-size: .76em; font-weight: 600; color: #3a3a36; margin-left: .5em; }
+.win-body { padding: 2em 3em 0; }
+.win-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: .9em; }
+.win-head h3 { margin: 0; font-size: 1.75em; font-weight: 450; letter-spacing: -0.025em; }
+.focus { display: inline-flex; align-items: center; gap: .55em; height: 2.4em; padding: 0 .45em 0 1em; border: 1px solid var(--input); border-radius: 999px; font-size: .9em; font-weight: 500; background: #fff; }
+.focus svg { width: 1.05em; height: 1.05em; color: var(--brand); }
+.lbl { font-size: .76em; font-weight: 550; letter-spacing: .05em; text-transform: uppercase; color: var(--gray); margin: 1.3em 0 .4em .9em; }
+.r { display: flex; align-items: center; gap: .85em; padding: .7em .9em; border-radius: var(--radius); }
+.r.on { background: var(--brand-soft); }
+.av { width: 2.5em; height: 2.5em; border-radius: 50%; display: grid; place-items: center; flex: none; font-size: .8em; font-weight: 550; color: rgb(24 24 24 / .7); background: oklch(0.92 0.035 var(--h, 200)); }
 .rm { flex: 1; min-width: 0; }
 .rt { display: flex; align-items: baseline; gap: .55em; white-space: nowrap; overflow: hidden; }
-.dot { width: .55em; height: .55em; border-radius: 50%; background: var(--olive); flex: none; align-self: center; }
-.nm { font-weight: 600; }
-.sj { color: #8a8a8a; overflow: hidden; text-overflow: ellipsis; }
-.pv { font-size: .92em; color: #8a8a8a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meta { display: flex; align-items: center; gap: .6em; font-size: .82em; color: #8a8a8a; flex: none; }
-.chip-ai { display: inline-flex; align-items: center; gap: .3em; padding: .15em .5em; border-radius: .4em; background: #f2f2f2; color: var(--olive-ink); font-weight: 500; }
-.chip-ai svg { width: .95em; height: .95em; }
-.thread { padding: .6em 0 1.2em 4.2em; }
-.draft { border: 1px solid rgb(120 140 21 / .3); background: rgb(120 140 21 / .05); border-radius: .9em; padding: 1.1em; }
-.dh { display: flex; flex-wrap: wrap; align-items: center; gap: .6em; font-size: .82em; margin-bottom: .8em; }
-.b-ai { display: inline-flex; align-items: center; gap: .3em; padding: .2em .55em; border-radius: .4em; background: var(--olive-ink); color: #fff; font-weight: 600; }
+.dot { width: .5em; height: .5em; border-radius: 50%; background: var(--brand); flex: none; align-self: center; }
+.nm { font-weight: 550; }
+.sj { color: var(--muted-foreground); overflow: hidden; text-overflow: ellipsis; }
+.pv { font-size: .92em; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta { display: flex; align-items: center; gap: .6em; font-size: .8em; color: var(--gray); flex: none; }
+.chip-ai { display: inline-flex; align-items: center; gap: .3em; padding: .15em .5em; border-radius: .4em; background: var(--brand-soft); color: var(--brand-ink); font-weight: 500; }
+.chip-ai svg { width: .95em; height: .95em; color: var(--brand); }
+.thread { padding: .5em 0 1.2em 4.2em; }
+.draft { border: 1px solid rgb(103 158 238 / .4); background: var(--brand-soft); border-radius: var(--radius-card); padding: 1.05em; }
+.dh { display: flex; flex-wrap: wrap; align-items: center; gap: .65em; font-size: .8em; margin-bottom: .8em; }
+.b-ai { display: inline-flex; align-items: center; gap: .3em; padding: .2em .55em; border-radius: .4em; background: var(--brand-ink); color: #fff; font-weight: 600; letter-spacing: .02em; }
 .b-ai svg { width: .95em; height: .95em; }
-.ok { color: var(--olive-ink); font-weight: 500; display: inline-flex; align-items: center; gap: .3em; }
-.ok svg { width: 1em; height: 1em; }
-.db { background: #fff; border-radius: .6em; padding: .8em 1.1em; font-size: .98em; min-height: 6.6em; }
+.vf { color: var(--brand-ink); font-weight: 500; display: inline-flex; align-items: center; gap: .3em; }
+.vf svg { width: 1em; height: 1em; }
+.db { background: #fff; border: 1px solid rgb(103 158 238 / .22); border-radius: var(--radius); padding: .85em 1.1em; font-size: .98em; min-height: 6.6em; }
 .db p { margin: 0 0 .55em; }
 .db p:last-child { margin: 0; }
-.caret { display: inline-block; width: 2px; height: 1.05em; background: var(--olive); vertical-align: -.15em; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+.caret { display: inline-block; width: 2px; height: 1.05em; background: var(--brand); vertical-align: -.15em; margin-left: 1px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .df { display: flex; align-items: center; gap: .45em; margin-top: .85em; }
-.b { display: inline-flex; align-items: center; gap: .45em; height: 2.3em; padding: 0 .85em; border-radius: .55em; font-size: .88em; font-weight: 500; border: 1px solid transparent; }
+.b { display: inline-flex; align-items: center; gap: .45em; height: 2.3em; padding: 0 .85em; border-radius: var(--radius); font-size: .88em; font-weight: 500; border: 1px solid transparent; }
 .b svg { width: 1em; height: 1em; }
-.b.p { background: var(--olive-ink); color: #fff; }
-.b.p .kb { background: rgb(255 255 255 / .2); color: #fff; }
-.b.o { border-color: #e6e6e6; background: #fff; }
-.b.g { color: #555; }
+.b.p { background: var(--ink); color: var(--paper); }
+.b.p .kb { background: rgb(255 255 255 / .14); border-color: transparent; color: #fff; }
+.b.o { border-color: var(--input); background: #fff; }
+.b.g { color: var(--muted-foreground); }
 .b.pulse { animation: pulse 1.6s ease-out 2; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(120 140 21 / .45); } 100% { box-shadow: 0 0 0 .7em rgb(120 140 21 / 0); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(103 158 238 / .55); } 100% { box-shadow: 0 0 0 .7em rgb(103 158 238 / 0); } }
 .skrow { display: flex; align-items: center; gap: .85em; padding: .7em .9em; }
-.skrow .av { background: #eeeeea; }
-.bar { height: .62em; border-radius: 99px; background: #eeeeea; }
-.fade { -webkit-mask-image: linear-gradient(#000 35%, transparent); mask-image: linear-gradient(#000 35%, transparent); }
+.skrow .av { background: var(--secondary); }
+.bar { height: .62em; border-radius: 99px; background: var(--secondary); }
+.fade { -webkit-mask-image: linear-gradient(#000 56%, transparent); mask-image: linear-gradient(#000 56%, transparent); }
 
-/* ── Manifesto ── */
-.manifesto { padding-top: 120px; padding-bottom: 110px; }
-.manifesto p { font-size: clamp(26px, 3.4vw, 40px); line-height: 1.32; letter-spacing: -0.02em; font-weight: 700; max-width: 21em; margin: 0 auto; color: #b9b9b1; }
-.manifesto p b { color: var(--ink); font-weight: 700; }
-.manifesto .badge { display: inline-grid; place-items: center; min-width: 1.6em; height: 1.1em; padding: 0 .3em; border-radius: 99px; background: #e5484d; color: #fff; font-size: .62em; font-weight: 700; vertical-align: .22em; letter-spacing: 0; transform: rotate(-6deg); }
-.manifesto .typed { position: relative; color: var(--ink); }
-.manifesto .typed::after { content: ""; display: inline-block; width: 3px; height: .9em; background: var(--olive); margin-left: 3px; vertical-align: -.08em; animation: blink 1s steps(1) infinite; }
-.manifesto .key { display: inline-grid; place-items: center; height: 1.2em; padding: 0 .3em; border-radius: .22em; background: #fff; border: 1px solid var(--line); box-shadow: 0 .08em 0 var(--line); color: var(--ink); font: 600 .72em var(--ui); vertical-align: .12em; letter-spacing: 0; }
+/* ── Manifesto, on ruled letter paper ── */
+.manifesto { padding-top: clamp(84px, 11vw, 136px); padding-bottom: clamp(76px, 10vw, 120px); text-align: center; }
+.manifesto .eyebrow { color: var(--gray); }
+.ruled { position: relative; font-size: clamp(25px, 3.4vw, 42px); padding: 1.2em 0; }
+.ruled::before { content: ""; position: absolute; top: -.2em; bottom: .2em; left: 0; right: 0; pointer-events: none;
+	background: repeating-linear-gradient(to bottom, transparent 0 calc(1.2em - 1px), rgb(103 158 238 / .24) calc(1.2em - 1px) 1.2em);
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent), linear-gradient(transparent, #000 18%, #000 82%, transparent); -webkit-mask-composite: source-in;
+	mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent), linear-gradient(transparent, #000 18%, #000 82%, transparent); mask-composite: intersect; }
+.mf { position: relative; font-size: 1em; line-height: 1.2; font-weight: 360; letter-spacing: -0.022em; max-width: 21em; margin: 0 auto; color: var(--gray); }
+.mf .i { color: var(--ink); }
+.badge { display: inline-grid; place-items: center; min-width: 1.55em; height: 1.08em; padding: 0 .3em; border-radius: 99px; background: var(--amber); color: var(--ink); font-size: .58em; font-weight: 600; vertical-align: .28em; letter-spacing: 0; transform: rotate(-6deg); box-shadow: 0 .1em .3em rgb(150 110 0 / .25); }
+.typed { color: var(--ink); }
+.typed::after { content: ""; display: inline-block; width: 2px; height: .86em; background: var(--brand); margin-left: 2px; vertical-align: -.06em; animation: blink 1s steps(1) infinite; }
+.key { display: inline-grid; place-items: center; height: 1.24em; padding: 0 .32em; border-radius: .2em; background: #fff; border: 1px solid var(--input); box-shadow: 0 .07em 0 var(--input); color: var(--ink); font: 500 .6em var(--font); vertical-align: .16em; letter-spacing: .02em; }
 
-/* ── Features ── */
-.feat { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: center; padding-top: 80px; padding-bottom: 80px; }
-.feat.flip { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+/* ── Feature rows: copy beside a window that runs off the page edge ── */
+.feat { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: center; padding-top: 84px; padding-bottom: 84px; }
+.feat.flip { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
 .feat.flip .copy { order: 2; }
-.tag { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; margin-bottom: 16px; }
-.tag i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; font-size: 15px; }
-.t-olive i { background: var(--olive-soft); color: var(--olive-ink); }
-.t-blue i { background: var(--blue-soft); color: var(--blue); }
-.t-peach i { background: var(--peach-soft); color: var(--peach); }
-.t-sand i { background: var(--sand-soft); color: var(--sand); }
-.feat h2, .center h2 { font-size: clamp(30px, 3.6vw, 42px); line-height: 1.12; letter-spacing: -0.015em; font-weight: 800; margin: 0 0 16px; }
-.feat .copy p { color: var(--grey); font-size: 18px; margin: 0 0 26px; max-width: 26em; }
-.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.ticks li { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 16.5px; }
-.ticks li i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; font-size: 13px; flex: none; }
-
-/* Feature cards bleed off the page edge, like a window you scrolled past */
+.feat h2, .setup h2 { font-size: clamp(30px, 3.5vw, 46px); line-height: 1.06; }
+.feat .lead { color: var(--muted-foreground); }
+.lines { list-style: none; margin: 28px 0 0; padding: 0; border-top: var(--hair) solid var(--input); max-width: 26em; }
+.lines li { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: var(--hair) solid var(--input); font-size: 17px; }
+.lines li svg { width: 18px; height: 18px; color: var(--brand); }
 .stage { position: relative; container-type: inline-size; }
-.stage .win { font-size: clamp(7px, 2.05cqw, 15px); border-radius: 1em; }
+.stage .win { font-size: clamp(7px, 2.05cqw, 15px); }
 .bleed-r { margin-right: calc(-1 * var(--bleed)); }
 .bleed-l { margin-left: calc(-1 * var(--bleed)); }
-.bleed-r .win { padding-right: var(--bleed); }
-.bleed-r .win.modes { padding-right: calc(var(--bleed) + 1.8em); }
+.bleed-r .win { border-radius: var(--radius-card) 0 0 var(--radius-card); border-right: 0; padding-right: var(--bleed); }
+.bleed-l .win { border-radius: 0 var(--radius-card) var(--radius-card) 0; border-left: 0; }
 .bleed-l .win.cardpad { padding-left: calc(var(--bleed) + 1.8em); }
-.bleed-r .win { border-radius: 1em 0 0 1em; }
-.bleed-l .win { border-radius: 0 1em 1em 0; }
-.cardpad { padding: 1.6em 1.8em 1.4em; }
+.bleed-r .win.modes { padding-right: calc(var(--bleed) + 1.8em); }
+.cardpad { padding: 1.6em 1.8em 1.5em; }
 
-.boxcol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; padding: 1.6em; }
-.col { background: #fafaf8; border: 1px solid #efefea; border-radius: .9em; padding: .9em; min-height: 21em; }
-.col h4 { display: flex; align-items: center; justify-content: space-between; margin: 0 0 .8em; font-size: .95em; font-weight: 600; }
-.pill { display: inline-flex; align-items: center; padding: .15em .6em; border-radius: .45em; font-size: .85em; font-weight: 600; }
-.p-olive { background: var(--olive-soft); color: var(--olive-ink); }
-.p-sand { background: var(--sand-soft); color: var(--sand); }
-.p-rose { background: var(--rose-soft); color: var(--rose); }
-.col h4 small { color: #9a9a9a; font-weight: 500; font-size: .85em; }
-.mini { background: #fff; border: 1px solid #efefea; border-radius: .7em; padding: .7em .75em; margin-bottom: .6em; display: flex; gap: .6em; align-items: flex-start; }
+.win.tray { background: var(--paper); }
+.boxcol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; padding: 1.5em; }
+.col { background: var(--secondary); border: 1px solid var(--border); border-radius: var(--radius-card); padding: .9em; min-height: 20em; }
+.col h4 { display: flex; align-items: center; justify-content: space-between; margin: 0 0 .8em; font-size: .95em; font-weight: 550; }
+.col h4 small { color: var(--gray); font-weight: 500; font-size: .85em; }
+.pill { display: inline-flex; align-items: center; padding: .15em .6em; border-radius: .45em; font-size: .88em; font-weight: 550; }
+.p-imbox { background: var(--brand-soft); color: var(--brand-ink); }
+.p-feed { background: var(--accent); color: var(--ink-2); }
+.p-spam { background: var(--note); color: var(--note-foreground); }
+.mini { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: .7em .75em; margin-bottom: .6em; display: flex; gap: .6em; align-items: flex-start; }
 .mini .av { width: 1.9em; height: 1.9em; font-size: .68em; }
 .mini .t { flex: 1; min-width: 0; }
-.mini .t b { display: block; font-size: .86em; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mini .t span { display: block; font-size: .8em; color: #8f8f8f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mini.dim { opacity: .62; }
+.mini .t b { display: block; font-size: .86em; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mini .t span { display: block; font-size: .8em; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mini.dim { opacity: .66; }
 .mini.x { opacity: .45; }
 .mini.x .t b { text-decoration: line-through; }
-.ico { width: 1.9em; height: 1.9em; border-radius: .5em; display: grid; place-items: center; background: #f3f3ef; color: #8f8f8f; flex: none; }
+.ico { width: 1.9em; height: 1.9em; border-radius: .5em; display: grid; place-items: center; background: var(--secondary); color: var(--gray); flex: none; }
 .ico svg { width: 1em; height: 1em; }
 
+.letter { display: flex; gap: .85em; align-items: flex-start; }
+.letter .av { margin-top: .1em; }
+.letter .lh { display: flex; align-items: baseline; gap: .6em; white-space: nowrap; }
+.letter .when { color: var(--gray); font-size: .85em; margin-left: auto; }
+.letter p { margin: .2em 0 0; color: var(--ink-2); }
+.att { display: inline-flex; align-items: center; gap: .4em; margin-top: .7em; padding: .3em .7em; border: 1px solid var(--border); border-radius: var(--radius); font-size: .82em; color: var(--muted-foreground); }
+.att svg { width: 1em; height: 1em; }
+
 .modes { padding: 1.8em; }
-.modes h4 { margin: 0 0 .3em; font-size: 1.15em; font-weight: 600; }
-.modes > p { margin: 0 0 1.1em; color: #8a8a8a; font-size: .92em; }
-.seg { display: inline-flex; gap: .2em; padding: .25em; border-radius: .75em; background: #f2f2ef; }
-.seg button { border: 0; background: transparent; height: 2.4em; padding: 0 1.3em; border-radius: .55em; font: 500 1em var(--ui); color: #8a8a8a; cursor: pointer; }
-.seg button[aria-pressed=true] { background: #fff; color: #0a0a0a; box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
-.mode-desc { margin: 1.1em 0 1.2em; font-size: 1em; color: #333; min-height: 3em; }
-.guard { display: grid; gap: .55em; }
-.guard div { display: flex; align-items: center; gap: .7em; padding: .7em .85em; border: 1px solid #efefea; border-radius: .7em; font-size: .92em; transition: opacity .25s; }
-.guard div svg { width: 1.1em; height: 1.1em; color: var(--olive-ink); }
-.guard div span { margin-left: auto; font-size: .82em; color: #9a9a9a; }
-.guard.off div { opacity: .35; }
+.modes h4 { margin: 0 0 .2em; font-size: 1.15em; font-weight: 550; }
+.modes > p { margin: 0 0 1.1em; color: var(--gray); font-size: .92em; font-family: var(--mono); }
+.seg { display: inline-flex; gap: .2em; padding: .25em; border-radius: .75em; background: var(--secondary); border: 1px solid var(--border); }
+.seg button { border: 0; background: transparent; height: 2.4em; padding: 0 1.3em; border-radius: .55em; font: 500 1em var(--font); color: var(--muted-foreground); cursor: pointer; transition: background-color .2s, color .2s; }
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed=true] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(24 24 24 / .08), 0 0 0 1px var(--border); }
+.mode-desc { margin: 1.1em 0 1.2em; font-size: 1em; color: #333; min-height: 3em; max-width: 30em; }
+.guard { display: grid; gap: .5em; max-width: 34em; }
+.guard div { display: flex; align-items: center; gap: .7em; padding: .7em .85em; border: 1px solid var(--border); border-radius: var(--radius); font-size: .92em; background: #fff; transition: opacity .25s; }
+.guard div svg { width: 1.1em; height: 1.1em; color: var(--brand); }
+.guard div span { margin-left: auto; font-size: .82em; color: var(--gray); }
+.guard.off div { opacity: .38; }
 
-/* ── Setup band ── */
-.center { text-align: center; padding-top: 90px; padding-bottom: 90px; }
-.center .tag { justify-content: center; }
-.center p.lead { color: var(--grey); font-size: 18px; margin: 0 auto 36px; max-width: 30em; }
-.route { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
-.addr { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 18px; border-radius: 14px; background: #fff; border: 1px solid var(--line); font: 500 16px var(--mono); }
-.addr.ours { background: var(--olive-soft); border-color: rgb(120 140 21 / .3); color: var(--olive-ink); }
-.addr.wp { font-family: var(--display); font-weight: 700; }
-.addr.wp svg { color: var(--olive); width: 20px; height: 20px; }
-.arrow { width: 54px; height: 2px; background: repeating-linear-gradient(90deg, #c9c9c1 0 6px, transparent 6px 11px); position: relative; }
-.arrow::after { content: ""; position: absolute; right: -2px; top: -4px; border: 5px solid transparent; border-left: 7px solid #c9c9c1; border-right: 0; }
+/* ── Setup: the onboarding chat ── */
+.setup { text-align: center; padding-top: 96px; padding-bottom: 104px; }
+.setup .lead { margin-left: auto; margin-right: auto; }
+.chatwin { max-width: 620px; margin: 48px auto 0; font-size: 15px; }
+.chat { display: flex; flex-direction: column; gap: 16px; padding: 30px 30px 10px; }
+.cm { display: flex; gap: 12px; align-items: flex-start; opacity: 0; transform: translateY(6px); transition: opacity .45s cubic-bezier(.2,.7,.2,1), transform .45s cubic-bezier(.2,.7,.2,1); }
+.cm.on, .cm.typing { opacity: 1; transform: none; }
+.who { width: 26px; height: 26px; flex: none; display: grid; place-items: center; }
+.who svg { width: 22px; height: 22px; color: var(--brand); }
+.ct { position: relative; flex: 1; min-width: 0; padding-top: 2px; font-size: 15.5px; line-height: 1.5; }
+.ct p { margin: 0 0 8px; }
+.ct p:last-child { margin-bottom: 0; }
+.cm.typing .ct > * { visibility: hidden; }
+.dots { display: none; position: absolute; top: 9px; left: 0; gap: 4px; }
+.cm.typing .dots { display: flex; visibility: visible; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: #b9b9b2; animation: hop 1s infinite ease-in-out; }
+.dots i:nth-child(2) { animation-delay: .15s; }
+.dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes hop { 0%, 60%, 100% { transform: none; opacity: .5; } 30% { transform: translateY(-3px); opacity: 1; } }
+.cm.you { justify-content: flex-end; }
+.bub { background: var(--secondary); border: 1px solid var(--border); border-radius: 16px 16px 4px 16px; padding: 8px 14px; font-size: 15.5px; }
+/* Same as the plugin's click-to-copy card (CopyValue): white card, ink mono, grey "Copy". */
+.addr { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 340px; margin: 4px 0 10px; padding: 10px 14px; border-radius: 12px; background: #fff; border: 1px solid var(--border); font: 400 15px var(--mono); color: var(--ink); letter-spacing: 0; }
+.addr small { display: inline-flex; align-items: center; gap: 4px; font: 400 12.5px var(--font); color: var(--muted-foreground); }
+.addr small svg { width: 12px; height: 12px; }
+.watch { display: flex; align-items: flex-start; gap: 10px; color: var(--muted-foreground); }
+.watch .pd { margin-top: 8px; }
+.watch .ok-ic { margin-top: 3px; }
+.pd { position: relative; width: 8px; height: 8px; flex: none; border-radius: 50%; background: var(--brand); }
+.pd::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--brand); animation: ping 1.6s cubic-bezier(0,0,.2,1) infinite; }
+@keyframes ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
+.watch .ok-ic { display: none; width: 18px; height: 18px; flex: none; color: var(--brand); }
+.watch .w-done { display: none; }
+.watch.done { color: var(--ink); }
+.watch.done .pd, .watch.done .w-wait { display: none; }
+.watch.done .ok-ic { display: block; }
+.watch.done .w-done { display: inline; }
+.composer { display: flex; align-items: center; gap: 10px; height: 50px; margin: 14px 20px 20px; padding: 0 10px 0 16px; border: 1px solid var(--input); border-radius: 14px; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .04); font-size: 15.5px; color: #a8a8a8; text-align: left; }
+.composer .val { color: var(--ink); }
+.composer .val:not(:empty)::after { content: ""; display: inline-block; width: 1.5px; height: 1.05em; background: var(--brand); vertical-align: -.17em; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+.composer .kb { margin-left: auto; height: 24px; min-width: 24px; font-size: 12px; transition: background-color .15s, color .15s; }
+.composer .kb.hit { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* ── Note + final ── */
-.note { display: flex; gap: 18px; align-items: flex-start; max-width: 640px; margin: 0 auto; padding: 0 0 90px; }
-.note .face { width: 48px; height: 48px; border-radius: 50%; background: oklch(0.86 0.08 90); display: grid; place-items: center; font-weight: 800; flex: none; }
-.note blockquote { margin: 0; font-size: 21px; line-height: 1.45; font-weight: 600; letter-spacing: -0.01em; }
-.note cite { display: block; margin-top: 10px; font-style: normal; font-size: 15px; color: var(--grey); font-weight: 500; }
-.final { text-align: center; padding: 84px 24px 88px; margin-bottom: 40px; }
-.final h2 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; letter-spacing: -0.02em; font-weight: 800; margin: 0 0 14px; }
-.final p.lead { color: #5c5a4c; font-size: 18px; margin: 0 auto 30px; max-width: 28em; }
-.final .fine { color: #6f6d5f; }
-.final .signup input[type=email] { border-color: rgb(0 0 0 / .06); }
+/* ── Founder note ── */
+.note { display: flex; gap: 20px; align-items: flex-start; max-width: 680px; margin: 0 auto; padding: 0 0 100px; }
+.note img { width: 52px; height: 52px; border-radius: 50%; flex: none; object-fit: cover; box-shadow: 0 0 0 1px var(--border); }
+.note blockquote { margin: 0; font-size: clamp(21px, 2.3vw, 26px); line-height: 1.34; font-weight: 360; letter-spacing: -0.015em; }
+.note blockquote .g { color: var(--gray); }
+.note cite { display: block; margin-top: 14px; font-style: normal; font-size: 15px; color: var(--muted-foreground); }
+.note cite b { color: var(--ink); font-weight: 550; }
+
+/* ── Final: the same cream sheet, postmarked ── */
+.final { position: relative; overflow: hidden; text-align: center; border-radius: 22px; background: var(--noise), var(--cream); padding: clamp(64px, 8vw, 96px) 24px clamp(64px, 8vw, 92px); margin-bottom: 40px; isolation: isolate; }
+.final h2 { font-size: clamp(32px, 4.2vw, 54px); line-height: 1.04; }
+.final .lead { margin: 18px auto 32px; }
+.final .fine { color: #7b7b72; }
+.postmark { position: absolute; top: 34px; right: 5%; z-index: -1; width: clamp(150px, 19vw, 236px); color: var(--brand-ink); opacity: .26; transform: rotate(-12deg); pointer-events: none; }
 footer { padding: 0 0 40px; }
-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font-size: 14px; color: var(--grey); }
+footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; font-size: 15px; color: var(--muted-foreground); }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--ink); }
-footer .brand { font-size: 18px; color: var(--ink); }
-footer .brand svg { width: 20px; height: 20px; }
+footer .brand { font-size: 19px; color: var(--ink); }
+footer .brand svg { width: 19px; height: 19px; }
 
-/* ── Motion: blur into focus ── */
-.rise { opacity: 0; filter: blur(10px); transform: translateY(10px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), filter .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
-.rise.in { opacity: 1; filter: blur(0); transform: none; }
+/* ── Motion: settle into focus ── */
+.rise { opacity: 0; filter: blur(6px); transform: translateY(8px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), filter .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.rise.in { opacity: 1; filter: none; transform: none; }
 .no-js .rise { opacity: 1; filter: none; transform: none; }
+.no-js .cm { opacity: 1; transform: none; }
+.no-js .watch .pd, .no-js .watch .w-wait { display: none; }
+.no-js .watch .ok-ic { display: block; }
+.no-js .watch .w-done { display: inline; }
 @media (prefers-reduced-motion: reduce) {
 	.rise { opacity: 1; filter: none; transform: none; transition: none; }
-	.caret, .manifesto .typed::after { animation: none; }
+	.cm { transition: none; }
+	.caret, .typed::after, .composer .val::after, .pd::after, .dots i { animation: none; }
 }
 
 @media (max-width: 900px) {
@@ -274,29 +340,33 @@ footer .brand svg { width: 20px; height: 20px; }
 	.feat.flip .copy { order: 0; }
 	:root { --bleed: 24px; }
 	.bleed-r, .bleed-l { margin: 0 -24px; }
-	.bleed-l .win.cardpad { padding-left: calc(24px + 1.8em); padding-right: calc(24px + 1.8em); }
-	.bleed-r .win { padding-left: 24px; }
-	.bleed-r .win, .bleed-l .win { border-radius: 0; }
-	.manifesto { padding-top: 80px; padding-bottom: 80px; }
-	.stage .win { font-size: 11.5px; }
+	.bleed-r .win, .bleed-l .win { border-radius: 0; border-left: 0; border-right: 0; }
+	.bleed-r .win { padding-right: 0; }
+	.bleed-r .win.modes { padding: 1.6em 24px; }
+	.bleed-l .win.cardpad { padding-left: 24px; padding-right: 24px; }
+	.stage .win { font-size: 12px; }
 	.boxcol { grid-template-columns: repeat(3, minmax(150px, 1fr)); overflow-x: auto; }
 	.col { min-height: 16em; }
+	.search, .scope { display: none; }
 }
 @media (max-width: 560px) {
+	body { font-size: 17px; }
 	.signup { flex-direction: column; }
 	.signup input[type=email] { flex: none; width: 100%; }
 	.signup button { width: 100%; }
-	.hero { padding-top: 40px; }
-	.meadow { border-radius: 22px; }
-	.shot { padding: 8% 5% 0; }
-	.search, .scope { display: none; }
-	.route { flex-direction: column; gap: 10px; }
-	.arrow { width: 2px; height: 30px; background: repeating-linear-gradient(180deg, #c9c9c1 0 6px, transparent 6px 11px); }
-	.arrow::after { right: -4px; top: auto; bottom: -2px; border: 5px solid transparent; border-top: 7px solid #c9c9c1; border-bottom: 0; }
-	.addr { font-size: 14px; height: 46px; }
-	.note { padding-bottom: 64px; }
-	.note blockquote { font-size: 18px; }
-	.final { padding: 56px 18px 60px; }
+	.hero { padding-top: 36px; }
+	.lead, .hero .lead { font-size: 17px; }
+	.envelope, .final { border-radius: 16px; }
+	.shot { padding: 9% 5% 0; }
+	.url { display: none; }
+	.thread { padding-left: 0; }
+	.chat { padding: 22px 16px 6px; }
+	.composer { margin: 12px 12px 14px; }
+	.addr { font-size: 13.5px; }
+	.addr small { display: none; }
+	.note { padding-bottom: 72px; gap: 14px; }
+	.note img { width: 44px; height: 44px; }
+	.postmark { top: 8px; right: -20px; width: 108px; opacity: .2; }
 }
 </style>
 </head>
@@ -313,45 +383,53 @@ footer .brand svg { width: 20px; height: 20px; }
 	<symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
 	<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
 	<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
-	<symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+	<symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
 	<symbol id="i-feed" viewBox="0 0 24 24"><path d="M15 18h-5M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></symbol>
-	<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
 	<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
 	<symbol id="i-mega" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+	<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
 	<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
 	<symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></symbol>
 	<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
 	<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
 	<symbol id="i-key" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></symbol>
-	<symbol id="i-forward" viewBox="0 0 24 24"><path d="m15 17 5-5-5-5"/><path d="M4 18v-2a4 4 0 0 1 4-4h12"/></symbol>
+	<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+	<symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
 </svg>
 
-<header class="wrap top">
-	<a class="brand" href="/"><svg aria-hidden="true"><use href="#mark"/></svg>bridle</a>
-	<a class="ghost-btn" href="#join">Join the waitlist</a>
+<header class="top" id="top">
+	<div class="wrap">
+		<a class="brand" href="/"><svg aria-hidden="true"><use href="#mark"/></svg>bridle</a>
+		<a class="go" href="#join">join the waitlist <span class="ar">→</span></a>
+	</div>
 </header>
 
 <main>
 	<section class="wrap hero">
-		<h1 class="rise">bridle is the support inbox for people who'd rather be building</h1>
-		<p class="sub rise" style="--d:.12s">It sorts your support mail and drafts every reply from your own docs, right inside WordPress. You read it, press send, and get back to work.</p>
-		<div class="rise" style="--d:.24s">
+		<h1 class="two rise"><span>bridle is the support inbox</span><span class="g">for people who'd rather be building</span></h1>
+		<p class="lead rise" style="--d:.1s">It sorts your support mail and drafts every reply from your own docs, right inside WordPress. You read it, press send, and get back to work.</p>
+		<div class="rise" style="--d:.2s" data-form>
 			<form class="signup" action="/api/waitlist" method="post">
 				<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
 				<input type="hidden" name="source" value="hero">
 				<input type="hidden" name="ref" value="">
 				<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
-				<button type="submit">Join the waitlist</button>
+				<button type="submit">join the waitlist</button>
 			</form>
 			<p class="msg" role="status" aria-live="polite"></p>
 			<p class="fine">Opening soon. One email when your invite is ready.</p>
 		</div>
 	</section>
 
-	<div class="wrap rise" style="--d:.36s">
-		<div class="meadow">
+	<div class="wrap rise" style="--d:.32s">
+		<div class="envelope">
+			<svg class="flap" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+				<polygon points="0,0 100,0 50,58" fill="#f7f7f0"/>
+				<polyline points="0,0 50,58 100,0" fill="none" stroke="#d9d8cd" stroke-width="1" vector-effect="non-scaling-stroke"/>
+			</svg>
 			<div class="shot">
 				<div class="win" role="img" aria-label="The Bridle Imbox: two customer emails with AI drafts ready to send">
+					<div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="url"><svg class="i"><use href="#i-lock"/></svg>yourstore.com/wp-admin/admin.php?page=bridle</span></div>
 					<div class="win-bar">
 						<span class="logo"><svg aria-hidden="true"><use href="#mark"/></svg>Bridle<svg class="i chev"><use href="#i-chev"/></svg></span>
 						<span class="kb">⌘J</span>
@@ -376,7 +454,7 @@ footer .brand svg { width: 20px; height: 20px; }
 						</div>
 						<div class="thread">
 							<div class="draft">
-								<div class="dh"><span class="b-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI DRAFT</span><span class="ok">High confidence</span><span class="ok"><svg class="i"><use href="#i-check-circle"/></svg>Facts and links verified</span></div>
+								<div class="dh"><span class="b-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI DRAFT</span><span class="vf">High confidence</span><span class="vf"><svg class="i"><use href="#i-check-circle"/></svg>Facts and links verified</span></div>
 								<div class="db"><p>Hi Maya,</p><p>Yes, the license moves with you. Deactivate it on the old site under Settings → License, then activate the same key on the new domain. Nothing to buy.</p><p>Sam</p></div>
 								<div class="df"><span class="b p"><svg class="i"><use href="#i-send"/></svg>Send as is <span class="kb">⌘↵</span></span><span class="b o"><svg class="i"><use href="#i-pencil"/></svg>Edit</span><span class="b g">Redraft</span></div>
 							</div>
@@ -399,37 +477,38 @@ footer .brand svg { width: 20px; height: 20px; }
 	</div>
 
 	<section class="wrap manifesto">
-		<p class="rise"><b>Support mail is broken for small teams.</b> The one customer who needs you is buried under <span class="badge" aria-label="47 unread">47</span> receipts, newsletters and pitches, and every answer gets <span class="typed">typed from scratch</span> again. <b>Bridle clears the pile and writes the first draft. You press <span class="key">⌘ ↵</span></b></p>
+		<p class="eyebrow rise">why bridle</p>
+		<div class="ruled rise" style="--d:.08s"><p class="mf"><span class="i">Support mail is broken for small teams.</span> The one customer who needs you is buried under <span class="badge" aria-label="47 unread">47</span> receipts, newsletters and pitches, and every answer gets <span class="typed">typed from scratch</span> again. <span class="i">Bridle clears the pile and writes the first draft. <span class="nw">You press <span class="key">⌘ ↵</span></span></span></p></div>
 	</section>
 
-	<section class="wrap feat">
-		<div class="copy rise">
-			<div class="tag t-olive"><i><svg class="i"><use href="#i-inbox"/></svg></i>Imbox</div>
-			<h2>Customers first. Everything else can wait.</h2>
-			<p>Bridle reads every message the moment it lands and puts people in the Imbox. Receipts, newsletters and pitches go to the Feed. Scams go to Spam. When it isn't sure, it picks the Imbox.</p>
-			<ul class="ticks">
-				<li><i style="background:var(--olive-soft);color:var(--olive-ink)"><svg class="i"><use href="#i-user"/></svg></i>People in the Imbox</li>
-				<li><i style="background:var(--sand-soft);color:var(--sand)"><svg class="i"><use href="#i-feed"/></svg></i>Receipts and pitches in the Feed</li>
-				<li><i style="background:var(--rose-soft);color:var(--rose)"><svg class="i"><use href="#i-ban"/></svg></i>Scams caught before you see them</li>
+	<section class="wrap feat" id="imbox">
+		<div class="copy">
+			<p class="eyebrow rise">imbox</p>
+			<h2 class="two rise" style="--d:.06s"><span>customers first,</span><span class="g">everything else</span><span class="g">can wait</span></h2>
+			<p class="lead rise" style="--d:.12s">Bridle reads every message the moment it lands and puts people in the Imbox. Receipts, newsletters and pitches go to the Feed. Scams go to Spam. When it isn't sure, it picks the Imbox.</p>
+			<ul class="lines rise" style="--d:.18s">
+				<li><svg class="i"><use href="#i-user"/></svg>People in the Imbox</li>
+				<li><svg class="i"><use href="#i-feed"/></svg>Receipts and pitches in the Feed</li>
+				<li><svg class="i"><use href="#i-ban"/></svg>Scams caught before you see them</li>
 			</ul>
 		</div>
 		<div class="stage bleed-r rise" style="--d:.1s">
-			<div class="win" role="img" aria-label="Mail sorted into three boxes: Imbox, Feed and Spam">
+			<div class="win tray" role="img" aria-label="Mail sorted into three boxes: Imbox, Feed and Spam">
 				<div class="boxcol">
 					<div class="col">
-						<h4><span class="pill p-olive">Imbox</span><small>2</small></h4>
+						<h4><span class="pill p-imbox">Imbox</span><small>2</small></h4>
 						<div class="mini"><span class="av" style="--h:200">MC</span><div class="t"><b>Maya Chen</b><span>Move my license?</span></div></div>
 						<div class="mini"><span class="av" style="--h:40">TB</span><div class="t"><b>Tom Becker</b><span>Slider is blank</span></div></div>
 					</div>
 					<div class="col">
-						<h4><span class="pill p-sand">Feed</span><small>14</small></h4>
+						<h4><span class="pill p-feed">Feed</span><small>14</small></h4>
 						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-receipt"/></svg></span><div class="t"><b>Stripe</b><span>Your receipt #2219</span></div></div>
 						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-mega"/></svg></span><div class="t"><b>Growth Weekly</b><span>7 SEO tricks</span></div></div>
 						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-mega"/></svg></span><div class="t"><b>LinkBoost</b><span>Guest post collab?</span></div></div>
 						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-receipt"/></svg></span><div class="t"><b>PayPal</b><span>Payment received</span></div></div>
 					</div>
 					<div class="col">
-						<h4><span class="pill p-rose">Spam</span><small>3</small></h4>
+						<h4><span class="pill p-spam">Spam</span><small>3</small></h4>
 						<div class="mini x"><span class="ico"><svg class="i"><use href="#i-ban"/></svg></span><div class="t"><b>Domain notice</b><span>FINAL NOTICE</span></div></div>
 						<div class="mini x"><span class="ico"><svg class="i"><use href="#i-ban"/></svg></span><div class="t"><b>Account locked</b><span>Verify now</span></div></div>
 					</div>
@@ -438,28 +517,29 @@ footer .brand svg { width: 20px; height: 20px; }
 		</div>
 	</section>
 
-	<section class="wrap feat flip">
-		<div class="copy rise">
-			<div class="tag t-blue"><i><svg class="i"><use href="#i-sparkles"/></svg></i>Drafts</div>
-			<h2>A reply waiting for every real question.</h2>
-			<p>Drafts are written from your docs and saved replies, and every fact and link is checked against them before you see it. Read it, tweak it if you like, and send.</p>
-			<ul class="ticks">
-				<li><i style="background:var(--blue-soft);color:var(--blue)"><svg class="i"><use href="#i-book"/></svg></i>Grounded in your own docs</li>
-				<li><i style="background:var(--olive-soft);color:var(--olive-ink)"><svg class="i"><use href="#i-check-circle"/></svg></i>Facts and links checked</li>
-				<li><i style="background:var(--peach-soft);color:var(--peach)"><svg class="i"><use href="#i-undo"/></svg></i>Eight seconds to undo a send</li>
+	<section class="wrap feat flip" id="drafts">
+		<div class="copy">
+			<p class="eyebrow rise">drafts</p>
+			<h2 class="two rise" style="--d:.06s"><span>a reply waiting</span><span class="g">for every real question</span></h2>
+			<p class="lead rise" style="--d:.12s">Drafts are written from your docs and saved replies, and every fact and link is checked against them before you see it. Read it, tweak it if you like, and send.</p>
+			<ul class="lines rise" style="--d:.18s">
+				<li><svg class="i"><use href="#i-book"/></svg>Grounded in your own docs</li>
+				<li><svg class="i"><use href="#i-check-circle"/></svg>Facts and links checked</li>
+				<li><svg class="i"><use href="#i-undo"/></svg>Eight seconds to undo a send</li>
 			</ul>
 		</div>
 		<div class="stage bleed-l rise" style="--d:.1s">
-			<div class="win cardpad" id="typeCard" role="img" aria-label="An AI draft being written for Tom's question">
-				<div class="r" style="padding-left:0;padding-right:0">
+			<div class="win cardpad" role="img" aria-label="An AI draft being written for Tom's question">
+				<div class="letter">
 					<span class="av" style="--h:40">TB</span>
 					<div class="rm">
-						<div class="rt"><span class="nm">Tom Becker</span><span class="sj">Slider is blank on mobile</span></div>
-						<div class="pv">On my iPhone the slider area is just empty. Desktop is fine. Screenshot attached.</div>
+						<div class="lh"><span class="nm">Tom Becker</span><span class="sj">Slider is blank on mobile</span><span class="when">14m</span></div>
+						<p>On my iPhone the slider area is just empty. Desktop is fine. Screenshot attached.</p>
+						<span class="att"><svg class="i"><use href="#i-image"/></svg>IMG_2231.png</span>
 					</div>
 				</div>
-				<div class="draft" style="margin-top:.8em">
-					<div class="dh"><span class="b-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI DRAFT</span><span class="ok"><svg class="i"><use href="#i-check-circle"/></svg>Grounded in: Slider blank on mobile</span></div>
+				<div class="draft" style="margin-top:1.1em">
+					<div class="dh"><span class="b-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI DRAFT</span><span class="vf"><svg class="i"><use href="#i-check-circle"/></svg>Grounded in: Slider blank on mobile</span></div>
 					<div class="db" id="typeBody"><p>Hi Tom,</p><p>Thanks for the screenshot. A blank slider on phones is almost always lazy-loading from a cache plugin. Exclude the slider's script from lazy-load, clear the cache, and it should appear.</p><p>Sam</p></div>
 					<div class="df"><span class="b p" id="typeSend"><svg class="i"><use href="#i-send"/></svg>Send as is <span class="kb">⌘↵</span></span><span class="b o"><svg class="i"><use href="#i-pencil"/></svg>Edit</span></div>
 				</div>
@@ -467,15 +547,15 @@ footer .brand svg { width: 20px; height: 20px; }
 		</div>
 	</section>
 
-	<section class="wrap feat">
-		<div class="copy rise">
-			<div class="tag t-peach"><i><svg class="i"><use href="#i-shield"/></svg></i>You decide</div>
-			<h2>Send with one key. Or let it send when it's sure.</h2>
-			<p>Every inbox starts in Draft mode: Bridle writes, you send. Turn on Auto for an inbox and it only sends verified, high-confidence replies. The tricky ones always come to you.</p>
-			<ul class="ticks">
-				<li><i style="background:var(--peach-soft);color:var(--peach)"><svg class="i"><use href="#i-key"/></svg></i>One keystroke to send</li>
-				<li><i style="background:var(--olive-soft);color:var(--olive-ink)"><svg class="i"><use href="#i-shield"/></svg></i>Guardrails on Auto</li>
-				<li><i style="background:var(--rose-soft);color:var(--rose)"><svg class="i"><use href="#i-user"/></svg></i>Refunds and angry customers go to you</li>
+	<section class="wrap feat" id="decide">
+		<div class="copy">
+			<p class="eyebrow rise">you decide</p>
+			<h2 class="two rise" style="--d:.06s"><span>send with one key,</span><span class="g">or let it send when it's sure</span></h2>
+			<p class="lead rise" style="--d:.12s">Every inbox starts in Draft mode: Bridle writes, you send. Turn on Auto for an inbox and it only sends verified, high-confidence replies. The tricky ones always come to you.</p>
+			<ul class="lines rise" style="--d:.18s">
+				<li><svg class="i"><use href="#i-key"/></svg>One keystroke to send</li>
+				<li><svg class="i"><use href="#i-shield"/></svg>Guardrails on Auto</li>
+				<li><svg class="i"><use href="#i-user"/></svg>Refunds and angry customers go to you</li>
 			</ul>
 		</div>
 		<div class="stage bleed-r rise" style="--d:.1s">
@@ -487,7 +567,7 @@ footer .brand svg { width: 20px; height: 20px; }
 					<button type="button" aria-pressed="true" data-mode="draft">Draft</button>
 					<button type="button" aria-pressed="false" data-mode="auto">Auto</button>
 				</div>
-				<div class="mode-desc" id="modeDesc">Every customer message gets a draft. Nothing leaves until you send it.</div>
+				<div class="mode-desc" id="modeDesc" aria-live="polite">Every customer message gets a draft. Nothing leaves until you send it.</div>
 				<div class="guard off" id="guard">
 					<div><svg class="i"><use href="#i-check-circle"/></svg>Only verified, high-confidence drafts<span>always</span></div>
 					<div><svg class="i"><use href="#i-check-circle"/></svg>Never refunds, billing, legal or angry customers<span>always</span></div>
@@ -497,42 +577,46 @@ footer .brand svg { width: 20px; height: 20px; }
 		</div>
 	</section>
 
-	<section class="wrap center">
-		<div class="rise">
-			<div class="tag t-sand"><i><svg class="i"><use href="#i-forward"/></svg></i>Setup</div>
-			<h2>Keep your address. Add one forwarding rule.</h2>
-			<p class="lead">Customers keep writing to the address they know, and your replies go out from it too. Conversations stay in your WordPress database.</p>
-		</div>
-		<div class="route rise" style="--d:.12s">
-			<span class="addr">support@yourstore.com</span>
-			<span class="arrow" aria-hidden="true"></span>
-			<span class="addr ours">support-3f9a@bridle.to</span>
-			<span class="arrow" aria-hidden="true"></span>
-			<span class="addr wp"><svg aria-hidden="true"><use href="#mark"/></svg>your wp-admin</span>
+	<section class="wrap setup" id="setup">
+		<p class="eyebrow rise">setup</p>
+		<h2 class="two rise" style="--d:.06s"><span>keep your address,</span><span class="g">add one forwarding rule</span></h2>
+		<p class="lead rise" style="--d:.12s">Customers keep writing to the address they know, and your replies go out from it too. Conversations stay in your WordPress database.</p>
+		<div class="win chatwin rise" style="--d:.18s" role="img" aria-label="Bridle's setup chat: you give your support address, Bridle gives you an address to forward it to, then spots your first email">
+			<div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="url"><svg class="i"><use href="#i-lock"/></svg>yourstore.com/wp-admin/admin.php?page=bridle</span></div>
+			<div class="chat" id="chat">
+				<div class="cm bot"><span class="who"><svg aria-hidden="true"><use href="#mark"/></svg></span><div class="ct"><span class="dots"><i></i><i></i><i></i></span><p>Which address do your customers write to?</p></div></div>
+				<div class="cm you"><div class="bub">support@yourstore.com</div></div>
+				<div class="cm bot"><span class="who"><svg aria-hidden="true"><use href="#mark"/></svg></span><div class="ct"><span class="dots"><i></i><i></i><i></i></span><p>Got it. Forward it to this address:</p><span class="addr">support-3f9a@bridle.to<small><svg class="i"><use href="#i-copy"/></svg>Copy</small></span><p>I'll watch for your first email.</p></div></div>
+				<div class="cm bot"><span class="who"><svg aria-hidden="true"><use href="#mark"/></svg></span><div class="ct"><span class="dots"><i></i><i></i><i></i></span><p class="watch" id="watch"><span class="pd"></span><svg class="i ok-ic"><use href="#i-check-circle"/></svg><span class="w-wait">Waiting for your first email…</span><span class="w-done">It's here. <b>Can I move my license?</b> from Maya Chen just landed in your Imbox.</span></p></div></div>
+			</div>
+			<div class="composer"><span class="ph" id="compPh">Type your answer</span><span class="val" id="compVal"></span><span class="kb" id="compKey">↵</span></div>
 		</div>
 	</section>
 
 	<div class="wrap">
 		<div class="note rise">
-			<div class="face" aria-hidden="true">F</div>
+			<img src="/fahim.jpg" alt="Fahim Reza" width="52" height="52" loading="lazy" decoding="async">
 			<div>
-				<blockquote>"We're building Bridle at PlugPress, the team behind Divi Torque, and it runs on our own support mail first. Every rough edge is one we hit before you do."</blockquote>
-				<cite>Fahim Reza, PlugPress</cite>
+				<blockquote>"We're building Bridle at PlugPress, the team behind Divi Torque, and it runs on our own support mail first. <span class="g">Every rough edge is one we hit before you do."</span></blockquote>
+				<cite><b>Fahim Reza</b> · PlugPress</cite>
 			</div>
 		</div>
 
-		<section class="meadow final rise" id="join">
-			<h2>Be first in line.</h2>
-			<p class="lead">Leave your email and we'll send an invite when Bridle opens.</p>
-			<form class="signup" action="/api/waitlist" method="post">
-				<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-				<input type="hidden" name="source" value="footer">
-				<input type="hidden" name="ref" value="">
-				<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
-				<button type="submit">Join the waitlist</button>
-			</form>
-			<p class="msg" role="status" aria-live="polite"></p>
-			<p class="fine">WordPress 7.0+ · PHP 8.1+ · Paid plugin, pricing at launch</p>
+		<section class="final rise" id="join">
+			<svg class="postmark" viewBox="0 0 250 130" aria-hidden="true"><defs><path id="pmc" d="M65 65m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><circle cx="65" cy="65" r="57" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="65" cy="65" r="36" fill="none" stroke="currentColor" stroke-width="1.2"/><text font-family="Geist Mono, monospace" font-size="10.4" letter-spacing="2.1" fill="currentColor"><textPath href="#pmc">BRIDLE.TO · OPENING SOON · 2026 ·</textPath></text><text x="65" y="63" text-anchor="middle" font-family="Figtree, sans-serif" font-size="12.5" font-weight="650" letter-spacing="1" fill="currentColor">WAITLIST</text><text x="65" y="78" text-anchor="middle" font-family="Geist Mono, monospace" font-size="9.5" letter-spacing="1" fill="currentColor">OCT 01</text><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M128 41q11-7 22 0t22 0 22 0 22 0 22 0"/><path d="M130 56q11-7 22 0t22 0 22 0 22 0 22 0"/><path d="M130 71q11-7 22 0t22 0 22 0 22 0 22 0"/><path d="M128 86q11-7 22 0t22 0 22 0 22 0 22 0"/></g></svg>
+			<h2 class="two"><span>be first in line</span><span class="g">when bridle opens</span></h2>
+			<p class="lead">Leave your email and we'll send an invite when your spot is ready.</p>
+			<div data-form>
+				<form class="signup" action="/api/waitlist" method="post">
+					<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+					<input type="hidden" name="source" value="footer">
+					<input type="hidden" name="ref" value="">
+					<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
+					<button type="submit">join the waitlist</button>
+				</form>
+				<p class="msg" role="status" aria-live="polite"></p>
+				<p class="fine">WordPress 7.0+ · PHP 8.1+ · Paid plugin, pricing at launch</p>
+			</div>
 		</section>
 	</div>
 </main>
@@ -547,22 +631,34 @@ footer .brand svg { width: 20px; height: 20px; }
 <script>
 (function () {
 	var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
 
-	/* Blur into focus as things scroll in */
+	/* Header gets its hairline once the page moves */
+	var top = document.getElementById('top');
+	var onScroll = function () { top.classList.toggle('scrolled', window.scrollY > 8); };
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+
+	/* Settle into focus as things scroll in */
 	var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
 		entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 	}, { threshold: 0.12 }) : null;
 	document.querySelectorAll('.rise').forEach(function (el) { io ? io.observe(el) : el.classList.add('in'); });
+
+	var onceVisible = function (el, threshold, fn) {
+		var done = false;
+		new IntersectionObserver(function (entries, obs) {
+			if (!entries[0].isIntersecting || done) return;
+			done = true; obs.disconnect(); fn();
+		}, { threshold: threshold }).observe(el);
+	};
 
 	/* The draft writes itself the first time it's on screen */
 	var body = document.getElementById('typeBody');
 	var send = document.getElementById('typeSend');
 	if (body && !reduce && io) {
 		var paras = Array.prototype.map.call(body.querySelectorAll('p'), function (p) { return p.textContent; });
-		var started = false;
-		new IntersectionObserver(function (entries, obs) {
-			if (!entries[0].isIntersecting || started) return;
-			started = true; obs.disconnect();
+		onceVisible(body, 0.5, function () {
 			body.innerHTML = '';
 			var pi = 0, ci = 0, p = document.createElement('p'), caret = document.createElement('span');
 			caret.className = 'caret'; body.appendChild(p); p.appendChild(caret);
@@ -574,7 +670,7 @@ footer .brand svg { width: 20px; height: 20px; }
 				if (ci >= text.length) { pi++; ci = 0; if (pi < paras.length) { p = document.createElement('p'); body.appendChild(p); p.appendChild(caret); } setTimeout(step, 260); }
 				else setTimeout(step, 18 + Math.random() * 30);
 			})();
-		}, { threshold: 0.5 }).observe(body);
+		});
 	}
 
 	/* Agent mode switch */
@@ -592,12 +688,51 @@ footer .brand svg { width: 20px; height: 20px; }
 		});
 	});
 
+	/* Setup chat: Bridle asks, you answer, it watches for mail */
+	var chat = document.getElementById('chat');
+	if (chat) {
+		var items = chat.querySelectorAll('.cm');
+		var watch = document.getElementById('watch');
+		var val = document.getElementById('compVal'), ph = document.getElementById('compPh'), key = document.getElementById('compKey');
+		var all = function () { items.forEach(function (el) { el.classList.add('on'); }); watch.classList.add('done'); };
+		var bot = function (el, ms) { el.classList.add('typing'); return wait(ms).then(function () { el.classList.remove('typing'); el.classList.add('on'); }); };
+		var typeIn = function (text, el) {
+			ph.hidden = true;
+			var i = 0;
+			return new Promise(function (resolve) {
+				(function next() {
+					val.textContent = text.slice(0, ++i);
+					if (i < text.length) setTimeout(next, 35 + Math.random() * 45);
+					else resolve();
+				})();
+			}).then(function () { return wait(380); }).then(function () {
+				key.classList.add('hit');
+				return wait(160);
+			}).then(function () {
+				key.classList.remove('hit'); val.textContent = ''; ph.hidden = false; el.classList.add('on');
+			});
+		};
+		if (reduce || !io) all();
+		else onceVisible(chat, 0.45, function () {
+			wait(250)
+				.then(function () { return bot(items[0], 850); })
+				.then(function () { return wait(450); })
+				.then(function () { return typeIn('support@yourstore.com', items[1]); })
+				.then(function () { return wait(350); })
+				.then(function () { return bot(items[2], 1050); })
+				.then(function () { return wait(500); })
+				.then(function () { return bot(items[3], 650); })
+				.then(function () { return wait(3200); })
+				.then(function () { watch.classList.add('done'); });
+		});
+	}
+
 	/* Waitlist forms */
 	var params = new URLSearchParams(location.search);
 	var ref = [document.referrer, params.get('utm_source'), params.get('utm_campaign')].filter(Boolean).join(' | ').slice(0, 500);
 	document.querySelectorAll('form.signup').forEach(function (form) {
 		form.querySelector('input[name=ref]').value = ref;
-		var msg = form.nextElementSibling;
+		var msg = form.closest('[data-form]').querySelector('.msg');
 		form.addEventListener('submit', function (e) {
 			e.preventDefault();
 			var btn = form.querySelector('button');
