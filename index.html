@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bridle: AI support agent for WordPress</title>
-<meta name="description" content="Bridle sorts your support mail and drafts every reply from your own docs, inside WordPress. You press send. Join the waitlist.">
+<meta name="description" content="Bridle is an AI support agent inside WordPress. It sorts your support mail and drafts each reply from answers you've already written. You decide what gets sent.">
 <link rel="canonical" href="https://bridle.to/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
@@ -13,8 +13,8 @@
 <meta name="theme-color" content="#fcfcf9">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bridle.to/">
-<meta property="og:title" content="bridle: the support inbox for people who'd rather be building">
-<meta property="og:description" content="An AI support agent that lives in your WordPress. It sorts the mail, drafts every answer from your docs, and leaves the send button to you.">
+<meta property="og:title" content="bridle: every customer email arrives with a reply already written">
+<meta property="og:description" content="An AI support agent inside your WordPress admin. It files receipts and pitches out of the way, drafts each answer from your saved replies, and leaves sending to you.">
 <meta property="og:image" content="https://bridle.to/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -89,9 +89,10 @@ svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; s
 /* ── Type ── */
 .two { margin: 0; font-weight: 360; letter-spacing: -0.026em; }
 .two span { display: block; text-wrap: balance; }
-.two .g { color: var(--gray); }
+.two span:first-child { font-weight: 560; letter-spacing: -0.034em; }
+.two .g { color: var(--gray); font-weight: 360; }
 .eyebrow { margin: 0 0 18px; font-size: 17px; color: var(--ink); }
-.lead { margin: 20px 0 0; font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 30em; }
+.lead { margin: 20px 0 0; font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 30em; text-wrap: pretty; }
 .nw { white-space: nowrap; }
 
 /* ── Hero ── */
@@ -108,16 +109,86 @@ svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; s
 .signup button:disabled { opacity: .6; }
 .hp { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .fine { font-size: 15px; color: var(--gray); margin: 14px 0 0; }
+.fine a, .note blockquote a { color: inherit; text-decoration: underline; text-decoration-color: var(--input); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-color .2s; }
+.fine a:hover, .note blockquote a:hover { text-decoration-color: currentColor; }
 .msg { font-size: 15px; margin: 12px 0 0; }
 .msg:empty { display: none; }
 .msg.ok { color: var(--brand-ink); }
 .msg.err { color: #c2410c; }
 
-/* ── The envelope: a cream sheet whose flap folds open behind the product ── */
-.envelope { position: relative; overflow: hidden; border-radius: 22px; background: var(--noise), var(--cream); isolation: isolate; }
-.envelope .flap { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; filter: drop-shadow(0 12px 20px rgb(70 60 20 / .08)); }
-.shot { margin: 0 auto; max-width: 1072px; padding: 6% 7% 0; container-type: inline-size; }
-.shot .win { font-size: clamp(6.5px, 1.45cqw, 15px); border-radius: var(--radius-card) var(--radius-card) 0 0; border-bottom: 0; }
+/* ── Header nav ── */
+.nav { display: flex; gap: 30px; font-size: 16px; }
+.nav a { text-decoration: none; color: var(--ink-2); transition: color .2s; }
+.nav a:hover { color: var(--ink); }
+.btn-sm { display: inline-flex; align-items: center; height: 38px; padding: 0 15px; border-radius: 8px; background: var(--ink); color: var(--paper); font-size: 15px; text-decoration: none; white-space: nowrap; transition: background-color .2s; }
+.btn-sm:hover { background: #333331; }
+
+/* ── Hero: centred copy, then the live inbox ── */
+.hero { position: relative; isolation: isolate; }
+.hero::before { content: ""; position: absolute; inset: -68px 0 0; z-index: -2; pointer-events: none; background: radial-gradient(60% 55% at 50% 0%, var(--brand-soft), transparent 70%); }
+.hero-in { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: clamp(36px, 4.3vw, 62px); }
+.tag { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 26px; padding: 6px 13px 6px 9px; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-size: 15px; color: var(--ink-2); box-shadow: 0 1px 2px rgb(24 24 24 / .04); }
+.tag svg { width: 18px; height: 18px; color: var(--brand); }
+.signup.wl { max-width: 520px; padding: 6px; gap: 6px; border: 1px solid var(--input); border-radius: 14px; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .04), 0 18px 40px -26px rgb(24 24 24 / .3); transition: border-color .2s, box-shadow .2s; }
+.signup.wl:focus-within { border-color: var(--ring); box-shadow: 0 0 0 4px rgb(129 173 236 / .22), 0 18px 40px -26px rgb(24 24 24 / .3); }
+.signup.wl input[type=email] { height: 46px; border: 0; padding: 0 12px; background: transparent; box-shadow: none; }
+.signup.wl input[type=email]:focus { box-shadow: none; }
+.signup.wl button { height: 46px; border-radius: 9px; }
+.proof { display: inline-flex; align-items: center; gap: 9px; margin: 16px 0 0; font-size: 15px; color: var(--muted-foreground); }
+.proof span { text-align: left; }
+.proof img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--border); }
+.proof a, .quote a { color: inherit; text-decoration: underline; text-decoration-color: var(--input); text-underline-offset: 3px; }
+.proof a:hover, .quote a:hover { text-decoration-color: currentColor; }
+
+/* A status chip that ticks: new, working, then where the email ended up */
+.tk { flex: none; display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 6px; font-size: 12px; font-weight: 550; white-space: nowrap; transition: background-color .3s, color .3s; background: var(--secondary); color: var(--muted-foreground); }
+.tk.pop { animation: pop .35s cubic-bezier(.2,.7,.2,1); }
+@keyframes pop { 40% { transform: scale(1.12); } }
+.tk[data-k=work] { background: var(--brand-soft); color: var(--brand-ink); }
+.tk[data-k=ready] { background: var(--brand-ink); color: #fff; }
+.tk[data-k=sent] { background: var(--ink); color: #fff; }
+.tk[data-k=feed] { background: var(--accent); color: var(--ink-2); }
+.tk[data-k=spam], .tk[data-k=you] { background: var(--note); color: var(--note-foreground); }
+
+/* ── What it does: six emails in hairline cells ── */
+.cases { padding-top: clamp(84px, 10vw, 120px); padding-bottom: 40px; }
+.sec-head { text-align: center; margin-bottom: 44px; }
+.cells { display: grid; grid-template-columns: repeat(3, 1fr); border: var(--hair) solid var(--input); border-radius: 18px; background: #fff; overflow: hidden; }
+.cell { padding: 26px 26px 28px; border-right: var(--hair) solid var(--input); border-bottom: var(--hair) solid var(--input); }
+.cells .cell:nth-child(3n) { border-right: 0; }
+.cells .cell:nth-last-child(-n+3) { border-bottom: 0; }
+.cm-h { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.cm-h .av, .cm-h .ico { width: 30px; height: 30px; font-size: 11px; }
+.cm-h b { font-weight: 550; }
+.cm-h .tk { margin-left: auto; }
+.cell h3 { margin: 16px 0 8px; font-size: 18px; font-weight: 550; letter-spacing: -0.012em; line-height: 1.3; }
+.cell p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--muted-foreground); }
+
+/* ── Drafts and control, side by side ── */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 24px; border: var(--hair) solid var(--input); border-radius: 18px; background: #fff; overflow: hidden; }
+.duo .cell.big { padding: 36px 36px 38px; border-bottom: 0; }
+.duo .eyebrow { margin-bottom: 12px; }
+.duo .cell.big:last-child { border-right: 0; }
+.duo h3 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.1; margin: 0; }
+.duo .lead { margin-top: 14px; font-size: 16.5px; color: var(--muted-foreground); max-width: 28em; }
+.checks { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; }
+.checks li { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; border: 1px solid var(--border); border-radius: 10px; font-size: 14.5px; line-height: 1.45; opacity: .35; transform: translateY(4px); transition: opacity .45s, transform .45s cubic-bezier(.2,.7,.2,1); }
+.checks li.on { opacity: 1; transform: none; }
+.checks li svg { width: 18px; height: 18px; flex: none; margin-top: 1px; color: var(--brand); }
+.checks li[data-k=flag] { background: var(--note); border-color: var(--note-border); color: var(--note-foreground); }
+.checks li[data-k=flag] svg { color: var(--note-foreground); }
+.checks b { font-weight: 550; }
+.duo .win.modes { margin-top: 24px; font-size: 14.5px; box-shadow: none; }
+
+/* ── Closing card ── */
+.closing { margin: 24px 0 44px; padding: clamp(56px, 7vw, 84px) 24px clamp(52px, 7vw, 76px); border-radius: 22px; background: var(--noise), radial-gradient(70% 60% at 50% 0%, var(--brand-soft), transparent 70%), #fff; border: var(--hair) solid var(--input); text-align: center; }
+.closing .face { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--border); }
+.quote { max-width: 34em; margin: 18px auto 30px; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
+.quote span { display: block; margin-top: 8px; font-size: 14.5px; color: var(--muted-foreground); }
+.closing h2 { font-size: clamp(32px, 4.2vw, 56px); line-height: 1.04; }
+.closing .lead { margin: 16px auto 28px; }
+.closing .signup.wl { margin: 0 auto; }
 
 /* ── Product windows (mirror the plugin app) ── */
 .win { font-family: var(--font); letter-spacing: 0; color: var(--ink); background: #fff; border: 1px solid var(--border); border-radius: var(--radius-card); box-shadow: 0 1px 2px rgb(24 24 24 / .03), 0 2.4em 4.8em -2.4em rgb(60 52 20 / .22); overflow: hidden; text-align: left; line-height: 1.5; }
@@ -146,6 +217,8 @@ svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; s
 .r { display: flex; align-items: center; gap: .85em; padding: .7em .9em; border-radius: var(--radius); }
 .r.on { background: var(--brand-soft); }
 .av { width: 2.5em; height: 2.5em; border-radius: 50%; display: grid; place-items: center; flex: none; font-size: .8em; font-weight: 550; color: rgb(24 24 24 / .7); background: oklch(0.92 0.035 var(--h, 200)); }
+.av.face { background: none; overflow: hidden; box-shadow: 0 0 0 1px rgb(24 24 24 / .05); }
+.av.face svg { display: block; width: 100%; height: 100%; }
 .rm { flex: 1; min-width: 0; }
 .rt { display: flex; align-items: baseline; gap: .55em; white-space: nowrap; overflow: hidden; }
 .dot { width: .5em; height: .5em; border-radius: 50%; background: var(--brand); flex: none; align-self: center; }
@@ -181,67 +254,26 @@ svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; s
 .bar { height: .62em; border-radius: 99px; background: var(--secondary); }
 .fade { -webkit-mask-image: linear-gradient(#000 56%, transparent); mask-image: linear-gradient(#000 56%, transparent); }
 
-/* ── Manifesto, on ruled letter paper ── */
-.manifesto { padding-top: clamp(84px, 11vw, 136px); padding-bottom: clamp(76px, 10vw, 120px); text-align: center; }
-.manifesto .eyebrow { color: var(--gray); }
-.ruled { position: relative; font-size: clamp(25px, 3.4vw, 42px); padding: 1.2em 0; }
-.ruled::before { content: ""; position: absolute; top: -.2em; bottom: .2em; left: 0; right: 0; pointer-events: none;
-	background: repeating-linear-gradient(to bottom, transparent 0 calc(1.2em - 1px), rgb(103 158 238 / .24) calc(1.2em - 1px) 1.2em);
-	-webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent), linear-gradient(transparent, #000 18%, #000 82%, transparent); -webkit-mask-composite: source-in;
-	mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent), linear-gradient(transparent, #000 18%, #000 82%, transparent); mask-composite: intersect; }
-.mf { position: relative; font-size: 1em; line-height: 1.2; font-weight: 360; letter-spacing: -0.022em; max-width: 21em; margin: 0 auto; color: var(--gray); }
-.mf .i { color: var(--ink); }
-.badge { display: inline-grid; place-items: center; min-width: 1.55em; height: 1.08em; padding: 0 .3em; border-radius: 99px; background: var(--amber); color: var(--ink); font-size: .58em; font-weight: 600; vertical-align: .28em; letter-spacing: 0; transform: rotate(-6deg); box-shadow: 0 .1em .3em rgb(150 110 0 / .25); }
-.typed { color: var(--ink); }
-.typed::after { content: ""; display: inline-block; width: 2px; height: .86em; background: var(--brand); margin-left: 2px; vertical-align: -.06em; animation: blink 1s steps(1) infinite; }
-.key { display: inline-grid; place-items: center; height: 1.24em; padding: 0 .32em; border-radius: .2em; background: #fff; border: 1px solid var(--input); box-shadow: 0 .07em 0 var(--input); color: var(--ink); font: 500 .6em var(--font); vertical-align: .16em; letter-spacing: .02em; }
+/* ── Manifesto, on a deep blue band ── */
+.band { position: relative; margin: clamp(72px, 9vw, 112px) 0; padding: clamp(84px, 10vw, 128px) 0; background: var(--noise), var(--brand-ink); color: #fff; text-align: center; isolation: isolate; }
+.band .eyebrow { color: #c6dbf9; }
+.mf { position: relative; font-size: clamp(26px, 3.5vw, 44px); line-height: 1.22; font-weight: 360; letter-spacing: -0.022em; max-width: 21em; margin: 0 auto; color: #c6dbf9; }
+.mf .i { color: #fff; font-weight: 520; letter-spacing: -0.028em; }
+.badge { display: inline-grid; place-items: center; min-width: 1.55em; height: 1.08em; padding: 0 .3em; border-radius: 99px; background: var(--amber); color: var(--ink); font-size: .58em; font-weight: 650; vertical-align: .28em; letter-spacing: 0; transform: rotate(-6deg); box-shadow: 0 .1em .4em rgb(0 20 60 / .35); }
+.typed { color: #fff; }
+.typed::after { content: ""; display: inline-block; width: 2px; height: .86em; background: var(--amber); margin-left: 2px; vertical-align: -.06em; animation: blink 1s steps(1) infinite; }
+.key { display: inline-grid; place-items: center; height: 1.24em; padding: 0 .32em; border-radius: .2em; background: #fff; border: 1px solid #fff; box-shadow: 0 .08em 0 #8fb2ea; color: var(--brand-ink); font: 600 .6em var(--font); vertical-align: .16em; letter-spacing: .02em; }
 
-/* ── Feature rows: copy beside a window that runs off the page edge ── */
-.feat { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: center; padding-top: 84px; padding-bottom: 84px; }
-.feat.flip { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
-.feat.flip .copy { order: 2; }
-.feat h2, .setup h2 { font-size: clamp(30px, 3.5vw, 46px); line-height: 1.06; }
-.feat .lead { color: var(--muted-foreground); }
-.lines { list-style: none; margin: 28px 0 0; padding: 0; border-top: var(--hair) solid var(--input); max-width: 26em; }
-.lines li { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: var(--hair) solid var(--input); font-size: 17px; }
-.lines li svg { width: 18px; height: 18px; color: var(--brand); }
-.stage { position: relative; container-type: inline-size; }
-.stage .win { font-size: clamp(7px, 2.05cqw, 15px); }
-.bleed-r { margin-right: calc(-1 * var(--bleed)); }
-.bleed-l { margin-left: calc(-1 * var(--bleed)); }
-.bleed-r .win { border-radius: var(--radius-card) 0 0 var(--radius-card); border-right: 0; padding-right: var(--bleed); }
-.bleed-l .win { border-radius: 0 var(--radius-card) var(--radius-card) 0; border-left: 0; }
-.bleed-l .win.cardpad { padding-left: calc(var(--bleed) + 1.8em); }
-.bleed-r .win.modes { padding-right: calc(var(--bleed) + 1.8em); }
-.cardpad { padding: 1.6em 1.8em 1.5em; }
+/* ── Shared bits: box pills, icons, the agent-mode card ── */
+.setup h2, .sec-head h2 { font-size: clamp(30px, 3.5vw, 46px); line-height: 1.06; }
 
-.win.tray { background: var(--paper); }
-.boxcol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; padding: 1.5em; }
-.col { background: var(--secondary); border: 1px solid var(--border); border-radius: var(--radius-card); padding: .9em; min-height: 20em; }
-.col h4 { display: flex; align-items: center; justify-content: space-between; margin: 0 0 .8em; font-size: .95em; font-weight: 550; }
-.col h4 small { color: var(--gray); font-weight: 500; font-size: .85em; }
 .pill { display: inline-flex; align-items: center; padding: .15em .6em; border-radius: .45em; font-size: .88em; font-weight: 550; }
 .p-imbox { background: var(--brand-soft); color: var(--brand-ink); }
 .p-feed { background: var(--accent); color: var(--ink-2); }
 .p-spam { background: var(--note); color: var(--note-foreground); }
-.mini { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: .7em .75em; margin-bottom: .6em; display: flex; gap: .6em; align-items: flex-start; }
-.mini .av { width: 1.9em; height: 1.9em; font-size: .68em; }
-.mini .t { flex: 1; min-width: 0; }
-.mini .t b { display: block; font-size: .86em; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mini .t span { display: block; font-size: .8em; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mini.dim { opacity: .66; }
-.mini.x { opacity: .45; }
-.mini.x .t b { text-decoration: line-through; }
 .ico { width: 1.9em; height: 1.9em; border-radius: .5em; display: grid; place-items: center; background: var(--secondary); color: var(--gray); flex: none; }
 .ico svg { width: 1em; height: 1em; }
 
-.letter { display: flex; gap: .85em; align-items: flex-start; }
-.letter .av { margin-top: .1em; }
-.letter .lh { display: flex; align-items: baseline; gap: .6em; white-space: nowrap; }
-.letter .when { color: var(--gray); font-size: .85em; margin-left: auto; }
-.letter p { margin: .2em 0 0; color: var(--ink-2); }
-.att { display: inline-flex; align-items: center; gap: .4em; margin-top: .7em; padding: .3em .7em; border: 1px solid var(--border); border-radius: var(--radius); font-size: .82em; color: var(--muted-foreground); }
-.att svg { width: 1em; height: 1em; }
 
 .modes { padding: 1.8em; }
 .modes h4 { margin: 0 0 .2em; font-size: 1.15em; font-weight: 550; }
@@ -256,6 +288,100 @@ svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; s
 .guard div svg { width: 1.1em; height: 1.1em; color: var(--brand); }
 .guard div span { margin-left: auto; font-size: .82em; color: var(--gray); }
 .guard.off div { opacity: .38; }
+
+/* ── Try it: a live inbox you clear yourself ── */
+.try { padding-top: clamp(40px, 5vw, 64px); padding-bottom: clamp(64px, 8vw, 96px); }
+.try-cap { margin: 0; text-align: center; font-size: 15.5px; line-height: 1.7; color: var(--muted-foreground); text-wrap: balance; }
+.live { display: inline-block; width: 8px; height: 8px; margin-right: 9px; vertical-align: 1px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 0 rgb(103 158 238 / .5); animation: live 1.8s ease-out infinite; }
+@keyframes live { 70% { box-shadow: 0 0 0 7px rgb(103 158 238 / 0); } 100% { box-shadow: 0 0 0 0 rgb(103 158 238 / 0); } }
+kbd.mk { display: inline-block; padding: .05em .4em; border: 1px solid var(--input); border-bottom-width: 2px; border-radius: .3em; background: #fff; font: 500 .82em var(--font); color: var(--ink); white-space: nowrap; }
+.sim { max-width: 1040px; margin: 22px auto 0; }
+.simwin { font-size: 15px; }
+.sim-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.sim-bar .pill { gap: 6px; font-size: 13.5px; padding: 4px 10px; }
+.sim-bar .pill b { font-weight: 650; font-variant-numeric: tabular-nums; }
+.sim-bar .pill.bump { animation: bump .4s ease-out; }
+@keyframes bump { 40% { transform: scale(1.14); } }
+.sim-bar .grow { flex: 1; }
+.clock { font: 500 13px var(--mono); color: var(--muted-foreground); font-variant-numeric: tabular-nums; }
+.sim-body { position: relative; display: grid; grid-template-columns: 340px minmax(0, 1fr); min-height: 440px; }
+.sim-list { min-width: 0; border-right: 1px solid var(--border); padding: 12px; background: var(--paper); }
+.lane { min-height: 60px; margin-bottom: 6px; }
+.sim.is-done .lane { display: none; }
+.sim-list .lbl { font-size: 11.5px; font-weight: 550; letter-spacing: .07em; text-transform: uppercase; color: var(--gray); margin: 6px 8px 6px; }
+.srow { display: flex; gap: 10px; align-items: center; width: 100%; margin-bottom: 4px; padding: 10px; text-align: left; border: 1px solid transparent; border-radius: 10px; background: none; font: inherit; color: inherit; letter-spacing: 0; cursor: pointer; transition: background-color .2s, border-color .2s, opacity .3s; }
+.srow:hover { background: var(--secondary); }
+.srow.on { background: var(--brand-soft); border-color: rgb(103 158 238 / .38); }
+.srow.arriving { cursor: default; background: #fff; border-color: var(--border); box-shadow: 0 8px 18px -12px rgb(24 24 24 / .35); animation: drop .45s cubic-bezier(.2,.7,.2,1); }
+@keyframes drop { from { opacity: 0; transform: translateY(-12px); } }
+.srow .av { width: 32px; height: 32px; font-size: 11.5px; }
+.srow .ico { width: 32px; height: 32px; }
+.srow .t { flex: 1; min-width: 0; }
+.srow .t b { display: block; font-size: 14px; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srow .t span { display: block; font-size: 13px; color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srow .st { font-size: 12px; color: var(--brand-ink); white-space: nowrap; }
+.srow.is-feed .st { color: var(--ink-2); }
+.srow.is-spam .st { color: var(--note-foreground); }
+.srow.done { opacity: .5; }
+.srow.done .st { color: var(--muted-foreground); }
+.sim-pane { min-width: 0; padding: 22px 26px 76px; }
+.sim-idle { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 340px; margin: 0; color: var(--muted-foreground); font-size: 14.5px; }
+.sdot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); animation: breathe 1.4s ease-in-out infinite; }
+@keyframes breathe { 50% { opacity: .3; transform: scale(.75); } }
+.sp-head { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+.sp-head .av { width: 34px; height: 34px; font-size: 12px; }
+.sp-head b { display: block; font-size: 15px; font-weight: 550; }
+.sp-head span.s { display: block; font-size: 13.5px; color: var(--muted-foreground); }
+.sp-msg { margin: 0 0 16px 44px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.sim-pane .draft { font-size: 14.5px; animation: drop .4s cubic-bezier(.2,.7,.2,1); }
+.sim-pane .db { min-height: 0; }
+.sp-refund { margin: 0 0 14px; padding: 12px 14px; border-radius: 10px; background: var(--note); border: 1px solid var(--note-border); color: var(--note-foreground); font-size: 14px; line-height: 1.5; animation: drop .4s cubic-bezier(.2,.7,.2,1); }
+.sp-act { cursor: pointer; font-family: inherit; }
+.sp-act:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.sp-done { text-align: center; padding: 26px 8px 0; animation: drop .5s cubic-bezier(.2,.7,.2,1); }
+.sp-big { margin: 0; font-size: clamp(26px, 3vw, 34px); font-weight: 560; letter-spacing: -0.03em; }
+.sp-stats { margin: 8px 0 0; font: 400 13.5px var(--mono); color: var(--muted-foreground); }
+.sp-pitch { margin: 24px 0 14px; font-size: 16px; color: var(--ink-2); }
+.sp-done .signup { max-width: 440px; }
+.sp-again { margin-top: 16px; padding: 0; background: none; border: 0; font: inherit; font-size: 14px; color: var(--muted-foreground); text-decoration: underline; text-decoration-color: var(--input); text-underline-offset: 3px; cursor: pointer; }
+.toast { position: absolute; left: 50%; bottom: 18px; z-index: 2; display: flex; align-items: center; gap: 12px; padding: 7px 8px 7px 14px; border-radius: 10px; background: var(--ink); color: #fff; font-size: 13.5px; white-space: nowrap; transform: translateX(-50%); box-shadow: 0 12px 28px -12px rgb(24 24 24 / .55); animation: rise-t .3s cubic-bezier(.2,.7,.2,1); }
+@keyframes rise-t { from { opacity: 0; transform: translate(-50%, 8px); } }
+.toast button { padding: 4px 9px; border: 0; border-radius: 6px; background: rgb(255 255 255 / .16); color: #fff; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
+.no-js .sim-idle::after { content: " (needs JavaScript)"; }
+
+/* ── Floating call to action, after the hero form scrolls away ── */
+.float-cta { position: fixed; left: 50%; bottom: 20px; z-index: 40; display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 18px 0 14px; border-radius: 999px; background: var(--ink); color: var(--paper); text-decoration: none; font-size: 16px; letter-spacing: .01em; box-shadow: 0 14px 34px -14px rgb(24 24 24 / .55); transform: translate(-50%, 160%); opacity: 0; pointer-events: none; transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s; }
+.float-cta svg { width: 20px; height: 20px; color: var(--brand); }
+.float-cta.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+.float-cta:hover .ar { transform: translateX(3px); }
+
+/* ── After signing up ── */
+.share { display: block; margin-top: 6px; color: var(--muted-foreground); }
+.share a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--input); text-underline-offset: 3px; cursor: pointer; }
+
+/* ── Your own agent: Claude, ChatGPT or OpenClaw working through Bridle ── */
+.agents { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; padding-top: clamp(84px, 10vw, 120px); padding-bottom: 24px; }
+.agents h2 { font-size: clamp(30px, 3.5vw, 46px); line-height: 1.06; }
+.agents .lead { color: var(--muted-foreground); }
+.agents .lead a { color: inherit; text-decoration: underline; text-decoration-color: var(--input); text-underline-offset: 3px; }
+.ag-note { display: flex; gap: 10px; align-items: flex-start; margin: 22px 0 0; max-width: 30em; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+.ag-note svg { width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--brand); }
+.agwin { font-size: 15px; }
+.ag-tabs { display: flex; gap: 6px; padding: 10px; border-bottom: 1px solid var(--border); background: var(--secondary); }
+.ag-tabs button { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px 0 6px; border: 1px solid transparent; border-radius: 10px; background: none; font: 500 14.5px var(--font); color: var(--muted-foreground); cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
+.ag-tabs button:hover { color: var(--ink); }
+.ag-tabs button[aria-selected=true] { background: #fff; color: var(--ink); border-color: var(--border); box-shadow: 0 1px 2px rgb(24 24 24 / .06); }
+.ag-tabs .av, .ag-ask .av { width: 26px; height: 26px; }
+.ag-body { padding: 20px 22px 24px; }
+.ag-ask { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-size: 15px; color: var(--ink-2); }
+.ag-ask b { color: var(--ink); font-weight: 550; }
+.ag-log { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-family: var(--mono); font-size: 13px; }
+.ag-log li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; opacity: .28; transform: translateY(4px); transition: opacity .4s, transform .4s cubic-bezier(.2,.7,.2,1); }
+.ag-log li.on { opacity: 1; transform: none; }
+.ag-log .fn { color: var(--brand-ink); }
+.ag-log .fn::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 9px; border-radius: 50%; background: var(--brand); vertical-align: 1px; }
+.ag-log .rs { color: var(--muted-foreground); }
+.ag-log .tk { margin-left: auto; font-family: var(--font); }
 
 /* ── Setup: the onboarding chat ── */
 .setup { text-align: center; padding-top: 96px; padding-bottom: 104px; }
@@ -300,20 +426,6 @@ svg.i { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; s
 .composer .kb { margin-left: auto; height: 24px; min-width: 24px; font-size: 12px; transition: background-color .15s, color .15s; }
 .composer .kb.hit { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* ── Founder note ── */
-.note { display: flex; gap: 20px; align-items: flex-start; max-width: 680px; margin: 0 auto; padding: 0 0 100px; }
-.note img { width: 52px; height: 52px; border-radius: 50%; flex: none; object-fit: cover; box-shadow: 0 0 0 1px var(--border); }
-.note blockquote { margin: 0; font-size: clamp(21px, 2.3vw, 26px); line-height: 1.34; font-weight: 360; letter-spacing: -0.015em; }
-.note blockquote .g { color: var(--gray); }
-.note cite { display: block; margin-top: 14px; font-style: normal; font-size: 15px; color: var(--muted-foreground); }
-.note cite b { color: var(--ink); font-weight: 550; }
-
-/* ── Final: the same cream sheet, postmarked ── */
-.final { position: relative; overflow: hidden; text-align: center; border-radius: 22px; background: var(--noise), var(--cream); padding: clamp(64px, 8vw, 96px) 24px clamp(64px, 8vw, 92px); margin-bottom: 40px; isolation: isolate; }
-.final h2 { font-size: clamp(32px, 4.2vw, 54px); line-height: 1.04; }
-.final .lead { margin: 18px auto 32px; }
-.final .fine { color: #7b7b72; }
-.postmark { position: absolute; top: 34px; right: 5%; z-index: -1; width: clamp(150px, 19vw, 236px); color: var(--brand-ink); opacity: .26; transform: rotate(-12deg); pointer-events: none; }
 footer { padding: 0 0 40px; }
 footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; font-size: 15px; color: var(--muted-foreground); }
 footer a { text-decoration: none; }
@@ -330,43 +442,56 @@ footer .brand svg { width: 19px; height: 19px; }
 .no-js .watch .ok-ic { display: block; }
 .no-js .watch .w-done { display: inline; }
 @media (prefers-reduced-motion: reduce) {
+	.ag-log li { transition: none; }
+	.tk.pop, .live { animation: none; }
+	.checks li { transition: none; }
+	.srow.arriving, .sim-pane .draft, .sp-refund, .sp-done, .toast, .sim-bar .pill.bump { animation: none; }
+	.float-cta { transition: none; }
+	.sdot { animation: none; }
 	.rise { opacity: 1; filter: none; transform: none; transition: none; }
 	.cm { transition: none; }
 	.caret, .typed::after, .composer .val::after, .pd::after, .dots i { animation: none; }
 }
 
 @media (max-width: 900px) {
-	.feat, .feat.flip { grid-template-columns: 1fr; gap: 36px; padding-top: 56px; padding-bottom: 56px; }
-	.feat.flip .copy { order: 0; }
-	:root { --bleed: 24px; }
-	.bleed-r, .bleed-l { margin: 0 -24px; }
-	.bleed-r .win, .bleed-l .win { border-radius: 0; border-left: 0; border-right: 0; }
-	.bleed-r .win { padding-right: 0; }
-	.bleed-r .win.modes { padding: 1.6em 24px; }
-	.bleed-l .win.cardpad { padding-left: 24px; padding-right: 24px; }
-	.stage .win { font-size: 12px; }
-	.boxcol { grid-template-columns: repeat(3, minmax(150px, 1fr)); overflow-x: auto; }
-	.col { min-height: 16em; }
+	.agents { grid-template-columns: 1fr; gap: 36px; }
+	.nav { display: none; }
+	.cells { grid-template-columns: 1fr 1fr; }
+	.cells .cell:nth-child(3n) { border-right: var(--hair) solid var(--input); }
+	.cells .cell:nth-child(2n) { border-right: 0; }
+	.cells .cell:nth-last-child(-n+3) { border-bottom: var(--hair) solid var(--input); }
+	.cells .cell:nth-last-child(-n+2) { border-bottom: 0; }
+	.duo { grid-template-columns: 1fr; }
+	.duo .cell.big { border-right: 0; border-bottom: var(--hair) solid var(--input); }
+	.duo .cell.big:last-child { border-bottom: 0; }
 	.search, .scope { display: none; }
 }
+@media (max-width: 760px) {
+	.sim-body { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+	.sim-list { border-right: 0; border-bottom: 1px solid var(--border); }
+	.sim-pane { padding: 18px 16px 76px; }
+	.sp-msg { margin-left: 0; }
+}
 @media (max-width: 560px) {
+	.btn-sm { height: 34px; padding: 0 12px; font-size: 14px; }
+	.cells { grid-template-columns: 1fr; }
+	.cells .cell { border-right: 0 !important; border-bottom: var(--hair) solid var(--input) !important; }
+	.cells .cell:last-child { border-bottom: 0 !important; }
+	.duo .cell.big { padding: 28px 22px 30px; }
+	.signup.wl { flex-direction: row; }
+	.signup.wl input[type=email] { width: auto; flex: 1; font-size: 16px; }
+	.signup.wl button { width: auto; padding: 0 14px; font-size: 15px; }
 	body { font-size: 17px; }
 	.signup { flex-direction: column; }
 	.signup input[type=email] { flex: none; width: 100%; }
 	.signup button { width: 100%; }
 	.hero { padding-top: 36px; }
 	.lead, .hero .lead { font-size: 17px; }
-	.envelope, .final { border-radius: 16px; }
 	.shot { padding: 9% 5% 0; }
-	.url { display: none; }
-	.thread { padding-left: 0; }
 	.chat { padding: 22px 16px 6px; }
 	.composer { margin: 12px 12px 14px; }
 	.addr { font-size: 13.5px; }
 	.addr small { display: none; }
-	.note { padding-bottom: 72px; gap: 14px; }
-	.note img { width: 44px; height: 44px; }
-	.postmark { top: 8px; right: -20px; width: 108px; opacity: .2; }
 }
 </style>
 </head>
@@ -375,6 +500,14 @@ footer .brand svg { width: 19px; height: 19px; }
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 	<symbol id="mark" viewBox="0 0 60 60"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M30 0C46.5685 0 60 13.4315 60 30C60 46.5685 46.5685 60 30 60C13.4315 60 0 46.5685 0 30C0 13.4315 13.4315 0 30 0ZM19.6875 16.2002C19.3923 16.2002 19.1251 16.3621 18.9863 16.6152L18.9346 16.7285L14.2471 29.7285C14.2157 29.8155 14.2002 29.9075 14.2002 30V39.2861C14.2003 40.4857 14.6812 41.6346 15.5352 42.4805C16.389 43.3262 17.5457 43.7998 18.75 43.7998H41.25C42.4543 43.7998 43.611 43.3262 44.4648 42.4805C45.3188 41.6346 45.7997 40.4857 45.7998 39.2861V30C45.7998 29.9075 45.7843 29.8155 45.7529 29.7285L41.0654 16.7285C40.9511 16.4113 40.6497 16.2002 40.3125 16.2002H19.6875ZM24.6279 35.0576C24.7729 35.2969 25.0327 35.4424 25.3125 35.4424H34.6875C34.9673 35.4424 35.2271 35.2969 35.3721 35.0576L37.9512 30.7998H44.2002V39.2861C44.2001 40.0564 43.8911 40.7967 43.3389 41.3438C42.7862 41.8911 42.0348 42.2002 41.25 42.2002H18.75C17.9652 42.2002 17.2138 41.8911 16.6611 41.3438C16.1089 40.7967 15.7999 40.0564 15.7998 39.2861V30.7998H22.0488L24.6279 35.0576ZM43.8604 29.2002H37.5C37.2552 29.2002 37.0256 29.3117 36.875 29.5L36.8154 29.5859L34.2363 33.8428H25.7637L23.1846 29.5859C23.0577 29.3765 22.8427 29.2382 22.6035 29.207L22.5 29.2002H16.1396L20.25 17.7998H39.75L43.8604 29.2002ZM30 22C28.8954 22 28 22.8954 28 24C28 25.1046 28.8954 26 30 26C31.1046 26 32 25.1046 32 24C32 22.8954 31.1046 22 30 22Z"/></symbol>
+	<!-- dot-matrix faces for sample customers -->
+	<symbol id="face-maya" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(200 70% 86%)"/><circle cx="8.80" cy="5.20" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="12.40" cy="5.20" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="16.00" cy="5.20" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="19.60" cy="5.20" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="23.20" cy="5.20" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="5.20" cy="8.80" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="8.80" cy="8.80" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="12.40" cy="8.80" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="16.00" cy="8.80" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="19.60" cy="8.80" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="23.20" cy="8.80" r="1.30" fill="hsl(200 45% 44%)"/><circle cx="26.80" cy="8.80" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="12.40" cy="12.40" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="23.20" cy="12.40" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="12.40" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="23.20" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="12.40" cy="19.60" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="16.00" cy="19.60" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="19.60" cy="19.60" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="23.20" cy="19.60" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="12.40" cy="23.20" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="16.00" cy="23.20" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="19.60" cy="23.20" r="1.62" fill="hsl(200 45% 16%)"/><circle cx="23.20" cy="23.20" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(200 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(200 35% 45% / .16)"/></symbol>
+	<symbol id="face-tom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(35 70% 86%)"/><circle cx="8.80" cy="5.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="5.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="16.00" cy="5.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="19.60" cy="5.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="23.20" cy="5.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="5.20" cy="8.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="8.80" cy="8.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="8.80" r="1.62" fill="hsl(35 45% 16%)"/><circle cx="16.00" cy="8.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="19.60" cy="8.80" r="1.62" fill="hsl(35 45% 16%)"/><circle cx="23.20" cy="8.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="26.80" cy="8.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="12.40" r="1.62" fill="hsl(35 45% 16%)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="1.62" fill="hsl(35 45% 16%)"/><circle cx="23.20" cy="12.40" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="23.20" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="16.00" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="19.60" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="23.20" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="23.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="16.00" cy="23.20" r="1.62" fill="hsl(35 45% 16%)"/><circle cx="19.60" cy="23.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="23.20" cy="23.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(35 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(35 35% 45% / .16)"/></symbol>
+	<symbol id="face-priya" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(325 70% 86%)"/><circle cx="8.80" cy="5.20" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="12.40" cy="5.20" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="16.00" cy="5.20" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="19.60" cy="5.20" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="23.20" cy="5.20" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="5.20" cy="8.80" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="8.80" cy="8.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="12.40" cy="8.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="16.00" cy="8.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="19.60" cy="8.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="23.20" cy="8.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="26.80" cy="8.80" r="1.30" fill="hsl(325 45% 44%)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="12.40" cy="12.40" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="23.20" cy="12.40" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="12.40" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="23.20" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="12.40" cy="19.60" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="16.00" cy="19.60" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="19.60" cy="19.60" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="23.20" cy="19.60" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="12.40" cy="23.20" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="16.00" cy="23.20" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="19.60" cy="23.20" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="23.20" cy="23.20" r="1.62" fill="hsl(325 45% 16%)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(325 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(325 35% 45% / .16)"/></symbol>
+	<symbol id="face-jonas" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(150 70% 86%)"/><circle cx="8.80" cy="5.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="12.40" cy="5.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="16.00" cy="5.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="19.60" cy="5.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="23.20" cy="5.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="5.20" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="8.80" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="12.40" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="16.00" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="19.60" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="23.20" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="26.80" cy="8.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="12.40" cy="12.40" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="23.20" cy="12.40" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="12.40" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="23.20" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="12.40" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="16.00" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="19.60" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="23.20" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="12.40" cy="23.20" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="16.00" cy="23.20" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="19.60" cy="23.20" r="1.62" fill="hsl(150 45% 16%)"/><circle cx="23.20" cy="23.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(150 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(150 35% 45% / .16)"/></symbol>
+	<symbol id="bot-claude" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(22 70% 86%)"/><circle cx="8.80" cy="5.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="12.40" cy="5.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="16.00" cy="5.20" r="1.30" fill="hsl(22 45% 44%)"/><circle cx="19.60" cy="5.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="23.20" cy="5.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="5.20" cy="8.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="8.80" cy="8.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="12.40" cy="8.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="16.00" cy="8.80" r="1.30" fill="hsl(22 45% 44%)"/><circle cx="19.60" cy="8.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="23.20" cy="8.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="26.80" cy="8.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="12.40" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="23.20" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="12.40" cy="16.00" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="23.20" cy="16.00" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="12.40" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="16.00" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="19.60" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="23.20" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="12.40" cy="23.20" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="16.00" cy="23.20" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="19.60" cy="23.20" r="1.62" fill="hsl(22 45% 16%)"/><circle cx="23.20" cy="23.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(22 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(22 35% 45% / .16)"/></symbol>
+	<symbol id="bot-chatgpt" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(165 70% 86%)"/><circle cx="8.80" cy="5.20" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="12.40" cy="5.20" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="16.00" cy="5.20" r="1.30" fill="hsl(165 45% 44%)"/><circle cx="19.60" cy="5.20" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="23.20" cy="5.20" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="5.20" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="8.80" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="12.40" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="16.00" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="19.60" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="23.20" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="26.80" cy="8.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="12.40" cy="12.40" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="23.20" cy="12.40" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="12.40" cy="16.00" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="23.20" cy="16.00" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="12.40" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="16.00" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="19.60" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="23.20" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="12.40" cy="23.20" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="16.00" cy="23.20" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="19.60" cy="23.20" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="23.20" cy="23.20" r="1.62" fill="hsl(165 45% 16%)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(165 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(165 35% 45% / .16)"/></symbol>
+	<symbol id="bot-openclaw" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="hsl(350 70% 86%)"/><circle cx="8.80" cy="5.20" r="1.30" fill="hsl(350 45% 44%)"/><circle cx="12.40" cy="5.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="16.00" cy="5.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="19.60" cy="5.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="23.20" cy="5.20" r="1.30" fill="hsl(350 45% 44%)"/><circle cx="5.20" cy="8.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="8.80" cy="8.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="12.40" cy="8.80" r="1.30" fill="hsl(350 45% 44%)"/><circle cx="16.00" cy="8.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="19.60" cy="8.80" r="1.30" fill="hsl(350 45% 44%)"/><circle cx="23.20" cy="8.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="26.80" cy="8.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="5.20" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="8.80" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="12.40" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="16.00" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="19.60" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="23.20" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="26.80" cy="12.40" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="5.20" cy="16.00" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="8.80" cy="16.00" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="12.40" cy="16.00" r="1.62" fill="hsl(350 45% 16%)"/><circle cx="16.00" cy="16.00" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="19.60" cy="16.00" r="1.62" fill="hsl(350 45% 16%)"/><circle cx="23.20" cy="16.00" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="26.80" cy="16.00" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="5.20" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="8.80" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="12.40" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="16.00" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="19.60" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="23.20" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="26.80" cy="19.60" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="5.20" cy="23.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="8.80" cy="23.20" r="1.62" fill="hsl(350 45% 16%)"/><circle cx="12.40" cy="23.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="16.00" cy="23.20" r="1.62" fill="hsl(350 45% 16%)"/><circle cx="19.60" cy="23.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="23.20" cy="23.20" r="1.62" fill="hsl(350 45% 16%)"/><circle cx="26.80" cy="23.20" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="8.80" cy="26.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="12.40" cy="26.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="16.00" cy="26.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="19.60" cy="26.80" r="0.90" fill="hsl(350 35% 45% / .16)"/><circle cx="23.20" cy="26.80" r="0.90" fill="hsl(350 35% 45% / .16)"/></symbol>
 	<!-- lucide icons, ISC licence -->
 	<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></symbol>
 	<symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
@@ -384,15 +517,10 @@ footer .brand svg { width: 19px; height: 19px; }
 	<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
 	<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
 	<symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-	<symbol id="i-feed" viewBox="0 0 24 24"><path d="M15 18h-5M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></symbol>
 	<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
 	<symbol id="i-mega" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
 	<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
-	<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
-	<symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></symbol>
-	<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
-	<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
-	<symbol id="i-key" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></symbol>
+	<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
 	<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
 	<symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
 </svg>
@@ -400,165 +528,93 @@ footer .brand svg { width: 19px; height: 19px; }
 <header class="top" id="top">
 	<div class="wrap">
 		<a class="brand" href="/"><svg aria-hidden="true"><use href="#mark"/></svg>bridle</a>
-		<a class="go" href="#join">join the waitlist <span class="ar">→</span></a>
+		<nav class="nav" aria-label="On this page"><a href="#try">try it</a><a href="#how">what it does</a><a href="#agents">agents</a><a href="#setup">setup</a></nav>
+		<a class="btn-sm" href="#join">join the waitlist</a>
 	</div>
 </header>
 
 <main>
-	<section class="wrap hero">
-		<h1 class="two rise"><span>bridle is the support inbox</span><span class="g">for people who'd rather be building</span></h1>
-		<p class="lead rise" style="--d:.1s">It sorts your support mail and drafts every reply from your own docs, right inside WordPress. You read it, press send, and get back to work.</p>
-		<div class="rise" style="--d:.2s" data-form>
-			<form class="signup" action="/api/waitlist" method="post">
-				<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-				<input type="hidden" name="source" value="hero">
-				<input type="hidden" name="ref" value="">
-				<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
-				<button type="submit">join the waitlist</button>
-			</form>
-			<p class="msg" role="status" aria-live="polite"></p>
-			<p class="fine">Opening soon. One email when your invite is ready.</p>
+	<section class="hero">
+		<div class="wrap hero-in">
+			<p class="tag rise"><svg aria-hidden="true"><use href="#mark"/></svg>AI support agent for WordPress</p>
+			<h1 class="two rise" style="--d:.06s"><span>every customer email arrives</span><span class="g">with a reply already written</span></h1>
+			<p class="lead rise" style="--d:.12s">Bridle sorts your support mail and drafts each answer from your saved replies. You decide what gets sent.</p>
+			<div class="rise" style="--d:.2s" data-form>
+				<form class="signup wl" action="/api/waitlist" method="post">
+					<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+					<input type="hidden" name="source" value="hero">
+					<input type="hidden" name="ref" value="">
+					<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
+					<button type="submit">join the waitlist</button>
+				</form>
+				<p class="msg" role="status" aria-live="polite"></p>
+				<p class="proof"><img src="/fahim.jpg" alt="" width="24" height="24"><span>Plugin launching soon. Built by the team behind <a href="https://saddle.to">Saddle</a>.</span></p>
+			</div>
 		</div>
-	</section>
-
-	<div class="wrap rise" style="--d:.32s">
-		<div class="envelope">
-			<svg class="flap" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-				<polygon points="0,0 100,0 50,58" fill="#f7f7f0"/>
-				<polyline points="0,0 50,58 100,0" fill="none" stroke="#d9d8cd" stroke-width="1" vector-effect="non-scaling-stroke"/>
-			</svg>
-			<div class="shot">
-				<div class="win" role="img" aria-label="The Bridle Imbox: two customer emails with AI drafts ready to send">
+		<div class="wrap try" id="try">
+			<p class="try-cap rise" style="--d:.28s"><span class="live"></span>Try it: seven emails are landing. Send the drafts with <kbd class="mk">⌘ ↵</kbd> or a tap.</p>
+			<div class="sim rise" id="sim" style="--d:.34s">
+				<div class="win simwin">
 					<div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="url"><svg class="i"><use href="#i-lock"/></svg>yourstore.com/wp-admin/admin.php?page=bridle</span></div>
-					<div class="win-bar">
-						<span class="logo"><svg aria-hidden="true"><use href="#mark"/></svg>Bridle<svg class="i chev"><use href="#i-chev"/></svg></span>
-						<span class="kb">⌘J</span>
-						<span class="scope"><i></i>All inboxes<svg class="i chev"><use href="#i-chev"/></svg></span>
+					<div class="sim-bar">
+						<span class="pill p-imbox">Imbox <b data-n="imbox">0</b></span>
+						<span class="pill p-feed">Feed <b data-n="feed">0</b></span>
+						<span class="pill p-spam">Spam <b data-n="spam">0</b></span>
 						<span class="grow"></span>
-						<span class="search"><svg class="i"><use href="#i-search"/></svg>Search<span class="kb">/</span></span>
-						<span class="me">SK</span>
+						<span class="clock" id="simClock" aria-label="Time">0:00</span>
 					</div>
-					<div class="win-body fade">
-						<div class="win-head">
-							<h3>Imbox</h3>
-							<span class="focus"><svg class="i"><use href="#i-crosshair"/></svg>2 drafts ready · Focus &amp; Reply<span class="kb">↵</span></span>
+					<div class="sim-body">
+						<div class="sim-list">
+							<div class="lane" id="simLane" aria-live="polite"></div>
+							<div class="lbl">Needs reply</div>
+							<div id="simRows"></div>
 						</div>
-						<div class="lbl">Needs reply</div>
-						<div class="r on">
-							<span class="av" style="--h:200">MC</span>
-							<div class="rm">
-								<div class="rt"><span class="dot"></span><span class="nm">Maya Chen</span><span class="sj">Can I move my license to a new domain?</span></div>
-								<div class="pv">We're relaunching on a new domain next week. Will the license move with us?</div>
-							</div>
-							<div class="meta"><span class="chip-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI draft</span>2m</div>
-						</div>
-						<div class="thread">
-							<div class="draft">
-								<div class="dh"><span class="b-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI DRAFT</span><span class="vf">High confidence</span><span class="vf"><svg class="i"><use href="#i-check-circle"/></svg>Facts and links verified</span></div>
-								<div class="db"><p>Hi Maya,</p><p>Yes, the license moves with you. Deactivate it on the old site under Settings → License, then activate the same key on the new domain. Nothing to buy.</p><p>Sam</p></div>
-								<div class="df"><span class="b p"><svg class="i"><use href="#i-send"/></svg>Send as is <span class="kb">⌘↵</span></span><span class="b o"><svg class="i"><use href="#i-pencil"/></svg>Edit</span><span class="b g">Redraft</span></div>
-							</div>
-						</div>
-						<div class="r">
-							<span class="av" style="--h:40">TB</span>
-							<div class="rm">
-								<div class="rt"><span class="dot"></span><span class="nm">Tom Becker</span><span class="sj">Slider is blank on mobile</span></div>
-								<div class="pv">On my iPhone the slider area is just empty. Desktop is fine.</div>
-							</div>
-							<div class="meta"><span class="chip-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI draft</span>14m</div>
-						</div>
-						<div class="lbl">Waiting on customer</div>
-						<div class="skrow"><span class="av"></span><div class="rm"><div class="bar" style="width:46%;margin-bottom:.5em"></div><div class="bar" style="width:72%"></div></div></div>
-						<div class="skrow"><span class="av"></span><div class="rm"><div class="bar" style="width:38%;margin-bottom:.5em"></div><div class="bar" style="width:64%"></div></div></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<section class="wrap manifesto">
-		<p class="eyebrow rise">why bridle</p>
-		<div class="ruled rise" style="--d:.08s"><p class="mf"><span class="i">Support mail is broken for small teams.</span> The one customer who needs you is buried under <span class="badge" aria-label="47 unread">47</span> receipts, newsletters and pitches, and every answer gets <span class="typed">typed from scratch</span> again. <span class="i">Bridle clears the pile and writes the first draft. <span class="nw">You press <span class="key">⌘ ↵</span></span></span></p></div>
-	</section>
-
-	<section class="wrap feat" id="imbox">
-		<div class="copy">
-			<p class="eyebrow rise">imbox</p>
-			<h2 class="two rise" style="--d:.06s"><span>customers first,</span><span class="g">everything else</span><span class="g">can wait</span></h2>
-			<p class="lead rise" style="--d:.12s">Bridle reads every message the moment it lands and puts people in the Imbox. Receipts, newsletters and pitches go to the Feed. Scams go to Spam. When it isn't sure, it picks the Imbox.</p>
-			<ul class="lines rise" style="--d:.18s">
-				<li><svg class="i"><use href="#i-user"/></svg>People in the Imbox</li>
-				<li><svg class="i"><use href="#i-feed"/></svg>Receipts and pitches in the Feed</li>
-				<li><svg class="i"><use href="#i-ban"/></svg>Scams caught before you see them</li>
-			</ul>
-		</div>
-		<div class="stage bleed-r rise" style="--d:.1s">
-			<div class="win tray" role="img" aria-label="Mail sorted into three boxes: Imbox, Feed and Spam">
-				<div class="boxcol">
-					<div class="col">
-						<h4><span class="pill p-imbox">Imbox</span><small>2</small></h4>
-						<div class="mini"><span class="av" style="--h:200">MC</span><div class="t"><b>Maya Chen</b><span>Move my license?</span></div></div>
-						<div class="mini"><span class="av" style="--h:40">TB</span><div class="t"><b>Tom Becker</b><span>Slider is blank</span></div></div>
-					</div>
-					<div class="col">
-						<h4><span class="pill p-feed">Feed</span><small>14</small></h4>
-						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-receipt"/></svg></span><div class="t"><b>Stripe</b><span>Your receipt #2219</span></div></div>
-						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-mega"/></svg></span><div class="t"><b>Growth Weekly</b><span>7 SEO tricks</span></div></div>
-						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-mega"/></svg></span><div class="t"><b>LinkBoost</b><span>Guest post collab?</span></div></div>
-						<div class="mini dim"><span class="ico"><svg class="i"><use href="#i-receipt"/></svg></span><div class="t"><b>PayPal</b><span>Payment received</span></div></div>
-					</div>
-					<div class="col">
-						<h4><span class="pill p-spam">Spam</span><small>3</small></h4>
-						<div class="mini x"><span class="ico"><svg class="i"><use href="#i-ban"/></svg></span><div class="t"><b>Domain notice</b><span>FINAL NOTICE</span></div></div>
-						<div class="mini x"><span class="ico"><svg class="i"><use href="#i-ban"/></svg></span><div class="t"><b>Account locked</b><span>Verify now</span></div></div>
+						<div class="sim-pane" id="simPane"><p class="sim-idle">Scroll here and the mail starts arriving.</p></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="wrap feat flip" id="drafts">
-		<div class="copy">
-			<p class="eyebrow rise">drafts</p>
-			<h2 class="two rise" style="--d:.06s"><span>a reply waiting</span><span class="g">for every real question</span></h2>
-			<p class="lead rise" style="--d:.12s">Drafts are written from your docs and saved replies, and every fact and link is checked against them before you see it. Read it, tweak it if you like, and send.</p>
-			<ul class="lines rise" style="--d:.18s">
-				<li><svg class="i"><use href="#i-book"/></svg>Grounded in your own docs</li>
-				<li><svg class="i"><use href="#i-check-circle"/></svg>Facts and links checked</li>
-				<li><svg class="i"><use href="#i-undo"/></svg>Eight seconds to undo a send</li>
-			</ul>
-		</div>
-		<div class="stage bleed-l rise" style="--d:.1s">
-			<div class="win cardpad" role="img" aria-label="An AI draft being written for Tom's question">
-				<div class="letter">
-					<span class="av" style="--h:40">TB</span>
-					<div class="rm">
-						<div class="lh"><span class="nm">Tom Becker</span><span class="sj">Slider is blank on mobile</span><span class="when">14m</span></div>
-						<p>On my iPhone the slider area is just empty. Desktop is fine. Screenshot attached.</p>
-						<span class="att"><svg class="i"><use href="#i-image"/></svg>IMG_2231.png</span>
-					</div>
-				</div>
-				<div class="draft" style="margin-top:1.1em">
-					<div class="dh"><span class="b-ai"><svg class="i"><use href="#i-sparkles"/></svg>AI DRAFT</span><span class="vf"><svg class="i"><use href="#i-check-circle"/></svg>Grounded in: Slider blank on mobile</span></div>
-					<div class="db" id="typeBody"><p>Hi Tom,</p><p>Thanks for the screenshot. A blank slider on phones is almost always lazy-loading from a cache plugin. Exclude the slider's script from lazy-load, clear the cache, and it should appear.</p><p>Sam</p></div>
-					<div class="df"><span class="b p" id="typeSend"><svg class="i"><use href="#i-send"/></svg>Send as is <span class="kb">⌘↵</span></span><span class="b o"><svg class="i"><use href="#i-pencil"/></svg>Edit</span></div>
-				</div>
-			</div>
+
+
+	<section class="band">
+		<div class="wrap">
+			<p class="eyebrow rise">why bridle</p>
+			<p class="mf rise" style="--d:.08s"><span class="i">Answering support alone is mostly sorting and retyping.</span> You scroll past <span class="badge" aria-label="47 unread">47</span> receipts and pitches to find one customer, then type the answer you <span class="typed">typed last Tuesday</span>. <span class="i">Bridle does both. <span class="nw">You press <span class="key">⌘ ↵</span></span></span></p>
 		</div>
 	</section>
 
-	<section class="wrap feat" id="decide">
-		<div class="copy">
-			<p class="eyebrow rise">you decide</p>
-			<h2 class="two rise" style="--d:.06s"><span>send with one key,</span><span class="g">or let it send when it's sure</span></h2>
-			<p class="lead rise" style="--d:.12s">Every inbox starts in Draft mode: Bridle writes, you send. Turn on Auto for an inbox and it only sends verified, high-confidence replies. The tricky ones always come to you.</p>
-			<ul class="lines rise" style="--d:.18s">
-				<li><svg class="i"><use href="#i-key"/></svg>One keystroke to send</li>
-				<li><svg class="i"><use href="#i-shield"/></svg>Guardrails on Auto</li>
-				<li><svg class="i"><use href="#i-user"/></svg>Refunds and angry customers go to you</li>
+	<section class="wrap cases" id="how">
+		<div class="sec-head">
+			<p class="eyebrow rise">what it does</p>
+			<h2 class="two rise" style="--d:.06s"><span>you only see</span><span class="g">what needs you</span></h2>
+		</div>
+		<div class="cells rise" style="--d:.12s" id="cells">
+			<article class="cell"><div class="cm-h"><span class="av face"><svg aria-hidden="true"><use href="#face-maya"/></svg></span><b>Maya Chen</b><span class="tk" data-k="new" data-final="ready" data-label="drafted">new</span></div><h3>Can I move my license to a new domain?</h3><p>A customer, so it stays in the Imbox with a draft built from your saved reply on licenses.</p></article>
+			<article class="cell"><div class="cm-h"><span class="av face"><svg aria-hidden="true"><use href="#face-jonas"/></svg></span><b>Jonas Ortiz</b><span class="tk" data-k="new" data-final="ready" data-label="drafted">new</span></div><h3>Where is my invoice for September?</h3><p>The draft pulls the right order from WooCommerce, so the answer has the real number in it.</p></article>
+			<article class="cell"><div class="cm-h"><span class="av face"><svg aria-hidden="true"><use href="#face-priya"/></svg></span><b>Priya Nair</b><span class="tk" data-k="new" data-final="you" data-label="for you">new</span></div><h3>Please refund order #1043</h3><p>Refunds, billing, legal questions and angry customers never get a draft. They wait for you.</p></article>
+			<article class="cell"><div class="cm-h"><span class="ico"><svg class="i"><use href="#i-receipt"/></svg></span><b>Stripe</b><span class="tk" data-k="new" data-final="feed" data-label="Feed">new</span></div><h3>Your receipt #2219</h3><p>Receipts and notifications collect in the Feed. No acknowledgement goes out and nothing pings you.</p></article>
+			<article class="cell"><div class="cm-h"><span class="ico"><svg class="i"><use href="#i-mega"/></svg></span><b>LinkBoost</b><span class="tk" data-k="new" data-final="feed" data-label="Feed">new</span></div><h3>Guest post collaboration?</h3><p>Sales pitches wait in the Feed, one row per sender. Moving a sender to the Imbox takes one click.</p></article>
+			<article class="cell"><div class="cm-h"><span class="ico"><svg class="i"><use href="#i-ban"/></svg></span><b>Account notice</b><span class="tk" data-k="new" data-final="spam" data-label="Spam">new</span></div><h3>Your account is locked. Verify now</h3><p>Obvious phishing goes to Spam. When Bridle can't tell, the email stays in front of you.</p></article>
+		</div>
+	</section>
+
+	<div class="wrap"><section class="duo">
+		<div class="cell big">
+			<p class="eyebrow">drafts</p>
+			<h3 class="two"><span>every draft is checked</span><span class="g">before you see it</span></h3>
+			<p class="lead">Each draft draws on your saved replies, your instructions, the customer's orders and the thread. Every quote and link in it is matched against those sources.</p>
+			<ul class="checks" id="checks">
+				<li data-k="ok"><svg class="i"><use href="#i-check-circle"/></svg><span>Quote found in <b>Moving a license</b></span></li>
+				<li data-k="ok"><svg class="i"><use href="#i-check-circle"/></svg><span>Link to <b>yourstore.com/docs/license</b> is in your sources</span></li>
+				<li data-k="flag"><svg class="i"><use href="#i-alert"/></svg><span>Link to <b>yourstore.com/pricing</b> isn't, so the draft is marked unverified</span></li>
 			</ul>
 		</div>
-		<div class="stage bleed-r rise" style="--d:.1s">
+		<div class="cell big" id="decide">
+			<p class="eyebrow">you decide</p>
+			<h3 class="two"><span>one key to send,</span><span class="g">or let it send when it's sure</span></h3>
+			<p class="lead">Inboxes start in Draft mode and every send can be undone for eight seconds. Turn on Auto when you trust it.</p>
 			<div class="win modes">
 				<h4>Agent mode</h4>
 				<p>support@yourstore.com</p>
@@ -575,12 +631,38 @@ footer .brand svg { width: 19px; height: 19px; }
 				</div>
 			</div>
 		</div>
+	</section></div>
+
+	<section class="wrap agents" id="agents">
+		<div class="ag-copy">
+			<p class="eyebrow rise">agents</p>
+			<h2 class="two rise" style="--d:.06s"><span>bring your own agent,</span><span class="g">it can answer too</span></h2>
+			<p class="lead rise" style="--d:.12s">Bridle opens your inbox to agents like Claude, ChatGPT and OpenClaw through WordPress abilities over MCP. Connect one with <a href="https://saddle.to">Saddle</a> or any MCP client, and it can read a conversation, check your saved replies and leave a draft for you.</p>
+			<p class="ag-note rise" style="--d:.18s"><svg class="i" aria-hidden="true"><use href="#i-check-circle"/></svg>Sending needs a permission you grant and an inbox in Auto mode, with the same guardrails as Bridle's own agent.</p>
+		</div>
+		<div class="win agwin rise" style="--d:.1s" id="agwin">
+			<div class="ag-tabs" role="tablist" aria-label="Pick an agent">
+				<button type="button" role="tab" aria-selected="true" data-agent="claude"><span class="av face"><svg aria-hidden="true"><use href="#bot-claude"/></svg></span>Claude</button>
+				<button type="button" role="tab" aria-selected="false" data-agent="chatgpt"><span class="av face"><svg aria-hidden="true"><use href="#bot-chatgpt"/></svg></span>ChatGPT</button>
+				<button type="button" role="tab" aria-selected="false" data-agent="openclaw"><span class="av face"><svg aria-hidden="true"><use href="#bot-openclaw"/></svg></span>OpenClaw</button>
+			</div>
+			<div class="ag-body">
+				<p class="ag-ask"><span class="av face"><svg aria-hidden="true"><use href="#bot-claude"/></svg></span><span><b id="agName">Claude</b> · "Clear what you can in my support inbox."</span></p>
+				<ol class="ag-log" id="agLog" aria-live="polite">
+					<li><span class="fn">bridle/list-conversations</span><span class="rs">3 need a reply</span></li>
+					<li><span class="fn">bridle/get-conversation</span><span class="rs">Maya Chen: "Can I move my license…"</span></li>
+					<li><span class="fn">bridle/get-knowledge</span><span class="rs">saved reply: Moving a license</span></li>
+					<li><span class="fn">bridle/draft-reply</span><span class="rs">draft saved for you to review</span><span class="tk" data-k="ready">draft ready</span></li>
+					<li class="skip"><span class="fn">bridle/get-conversation</span><span class="rs">Priya: refund request</span><span class="tk" data-k="you">left for you</span></li>
+				</ol>
+			</div>
+		</div>
 	</section>
 
 	<section class="wrap setup" id="setup">
 		<p class="eyebrow rise">setup</p>
 		<h2 class="two rise" style="--d:.06s"><span>keep your address,</span><span class="g">add one forwarding rule</span></h2>
-		<p class="lead rise" style="--d:.12s">Customers keep writing to the address they know, and your replies go out from it too. Conversations stay in your WordPress database.</p>
+		<p class="lead rise" style="--d:.12s">Customers keep writing to the address they already use, and replies go out from it. A two-minute chat sets up the forwarding and tells you when the first email lands. Every conversation stays in your WordPress database.</p>
 		<div class="win chatwin rise" style="--d:.18s" role="img" aria-label="Bridle's setup chat: you give your support address, Bridle gives you an address to forward it to, then spots your first email">
 			<div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="url"><svg class="i"><use href="#i-lock"/></svg>yourstore.com/wp-admin/admin.php?page=bridle</span></div>
 			<div class="chat" id="chat">
@@ -594,20 +676,13 @@ footer .brand svg { width: 19px; height: 19px; }
 	</section>
 
 	<div class="wrap">
-		<div class="note rise">
-			<img src="/fahim.jpg" alt="Fahim Reza" width="52" height="52" loading="lazy" decoding="async">
-			<div>
-				<blockquote>"We're building Bridle at PlugPress, the team behind Divi Torque, and it runs on our own support mail first. <span class="g">Every rough edge is one we hit before you do."</span></blockquote>
-				<cite><b>Fahim Reza</b> · PlugPress</cite>
-			</div>
-		</div>
-
-		<section class="final rise" id="join">
-			<svg class="postmark" viewBox="0 0 250 130" aria-hidden="true"><defs><path id="pmc" d="M65 65m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><circle cx="65" cy="65" r="57" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="65" cy="65" r="36" fill="none" stroke="currentColor" stroke-width="1.2"/><text font-family="Geist Mono, monospace" font-size="10.4" letter-spacing="2.1" fill="currentColor"><textPath href="#pmc">BRIDLE.TO · OPENING SOON · 2026 ·</textPath></text><text x="65" y="63" text-anchor="middle" font-family="Figtree, sans-serif" font-size="12.5" font-weight="650" letter-spacing="1" fill="currentColor">WAITLIST</text><text x="65" y="78" text-anchor="middle" font-family="Geist Mono, monospace" font-size="9.5" letter-spacing="1" fill="currentColor">OCT 01</text><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M128 41q11-7 22 0t22 0 22 0 22 0 22 0"/><path d="M130 56q11-7 22 0t22 0 22 0 22 0 22 0"/><path d="M130 71q11-7 22 0t22 0 22 0 22 0 22 0"/><path d="M128 86q11-7 22 0t22 0 22 0 22 0 22 0"/></g></svg>
-			<h2 class="two"><span>be first in line</span><span class="g">when bridle opens</span></h2>
-			<p class="lead">Leave your email and we'll send an invite when your spot is ready.</p>
+		<section class="closing rise" id="join">
+			<img class="face" src="/fahim.jpg" alt="Fahim Reza" width="56" height="56" loading="lazy" decoding="async">
+			<p class="quote">"We're building Bridle at PlugPress, the team behind <a href="https://saddle.to">Saddle</a>, and it runs on our own support mail first. Every rough edge is one we hit before you do."<span>Fahim Reza</span></p>
+			<h2 class="two"><span>get the plugin first,</span><span class="g">the day it launches</span></h2>
+			<p class="lead">Leave your email and we'll send one message with the download link when it's out.</p>
 			<div data-form>
-				<form class="signup" action="/api/waitlist" method="post">
+				<form class="signup wl" action="/api/waitlist" method="post">
 					<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
 					<input type="hidden" name="source" value="footer">
 					<input type="hidden" name="ref" value="">
@@ -615,11 +690,13 @@ footer .brand svg { width: 19px; height: 19px; }
 					<button type="submit">join the waitlist</button>
 				</form>
 				<p class="msg" role="status" aria-live="polite"></p>
-				<p class="fine">WordPress 7.0+ · PHP 8.1+ · Paid plugin, pricing at launch</p>
+				<p class="fine">WordPress 7.0+ · PHP 8.1+ · uses the AI provider you connect in WordPress · pricing at launch</p>
 			</div>
 		</section>
 	</div>
 </main>
+
+<a class="float-cta" id="floatCta" href="#join" aria-hidden="true" tabindex="-1"><svg aria-hidden="true"><use href="#mark"/></svg>join the waitlist <span class="ar">→</span></a>
 
 <footer>
 	<div class="wrap">
@@ -652,26 +729,6 @@ footer .brand svg { width: 19px; height: 19px; }
 			done = true; obs.disconnect(); fn();
 		}, { threshold: threshold }).observe(el);
 	};
-
-	/* The draft writes itself the first time it's on screen */
-	var body = document.getElementById('typeBody');
-	var send = document.getElementById('typeSend');
-	if (body && !reduce && io) {
-		var paras = Array.prototype.map.call(body.querySelectorAll('p'), function (p) { return p.textContent; });
-		onceVisible(body, 0.5, function () {
-			body.innerHTML = '';
-			var pi = 0, ci = 0, p = document.createElement('p'), caret = document.createElement('span');
-			caret.className = 'caret'; body.appendChild(p); p.appendChild(caret);
-			(function step() {
-				if (pi >= paras.length) { caret.remove(); send.classList.add('pulse'); return; }
-				var text = paras[pi];
-				ci += Math.max(1, Math.round(Math.random() * 3));
-				p.textContent = text.slice(0, ci); p.appendChild(caret);
-				if (ci >= text.length) { pi++; ci = 0; if (pi < paras.length) { p = document.createElement('p'); body.appendChild(p); p.appendChild(caret); } setTimeout(step, 260); }
-				else setTimeout(step, 18 + Math.random() * 30);
-			})();
-		});
-	}
 
 	/* Agent mode switch */
 	var desc = {
@@ -727,10 +784,34 @@ footer .brand svg { width: 19px; height: 19px; }
 		});
 	}
 
-	/* Waitlist forms */
+	var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+	var el = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+	var icon = function (id) {
+		var ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), use = document.createElementNS(ns, 'use');
+		svg.setAttribute('class', 'i'); svg.setAttribute('aria-hidden', 'true'); use.setAttribute('href', '#' + id); svg.appendChild(use); return svg;
+	};
+	var joined = false;
+	var floatCta = document.getElementById('floatCta');
+
+	/* Waitlist forms. Success offers a share. */
 	var params = new URLSearchParams(location.search);
 	var ref = [document.referrer, params.get('utm_source'), params.get('utm_campaign')].filter(Boolean).join(' | ').slice(0, 500);
-	document.querySelectorAll('form.signup').forEach(function (form) {
+	var shareRow = function () {
+		var row = el('span', 'share');
+		row.appendChild(document.createTextNode('Know someone answering support alone? '));
+		var copy = el('a', null, 'Copy the link');
+		copy.href = 'https://bridle.to/';
+		copy.addEventListener('click', function (e) {
+			e.preventDefault();
+			if (navigator.clipboard) navigator.clipboard.writeText('https://bridle.to/').then(function () { copy.textContent = 'Link copied'; });
+		});
+		var post = el('a', null, 'post it on X');
+		post.href = 'https://x.com/intent/post?text=' + encodeURIComponent('Bridle drafts replies to your support mail inside WordPress. I just joined the waitlist:') + '&url=' + encodeURIComponent('https://bridle.to/');
+		post.target = '_blank'; post.rel = 'noopener';
+		row.append(copy, document.createTextNode(' or '), post, document.createTextNode('.'));
+		return row;
+	};
+	var bindForm = function (form) {
 		form.querySelector('input[name=ref]').value = ref;
 		var msg = form.closest('[data-form]').querySelector('.msg');
 		form.addEventListener('submit', function (e) {
@@ -749,9 +830,12 @@ footer .brand svg { width: 19px; height: 19px; }
 			}).then(function (res) {
 				if (res.ok) {
 					msg.className = 'msg ok';
-					msg.textContent = "You're on the list. We'll write to " + data.email + ' when your invite is ready.';
+					msg.textContent = "You're on the list. The download link goes to " + data.email + ' on launch day.';
+					msg.appendChild(shareRow());
 					form.reset();
 					form.querySelector('input[name=ref]').value = ref;
+					joined = true;
+					if (floatCta) floatCta.classList.remove('show');
 				} else {
 					msg.className = 'msg err';
 					msg.textContent = (res.j && res.j.error) || 'Something went wrong. Please try again.';
@@ -761,7 +845,323 @@ footer .brand svg { width: 19px; height: 19px; }
 				msg.textContent = 'Network error. Please try again.';
 			}).finally(function () { btn.disabled = false; });
 		});
-	});
+	};
+	document.querySelectorAll('form.signup').forEach(bindForm);
+
+	/* Floating call to action: shown once the hero form has scrolled away, hidden near the last form */
+	var heroForm = document.querySelector('.hero [data-form]');
+	var finalSec = document.getElementById('join');
+	if (floatCta && heroForm && finalSec) {
+		var sync = function () {
+			var past = heroForm.getBoundingClientRect().bottom < 0;
+			var near = finalSec.getBoundingClientRect().top < window.innerHeight * 0.9;
+			var on = !joined && past && !near;
+			floatCta.classList.toggle('show', on);
+			floatCta.setAttribute('aria-hidden', on ? 'false' : 'true');
+			floatCta.tabIndex = on ? 0 : -1;
+		};
+		var request = function () { sync(); };
+		window.addEventListener('scroll', request, { passive: true });
+		window.addEventListener('resize', request);
+		sync();
+		floatCta.addEventListener('click', function (e) {
+			e.preventDefault();
+			finalSec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+			setTimeout(function () { var input = finalSec.querySelector('input[type=email]'); if (input) input.focus({ preventScroll: true }); }, reduce ? 0 : 650);
+		});
+	}
+
+	/* Ticking status chips */
+	var setTick = function (chip, label, kind) {
+		chip.textContent = label;
+		chip.setAttribute('data-k', kind);
+		if (!reduce) { chip.classList.remove('pop'); void chip.offsetWidth; chip.classList.add('pop'); }
+	};
+
+	/* What it does: each cell's chip lands on its outcome when the grid comes into view */
+	var cells = document.getElementById('cells');
+	if (cells) {
+		var landCells = function () {
+			cells.querySelectorAll('.tk[data-final]').forEach(function (chip, n) {
+				setTimeout(function () { setTick(chip, 'reading…', 'work'); }, reduce ? 0 : n * 260);
+				setTimeout(function () { setTick(chip, chip.getAttribute('data-label'), chip.getAttribute('data-final')); }, reduce ? 0 : 700 + n * 260);
+			});
+		};
+		if (reduce || !io) landCells(); else onceVisible(cells, 0.35, landCells);
+	}
+
+	/* Drafts: the checks tick one by one */
+	var checks = document.getElementById('checks');
+	if (checks) {
+		var runChecks = function () {
+			checks.querySelectorAll('li').forEach(function (li, n) { setTimeout(function () { li.classList.add('on'); }, reduce ? 0 : 300 + n * 550); });
+		};
+		if (reduce || !io) runChecks(); else onceVisible(checks, 0.5, runChecks);
+	}
+
+	/* Your own agent: pick one, watch its Bridle calls tick in */
+	var agwin = document.getElementById('agwin');
+	if (agwin) {
+		var agLog = document.getElementById('agLog');
+		var agName = document.getElementById('agName');
+		var agAsk = agwin.querySelector('.ag-ask use');
+		var agTimers = [];
+		var playLog = function () {
+			agTimers.forEach(clearTimeout); agTimers = [];
+			var lines = agLog.querySelectorAll('li');
+			lines.forEach(function (li) { li.classList.remove('on'); });
+			lines.forEach(function (li, n) { agTimers.push(setTimeout(function () { li.classList.add('on'); }, reduce ? 0 : 350 + n * 650)); });
+		};
+		agwin.querySelectorAll('[data-agent]').forEach(function (tab) {
+			tab.addEventListener('click', function () {
+				agwin.querySelectorAll('[data-agent]').forEach(function (t) { t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
+				agName.textContent = tab.textContent.trim();
+				agAsk.setAttribute('href', '#bot-' + tab.getAttribute('data-agent'));
+				playLog();
+			});
+		});
+		if (reduce || !io) playLog(); else onceVisible(agwin, 0.4, playLog);
+	}
+
+	/* Try it: seven emails arrive, Bridle files the noise, you clear the rest */
+	var sim = document.getElementById('sim');
+	if (sim) {
+		var lane = document.getElementById('simLane');
+		var rows = document.getElementById('simRows');
+		var pane = document.getElementById('simPane');
+		var simBody = sim.querySelector('.sim-body');
+		var clock = document.getElementById('simClock');
+		var counts = {};
+		sim.querySelectorAll('[data-n]').forEach(function (b) { counts[b.getAttribute('data-n')] = b; });
+		var MAIL = [
+			{ box: 'imbox', name: 'Maya Chen', face: 'maya', subj: 'Can I move my license to a new domain?', msg: "We're relaunching on a new domain next week. Will the license move with us?", src: 'Moving a license', draft: ['Hi Maya,', 'Yes, the license moves with you. Deactivate it under Settings → License on the old site, then activate the same key on the new domain. Nothing to buy.', 'Sam'] },
+			{ box: 'feed', kind: 'receipt', name: 'Stripe', subj: 'Your receipt #2219' },
+			{ box: 'imbox', name: 'Tom Becker', face: 'tom', subj: 'Slider is blank on mobile', msg: 'On my iPhone the slider area is just empty. Desktop is fine.', src: 'Slider blank on mobile', draft: ['Hi Tom,', "A blank slider on phones is almost always lazy-loading from a cache plugin. Exclude the slider's script from lazy-load, clear the cache, and it should appear.", 'Sam'] },
+			{ box: 'feed', kind: 'sales pitch', name: 'LinkBoost', subj: 'Guest post collab?' },
+			{ box: 'spam', kind: 'phishing', name: 'Account notice', subj: 'Your account is locked. Verify now' },
+			{ box: 'imbox', name: 'Priya Nair', face: 'priya', subj: 'Refund for order #1043', msg: 'The plugin clashes with my theme. Can I get my money back?', refund: true },
+			{ box: 'feed', kind: 'newsletter', name: 'Growth Weekly', subj: '7 SEO tricks for October' }
+		];
+		var st, timers = [], tick = null, t0 = 0, toastTimer = null, simInView = false, started = false;
+		var later = function (fn, ms) { timers.push(setTimeout(fn, reduce ? Math.min(ms, 80) : ms)); };
+		var fmt = function (ms) { var sec = Math.floor(ms / 1000); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
+		var initials = function (name) { return name.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2); };
+		var avatar = function (m) {
+			if (!m.face) { var a = el('span', 'av', initials(m.name)); a.style.setProperty('--h', m.h || 90); return a; }
+			var f = el('span', 'av face');
+			var ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), use = document.createElementNS(ns, 'use');
+			svg.setAttribute('aria-hidden', 'true'); use.setAttribute('href', '#face-' + m.face); svg.appendChild(use); f.appendChild(svg);
+			return f;
+		};
+		var keycap = function () { return el('span', 'kb', isMac ? '⌘↵' : 'Ctrl ↵'); };
+		var runClock = function () { clearInterval(tick); tick = setInterval(function () { clock.textContent = fmt(Date.now() - t0); }, 250); };
+		var bump = function (box) {
+			var b = counts[box];
+			b.textContent = String(Number(b.textContent) + 1);
+			var pill = b.parentNode;
+			pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump');
+		};
+		var idle = function (text) {
+			pane.textContent = '';
+			var p = el('p', 'sim-idle');
+			p.append(el('span', 'sdot'), document.createTextNode(text));
+			pane.appendChild(p);
+		};
+		var rowFor = function (m) {
+			var r = el('button', 'srow');
+			r.type = 'button';
+			if (m.box === 'imbox') r.appendChild(avatar(m));
+			else { var ic = el('span', 'ico'); ic.appendChild(icon(m.box === 'spam' ? 'i-ban' : (m.kind === 'receipt' ? 'i-receipt' : 'i-mega'))); r.appendChild(ic); }
+			var t = el('span', 't');
+			t.append(el('b', null, m.name), el('span', null, m.subj));
+			r.append(t, el('span', 'st'));
+			return r;
+		};
+		var nextOpen = function () { for (var i = 0; i < st.items.length; i++) if (st.items[i].state === 'new') return st.items[i]; return null; };
+		var reset = function () {
+			timers.forEach(clearTimeout); timers = [];
+			clearInterval(tick); clearInterval(toastTimer);
+			var old = simBody.querySelector('.toast'); if (old) old.remove();
+			st = { items: [], arrived: 0, sel: null, done: false };
+			sim.classList.remove('is-done');
+			lane.textContent = ''; rows.textContent = '';
+			Object.keys(counts).forEach(function (k) { counts[k].textContent = '0'; });
+			clock.textContent = '0:00';
+		};
+		var select = function (item) {
+			st.sel = item;
+			st.items.forEach(function (x) { x.row.classList.toggle('on', x === item); });
+			var m = item.m;
+			pane.textContent = '';
+			var head = el('div', 'sp-head');
+			var who = el('div');
+			who.append(el('b', null, m.name), el('span', 's', m.subj));
+			head.append(avatar(m), who);
+			pane.append(head, el('p', 'sp-msg', m.msg));
+			var df = el('div', 'df');
+			var act = el('button', 'b p sp-act');
+			act.type = 'button';
+			if (m.refund) {
+				var note = el('div', 'sp-refund');
+				note.append(el('b', null, 'Refund request. '), document.createTextNode('Bridle never drafts refunds or billing replies, so this one waits for you.'));
+				pane.appendChild(note);
+				act.append(document.createTextNode('Take it '), keycap());
+				act.addEventListener('click', function () { take(item); });
+				df.appendChild(act);
+				pane.appendChild(df);
+			} else {
+				var d = el('div', 'draft');
+				var dh = el('div', 'dh');
+				var badge = el('span', 'b-ai'); badge.append(icon('i-sparkles'), document.createTextNode('AI DRAFT'));
+				var vf = el('span', 'vf'); vf.append(icon('i-check-circle'), document.createTextNode('Verified against: ' + m.src));
+				dh.append(badge, vf);
+				var db = el('div', 'db');
+				m.draft.forEach(function (line) { db.appendChild(el('p', null, line)); });
+				act.append(icon('i-send'), document.createTextNode('Send as is '), keycap());
+				act.addEventListener('click', function () { send(item); });
+				df.appendChild(act);
+				d.append(dh, db, df);
+				pane.appendChild(d);
+			}
+		};
+		var check = function () {
+			if (st.done || st.arrived < MAIL.length || lane.children.length || nextOpen()) return;
+			finish();
+		};
+		var advance = function () {
+			var n = nextOpen();
+			if (n) select(n);
+			else if (st.arrived < MAIL.length || lane.children.length) { st.sel = null; st.items.forEach(function (x) { x.row.classList.remove('on'); }); idle('More mail on the way…'); }
+			else check();
+		};
+		var toast = function (text, item) {
+			var old = simBody.querySelector('.toast'); if (old) old.remove();
+			clearInterval(toastTimer);
+			var t = el('div', 'toast');
+			var left = 8;
+			var undo = el('button', null, 'Undo ' + left);
+			undo.type = 'button';
+			t.append(el('span', null, text), undo);
+			simBody.appendChild(t);
+			toastTimer = setInterval(function () {
+				left -= 1;
+				undo.textContent = 'Undo ' + left;
+				if (left <= 0) { clearInterval(toastTimer); t.remove(); }
+			}, 1000);
+			undo.addEventListener('click', function () {
+				clearInterval(toastTimer); t.remove();
+				item.state = 'new';
+				item.row.classList.remove('done');
+				item.row.querySelector('.st').textContent = 'draft ready';
+				if (st.done) { st.done = false; sim.classList.remove('is-done'); runClock(); }
+				select(item);
+			});
+		};
+		var send = function (item) {
+			if (item.state !== 'new') return;
+			item.state = 'sent';
+			item.row.classList.add('done');
+			item.row.querySelector('.st').textContent = 'sent';
+			toast('Reply to ' + item.m.name.split(' ')[0] + ' sent', item);
+			advance();
+		};
+		var take = function (item) {
+			if (item.state !== 'new') return;
+			item.state = 'mine';
+			item.row.classList.add('done');
+			item.row.querySelector('.st').textContent = 'yours';
+			advance();
+		};
+		var finish = function () {
+			st.done = true;
+			sim.classList.add('is-done');
+			clearInterval(tick);
+			var ms = Date.now() - t0;
+			clock.textContent = fmt(ms);
+			st.items.forEach(function (x) { x.row.classList.remove('on'); });
+			var sent = st.items.filter(function (x) { return x.state === 'sent'; }).length;
+			var mine = st.items.filter(function (x) { return x.state === 'mine'; }).length;
+			var filed = MAIL.length - st.items.length;
+			pane.textContent = '';
+			var w = el('div', 'sp-done');
+			w.appendChild(el('p', 'sp-big', 'Inbox clear in ' + fmt(ms) + '.'));
+			w.appendChild(el('p', 'sp-stats', sent + (sent === 1 ? ' reply' : ' replies') + ' sent · ' + filed + ' filed · ' + mine + ' left for you'));
+			w.appendChild(el('p', 'sp-pitch', 'Your own support mail could start every morning like this.'));
+			var wrap = el('div');
+			wrap.setAttribute('data-form', '');
+			var form = el('form', 'signup');
+			form.action = '/api/waitlist'; form.method = 'post';
+			form.innerHTML = '<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label><input type="hidden" name="source" value="demo"><input type="hidden" name="ref" value=""><input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address"><button type="submit">join the waitlist</button>';
+			wrap.append(form, el('p', 'msg'));
+			wrap.querySelector('.msg').setAttribute('role', 'status');
+			w.appendChild(wrap);
+			var again = el('button', 'sp-again', 'Run it again');
+			again.type = 'button';
+			again.addEventListener('click', start);
+			w.appendChild(again);
+			pane.appendChild(w);
+			bindForm(form);
+		};
+		var fly = function (row, box) {
+			var pill = counts[box].parentNode;
+			if (reduce || !row.animate) { row.remove(); bump(box); check(); return; }
+			var a = row.getBoundingClientRect(), b = pill.getBoundingClientRect();
+			var dx = (b.left + b.width / 2) - (a.left + a.width / 2), dy = (b.top + b.height / 2) - (a.top + a.height / 2);
+			row.animate([{ transform: 'none', opacity: 1 }, { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.2)', opacity: 0.15 }], { duration: 650, easing: 'cubic-bezier(.55,0,.7,.2)' })
+				.onfinish = function () { row.remove(); bump(box); check(); };
+		};
+		var arrive = function (m, i) {
+			var item = { m: m, state: 'new' };
+			var row = rowFor(m);
+			item.row = row;
+			row.classList.add('arriving');
+			row.tabIndex = -1;
+			lane.appendChild(row);
+			st.arrived = i + 1;
+			var tag = row.querySelector('.st');
+			tag.textContent = 'reading…';
+			later(function () {
+				if (m.box === 'imbox') {
+					tag.textContent = m.refund ? 'needs you' : 'draft ready';
+					row.classList.remove('arriving');
+					row.tabIndex = 0;
+					rows.appendChild(row);
+					bump('imbox');
+					st.items.push(item);
+					row.addEventListener('click', function () { select(item); });
+					if (!st.sel) select(item);
+					check();
+				} else {
+					tag.textContent = '→ ' + (m.box === 'spam' ? 'Spam' : 'Feed') + ' · ' + m.kind;
+					row.classList.add(m.box === 'spam' ? 'is-spam' : 'is-feed');
+					later(function () { fly(row, m.box); }, 700);
+				}
+			}, 650);
+		};
+		var start = function () {
+			started = true;
+			reset();
+			idle('Mail is arriving…');
+			t0 = Date.now();
+			runClock();
+			MAIL.forEach(function (m, i) { later(function () { arrive(m, i); }, 400 + i * 1250); });
+		};
+		if (io) {
+			new IntersectionObserver(function (entries) {
+				entries.forEach(function (e) {
+					simInView = e.intersectionRatio > 0.3;
+					if (simInView && !started) start();
+				});
+			}, { threshold: [0, 0.3, 0.6] }).observe(sim);
+		} else {
+			start();
+		}
+		document.addEventListener('keydown', function (e) {
+			if (!simInView || e.key !== 'Enter' || !(e.metaKey || e.ctrlKey)) return;
+			var act = pane.querySelector('.sp-act');
+			if (act) { e.preventDefault(); act.click(); }
+		});
+	}
 })();
 </script>
 </body>
