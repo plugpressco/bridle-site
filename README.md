@@ -12,7 +12,9 @@ The Bridle waitlist page, hosted on Spacefast (Space `bridle`, team `fahim-team`
 | `sf.jsonc` | Declares the Functions runtime with `database: true` (that's what gives the worker `env.DB`) |
 | `fonts/figtree-latin.woff2`, `fonts/geist-mono-latin.woff2` | Figtree (UI and headlines) and Geist Mono (addresses), self-hosted, SIL Open Font License. Same fonts and tokens as the plugin app; see `../rebrand/BRAND.md` |
 | `fahim.jpg` | Founder photo for the note near the end (192×192, self-hosted) |
-| `icon-128.png`, `icon-256.png` | Linked from the plugin's `manifest.json` |
+| `favicon.svg` | The mark; turns lighter blue in dark mode |
+| `icon-128.png`, `icon-256.png` | The app tile (blue mark on ink), linked from the plugin's `manifest.json` |
+| `apple-touch-icon.png` | 180×180, full bleed; iOS rounds the corners |
 | `og.png` | Social preview, 1200×630 |
 
 ## Publish

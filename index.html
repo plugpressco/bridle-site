@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://bridle.to/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
-<link rel="apple-touch-icon" href="/icon-256.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="theme-color" content="#fcfcf9">
 <meta property="og:type" content="website">
@@ -123,7 +123,7 @@ h1 .g, h2 .g { color: var(--gray); }
 .band { position: relative; flex: 1; min-height: 300px; }
 .gate { position: absolute; left: 0; top: 0; width: 88px; height: 88px; margin: -44px 0 0 -44px; color: var(--brand); filter: drop-shadow(0 10px 24px rgb(45 111 205 / .28)); opacity: 0; transition: opacity .6s; }
 .gate.on { opacity: 1; }
-.gate svg { width: 100%; height: 100%; display: block; }
+.gate svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .gate::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 1px solid var(--brand); opacity: 0; }
 .gate.pulse::after { animation: gate .7s var(--ease); }
 @keyframes gate { 0% { opacity: .7; transform: scale(.85); } 100% { opacity: 0; transform: scale(1.35); } }
@@ -314,7 +314,10 @@ footer a:hover { color: var(--ink); }
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-	<symbol id="mark" viewBox="0 0 60 60"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M30 0C46.5685 0 60 13.4315 60 30C60 46.5685 46.5685 60 30 60C13.4315 60 0 46.5685 0 30C0 13.4315 13.4315 0 30 0ZM19.6875 16.2002C19.3923 16.2002 19.1251 16.3621 18.9863 16.6152L18.9346 16.7285L14.2471 29.7285C14.2157 29.8155 14.2002 29.9075 14.2002 30V39.2861C14.2003 40.4857 14.6812 41.6346 15.5352 42.4805C16.389 43.3262 17.5457 43.7998 18.75 43.7998H41.25C42.4543 43.7998 43.611 43.3262 44.4648 42.4805C45.3188 41.6346 45.7997 40.4857 45.7998 39.2861V30C45.7998 29.9075 45.7843 29.8155 45.7529 29.7285L41.0654 16.7285C40.9511 16.4113 40.6497 16.2002 40.3125 16.2002H19.6875ZM24.6279 35.0576C24.7729 35.2969 25.0327 35.4424 25.3125 35.4424H34.6875C34.9673 35.4424 35.2271 35.2969 35.3721 35.0576L37.9512 30.7998H44.2002V39.2861C44.2001 40.0564 43.8911 40.7967 43.3389 41.3438C42.7862 41.8911 42.0348 42.2002 41.25 42.2002H18.75C17.9652 42.2002 17.2138 41.8911 16.6611 41.3438C16.1089 40.7967 15.7999 40.0564 15.7998 39.2861V30.7998H22.0488L24.6279 35.0576ZM43.8604 29.2002H37.5C37.2552 29.2002 37.0256 29.3117 36.875 29.5L36.8154 29.5859L34.2363 33.8428H25.7637L23.1846 29.5859C23.0577 29.3765 22.8427 29.2382 22.6035 29.207L22.5 29.2002H16.1396L20.25 17.7998H39.75L43.8604 29.2002ZM30 22C28.8954 22 28 22.8954 28 24C28 25.1046 28.8954 26 30 26C31.1046 26 32 25.1046 32 24C32 22.8954 31.1046 22 30 22Z"/></symbol>
+	<!-- The Bridle mark: a b drawn as tack, a bit ring and a taut rein. -->
+	<symbol id="mark" viewBox="0 0 60 60"><path fill="currentColor" fill-rule="evenodd" d="M13.31 41.92L5.18 3.67L13.97 1.8L18.57 23.43A20.56 20.56 0 1 1 13.31 41.92ZM22.27 37.64a11.15 11.36 0 1 0 22.3 0a11.15 11.36 0 1 0 -22.3 0Z"/></symbol>
+	<!-- The same mark centred on its ring, so hero mail threads through the hole. -->
+	<symbol id="mark-gate" viewBox="14.39 18.39 43.22 43.22" overflow="visible"><path fill="currentColor" fill-rule="evenodd" d="M16.98 44.04L9.28 7.85L17.6 6.08L21.95 26.55A19.45 19.45 0 1 1 16.98 44.04ZM25.45 40a10.55 10.75 0 1 0 21.1 0a10.55 10.75 0 1 0 -21.1 0Z"/></symbol>
 	<!-- lucide icons, ISC licence -->
 	<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></symbol>
 	<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
@@ -358,7 +361,7 @@ footer a:hover { color: var(--ink); }
 
 	<figure class="band" id="band" style="margin:0">
 		<figcaption class="sr">Support mail drifts in as a tangle of dots and passes through Bridle. It comes out as three calm rows: replies you sent, refunds that wait for you, and receipts and spam filed away.</figcaption>
-		<div class="gate" aria-hidden="true"><svg><use href="#mark"/></svg></div>
+		<div class="gate" aria-hidden="true"><svg><use href="#mark-gate"/></svg></div>
 		<div class="lane" data-k="sent" aria-hidden="true"><i></i><span>sent by you</span><b>0</b></div>
 		<div class="lane" data-k="mine" aria-hidden="true"><i></i><span>waits for you</span><b>0</b></div>
 		<div class="lane" data-k="filed" aria-hidden="true"><i></i><span>filed away</span><b>0</b></div>
