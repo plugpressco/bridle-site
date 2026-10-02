@@ -380,15 +380,13 @@ footer a:hover { color: var(--ink); }
 			<div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>yourstore.com/wp-admin · bridle</span></div>
 			<nav class="side" aria-hidden="true">
 				<div class="brand"><svg><use href="#mark"/></svg>bridle</div>
-				<div class="nav on"><svg class="i"><use href="#i-inbox"/></svg>Imbox<b id="n-imbox">4</b></div>
+				<div class="nav on"><svg class="i"><use href="#i-inbox"/></svg>Inbox<b id="n-imbox">4</b></div>
 				<div class="nav"><svg class="i"><use href="#i-news"/></svg>Feed<b id="n-feed">18</b></div>
-				<div class="nav"><svg class="i"><use href="#i-archive"/></svg>Closed<b>212</b></div>
+				<div class="nav"><svg class="i"><use href="#i-archive"/></svg>Resolved<b>212</b></div>
 				<div class="nav"><svg class="i"><use href="#i-ban"/></svg>Spam<b id="n-spam">9</b></div>
-				<hr>
-				<div class="nav"><svg class="i"><use href="#i-text"/></svg>Snippets<b>36</b></div>
 			</nav>
 			<div class="list" aria-hidden="true">
-				<h3>Imbox <small>needs a reply</small></h3>
+				<h3>Inbox <small>needs a reply</small></h3>
 				<div id="rows"></div>
 			</div>
 			<div class="thread" id="thread" data-s="new" aria-hidden="true">
@@ -417,7 +415,7 @@ footer a:hover { color: var(--ink); }
 			<div class="cell">
 				<div class="art" data-art="sort"><canvas class="dots" aria-hidden="true"></canvas></div>
 				<h3>sorted on arrival.</h3>
-				<p>Receipts, newsletters and pitches go to the Feed. Spam goes to Spam. Your Imbox only holds people.</p>
+				<p>Receipts, newsletters and pitches go to the Feed. Spam goes to Spam. Your Inbox only holds people.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="draft"><canvas class="dots" aria-hidden="true"></canvas></div>
@@ -923,7 +921,7 @@ footer a:hover { color: var(--ink); }
 			{ face: 'jonas', name: 'Jonas Ortiz', from: 'jonas@ortiz.dev', subj: 'Where is my invoice for September?', body: "Our accountant needs it by Friday and I can't find it anywhere.",
 				src: 'from WooCommerce order #2291', text: 'Hi Jonas, here it is: invoice #2291 for September, $49.00, attached as a PDF. Past invoices are always under My Account → Orders too.' },
 			{ face: 'priya', name: 'Priya Nair', from: 'priya@nairandco.com', subj: 'Please refund order #1043', body: "It doesn't do what I needed. I'd like my money back.", mine: true,
-				src: 'refunds always wait for you', text: 'Refunds, billing questions and angry customers never get a draft. This one stays in your Imbox until you answer it.' },
+				src: 'refunds always wait for you', text: 'Refunds, billing questions and angry customers never get a draft. This one stays in your Inbox until you answer it.' },
 			{ face: 'tom', name: 'Tom Becker', from: 'tom@beckerbikes.de', subj: 'Slider is blank on mobile', body: 'Since the last update the slider shows nothing on my phone.',
 				src: 'from your docs “Safari display fix”', text: 'Hi Tom, thanks for the heads-up. Version 2.4.1 fixes this on Safari. Update from Plugins → Updates and clear your cache. Still blank? Send me the page URL.' }
 		];
@@ -1074,7 +1072,7 @@ footer a:hover { color: var(--ink); }
 			}
 		};
 		var stories = {
-			// Mail falls in. People land as rows in the Imbox, the rest drops through.
+			// Mail falls in. People land as rows in the Inbox, the rest drops through.
 			sort: function (dt) {
 				var w = dots.w, h = dots.h, rails = S.rails;
 				S.next -= dt;
