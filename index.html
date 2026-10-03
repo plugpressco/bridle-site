@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bridle: AI writes the replies, you hold the reins</title>
-<meta name="description" content="Bridle is a WordPress plugin that sorts your support mail and drafts each answer from your saved replies. Nothing goes out until you send it. Plugin launching soon.">
+<meta name="description" content="Bridle is a WordPress plugin that answers your support mail from your site, your docs and your past replies. It sends when it&#8217;s sure and drafts when it isn&#8217;t. Works with ChatGPT, Claude and Codex. Plugin launching soon.">
 <link rel="canonical" href="https://bridle.to/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bridle.to/">
 <meta property="og:title" content="bridle: AI writes the replies, you hold the reins">
-<meta property="og:description" content="A WordPress plugin that sorts your support mail and drafts each answer from your saved replies. Nothing goes out until you send it.">
+<meta property="og:description" content="A WordPress plugin that answers your support mail from your site, your docs and your past replies. It sends when it&#8217;s sure and drafts when it isn&#8217;t. Works with ChatGPT, Claude and Codex.">
 <meta property="og:image" content="https://bridle.to/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -155,19 +155,16 @@ h2 { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.02; }
 /* The product, crisp, on a halftone panel */
 .panel { position: relative; isolation: isolate; height: clamp(520px, 62vw, 660px); margin: 0 32px; overflow: hidden; border: var(--hair) solid var(--border); border-radius: 28px; background: linear-gradient(180deg, var(--paper) 0%, #f2f5fa 100%); }
 .panel > canvas { z-index: -1; }
-.window { position: absolute; left: 50%; top: clamp(44px, 7vw, 72px); width: min(1040px, calc(100% - 96px)); height: 640px; transform: translateX(-50%); display: grid; grid-template-columns: 196px 300px minmax(0, 1fr); grid-template-rows: 44px 1fr; overflow: hidden; border: var(--hair) solid var(--input); border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .05), 0 40px 80px -40px rgb(24 24 24 / .45); font-size: 15px; }
+.window { position: absolute; left: 50%; top: clamp(44px, 7vw, 72px); width: min(1040px, calc(100% - 96px)); height: 640px; transform: translateX(-50%); display: grid; grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: 44px 1fr; overflow: hidden; border: var(--hair) solid var(--input); border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .05), 0 40px 80px -40px rgb(24 24 24 / .45); font-size: 15px; }
 .bar { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-bottom: var(--hair) solid var(--border); background: var(--secondary); }
 .bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--input); }
 .bar span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 49px; text-align: center; font: 12px var(--mono); letter-spacing: 0; color: var(--gray); }
-.side { padding: 16px 10px; border-right: var(--hair) solid var(--border); background: #fbfbf8; }
-.side .brand { margin: 0 8px 18px; font-size: 18px; }
-.side .brand svg { width: 20px; height: 20px; }
-.nav { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 8px; color: var(--muted-foreground); font-size: 14.5px; }
-.nav svg { width: 16px; height: 16px; }
-.nav b { margin-left: auto; font: 500 12px var(--mono); letter-spacing: 0; color: var(--gray); font-variant-numeric: tabular-nums; }
-.nav.on { background: #fff; color: var(--ink); box-shadow: 0 0 0 var(--hair) var(--border), 0 1px 2px rgb(24 24 24 / .04); }
-.nav.on b { color: var(--brand-ink); }
-.side hr { margin: 12px 10px; border: 0; border-top: var(--hair) solid var(--border); }
+.dock { position: absolute; z-index: 2; left: 50%; bottom: 26px; display: flex; align-items: center; gap: 2px; padding: 4px; border: var(--hair) solid var(--input); border-radius: 999px; background: rgb(255 255 255 / .9); box-shadow: 0 1px 2px rgb(24 24 24 / .06), 0 14px 30px -14px rgb(24 24 24 / .3); transform: translateX(-50%); font-size: 13px; color: var(--muted-foreground); backdrop-filter: blur(8px); }
+.dock span { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 999px; }
+.dock span.on { background: var(--ink); color: var(--paper); }
+.dock b { font: 500 11px var(--mono); letter-spacing: 0; opacity: .7; }
+.dock i { width: 1px; height: 14px; margin: 0 4px; background: var(--border); }
+.dock svg { width: 15px; height: 15px; margin: 0 7px; }
 .list { border-right: var(--hair) solid var(--border); }
 .list h3 { display: flex; align-items: center; justify-content: space-between; height: 52px; margin: 0; padding: 0 18px; border-bottom: var(--hair) solid var(--border); font-size: 16px; font-weight: 560; letter-spacing: -0.01em; }
 .list h3 small { font: 12px var(--mono); letter-spacing: 0; color: var(--gray); }
@@ -221,8 +218,7 @@ h2 { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.02; }
 .act .ok { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray); opacity: 0; transition: opacity .4s; }
 .act .ok svg { width: 13px; height: 13px; }
 .thread[data-s=ready] .act .ok { opacity: 1; }
-.send { display: inline-flex; align-items: center; gap: 10px; height: 38px; margin-left: auto; padding: 0 8px 0 14px; border-radius: 9px; background: var(--ink); color: var(--paper); font-size: 15px; font-weight: 450; opacity: .2; transition: opacity .3s, transform .12s, background-color .2s; }
-.send kbd { display: inline-flex; align-items: center; height: 22px; padding: 0 6px; border-radius: 5px; background: rgb(255 255 255 / .14); font: 12px var(--font); letter-spacing: .04em; }
+.send { display: inline-flex; align-items: center; gap: 10px; height: 38px; margin-left: auto; padding: 0 14px; border-radius: 9px; background: var(--ink); color: var(--paper); font-size: 15px; font-weight: 450; opacity: .2; transition: opacity .3s, transform .12s, background-color .2s; }
 .thread[data-s=ready] .send, .thread[data-s=sent] .send { opacity: 1; }
 .send.press { transform: scale(.94); background: #333331; }
 .thread[data-s=sent] .send { background: var(--brand); }
@@ -240,6 +236,19 @@ h2 { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.02; }
 .art { position: relative; height: 190px; margin: 0 -28px 22px; border-bottom: var(--hair) solid var(--border); }
 .cell h3 { margin: 0 0 6px; font-size: 21px; font-weight: 540; letter-spacing: -0.015em; }
 .cell p { margin: 0; max-width: 24em; font-size: 16.5px; line-height: 1.55; color: var(--muted-foreground); }
+
+/* Bring your own agent */
+.agents { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.names { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; padding: 0; list-style: none; }
+.names li { padding: 6px 13px; border: var(--hair) solid var(--input); border-radius: 999px; background: #fff; font-size: 15px; color: var(--ink-2); }
+.names li:last-child { border-style: dashed; color: var(--muted-foreground); }
+.tools { margin: 0; padding: 0; list-style: none; border-top: var(--hair) solid var(--input); }
+.tools li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 15px 0; border-bottom: var(--hair) solid var(--input); }
+.tools code { font: 500 14px var(--mono); letter-spacing: 0; color: var(--ink); }
+.tools span { font-size: 15.5px; color: var(--muted-foreground); }
+.tools .gated code { color: var(--note-foreground); }
+.tools .gated span { display: inline-flex; align-items: center; gap: 6px; }
+.tools .gated svg { width: 14px; height: 14px; color: var(--note-foreground); }
 
 /* Closing card */
 .closing { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: center; gap: 40px; min-height: 520px; margin: 0 32px; padding: 64px clamp(32px, 6vw, 88px); overflow: hidden; border-radius: 28px; background: var(--ink); color: var(--paper); }
@@ -269,16 +278,16 @@ footer a:hover { color: var(--ink); }
 .r { animation: rise .8s var(--ease) both; animation-delay: var(--d, 0s); }
 
 @media (max-width: 1080px) {
-	.window { grid-template-columns: 0 290px minmax(0, 1fr); }
-	.side { visibility: hidden; padding: 0; border: 0; }
+	.window { grid-template-columns: 290px minmax(0, 1fr); }
 }
 @media (max-width: 860px) {
 	.under { grid-template-columns: minmax(0, 1fr); }
 	.cells { grid-template-columns: minmax(0, 1fr); }
 	.cell + .cell { border-left: 0; border-top: var(--hair) solid var(--input); }
+	.agents { grid-template-columns: minmax(0, 1fr); gap: 32px; }
 	.closing { grid-template-columns: minmax(0, 1fr); padding-top: 0; }
 	.closing .markart { order: -1; min-height: 0; height: 300px; margin: 0 -40px; }
-	.window { grid-template-columns: 0 0 minmax(0, 1fr); }
+	.window { grid-template-columns: 0 minmax(0, 1fr); }
 	.list { visibility: hidden; border: 0; }
 }
 @media (max-width: 560px) {
@@ -299,6 +308,7 @@ footer a:hover { color: var(--ink); }
 	.window { width: calc(100% - 28px); top: 28px; }
 	.thread { padding: 20px 18px; }
 	.who small, .src, .act .ok { display: none; }
+	.dock span:not(.on), .dock i { display: none; }
 	.subj { font-size: 18.5px; }
 	.txt { min-height: 8em; }
 	.cell { padding: 0 16px 30px; }
@@ -327,6 +337,9 @@ footer a:hover { color: var(--ink); }
 	<symbol id="i-news" viewBox="0 0 24 24"><path d="M15 18h-5M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></symbol>
 	<symbol id="i-archive" viewBox="0 0 24 24"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8M10 12h4"/></symbol>
 	<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
+	<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4M12 16h.01"/></symbol>
+	<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></symbol>
+	<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
 	<symbol id="i-text" viewBox="0 0 24 24"><path d="M17 6H3M21 12H8M21 18H8M3 12v6"/></symbol>
 	<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
 </svg>
@@ -341,10 +354,10 @@ footer a:hover { color: var(--ink); }
 	</header>
 
 	<main class="wrap intro" data-mask>
-		<p class="eyebrow r" data-mask>the support inbox for <b>WordPress</b></p>
+		<p class="eyebrow r" data-mask>the support agent for <b>WordPress</b></p>
 		<h1 class="r" style="--d:.05s"><span data-mask>AI writes the replies.</span><span class="g" data-mask>you hold the reins.</span></h1>
 		<div class="under">
-			<p class="lead r" style="--d:.12s" data-mask>Bridle sorts your support mail inside WordPress and drafts each answer from your saved replies. Nothing goes out until you send it.</p>
+			<p class="lead r" style="--d:.12s" data-mask>Bridle answers support mail inside WordPress from your site, your docs and your past replies. It sends when it&#8217;s sure and drafts when it isn&#8217;t. Or let ChatGPT, Claude or Codex do the writing.</p>
 			<div class="r" style="--d:.18s" data-form data-mask>
 				<form class="signup" action="/api/waitlist" method="post">
 					<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
@@ -360,9 +373,9 @@ footer a:hover { color: var(--ink); }
 	</main>
 
 	<figure class="band" id="band" style="margin:0">
-		<figcaption class="sr">Support mail drifts in as a tangle of dots and passes through Bridle. It comes out as three calm rows: replies you sent, refunds that wait for you, and receipts and spam filed away.</figcaption>
+		<figcaption class="sr">Support mail drifts in as a tangle of dots and passes through Bridle. It comes out as three calm rows: questions answered, refunds that wait for you, and receipts and spam filed away.</figcaption>
 		<div class="gate" aria-hidden="true"><svg><use href="#mark-gate"/></svg></div>
-		<div class="lane" data-k="sent" aria-hidden="true"><i></i><span>sent by you</span><b>0</b></div>
+		<div class="lane" data-k="sent" aria-hidden="true"><i></i><span>answered</span><b>0</b></div>
 		<div class="lane" data-k="mine" aria-hidden="true"><i></i><span>waits for you</span><b>0</b></div>
 		<div class="lane" data-k="filed" aria-hidden="true"><i></i><span>filed away</span><b>0</b></div>
 		<div class="tip" aria-hidden="true"></div>
@@ -372,19 +385,12 @@ footer a:hover { color: var(--ink); }
 <section class="block" aria-labelledby="h-product">
 	<div class="head">
 		<p class="eyebrow">inside wp-admin</p>
-		<h2 id="h-product"><span>every email arrives with its answer.</span><span class="g">you read it, then you send it.</span></h2>
+		<h2 id="h-product"><span>every email arrives with its answer.</span><span class="g">sent when it&#8217;s sure. drafted when it isn&#8217;t.</span></h2>
 	</div>
 	<div class="panel" id="panel">
 		<canvas class="dots" aria-hidden="true"></canvas>
-		<figure class="window" aria-label="Bridle inside WordPress: an email arrives, a draft writes itself from a saved reply, and you press send." style="margin:0">
+		<figure class="window" aria-label="Bridle inside WordPress: an email arrives, a reply writes itself from your saved replies, docs and past answers, and goes out on its own when every fact checks out." style="margin:0">
 			<div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>yourstore.com/wp-admin · bridle</span></div>
-			<nav class="side" aria-hidden="true">
-				<div class="brand"><svg><use href="#mark"/></svg>bridle</div>
-				<div class="nav on"><svg class="i"><use href="#i-inbox"/></svg>Inbox<b id="n-imbox">4</b></div>
-				<div class="nav"><svg class="i"><use href="#i-news"/></svg>Feed<b id="n-feed">18</b></div>
-				<div class="nav"><svg class="i"><use href="#i-archive"/></svg>Resolved<b>212</b></div>
-				<div class="nav"><svg class="i"><use href="#i-ban"/></svg>Spam<b id="n-spam">9</b></div>
-			</nav>
 			<div class="list" aria-hidden="true">
 				<h3>Inbox <small>needs a reply</small></h3>
 				<div id="rows"></div>
@@ -402,10 +408,12 @@ footer a:hover { color: var(--ink); }
 						<div class="rh"><span class="lbl"><svg class="i"><use href="#i-sparkles"/></svg>draft</span><span class="src"></span></div>
 						<p class="txt"><span class="t"></span><span class="rest"></span></p>
 					</div>
-					<div class="act"><span class="ok"><svg class="i"><use href="#i-check"/></svg>checked against your docs</span><span class="send">send <kbd>⌘↵</kbd></span></div>
+					<div class="act"><span class="ok"><svg class="i"><use href="#i-check"/></svg>checked against your docs</span><span class="send">send</span></div>
 				</div>
 			</div>
 		</figure>
+		<!-- The app's dock, floating over the bottom of the panel (the window itself runs past the crop). -->
+		<div class="dock" aria-hidden="true"><span class="on">inbox<b id="n-imbox">6</b></span><span>updates</span><span>resolved</span><i></i><svg class="i"><use href="#i-shield"/></svg><svg class="i"><use href="#i-trash"/></svg></div>
 	</div>
 </section>
 
@@ -415,19 +423,41 @@ footer a:hover { color: var(--ink); }
 			<div class="cell">
 				<div class="art" data-art="sort"><canvas class="dots" aria-hidden="true"></canvas></div>
 				<h3>sorted on arrival.</h3>
-				<p>Receipts, newsletters and pitches go to the Feed. Spam goes to Spam. Your Inbox only holds people.</p>
+				<p>Receipts, newsletters and pitches go to Updates. Spam goes to Spam. Your Inbox only holds people.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="draft"><canvas class="dots" aria-hidden="true"></canvas></div>
-				<h3>drafted from your answers.</h3>
-				<p>Each draft comes from your saved replies, your docs and the customer's WooCommerce orders. No made-up policies.</p>
+				<h3>answers from what you know.</h3>
+				<p>Your saved replies, help docs, site pages, products and how you answered before. Every quote and link is checked against them. No made-up policies.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="send"><canvas class="dots" aria-hidden="true"></canvas></div>
-				<h3>nothing sends without you.</h3>
-				<p>You read every draft and press send. Refunds and angry customers get no draft at all.</p>
+				<h3>sends when it&#8217;s sure.</h3>
+				<p>Turn on Auto and confident answers go out by themselves after a 15 minute wait you can stop. Refunds, billing and upset customers always wait for you.</p>
 			</div>
 		</div>
+	</div>
+</section>
+
+<section class="block" aria-labelledby="h-agents">
+	<div class="head">
+		<p class="eyebrow">bring your own agent</p>
+		<h2 id="h-agents"><span>ChatGPT, Claude and Codex can answer too.</span><span class="g">you decide if they can send.</span></h2>
+	</div>
+	<div class="wrap agents">
+		<div>
+			<p class="lead">Bridle opens your inbox to any AI agent that speaks MCP. Connect it through Saddle or the WordPress MCP adapter and it can read a conversation, search your docs and past replies, and leave a draft. Sending needs a permission you grant.</p>
+			<ul class="names" aria-label="Agents that can connect">
+				<li>ChatGPT</li><li>Claude</li><li>Codex</li><li>any MCP client</li>
+			</ul>
+		</div>
+		<ul class="tools" aria-label="What a connected agent can do">
+			<li><code>list-conversations</code><span>see who is waiting on a reply</span></li>
+			<li><code>search-knowledge</code><span>your saved replies, docs, pages and past answers</span></li>
+			<li><code>draft-reply</code><span>a draft for you, checked like Bridle&#8217;s own</span></li>
+			<li><code>add-note</code> <code>set-status</code><span>notes for the team, resolve when done</span></li>
+			<li class="gated"><code>send-reply</code><span><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>only once you allow it, after a two minute hold</span></li>
+		</ul>
 	</div>
 </section>
 
@@ -455,7 +485,7 @@ footer a:hover { color: var(--ink); }
 
 <footer>
 	<div class="wrap">
-		<span>WordPress 7.0+ · PHP 8.1+ · uses the AI provider you connect</span>
+		<span>WordPress 7.0+ · PHP 8.1+ · your own AI key · works with any MCP client</span>
 		<span>© 2026 PlugPress · <a href="https://plugpress.co/privacy/">Privacy</a></span>
 	</div>
 </footer>
@@ -463,7 +493,6 @@ footer a:hover { color: var(--ink); }
 <script>
 (function () {
 	var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 	var el = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 	var icon = function (id) {
 		var ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), use = document.createElementNS(ns, 'use');
@@ -549,7 +578,7 @@ footer a:hover { color: var(--ink); }
 					if (navigator.clipboard) navigator.clipboard.writeText('https://bridle.to/').then(function () { copy.textContent = 'link copied'; });
 				});
 				var post = el('a', null, 'post it on X');
-				post.href = 'https://x.com/intent/post?text=' + encodeURIComponent('Bridle drafts replies to your support mail inside WordPress. I just joined the waitlist:') + '&url=' + encodeURIComponent('https://bridle.to/');
+				post.href = 'https://x.com/intent/post?text=' + encodeURIComponent('Bridle answers support mail inside WordPress, from your own docs and replies. I just joined the waitlist:') + '&url=' + encodeURIComponent('https://bridle.to/');
 				post.target = '_blank'; post.rel = 'noopener';
 				share.append('Know someone drowning in support mail? ', copy, ' or ', post, '.');
 				box.insertBefore(share, box.querySelector('.proof'));
@@ -703,7 +732,7 @@ footer a:hover { color: var(--ink); }
 			]
 		};
 		var KIND = {
-			blue: { col: BLUE, lane: 0, status: 'drafted' },
+			blue: { col: BLUE, lane: 0, status: 'answered' },
 			gray: { col: GRAY, lane: 2, status: 'filed away' },
 			amber: { col: AMBER, lane: 1, status: 'for you' }
 		};
@@ -915,17 +944,22 @@ footer a:hover { color: var(--ink); }
 		};
 		paint(); resizers.push(paint);
 
+		// Every source here is one Bridle really reads: a saved reply, a product, a help doc, a past answer.
 		var MAIL = [
 			{ face: 'maya', name: 'Maya Chen', from: 'maya@lumen.studio', subj: 'Can I move my license to a new domain?', body: "We're relaunching next week. Will the license move with us?",
 				src: 'from your saved reply “Moving a license”', text: 'Hi Maya, yes, the license moves with you. Deactivate it under Settings → License on the old site, then activate the same key on the new domain. Nothing to buy.' },
-			{ face: 'jonas', name: 'Jonas Ortiz', from: 'jonas@ortiz.dev', subj: 'Where is my invoice for September?', body: "Our accountant needs it by Friday and I can't find it anywhere.",
-				src: 'from WooCommerce order #2291', text: 'Hi Jonas, here it is: invoice #2291 for September, $49.00, attached as a PDF. Past invoices are always under My Account → Orders too.' },
+			{ face: 'jonas', name: 'Jonas Ortiz', from: 'jonas@ortiz.dev', subj: 'Does the Pro plan include updates?', body: 'Thinking of upgrading. Do I get a year of updates with Pro?',
+				src: 'from your product “Pro plan”', text: 'Hi Jonas, yes. Pro is $49 a year and includes every update and priority support for that year. You can upgrade any time from your account page.' },
 			{ face: 'priya', name: 'Priya Nair', from: 'priya@nairandco.com', subj: 'Please refund order #1043', body: "It doesn't do what I needed. I'd like my money back.", mine: true,
-				src: 'refunds always wait for you', text: 'Refunds, billing questions and angry customers never get a draft. This one stays in your Inbox until you answer it.' },
-			{ face: 'tom', name: 'Tom Becker', from: 'tom@beckerbikes.de', subj: 'Slider is blank on mobile', body: 'Since the last update the slider shows nothing on my phone.',
-				src: 'from your docs “Safari display fix”', text: 'Hi Tom, thanks for the heads-up. Version 2.4.1 fixes this on Safari. Update from Plugins → Updates and clear your cache. Still blank? Send me the page URL.' }
+				src: 'refunds always wait for you', text: 'Refunds, billing and upset customers never go out on their own. Bridle marks this one for you and waits.' },
+			{ face: 'tom', name: 'Tom Becker', from: 'tom@beckerbikes.de', subj: 'Slider is blank on mobile', body: 'Since the last update the slider shows nothing on my phone.', auto: true,
+				src: 'from your docs “Safari display fix”', text: 'Hi Tom, thanks for the heads-up. Version 2.4.1 fixes this on Safari. Update from Plugins → Updates and clear your cache. Still blank? Send me the page URL.' },
+			{ face: 'ana', name: 'Ana Silva', from: 'ana@silvadesign.pt', subj: 'Can I use it on a staging site?', body: 'We keep a staging copy of the store. Does it count as another site?',
+				src: 'from how you answered this before', text: 'Hi Ana, staging is free. Use the same key on your staging copy; it won’t use up an activation.' },
+			{ face: 'leo', name: 'Leo Park', from: 'leo@parkandco.io', subj: 'Can I move my settings to a new install?', body: 'Setting up a fresh site. Can I take my carousel settings with me?', by: 'Claude',
+				src: 'drafted by Claude, from your docs', text: 'Hi Leo, yes. Go to Settings → Tools → Export, download the file, then import it on the new site from the same screen.' }
 		];
-		var AGO = ['2m', '9m', '14m', '31m'];
+		var AGO = ['2m', '9m', '14m', '31m', '48m', '1h'];
 		var rowsEl = document.getElementById('rows'), rows = [];
 		MAIL.forEach(function (m, i) {
 			var row = el('div', 'row'), av = el('span', 'face'), d = el('div'), b = el('b'), st = el('span', 'st');
@@ -940,8 +974,7 @@ footer a:hover { color: var(--ink); }
 		var th = document.getElementById('thread'), tin = th.querySelector('.tin');
 		var $ = function (s) { return th.querySelector(s); };
 		var chip = $('.chip'), send = $('.send'), t = $('.t'), rest = $('.rest');
-		var imbox = document.getElementById('n-imbox'), left = 4;
-		if (!isMac) send.querySelector('kbd').textContent = 'Ctrl ↵';
+		var imbox = document.getElementById('n-imbox'), left = MAIL.length;
 
 		var visible = false;
 		var gate = function () { return new Promise(function (res) { (function c() { if (visible && !document.hidden) res(); else setTimeout(c, 250); })(); }); };
@@ -969,11 +1002,11 @@ footer a:hover { color: var(--ink); }
 			$('.subj').textContent = m.subj;
 			$('.body').textContent = m.body;
 			$('.src').textContent = m.src;
-			$('.lbl').replaceChildren(icon(m.mine ? 'i-lock' : 'i-sparkles'), m.mine ? 'no draft' : 'draft');
+			$('.lbl').replaceChildren(icon(m.mine ? 'i-lock' : 'i-sparkles'), m.mine ? 'waits for you' : m.by ? m.by : 'draft');
 			t.textContent = '';
 			rest.textContent = m.text;
 			send.classList.remove('press');
-			send.firstChild.textContent = 'send ';
+			send.firstChild.textContent = 'send';
 			setChip('new', 'new');
 		};
 		var type = function (text) {
@@ -995,7 +1028,7 @@ footer a:hover { color: var(--ink); }
 		};
 		var play = function (n) {
 			var i = n % MAIL.length, m = MAIL[i];
-			if (i === 0 && n) { rows.forEach(function (r, k) { setRow(k, '', ''); }); left = 4; imbox.textContent = left; }
+			if (i === 0 && n) { rows.forEach(function (r, k) { setRow(k, '', ''); }); left = MAIL.length; imbox.textContent = left; }
 			return (n ? swap(i) : Promise.resolve())
 				.then(function () { return sleep(700); })
 				.then(function () { setChip('work', 'reading'); setRow(i, 'work', 'reading'); return sleep(900); })
@@ -1006,15 +1039,30 @@ footer a:hover { color: var(--ink); }
 						setChip('mine', 'for you', 'i-lock'); setRow(i, 'mine', 'for you', 'i-lock');
 						return sleep(3400);
 					}
-					setChip('work', 'drafting'); setRow(i, 'work', 'drafting');
+					var writing = m.by ? m.by.toLowerCase() + ' is writing' : 'drafting';
+					setChip('work', writing); setRow(i, 'work', writing);
 					return type(m.text)
-						.then(function () { th.setAttribute('data-s', 'ready'); setChip('ready', 'draft ready', 'i-check'); setRow(i, 'ready', 'draft ready'); return sleep(1500); })
-						.then(function () { send.classList.add('press'); return sleep(160); })
 						.then(function () {
+							var ready = m.auto ? 'verified' : 'draft ready';
+							th.setAttribute('data-s', 'ready'); setChip('ready', ready, 'i-check'); setRow(i, 'ready', ready);
+							return sleep(1500);
+						})
+						// Sure enough to send itself: it waits out the hold (shortened here), no key press.
+						.then(function () {
+							if (m.auto) {
+								send.firstChild.textContent = 'sends in 15 min';
+								setChip('work', 'sending'); setRow(i, 'work', 'sending');
+								return sleep(1700);
+							}
+							send.classList.add('press');
+							return sleep(160);
+						})
+						.then(function () {
+							var done = m.auto ? 'sent by bridle' : 'sent';
 							send.classList.remove('press');
-							send.firstChild.textContent = 'sent ';
+							send.firstChild.textContent = 'sent';
 							th.setAttribute('data-s', 'sent');
-							setChip('sent', 'sent', 'i-check'); setRow(i, 'sent', 'sent', 'i-check');
+							setChip('sent', done, 'i-check'); setRow(i, 'sent', done, 'i-check');
 							imbox.textContent = --left; bump(imbox);
 							return sleep(1300);
 						});
@@ -1054,7 +1102,7 @@ footer a:hover { color: var(--ink); }
 				S.src = [dots.rowY(h * .22), S.ty, dots.rowY(h * .78)];
 			}
 			if (kind === 'send') {
-				// The return key, sampled into the grid twice: up and pressed.
+				// A check in a rounded frame, sampled into the grid twice: checking and checked.
 				var cx = Math.round(w * .3), cy = Math.round(h / 2);
 				var key = function (dy, k) {
 					return dots.sample(function (g) {
@@ -1063,9 +1111,8 @@ footer a:hover { color: var(--ink); }
 						g.beginPath();
 						if (g.roundRect) g.roundRect(-54, -44, 108, 88, 18); else g.rect(-54, -44, 108, 88);
 						g.stroke();
-						g.lineWidth = 8.5;
-						g.beginPath(); g.moveTo(20, -20); g.lineTo(20, 8); g.lineTo(-20, 8); g.stroke();
-						g.beginPath(); g.moveTo(-8, -4); g.lineTo(-20, 8); g.lineTo(-8, 20); g.stroke();
+						g.lineWidth = 9;
+						g.beginPath(); g.moveTo(-24, 2); g.lineTo(-7, 19); g.lineTo(25, -15); g.stroke();
 					});
 				};
 				S.up = key(-2, 1); S.down = key(3, .94);
@@ -1129,7 +1176,7 @@ footer a:hover { color: var(--ink); }
 					if (g < 1) dots.stamp(x1, y, 4, 4, .95, DEEP);
 				});
 			},
-			// The draft waits. Only your key press lets it go.
+			// The draft is checked against your knowledge. When it holds up, it goes.
 			send: function (dt) {
 				var w = dots.w, h = dots.h, y = dots.rowY(h / 2), x0 = w * .66;
 				T += dt;
