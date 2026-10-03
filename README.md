@@ -11,7 +11,7 @@ The Bridle waitlist page, hosted on Spacefast (Space `bridle`, team `fahim-team`
 | `thanks.html` | Where the no-JavaScript form post lands |
 | `functions/api/waitlist.ts` | `POST /api/waitlist`: stores signups in the Space's MySQL (table `waitlist`) |
 | `sf.jsonc` | Declares the Functions runtime with `database: true` (that's what gives the worker `env.DB`) |
-| `fonts/figtree-latin.woff2`, `fonts/geist-mono-latin.woff2` | Figtree (UI and headlines) and Geist Mono (addresses), self-hosted, SIL Open Font License. Same fonts and tokens as the plugin app; see `../rebrand/BRAND.md` |
+| `fonts/mona-sans-latin.woff2`, `fonts/geist-mono-latin.woff2` | Mona Sans (UI and headlines, variable 200 to 900, by GitHub) and Geist Mono (addresses), self-hosted, SIL Open Font License. Mona Sans stands in for Paper's Matter, which is commercial; the plugin app should use the same pair (see `../rebrand/BRAND.md`) |
 | `fahim.jpg` | Founder photo beside the "Built by the team behind Saddle" line (192×192, self-hosted) |
 | `favicon.svg` | The mark; turns lighter blue in dark mode |
 | `icon-128.png`, `icon-256.png` | The app tile (blue mark on ink), linked from the plugin's `manifest.json` |

@@ -9,7 +9,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" href="/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="theme-color" content="#fcfcf9">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bridle.to/">
@@ -21,9 +21,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 @font-face {
-	font-family: "Figtree";
-	src: url("/fonts/figtree-latin.woff2") format("woff2");
-	font-weight: 300 900;
+	font-family: "Mona Sans";
+	src: url("/fonts/mona-sans-latin.woff2") format("woff2");
+	font-weight: 200 900;
 	font-display: swap;
 }
 @font-face {
@@ -49,7 +49,7 @@
 	--note: #fff8e1;
 	--note-foreground: #6b5200;
 	--amber: #f2b51d;
-	--font: "Figtree", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--font: "Mona Sans", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	/* Site-only */
@@ -93,7 +93,7 @@ canvas.dots { position: absolute; inset: 0; width: 100%; height: 100%; display: 
 .eyebrow b { font-weight: 400; color: var(--ink); }
 h1, h2 { margin: 0; font-weight: 360; letter-spacing: -0.035em; }
 h1 { font-size: clamp(44px, 6.4vw, 92px); line-height: .98; }
-h1 span, h2 span { display: block; }
+h1 span, h2 span { display: block; text-wrap: balance; }
 h1 span:first-child, h2 span:first-child { font-weight: 540; }
 h1 .g, h2 .g { color: var(--gray); }
 .under { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 32px 64px; align-items: end; margin-top: clamp(26px, 4vh, 40px); }
@@ -413,7 +413,7 @@ footer a:hover { color: var(--ink); }
 
 	<main class="wrap intro" data-mask>
 		<p class="eyebrow r" data-mask>the support agent for <b>WordPress</b></p>
-		<h1 class="r" style="--d:.05s"><span data-mask>AI writes the replies.</span><span class="g" data-mask>you hold the reins.</span></h1>
+		<h1 class="r" style="--d:.05s"><span data-mask>AI writes the replies</span><span class="g" data-mask>you hold the reins</span></h1>
 		<div class="under">
 			<p class="lead r" style="--d:.12s" data-mask>Bridle answers your support mail from your docs and past replies. You step in only when it matters.</p>
 			<div class="r" style="--d:.18s" data-form data-mask>
@@ -443,14 +443,14 @@ footer a:hover { color: var(--ink); }
 <section class="block" aria-labelledby="h-product">
 	<div class="head">
 		<p class="eyebrow">inside wp-admin</p>
-		<h2 id="h-product"><span>every email arrives with its answer.</span><span class="g">you only check the hard ones.</span></h2>
+		<h2 id="h-product"><span>every email arrives with its answer</span><span class="g">you only check the hard ones</span></h2>
 	</div>
 	<div class="panel" id="panel">
 		<canvas class="dots" aria-hidden="true"></canvas>
 		<figure class="window" aria-label="Bridle inside WordPress: an email arrives, a reply writes itself from your saved replies, docs and past answers, and goes out on its own when every fact checks out." style="margin:0">
 			<div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>yourstore.com/wp-admin · bridle</span></div>
 			<div class="list" aria-hidden="true">
-				<h3>Inbox <small>needs a reply</small></h3>
+				<h3>inbox <small>needs a reply</small></h3>
 				<div id="rows"></div>
 			</div>
 			<div class="thread" id="thread" data-s="new" aria-hidden="true">
@@ -480,17 +480,17 @@ footer a:hover { color: var(--ink); }
 		<div class="cells">
 			<div class="cell">
 				<div class="art" data-art="sort"><canvas class="dots" aria-hidden="true"></canvas></div>
-				<h3>sorted on arrival.</h3>
+				<h3>sorted on arrival</h3>
 				<p>Receipts, newsletters and spam are filed away. Your inbox only holds customers.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="draft"><canvas class="dots" aria-hidden="true"></canvas></div>
-				<h3>answers from what you know.</h3>
+				<h3>answers from what you know</h3>
 				<p>Every reply comes from your docs, products and past answers. Nothing made up.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="send"><canvas class="dots" aria-hidden="true"></canvas></div>
-				<h3>sends when it&#8217;s sure.</h3>
+				<h3>sends when it&#8217;s sure</h3>
 				<p>Confident answers go out on their own. Refunds and upset customers wait for you.</p>
 			</div>
 		</div>
@@ -500,7 +500,7 @@ footer a:hover { color: var(--ink); }
 <section class="block" aria-labelledby="h-agents">
 	<div class="head">
 		<p class="eyebrow">bring your own agent</p>
-		<h2 id="h-agents"><span>ChatGPT, Claude and Codex can answer too.</span><span class="g">you decide if they can send.</span></h2>
+		<h2 id="h-agents"><span>works with ChatGPT, Claude and Codex</span><span class="g">you decide if they can send</span></h2>
 	</div>
 	<div class="wrap agents" id="agents">
 		<div class="pick">
@@ -535,7 +535,7 @@ footer a:hover { color: var(--ink); }
 	<div class="closing" id="closing">
 		<canvas class="dots" aria-hidden="true"></canvas>
 		<div>
-			<h2 id="h-join"><span>support in minutes.</span><span class="g">not your whole morning.</span></h2>
+			<h2 id="h-join"><span>support in minutes</span><span class="g">not your whole morning</span></h2>
 			<p class="lead">Bridle is a WordPress plugin, launching soon. Get the download link the day it ships.</p>
 			<div data-form>
 				<form class="signup" action="/api/waitlist" method="post">
