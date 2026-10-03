@@ -41,4 +41,6 @@ Rows live in the `waitlist` table: email (unique), source (`hero` / `footer`), r
 
 ## DNS
 
-bridle.to is on Cloudflare (Dotyard account). The A and verification TXT records for Spacefast are DNS-only (grey cloud); proxying them breaks verification and TLS. MX, SPF, DKIM and DMARC belong to Email Routing; leave them alone.
+bridle.to is on Cloudflare (Dotyard account). The apex A records and the verification TXT records for Spacefast are DNS-only (grey cloud); proxying them breaks verification and TLS. MX, SPF, DKIM and DMARC belong to Email Routing; leave them alone.
+
+`www.bridle.to` is the exception. Spacefast never issued a certificate for the www twin, so its two A records are proxied (orange cloud) and the Cloudflare Redirect Rule "www to bridle.to" sends `https://www.bridle.to/*` to `https://bridle.to/${1}` with a 301, keeping the query string. Plain `http://www` already redirects at the origin. If Spacefast ever serves www itself, set those records back to DNS-only and delete the rule.
