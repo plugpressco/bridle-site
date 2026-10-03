@@ -16,7 +16,9 @@ The Bridle waitlist page, hosted on Spacefast (Space `bridle`, team `fahim-team`
 | `favicon.svg` | The mark; turns lighter blue in dark mode |
 | `icon-128.png`, `icon-256.png` | The app tile (blue mark on ink), linked from the plugin's `manifest.json` |
 | `apple-touch-icon.png` | 180×180, full bleed; iOS rounds the corners |
-| `og.png` | Social preview, 1200×630 |
+| `og.png` | Social preview, 1200×630: headline in Mona Sans, mark on the ink tile, halftone b |
+| `robots.txt`, `sitemap.xml` | Lets search engines index `/` (not `/thanks.html`) |
+| `NOTICE.md` | Third-party licences: fonts (OFL), agent logos (MIT), interface icons (ISC) |
 
 ## Publish
 
