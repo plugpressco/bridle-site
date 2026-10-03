@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bridle: AI writes the replies, you hold the reins</title>
-<meta name="description" content="Bridle is a WordPress plugin that answers your support mail from your site, your docs and your past replies. It sends when it&#8217;s sure and drafts when it isn&#8217;t. Works with ChatGPT, Claude and Codex. Plugin launching soon.">
+<meta name="description" content="Bridle is a WordPress plugin that answers your support mail from your docs and past replies. You step in only when it matters. Plugin launching soon.">
 <link rel="canonical" href="https://bridle.to/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bridle.to/">
 <meta property="og:title" content="bridle: AI writes the replies, you hold the reins">
-<meta property="og:description" content="A WordPress plugin that answers your support mail from your site, your docs and your past replies. It sends when it&#8217;s sure and drafts when it isn&#8217;t. Works with ChatGPT, Claude and Codex.">
+<meta property="og:description" content="A WordPress plugin that answers your support mail from your docs and past replies. You step in only when it matters.">
 <meta property="og:image" content="https://bridle.to/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -78,8 +78,11 @@ canvas.dots { position: absolute; inset: 0; width: 100%; height: 100%; display: 
 .hero { position: relative; isolation: isolate; min-height: max(100svh, 760px); display: flex; flex-direction: column; overflow: hidden; }
 .hero > canvas { z-index: -1; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-size: 23px; font-weight: 500; letter-spacing: -0.03em; }
-.brand svg { width: 25px; height: 25px; color: var(--brand); }
+.brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-size: 23px; font-weight: 560; letter-spacing: -0.04em; }
+.brand .tile { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: radial-gradient(90% 80% at 60% 68%, #263348 0%, #181818 70%); box-shadow: inset 0 1px 0 rgb(255 255 255 / .16), inset 0 0 0 .5px rgb(255 255 255 / .1), 0 1px 2px rgb(24 24 24 / .18), 0 10px 20px -10px rgb(24 24 24 / .55); transition: transform .3s var(--ease); }
+.brand .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgb(255 255 255 / .1), transparent 45%); pointer-events: none; }
+.brand svg { width: 21px; height: 21px; margin: 1px 0 0 1px; color: var(--brand); filter: drop-shadow(0 0 7px rgb(103 158 238 / .5)); }
+.brand:hover .tile { transform: rotate(-6deg) scale(1.04); }
 .soon { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 12px; border: var(--hair) solid var(--input); border-radius: 999px; background: rgb(252 252 249 / .8); font-size: 14px; color: var(--muted-foreground); }
 .soon i { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
 .soon i::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--brand); opacity: 0; animation: ping 2.4s var(--ease) infinite; }
@@ -238,17 +241,55 @@ h2 { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.02; }
 .cell p { margin: 0; max-width: 24em; font-size: 16.5px; line-height: 1.55; color: var(--muted-foreground); }
 
 /* Bring your own agent */
-.agents { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
-.names { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; padding: 0; list-style: none; }
-.names li { padding: 6px 13px; border: var(--hair) solid var(--input); border-radius: 999px; background: #fff; font-size: 15px; color: var(--ink-2); }
-.names li:last-child { border-style: dashed; color: var(--muted-foreground); }
-.tools { margin: 0; padding: 0; list-style: none; border-top: var(--hair) solid var(--input); }
-.tools li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 15px 0; border-bottom: var(--hair) solid var(--input); }
-.tools code { font: 500 14px var(--mono); letter-spacing: 0; color: var(--ink); }
-.tools span { font-size: 15.5px; color: var(--muted-foreground); }
-.tools .gated code { color: var(--note-foreground); }
-.tools .gated span { display: inline-flex; align-items: center; gap: 6px; }
-.tools .gated svg { width: 14px; height: 14px; color: var(--note-foreground); }
+.agents { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+.pick .lead { max-width: 22em; }
+.apps { display: flex; flex-wrap: wrap; gap: 18px 16px; margin: 34px 0 0; }
+.app { display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 0; border: 0; background: none; font-size: 14px; color: var(--muted-foreground); cursor: pointer; transition: color .2s; }
+.app .tile { display: grid; place-items: center; width: 68px; height: 68px; border: var(--hair) solid var(--input); border-radius: 19px; background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(24 24 24 / .04), 0 12px 24px -16px rgb(24 24 24 / .3); transition: transform .35s var(--ease), box-shadow .35s, border-color .35s; }
+.app svg { width: 32px; height: 32px; }
+.app:hover { color: var(--ink); }
+.app:hover .tile { transform: translateY(-2px); }
+.app[aria-pressed=true] { color: var(--ink); }
+.app[aria-pressed=true] .tile { transform: translateY(-4px); border-color: var(--ring); box-shadow: 0 0 0 4px rgb(129 173 236 / .22), 0 18px 30px -16px rgb(24 24 24 / .4); }
+.app.more { cursor: default; }
+.app.more .tile { border-style: dashed; background: transparent; box-shadow: none; color: var(--gray); }
+.app.more:hover .tile { transform: none; }
+
+/* The chat, on a patch of dots */
+.stage { position: relative; isolation: isolate; padding: 44px 40px; }
+.stage::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle, #a9c6f1 1.3px, transparent 1.8px) 0 0 / 12px 12px; -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent 100%); mask-image: radial-gradient(closest-side, #000 35%, transparent 100%); }
+.chat { position: relative; overflow: hidden; border: var(--hair) solid var(--input); border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .05), 0 40px 80px -40px rgb(24 24 24 / .45); }
+.chat-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 54px; padding: 0 18px; border-bottom: var(--hair) solid var(--border); background: var(--secondary); }
+.agent { display: inline-flex; align-items: center; gap: 9px; font-size: 16px; }
+.agent b { font-weight: 560; }
+.agent svg { width: 20px; height: 20px; color: var(--ink); }
+.linked { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 8px; border: var(--hair) solid var(--border); border-radius: 999px; background: #fff; font: 12px var(--mono); letter-spacing: 0; color: var(--muted-foreground); white-space: nowrap; }
+.linked svg { width: 14px; height: 14px; color: var(--brand); }
+.chat-body { min-height: 272px; padding: 24px 22px 26px; transition: opacity .3s; }
+.chat-body.swap { opacity: 0; }
+.ask { width: fit-content; max-width: 80%; margin: 0 0 20px auto; padding: 10px 16px; border-radius: 18px 18px 5px 18px; background: var(--ink); color: var(--paper); font-size: 16px; line-height: 1.4; opacity: 0; transform: translateY(6px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+.ask.on { opacity: 1; transform: none; }
+.turn { display: flex; align-items: flex-start; gap: 12px; }
+.av { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border: var(--hair) solid var(--border); border-radius: 50%; background: #fff; color: var(--ink); }
+.av svg { width: 18px; height: 18px; }
+.steps { display: grid; flex: 1; gap: 12px; min-width: 0; margin: 4px 0 0; padding: 0; list-style: none; }
+.steps li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 15.5px; line-height: 1.35; color: var(--ink-2); opacity: 0; transform: translateY(6px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+.steps li.on { opacity: 1; transform: none; }
+.steps .st { position: relative; display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--secondary); color: var(--brand-ink); }
+.steps .st svg { width: 12px; height: 12px; opacity: 0; transform: scale(.5); transition: opacity .25s, transform .3s var(--ease); }
+.steps .st::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--gray); animation: busy 1s ease-in-out infinite; }
+.steps li.done .st { background: var(--brand-soft); }
+.steps li.done .st svg { opacity: 1; transform: none; }
+.steps li.done .st::after { display: none; }
+.steps li.busy .tx { color: var(--muted-foreground); }
+.steps em { padding: 2px 8px; border-radius: 6px; background: var(--secondary); font: 12.5px/1.5 var(--mono); font-style: normal; letter-spacing: 0; color: var(--muted-foreground); }
+.steps li.hold { margin-top: 6px; padding: 11px 12px 11px 11px; border-radius: 12px; background: var(--note); color: var(--note-foreground); }
+.steps li.hold .st { background: rgb(242 181 29 / .22); color: var(--note-foreground); }
+.steps li.hold .st svg { opacity: 1; transform: none; }
+.steps li.hold .st::after { display: none; }
+.steps li.hold .sw { position: relative; width: 30px; height: 18px; margin-left: auto; border-radius: 999px; background: rgb(107 82 0 / .18); }
+.steps li.hold .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .2); }
+@keyframes busy { 50% { transform: scale(.55); opacity: .5; } }
 
 /* Closing card */
 .closing { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: center; gap: 40px; min-height: 520px; margin: 0 32px; padding: 64px clamp(32px, 6vw, 88px); overflow: hidden; border-radius: 28px; background: var(--ink); color: var(--paper); }
@@ -284,7 +325,7 @@ footer a:hover { color: var(--ink); }
 	.under { grid-template-columns: minmax(0, 1fr); }
 	.cells { grid-template-columns: minmax(0, 1fr); }
 	.cell + .cell { border-left: 0; border-top: var(--hair) solid var(--input); }
-	.agents { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+	.agents { grid-template-columns: minmax(0, 1fr); gap: 36px; }
 	.closing { grid-template-columns: minmax(0, 1fr); padding-top: 0; }
 	.closing .markart { order: -1; min-height: 0; height: 300px; margin: 0 -40px; }
 	.window { grid-template-columns: 0 minmax(0, 1fr); }
@@ -309,6 +350,15 @@ footer a:hover { color: var(--ink); }
 	.thread { padding: 20px 18px; }
 	.who small, .src, .act .ok { display: none; }
 	.dock span:not(.on), .dock i { display: none; }
+	.brand { font-size: 21px; gap: 10px; }
+	.brand .tile { width: 32px; height: 32px; border-radius: 10px; }
+	.brand svg { width: 19px; height: 19px; }
+	.apps { gap: 14px 10px; justify-content: space-between; }
+	.app { font-size: 12.5px; }
+	.app .tile { width: 56px; height: 56px; border-radius: 16px; }
+	.app svg { width: 27px; height: 27px; }
+	.stage { margin: 0 -16px; padding: 28px 12px; }
+	.chat-body { min-height: 296px; padding: 20px 16px 22px; }
 	.subj { font-size: 18.5px; }
 	.txt { min-height: 8em; }
 	.cell { padding: 0 16px 30px; }
@@ -340,6 +390,14 @@ footer a:hover { color: var(--ink); }
 	<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4M12 16h.01"/></symbol>
 	<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></symbol>
 	<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+	<!-- Agent logos (LobeHub Icons, MIT), shown to say Bridle works with them. -->
+	<linearGradient id="g-codex" gradientUnits="userSpaceOnUse" x1="12" x2="12" y1="3" y2="21"><stop stop-color="#B1A7FF"/><stop offset=".5" stop-color="#7A9DFF"/><stop offset="1" stop-color="#3941FF"/></linearGradient>
+	<symbol id="l-openai" viewBox="0 0 24 24" fill-rule="evenodd"><path fill="currentColor" d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z"/></symbol>
+	<symbol id="l-claude" viewBox="0 0 24 24"><path fill="#D97757" d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z"/></symbol>
+	<symbol id="l-codex" viewBox="0 0 24 24"><path fill="url(#g-codex)" d="M9.064 3.344a4.578 4.578 0 012.285-.312c1 .115 1.891.54 2.673 1.275.01.01.024.017.037.021a.09.09 0 00.043 0 4.55 4.55 0 013.046.275l.047.022.116.057a4.581 4.581 0 012.188 2.399c.209.51.313 1.041.315 1.595a4.24 4.24 0 01-.134 1.223.123.123 0 00.03.115c.594.607.988 1.33 1.183 2.17.289 1.425-.007 2.71-.887 3.854l-.136.166a4.548 4.548 0 01-2.201 1.388.123.123 0 00-.081.076c-.191.551-.383 1.023-.74 1.494-.9 1.187-2.222 1.846-3.711 1.838-1.187-.006-2.239-.44-3.157-1.302a.107.107 0 00-.105-.024c-.388.125-.78.143-1.204.138a4.441 4.441 0 01-1.945-.466 4.544 4.544 0 01-1.61-1.335c-.152-.202-.303-.392-.414-.617a5.81 5.81 0 01-.37-.961 4.582 4.582 0 01-.014-2.298.124.124 0 00.006-.056.085.085 0 00-.027-.048 4.467 4.467 0 01-1.034-1.651 3.896 3.896 0 01-.251-1.192 5.189 5.189 0 01.141-1.6c.337-1.112.982-1.985 1.933-2.618.212-.141.413-.251.601-.33.215-.089.43-.164.646-.227a.098.098 0 00.065-.066 4.51 4.51 0 01.829-1.615 4.535 4.535 0 011.837-1.388zm3.482 10.565a.637.637 0 000 1.272h3.636a.637.637 0 100-1.272h-3.636zM8.462 9.23a.637.637 0 00-1.106.631l1.272 2.224-1.266 2.136a.636.636 0 101.095.649l1.454-2.455a.636.636 0 00.005-.64L8.462 9.23z"/></symbol>
+	<symbol id="l-cursor" viewBox="0 0 24 24" fill-rule="evenodd"><path fill="currentColor" d="M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z"/></symbol>
+	<symbol id="l-mcp" viewBox="0 0 24 24" fill-rule="evenodd"><path fill="currentColor" d="M15.688 2.343a2.588 2.588 0 00-3.61 0l-9.626 9.44a.863.863 0 01-1.203 0 .823.823 0 010-1.18l9.626-9.44a4.313 4.313 0 016.016 0 4.116 4.116 0 011.204 3.54 4.3 4.3 0 013.609 1.18l.05.05a4.115 4.115 0 010 5.9l-8.706 8.537a.274.274 0 000 .393l1.788 1.754a.823.823 0 010 1.18.863.863 0 01-1.203 0l-1.788-1.753a1.92 1.92 0 010-2.754l8.706-8.538a2.47 2.47 0 000-3.54l-.05-.049a2.588 2.588 0 00-3.607-.003l-7.172 7.034-.002.002-.098.097a.863.863 0 01-1.204 0 .823.823 0 010-1.18l7.273-7.133a2.47 2.47 0 00-.003-3.537z"/><path fill="currentColor" d="M14.485 4.703a.823.823 0 000-1.18.863.863 0 00-1.204 0l-7.119 6.982a4.115 4.115 0 000 5.9 4.314 4.314 0 006.016 0l7.12-6.982a.823.823 0 000-1.18.863.863 0 00-1.204 0l-7.119 6.982a2.588 2.588 0 01-3.61 0 2.47 2.47 0 010-3.54l7.12-6.982z"/></symbol>
+	<linearGradient id="g-mark" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#9dc0f4"/><stop offset="1" stop-color="#4c8eef"/></linearGradient>
 	<symbol id="i-text" viewBox="0 0 24 24"><path d="M17 6H3M21 12H8M21 18H8M3 12v6"/></symbol>
 	<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
 </svg>
@@ -348,7 +406,7 @@ footer a:hover { color: var(--ink); }
 	<canvas class="dots" aria-hidden="true"></canvas>
 	<header class="top">
 		<div class="wrap">
-			<a class="brand" href="/"><svg aria-hidden="true"><use href="#mark"/></svg>bridle</a>
+			<a class="brand" href="/"><span class="tile" aria-hidden="true"><svg viewBox="0 0 60 60"><path fill="url(#g-mark)" fill-rule="evenodd" d="M13.31 41.92L5.18 3.67L13.97 1.8L18.57 23.43A20.56 20.56 0 1 1 13.31 41.92ZM22.27 37.64a11.15 11.36 0 1 0 22.3 0a11.15 11.36 0 1 0 -22.3 0Z"/></svg></span>bridle</a>
 			<span class="soon"><i aria-hidden="true"></i>plugin launching soon</span>
 		</div>
 	</header>
@@ -357,7 +415,7 @@ footer a:hover { color: var(--ink); }
 		<p class="eyebrow r" data-mask>the support agent for <b>WordPress</b></p>
 		<h1 class="r" style="--d:.05s"><span data-mask>AI writes the replies.</span><span class="g" data-mask>you hold the reins.</span></h1>
 		<div class="under">
-			<p class="lead r" style="--d:.12s" data-mask>Bridle answers support mail inside WordPress from your site, your docs and your past replies. It sends when it&#8217;s sure and drafts when it isn&#8217;t. Or let ChatGPT, Claude or Codex do the writing.</p>
+			<p class="lead r" style="--d:.12s" data-mask>Bridle answers your support mail from your docs and past replies. You step in only when it matters.</p>
 			<div class="r" style="--d:.18s" data-form data-mask>
 				<form class="signup" action="/api/waitlist" method="post">
 					<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
@@ -385,7 +443,7 @@ footer a:hover { color: var(--ink); }
 <section class="block" aria-labelledby="h-product">
 	<div class="head">
 		<p class="eyebrow">inside wp-admin</p>
-		<h2 id="h-product"><span>every email arrives with its answer.</span><span class="g">sent when it&#8217;s sure. drafted when it isn&#8217;t.</span></h2>
+		<h2 id="h-product"><span>every email arrives with its answer.</span><span class="g">you only check the hard ones.</span></h2>
 	</div>
 	<div class="panel" id="panel">
 		<canvas class="dots" aria-hidden="true"></canvas>
@@ -423,17 +481,17 @@ footer a:hover { color: var(--ink); }
 			<div class="cell">
 				<div class="art" data-art="sort"><canvas class="dots" aria-hidden="true"></canvas></div>
 				<h3>sorted on arrival.</h3>
-				<p>Receipts, newsletters and pitches go to Updates. Spam goes to Spam. Your Inbox only holds people.</p>
+				<p>Receipts, newsletters and spam are filed away. Your inbox only holds customers.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="draft"><canvas class="dots" aria-hidden="true"></canvas></div>
 				<h3>answers from what you know.</h3>
-				<p>Your saved replies, help docs, site pages, products and how you answered before. Every quote and link is checked against them. No made-up policies.</p>
+				<p>Every reply comes from your docs, products and past answers. Nothing made up.</p>
 			</div>
 			<div class="cell">
 				<div class="art" data-art="send"><canvas class="dots" aria-hidden="true"></canvas></div>
 				<h3>sends when it&#8217;s sure.</h3>
-				<p>Turn on Auto and confident answers go out by themselves after a 15 minute wait you can stop. Refunds, billing and upset customers always wait for you.</p>
+				<p>Confident answers go out on their own. Refunds and upset customers wait for you.</p>
 			</div>
 		</div>
 	</div>
@@ -444,20 +502,32 @@ footer a:hover { color: var(--ink); }
 		<p class="eyebrow">bring your own agent</p>
 		<h2 id="h-agents"><span>ChatGPT, Claude and Codex can answer too.</span><span class="g">you decide if they can send.</span></h2>
 	</div>
-	<div class="wrap agents">
-		<div>
-			<p class="lead">Bridle opens your inbox to any AI agent that speaks MCP. Connect it through Saddle or the WordPress MCP adapter and it can read a conversation, search your docs and past replies, and leave a draft. Sending needs a permission you grant.</p>
-			<ul class="names" aria-label="Agents that can connect">
-				<li>ChatGPT</li><li>Claude</li><li>Codex</li><li>any MCP client</li>
-			</ul>
+	<div class="wrap agents" id="agents">
+		<div class="pick">
+			<p class="lead">Already work in Claude or ChatGPT? Connect it to Bridle and answer support from there.</p>
+			<div class="apps" role="group" aria-label="Pick an agent to see it work">
+				<button type="button" class="app" data-agent="chatgpt" aria-pressed="false"><span class="tile"><svg aria-hidden="true"><use href="#l-openai"/></svg></span>ChatGPT</button>
+				<button type="button" class="app" data-agent="claude" aria-pressed="true"><span class="tile"><svg aria-hidden="true"><use href="#l-claude"/></svg></span>Claude</button>
+				<button type="button" class="app" data-agent="codex" aria-pressed="false"><span class="tile"><svg aria-hidden="true"><use href="#l-codex"/></svg></span>Codex</button>
+				<button type="button" class="app" data-agent="cursor" aria-pressed="false"><span class="tile"><svg aria-hidden="true"><use href="#l-cursor"/></svg></span>Cursor</button>
+				<span class="app more"><span class="tile"><svg aria-hidden="true"><use href="#l-mcp"/></svg></span>any MCP app</span>
+			</div>
 		</div>
-		<ul class="tools" aria-label="What a connected agent can do">
-			<li><code>list-conversations</code><span>see who is waiting on a reply</span></li>
-			<li><code>search-knowledge</code><span>your saved replies, docs, pages and past answers</span></li>
-			<li><code>draft-reply</code><span>a draft for you, checked like Bridle&#8217;s own</span></li>
-			<li><code>add-note</code> <code>set-status</code><span>notes for the team, resolve when done</span></li>
-			<li class="gated"><code>send-reply</code><span><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>only once you allow it, after a two minute hold</span></li>
-		</ul>
+		<div class="stage">
+			<figure class="chat" id="chat" aria-label="An agent such as Claude answers a customer through Bridle: it reads the email, finds the answer in your docs and saves a draft. Sending waits for your OK." style="margin:0">
+				<div class="chat-top" aria-hidden="true">
+					<span class="agent"><svg><use data-logo href="#l-claude"/></svg><b data-name>Claude</b></span>
+					<span class="linked"><svg><use href="#mark"/></svg>bridle connected</span>
+				</div>
+				<div class="chat-body" aria-hidden="true">
+					<p class="ask">Answer Leo&#8217;s email.</p>
+					<div class="turn">
+						<span class="av"><svg><use data-logo href="#l-claude"/></svg></span>
+						<ol class="steps"></ol>
+					</div>
+				</div>
+			</figure>
+		</div>
 	</div>
 </section>
 
@@ -465,8 +535,8 @@ footer a:hover { color: var(--ink); }
 	<div class="closing" id="closing">
 		<canvas class="dots" aria-hidden="true"></canvas>
 		<div>
-			<h2 id="h-join"><span>be first when it launches.</span><span class="g">download link on launch day.</span></h2>
-			<p class="lead">Bridle is a WordPress plugin, launching soon. Leave your email and we'll send the download link the day it ships.</p>
+			<h2 id="h-join"><span>support in minutes.</span><span class="g">not your whole morning.</span></h2>
+			<p class="lead">Bridle is a WordPress plugin, launching soon. Get the download link the day it ships.</p>
 			<div data-form>
 				<form class="signup" action="/api/waitlist" method="post">
 					<label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
@@ -1242,6 +1312,113 @@ footer a:hover { color: var(--ink); }
 		if (reduce) { frame(1); return; }
 		frame(0);
 		watch(scene, box);
+	})();
+
+	/* ── Bring your own agent: pick a logo, watch that agent answer through Bridle ── */
+	(function () {
+		var box = document.getElementById('agents'), chat = document.getElementById('chat');
+		if (!box || !chat) return;
+		var AGENTS = {
+			chatgpt: { name: 'ChatGPT', logo: 'l-openai', who: 'Maya', doc: 'Moving a license' },
+			claude: { name: 'Claude', logo: 'l-claude', who: 'Leo', doc: 'Export settings' },
+			codex: { name: 'Codex', logo: 'l-codex', who: 'Tom', doc: 'Safari display fix' },
+			cursor: { name: 'Cursor', logo: 'l-cursor', who: 'Ana', doc: 'Staging sites' }
+		};
+		var ORDER = ['chatgpt', 'claude', 'codex', 'cursor'];
+		var buttons = box.querySelectorAll('[data-agent]'), body = chat.querySelector('.chat-body');
+		var ask = chat.querySelector('.ask'), list = chat.querySelector('.steps'), name = chat.querySelector('[data-name]');
+		var cur = 'claude', run = 0, visible = false;
+
+		var steps = function (a) {
+			return [
+				['Reading ' + a.who + '’s email', 'Read ' + a.who + '’s email'],
+				['Searching your docs', 'Found the answer in your docs', a.doc],
+				['Writing a reply', 'Saved a draft in Bridle']
+			];
+		};
+		var row = function (cls, text, chip, ic) {
+			var li = el('li', cls), st = el('span', 'st');
+			st.appendChild(icon(ic || 'i-check'));
+			li.appendChild(st); li.appendChild(el('span', 'tx', text));
+			if (chip) li.appendChild(el('em', null, chip));
+			return li;
+		};
+		var gateRow = function () {
+			var li = row('hold', 'Sending waits for your OK', null, 'i-lock');
+			li.appendChild(el('span', 'sw'));
+			return li;
+		};
+		var select = function (key) {
+			cur = key;
+			var a = AGENTS[key];
+			buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-agent') === key)); });
+			chat.querySelectorAll('[data-logo]').forEach(function (u) { u.setAttribute('href', '#' + a.logo); });
+			name.textContent = a.name;
+			ask.textContent = 'Answer ' + a.who + '’s email.';
+			list.textContent = '';
+			return a;
+		};
+		// The finished state: what reduced motion shows, and where every loop lands.
+		var still = function (key) {
+			var a = select(key);
+			ask.classList.add('on');
+			steps(a).forEach(function (s) { list.appendChild(row('on done', s[1], s[2])); });
+			list.appendChild(gateRow()); list.lastChild.classList.add('on');
+		};
+		// Waits that pause while the section is off screen, and stop when another agent is picked.
+		var wait = function (ms, id) {
+			return new Promise(function (res, rej) {
+				(function c(left) {
+					if (id !== run) return rej();
+					if (!visible || document.hidden) return setTimeout(function () { c(left); }, 250);
+					if (left <= 0) return res();
+					setTimeout(function () { c(left - 100); }, 100);
+				})(ms);
+			});
+		};
+		var play = function (key) {
+			var id = ++run, a;
+			body.classList.add('swap');
+			wait(300, id).then(function () {
+				a = select(key); ask.classList.remove('on');
+				body.classList.remove('swap');
+				return wait(250, id);
+			}).then(function () {
+				ask.classList.add('on');
+				var chain = wait(700, id);
+				steps(a).forEach(function (s) {
+					chain = chain.then(function () {
+						var li = row('busy', s[0]); list.appendChild(li);
+						void li.offsetWidth; li.classList.add('on');
+						return wait(1000, id).then(function () {
+							li.classList.remove('busy'); li.classList.add('done');
+							li.querySelector('.tx').textContent = s[1];
+							if (s[2]) li.appendChild(el('em', null, s[2]));
+							return wait(350, id);
+						});
+					});
+				});
+				return chain;
+			}).then(function () {
+				var g = gateRow(); list.appendChild(g); void g.offsetWidth; g.classList.add('on');
+				return wait(3800, id);
+			}).then(function () {
+				play(ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length]);
+			}).catch(function () {});
+		};
+
+		buttons.forEach(function (b) {
+			b.addEventListener('click', function () {
+				var key = b.getAttribute('data-agent');
+				if (reduce) still(key); else play(key);
+			});
+		});
+		if (reduce) { still(cur); return; }
+		still(cur);
+		var started = false;
+		var go = function () { if (!started) { started = true; play(cur); } };
+		if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; if (visible) go(); }, { threshold: .35 }).observe(chat);
+		else { visible = true; go(); }
 	})();
 })();
 </script>

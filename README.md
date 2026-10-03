@@ -7,6 +7,7 @@ The Bridle waitlist page, hosted on Spacefast (Space `bridle`, team `fahim-team`
 | Path | What |
 |---|---|
 | `index.html` | The whole page: markup, styles and script in one file |
+| (inline in `index.html`) | ChatGPT, Claude, Codex, Cursor and MCP logos in the agents section, from LobeHub Icons (`@lobehub/icons-static-svg`, MIT) |
 | `thanks.html` | Where the no-JavaScript form post lands |
 | `functions/api/waitlist.ts` | `POST /api/waitlist`: stores signups in the Space's MySQL (table `waitlist`) |
 | `sf.jsonc` | Declares the Functions runtime with `database: true` (that's what gives the worker `env.DB`) |
