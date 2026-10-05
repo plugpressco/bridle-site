@@ -79,9 +79,10 @@ canvas.dots { position: absolute; inset: 0; width: 100%; height: 100%; display: 
 .hero > canvas { z-index: -1; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
 .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-size: 23px; font-weight: 560; letter-spacing: -0.04em; }
-.brand .tile { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: radial-gradient(90% 80% at 60% 68%, #263348 0%, #181818 70%); box-shadow: inset 0 1px 0 rgb(255 255 255 / .16), inset 0 0 0 .5px rgb(255 255 255 / .1), 0 1px 2px rgb(24 24 24 / .18), 0 10px 20px -10px rgb(24 24 24 / .55); transition: transform .3s var(--ease); }
-.brand .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgb(255 255 255 / .1), transparent 45%); pointer-events: none; }
-.brand svg { width: 21px; height: 21px; margin: 1px 0 0 1px; color: var(--brand); filter: drop-shadow(0 0 7px rgb(103 158 238 / .5)); }
+/* The Bridle icon, the same everywhere (site, app, plugin directory): the white mark on a brand-blue circle. */
+.brand .tile { position: relative; display: block; width: 36px; height: 36px; border-radius: 50%; box-shadow: 0 1px 2px rgb(45 111 205 / .22), 0 8px 18px -8px rgb(45 111 205 / .6); transition: transform .3s var(--ease); }
+.brand .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgb(255 255 255 / .16), transparent 52%); box-shadow: inset 0 1px 0 rgb(255 255 255 / .3); pointer-events: none; }
+.brand svg { display: block; width: 36px; height: 36px; }
 .brand:hover .tile { transform: rotate(-6deg) scale(1.04); }
 .soon { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 12px; border: var(--hair) solid var(--input); border-radius: 999px; background: rgb(252 252 249 / .8); font-size: 14px; color: var(--muted-foreground); }
 .soon i { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
@@ -397,7 +398,7 @@ footer a:hover { color: var(--ink); }
 	<symbol id="l-codex" viewBox="0 0 24 24"><path fill="url(#g-codex)" d="M9.064 3.344a4.578 4.578 0 012.285-.312c1 .115 1.891.54 2.673 1.275.01.01.024.017.037.021a.09.09 0 00.043 0 4.55 4.55 0 013.046.275l.047.022.116.057a4.581 4.581 0 012.188 2.399c.209.51.313 1.041.315 1.595a4.24 4.24 0 01-.134 1.223.123.123 0 00.03.115c.594.607.988 1.33 1.183 2.17.289 1.425-.007 2.71-.887 3.854l-.136.166a4.548 4.548 0 01-2.201 1.388.123.123 0 00-.081.076c-.191.551-.383 1.023-.74 1.494-.9 1.187-2.222 1.846-3.711 1.838-1.187-.006-2.239-.44-3.157-1.302a.107.107 0 00-.105-.024c-.388.125-.78.143-1.204.138a4.441 4.441 0 01-1.945-.466 4.544 4.544 0 01-1.61-1.335c-.152-.202-.303-.392-.414-.617a5.81 5.81 0 01-.37-.961 4.582 4.582 0 01-.014-2.298.124.124 0 00.006-.056.085.085 0 00-.027-.048 4.467 4.467 0 01-1.034-1.651 3.896 3.896 0 01-.251-1.192 5.189 5.189 0 01.141-1.6c.337-1.112.982-1.985 1.933-2.618.212-.141.413-.251.601-.33.215-.089.43-.164.646-.227a.098.098 0 00.065-.066 4.51 4.51 0 01.829-1.615 4.535 4.535 0 011.837-1.388zm3.482 10.565a.637.637 0 000 1.272h3.636a.637.637 0 100-1.272h-3.636zM8.462 9.23a.637.637 0 00-1.106.631l1.272 2.224-1.266 2.136a.636.636 0 101.095.649l1.454-2.455a.636.636 0 00.005-.64L8.462 9.23z"/></symbol>
 	<symbol id="l-cursor" viewBox="0 0 24 24" fill-rule="evenodd"><path fill="currentColor" d="M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z"/></symbol>
 	<symbol id="l-mcp" viewBox="0 0 24 24" fill-rule="evenodd"><path fill="currentColor" d="M15.688 2.343a2.588 2.588 0 00-3.61 0l-9.626 9.44a.863.863 0 01-1.203 0 .823.823 0 010-1.18l9.626-9.44a4.313 4.313 0 016.016 0 4.116 4.116 0 011.204 3.54 4.3 4.3 0 013.609 1.18l.05.05a4.115 4.115 0 010 5.9l-8.706 8.537a.274.274 0 000 .393l1.788 1.754a.823.823 0 010 1.18.863.863 0 01-1.203 0l-1.788-1.753a1.92 1.92 0 010-2.754l8.706-8.538a2.47 2.47 0 000-3.54l-.05-.049a2.588 2.588 0 00-3.607-.003l-7.172 7.034-.002.002-.098.097a.863.863 0 01-1.204 0 .823.823 0 010-1.18l7.273-7.133a2.47 2.47 0 00-.003-3.537z"/><path fill="currentColor" d="M14.485 4.703a.823.823 0 000-1.18.863.863 0 00-1.204 0l-7.119 6.982a4.115 4.115 0 000 5.9 4.314 4.314 0 006.016 0l7.12-6.982a.823.823 0 000-1.18.863.863 0 00-1.204 0l-7.119 6.982a2.588 2.588 0 01-3.61 0 2.47 2.47 0 010-3.54l7.12-6.982z"/></symbol>
-	<linearGradient id="g-mark" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#9dc0f4"/><stop offset="1" stop-color="#4c8eef"/></linearGradient>
+	<linearGradient id="g-icon" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#7fb0f3"/><stop offset="1" stop-color="#4c8eef"/></linearGradient>
 	<symbol id="i-text" viewBox="0 0 24 24"><path d="M17 6H3M21 12H8M21 18H8M3 12v6"/></symbol>
 	<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
 </svg>
@@ -406,7 +407,7 @@ footer a:hover { color: var(--ink); }
 	<canvas class="dots" aria-hidden="true"></canvas>
 	<header class="top">
 		<div class="wrap">
-			<a class="brand" href="/"><span class="tile" aria-hidden="true"><svg viewBox="0 0 60 60"><path fill="url(#g-mark)" fill-rule="evenodd" d="M13.31 41.92L5.18 3.67L13.97 1.8L18.57 23.43A20.56 20.56 0 1 1 13.31 41.92ZM22.27 37.64a11.15 11.36 0 1 0 22.3 0a11.15 11.36 0 1 0 -22.3 0Z"/></svg></span>bridle</a>
+			<a class="brand" href="/"><span class="tile" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="url(#g-icon)"/><path transform="translate(20.36 19.15) scale(0.95)" fill="#fff" fill-rule="evenodd" d="M13.31 41.92L5.18 3.67L13.97 1.8L18.57 23.43A20.56 20.56 0 1 1 13.31 41.92ZM22.27 37.64a11.15 11.36 0 1 0 22.3 0a11.15 11.36 0 1 0 -22.3 0Z"/></svg></span>bridle</a>
 			<span class="soon"><i aria-hidden="true"></i>plugin launching soon</span>
 		</div>
 	</header>
