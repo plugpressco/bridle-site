@@ -10,6 +10,9 @@
 <link rel="icon" href="/icon-128.png" type="image/png" sizes="128x128">
 <!-- Not /apple-touch-icon.png: the host answers that path with its own default. -->
 <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180.png">
+<!-- Cloudflare Turnstile guards the waitlist (functions/api/waitlist.ts verifies the token). -->
+<script>window.bridleTurnstile = [];</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=bridleTurnstileReady" async defer></script>
 <link rel="preload" href="/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="theme-color" content="#fcfcf9">
 <meta property="og:type" content="website">
@@ -111,6 +114,9 @@ h1 .g, h2 .g { color: var(--gray); }
 .signup button:active { transform: translateY(1px); }
 .signup button:disabled { opacity: .6; }
 .hp { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+/* Turnstile: invisible unless Cloudflare needs the visitor to click. */
+.ts:empty { display: none; }
+.ts { margin-top: 10px; }
 .msg { margin: 12px 0 0; font-size: 15px; }
 .msg:empty { display: none; }
 .msg.err { color: #c2410c; }
@@ -426,6 +432,7 @@ footer a:hover { color: var(--ink); }
 					<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
 					<button type="submit">join the waitlist</button>
 				</form>
+				<div class="ts"></div>
 				<p class="msg" role="status" aria-live="polite"></p>
 				<p class="proof"><img src="/fahim.jpg" alt="" width="24" height="24"><span>Built by the team behind <a href="https://saddle.to">Saddle</a></span></p>
 			</div>
@@ -547,6 +554,7 @@ footer a:hover { color: var(--ink); }
 					<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address">
 					<button type="submit">join the waitlist</button>
 				</form>
+				<div class="ts"></div>
 				<p class="msg" role="status" aria-live="polite"></p>
 				<p class="proof"><img src="/fahim.jpg" alt="" width="24" height="24" loading="lazy"><span>Built by the team behind <a href="https://saddle.to">Saddle</a></span></p>
 			</div>
@@ -617,12 +625,43 @@ footer a:hover { color: var(--ink); }
 	};
 	var setFace = function (node, name) { node.innerHTML = faceSVG(name); };
 
-	/* ── Waitlist forms ── */
+	/* ── Waitlist forms ──
+	   Turnstile runs on submit (execution: execute): the page asks it for a
+	   fresh token, sends it with how long the page has been open, and resets
+	   the widget after every attempt, since a token works once. */
+	var TURNSTILE_SITEKEY = '__TURNSTILE_SITEKEY__';
+	var loadedAt = performance.now();
+	window.bridleTurnstileReady = function () { window.bridleTurnstile.forEach(function (render) { render(); }); };
 	var params = new URLSearchParams(location.search);
 	var ref = [document.referrer, params.get('utm_source'), params.get('utm_campaign')].filter(Boolean).join(' | ').slice(0, 500);
 	document.querySelectorAll('form.signup').forEach(function (form) {
 		var box = form.closest('[data-form]');
 		var msg = box.querySelector('.msg');
+		var tsBox = box.querySelector('.ts');
+		var widget = null, waiting = null;
+		var settle = function (fn, value) { if (waiting) { var w = waiting; waiting = null; w[fn](value); } };
+		var render = function () {
+			if (widget !== null || !window.turnstile) return;
+			widget = window.turnstile.render(tsBox, {
+				sitekey: TURNSTILE_SITEKEY,
+				action: 'waitlist',
+				appearance: 'interaction-only',
+				execution: 'execute',
+				callback: function (token) { settle('resolve', token); },
+				'error-callback': function () { settle('reject', new Error('We could not check that you are a person. Please try again.')); },
+				'expired-callback': function () { settle('reject', new Error('That took a while. Please try again.')); }
+			});
+		};
+		window.bridleTurnstile.push(render);
+		render();
+		var human = function () {
+			return new Promise(function (resolve, reject) {
+				render();
+				if (widget === null) { reject(new Error('Still loading. Please try again in a moment.')); return; }
+				waiting = { resolve: resolve, reject: reject };
+				window.turnstile.execute(widget);
+			});
+		};
 		form.querySelector('input[name=ref]').value = ref;
 		form.addEventListener('submit', function (e) {
 			e.preventDefault();
@@ -631,10 +670,14 @@ footer a:hover { color: var(--ink); }
 			btn.disabled = true;
 			msg.className = 'msg';
 			msg.textContent = '';
-			fetch('/api/waitlist', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-				body: JSON.stringify(data)
+			human().then(function (token) {
+				data['cf-turnstile-response'] = token;
+				data.elapsed = Math.round(performance.now() - loadedAt);
+				return fetch('/api/waitlist', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+					body: JSON.stringify(data)
+				});
 			}).then(function (r) {
 				return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; });
 			}).then(function (res) {
@@ -657,7 +700,10 @@ footer a:hover { color: var(--ink); }
 			}).catch(function (err) {
 				msg.className = 'msg err';
 				msg.textContent = err && err.message && err.message !== 'Failed to fetch' ? err.message : 'Network error. Please try again.';
-			}).finally(function () { btn.disabled = false; });
+			}).finally(function () {
+				btn.disabled = false;
+				if (widget !== null && window.turnstile) window.turnstile.reset(widget);
+			});
 		});
 	});
 
