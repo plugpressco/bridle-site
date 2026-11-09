@@ -1,0 +1,26 @@
+---
+// Who pays for the AI: your own key, or Bridle AI's free answers and packs.
+import { AI, count, money } from '../../data/site';
+---
+<section class="block" id="ai" aria-labelledby="h-ai">
+  <div class="head">
+    <p class="eyebrow">Your key, or ours</p>
+    <h2 id="h-ai"><span>Bring your own AI key</span><span class="g">Or start with Bridle AI</span></h2>
+  </div>
+  <div class="wrap duo">
+    <div class="card">
+      <span class="ico"><svg class="i"><use href="#i-key" /></svg></span>
+      <h3>Your own key</h3>
+      <p>Connect Anthropic, OpenAI or Google in WordPress. Use it as much as you like, at your provider’s price. Bridle never sees the key.</p>
+      <p class="big">Free <small>and unlimited</small></p>
+    </div>
+    <div class="card">
+      <span class="ico blue"><svg class="i"><use href="#i-sparkles" /></svg></span>
+      <h3>Bridle AI</h3>
+      <p>No key needed. Every site gets {AI.free} answers a month free, then packs that never expire. Only answers that pass Bridle’s checks count.</p>
+      <ul class="packs">
+        {AI.packs.map((p) => <li><b>{money(p.price)}</b><span>{count(p.answers)} answers</span></li>)}
+      </ul>
+    </div>
+  </div>
+</section>

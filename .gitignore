@@ -6,3 +6,11 @@
 # Spacefast build output and local state
 __spacefast/
 .DS_Store
+
+# Astro
+dist/
+.astro/
+node_modules/
+npm-debug.log*
+.env
+.env.production

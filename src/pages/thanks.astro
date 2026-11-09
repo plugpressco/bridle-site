@@ -1,0 +1,18 @@
+---
+// Where the waitlist form lands without JavaScript (the function answers a
+// plain form post with a 303 here). Not for search engines.
+import Base from '../layouts/Base.astro';
+---
+<Base title="You’re on the list | Bridle" description="Thanks for joining the Bridle waitlist. We email you the day Bridle is live on WordPress.org." noindex waitlist={false}>
+  <div class="wrap note-page">
+    <svg class="i done" aria-hidden="true"><use href="#i-check-circle" /></svg>
+    <h1><span>You’re on the list</span><span class="g">We email you on launch day</span></h1>
+    <a class="tlink" href="/">Back to Bridle</a>
+  </div>
+</Base>
+
+<style is:global>
+  .note-page { display: grid; gap: 26px; justify-items: start; align-content: center; min-height: 52vh; padding-top: 40px; }
+  .note-page .done { width: 44px; height: 44px; color: var(--brand); }
+  .note-page h1 { font-size: clamp(40px, 5vw, 68px); }
+</style>

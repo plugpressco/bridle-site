@@ -1,0 +1,27 @@
+---
+// Bridle Chat as a visitor sees it, drawn like the real bubble (the plugin's
+// src/chat): an answer with its source, then a refund handed to a person.
+// Played by src/scripts/chat-demo.js.
+import '../styles/demo.css';
+---
+<div class="cpanel" data-chatdemo>
+  <canvas class="dots" aria-hidden="true"></canvas>
+  <figure class="site" aria-label="A visitor asks the chat bubble on a store's site. It answers from a help page and shows the source. Asked for a refund, it hands the chat to a person and asks where to send the reply." style="margin:0">
+    <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>lumenslider.com/pricing</span></div>
+    <div class="page" aria-hidden="true"><b></b><i></i><i></i><i class="s"></i><u></u><u></u><u></u></div>
+  </figure>
+  <div class="bc" aria-hidden="true">
+    <div class="bc-panel">
+      <div class="bc-head"><div><b>Lumen Slider</b><small>AI assistant · a person can help</small></div><svg class="i"><use href="#i-close" /></svg></div>
+      <div class="bc-log"></div>
+      <div class="bc-form"><small>Where should we send the reply?</small><span class="bc-in"></span><span class="bc-btn">Send to a person</span></div>
+      <div class="bc-comp"><span>Ask a question…</span><b><svg class="i"><use href="#i-arrow" /></svg></b></div>
+      <div class="bc-foot"><span>Talk to a person</span><span>New chat</span><em></em><span>Powered by Bridle</span></div>
+    </div>
+    <span class="bc-launch"><svg class="i"><use href="#i-message" /></svg></span>
+  </div>
+</div>
+
+<script>
+  import '../scripts/chat-demo.js';
+</script>

@@ -1,0 +1,42 @@
+---
+// The footer: what Bridle is in one line, three short columns, the fine print.
+import Brand from './Brand.astro';
+import { SITE } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <div class="wrap">
+    <div class="about">
+      <Brand />
+      <p>{SITE.definition}</p>
+    </div>
+    <div class="cols">
+      <nav aria-label="Product">
+        <h2>Product</h2>
+        <a href="/#how">How it works</a>
+        <a href="/chat/">Bridle Chat</a>
+        <a href="/#agents">AI apps</a>
+        <a href="/#ai">Bridle AI</a>
+        <a href="/pro/">Bridle Pro</a>
+      </nav>
+      <nav aria-label="Legal">
+        <h2>Legal</h2>
+        <a href="/privacy/">Privacy</a>
+        <a href="/privacy/#relay">Email relay</a>
+        <a href="/privacy/#processors">Sub-processors</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+      <nav aria-label="Company">
+        <h2>Company</h2>
+        <a href={SITE.companyUrl}>PlugPress</a>
+        <a href={SITE.saddle}>Saddle</a>
+        <a href={`mailto:${SITE.email}`}>Contact</a>
+        <a href="/llms.txt">llms.txt</a>
+      </nav>
+    </div>
+  </div>
+  <div class="wrap base">
+    <span>{SITE.requires} · your own AI key or Bridle AI · works with any MCP app</span>
+    <span>© {year} {SITE.company}. Bridle is GPL.</span>
+  </div>
+</footer>

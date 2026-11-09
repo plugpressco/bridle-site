@@ -1,0 +1,11 @@
+---
+// /privacy/: what the relay, Bridle AI, Pro licences and this site see and keep.
+import Base from '../layouts/Base.astro';
+import Legal from '../components/Legal.astro';
+import { PAGES } from '../data/pages';
+import { PRIVACY } from '../data/legal';
+const page = PAGES.privacy;
+---
+<Base title={page.title} description={page.description} waitlist={false} crumbs={[{ name: 'Privacy', path: page.path }]}>
+  <Legal doc={PRIVACY} />
+</Base>

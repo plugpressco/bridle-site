@@ -1,0 +1,11 @@
+---
+// /terms/: the site, the relay, Bridle AI and Bridle Pro licences.
+import Base from '../layouts/Base.astro';
+import Legal from '../components/Legal.astro';
+import { PAGES } from '../data/pages';
+import { TERMS } from '../data/legal';
+const page = PAGES.terms;
+---
+<Base title={page.title} description={page.description} waitlist={false} crumbs={[{ name: 'Terms', path: page.path }]}>
+  <Legal doc={TERMS} />
+</Base>

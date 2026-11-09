@@ -1,0 +1,25 @@
+---
+// Bridle Chat on the home page: three facts beside the bubble, playing.
+import ChatDemo from '../ChatDemo.astro';
+const points = [
+  { icon: 'i-book', text: 'Answers from your docs, pages and past replies' },
+  { icon: 'i-check-circle', text: 'Shows an answer only when every fact checks out' },
+  { icon: 'i-user', text: 'Hands refunds, billing and anything unsure to you' },
+];
+---
+<section class="block" id="chat" aria-labelledby="h-chat">
+  <div class="head">
+    <p class="eyebrow">Bridle Chat</p>
+    <h2 id="h-chat"><span>A chat bubble that answers</span><span class="g">And knows when to call you</span></h2>
+  </div>
+  <div class="wrap chatrow">
+    <div class="points">
+      <ul>
+        {points.map((p) => <li><svg class="i"><use href={`#${p.icon}`} /></svg>{p.text}</li>)}
+      </ul>
+      <p class="muted">Free in Bridle. Switch it on and it shows on every page of your site.</p>
+      <a class="tlink blue" href="/chat/">How Bridle Chat works</a>
+    </div>
+    <ChatDemo />
+  </div>
+</section>

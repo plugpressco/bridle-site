@@ -1,0 +1,60 @@
+---
+// The home page. The pictures (hero, product window, dot stories, AI apps
+// chat, closing) are the approved v11 page's; the new sections say what the
+// rest of Bridle does, one idea each, with less text.
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import Product from '../components/home/Product.astro';
+import Cells from '../components/home/Cells.astro';
+import Knowledge from '../components/home/Knowledge.astro';
+import Chat from '../components/home/Chat.astro';
+import Agents from '../components/home/Agents.astro';
+import Ai from '../components/home/Ai.astro';
+import Plans from '../components/home/Plans.astro';
+import Faq from '../components/Faq.astro';
+import Closing from '../components/Closing.astro';
+import { PAGES } from '../data/pages';
+import { FAQ } from '../data/faq';
+import { SITE, AI, PRO } from '../data/site';
+import '../styles/home.css';
+
+const page = PAGES.home;
+const jsonLd = [
+  {
+    '@type': 'SoftwareApplication',
+    name: SITE.name,
+    description: SITE.definition,
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'Customer support',
+    operatingSystem: 'WordPress',
+    url: `${SITE.url}/`,
+    license: 'https://www.gnu.org/licenses/gpl-2.0.html',
+    publisher: { '@id': `${SITE.companyUrl}/#org` },
+    offers: [
+      { '@type': 'Offer', name: 'Bridle', price: '0', priceCurrency: 'USD' },
+      ...AI.packs.map((p) => ({ '@type': 'Offer', name: `Bridle AI, ${p.answers} answers`, price: String(p.price), priceCurrency: 'USD' })),
+      { '@type': 'Offer', name: 'Bridle Pro, lifetime licence for 1 site', price: String(PRO.plans[0].lifetime[0]), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base title={page.title} description={page.description} jsonLd={jsonLd}>
+  <Hero />
+  <Product />
+  <Cells />
+  <Knowledge />
+  <Chat />
+  <Agents />
+  <Ai />
+  <Plans />
+  <Faq items={FAQ} />
+  <Closing />
+</Base>
+
+<script>
+  import '../scripts/home.js';
+</script>
