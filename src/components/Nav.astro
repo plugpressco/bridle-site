@@ -17,7 +17,7 @@ const links = [
   <div class="wrap">
     <Brand />
     <nav class="links" aria-label="Main">
-      {links.map((l) => <a href={l.href} class:list={{ wide: l.wide }} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>)}
+      {links.map((l) => <a href={l.href} class:list={{ wide: l.wide }} aria-current={path === l.href || (l.href !== '/' && !l.href.includes('#') && path.startsWith(l.href)) ? 'page' : undefined}>{l.label}</a>)}
     </nav>
     <a class="soon" href={join}><i aria-hidden="true"></i><span>Launching soon<em>, join the waitlist</em></span></a>
   </div>

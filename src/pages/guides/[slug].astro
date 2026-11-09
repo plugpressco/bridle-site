@@ -1,0 +1,24 @@
+---
+// /guides/{slug}/: one support job, done with Bridle. The plugin links here
+// from the screen each guide is about, so the slugs never change.
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import GuidePage from '../../components/Guide.astro';
+import { GUIDES, type Guide } from '../../data/guides';
+import { PAGES } from '../../data/pages';
+
+export const getStaticPaths: GetStaticPaths = () => GUIDES.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+const { guide } = Astro.props as { guide: Guide };
+const page = PAGES[`guide-${guide.slug}`];
+const jsonLd = [{
+  '@type': 'TechArticle',
+  headline: guide.title[0],
+  description: page.description,
+  url: `https://bridle.to${page.path}`,
+  about: { '@type': 'SoftwareApplication', name: 'Bridle', applicationCategory: 'BusinessApplication', operatingSystem: 'WordPress' },
+  publisher: { '@id': 'https://plugpress.io/#org' },
+}];
+---
+<Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Guides', path: '/guides/' }, { name: guide.label, path: page.path }]}>
+  <GuidePage guide={guide} />
+</Base>

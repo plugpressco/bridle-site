@@ -4,6 +4,7 @@
 import { SITE, AI, PRO, DEMO, money, count } from './site';
 import { FAQ, PRO_FAQ, type QA } from './faq';
 import { PRIVACY, TERMS, docMd } from './legal';
+import { GUIDES, GUIDES_INDEX, guideMd, guidesIndexMd } from './guides';
 
 const qa = (list: QA[]) => list.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
 const steps = (p: (typeof PRO.plans)[number]) => p.lifetime.map((n, i) => `${money(n)} for licences ${i * PRO.step + 1} to ${(i + 1) * PRO.step}`).join(', ');
@@ -213,4 +214,17 @@ ${qa(PRO_FAQ)}
       'The terms for bridle.to, the Bridle email relay, Bridle AI answers and Bridle Pro licences, in plain words: fair use, packs, lifetime licences and refunds.',
     md: docMd(TERMS, SITE.updated),
   },
+  guides: {
+    path: GUIDES_INDEX.path,
+    title: GUIDES_INDEX.title,
+    description: GUIDES_INDEX.description,
+    md: guidesIndexMd(SITE.url),
+  },
+  // One entry per guide, keyed guide-{slug}.
+  ...Object.fromEntries(
+    GUIDES.map((g) => [
+      `guide-${g.slug}`,
+      { path: `/guides/${g.slug}/`, title: g.seo, description: g.description, md: guideMd(g, SITE.url) },
+    ])
+  ),
 };

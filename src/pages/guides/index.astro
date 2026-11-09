@@ -1,0 +1,27 @@
+---
+// /guides/: every guide, one line each.
+import Base from '../../layouts/Base.astro';
+import { GUIDES } from '../../data/guides';
+import { PAGES } from '../../data/pages';
+const page = PAGES.guides;
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Guides', path: page.path }]}>
+  <div class="wrap guides">
+    <header class="prose">
+      <p class="eyebrow">Guides</p>
+      <h1><span>Answer support with Bridle</span><span class="g">One job at a time</span></h1>
+      <p class="lead">{GUIDES.length} short guides. Each says what Bridle does for the job today, how to set it up, and what Bridle Pro adds.</p>
+    </header>
+    <ul class="list">
+      {GUIDES.map((g, i) => (
+        <li>
+          <a href={`/guides/${g.slug}/`}>
+            <span class="num">0{i + 1}</span>
+            <b>{g.label}</b>
+            <span>{g.summary}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

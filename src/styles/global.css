@@ -325,3 +325,30 @@ section.block { padding: clamp(96px, 14vh, 150px) 0 0; }
 }
 .ticks.two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 28px; margin: 0; align-self: end; }
 @media (max-width: 860px) { .ticks.two { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── Guides ── */
+.prose ol.steps { padding: 0; list-style: none; counter-reset: step; }
+.prose ol + p, .prose p + ol, .prose ul + ol, .prose ol + ul { margin-top: 16px; }
+.prose ol.steps li { position: relative; padding-left: 40px; counter-increment: step; }
+.prose ol.steps li + li { margin-top: 12px; }
+.prose ol.steps li::before { content: counter(step); position: absolute; left: 0; top: 2px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 999px; background: var(--brand-soft); color: var(--brand-ink); font: 500 13px var(--mono); }
+.prose strong { font-weight: 560; color: var(--ink); }
+.guide .eyebrow a { color: inherit; text-decoration: none; }
+.guide .eyebrow a:hover { color: var(--ink); }
+.guide .toc .back { margin-top: 14px; color: var(--brand-ink); }
+.guide #pro .box { margin-top: 0; }
+.guide #pro .tlink { color: var(--brand-ink); }
+.guide .more ul { padding: 0; list-style: none; }
+.guide .more li { display: grid; gap: 2px; padding: 14px 0; border-top: var(--hair) solid var(--border); }
+.guide .more li span { font-size: 15.5px; color: var(--muted-foreground); }
+.guides { padding-top: clamp(36px, 7vh, 80px); padding-bottom: clamp(48px, 8vh, 96px); }
+.guides h1 { font-size: clamp(40px, 5vw, 68px); }
+.guides .list { max-width: 880px; margin: clamp(32px, 6vh, 56px) 0 0; padding: 0; list-style: none; border-top: var(--hair) solid var(--input); }
+.guides .list li { border-bottom: var(--hair) solid var(--input); }
+.guides .list a { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; grid-template-areas: "num title go" "num text go"; align-items: baseline; gap: 4px 12px; padding: 24px 4px; color: inherit; text-decoration: none; }
+.guides .list a::after { content: "→"; grid-area: go; align-self: center; color: var(--muted-foreground); transition: transform .25s var(--ease), color .25s; }
+.guides .list a:hover::after { transform: translateX(3px); color: var(--ink); }
+.guides .list .num { grid-area: num; font: 500 13px var(--mono); color: var(--brand-ink); }
+.guides .list b { grid-area: title; font-size: 21px; font-weight: 500; letter-spacing: -0.01em; }
+.guides .list span:not(.num) { grid-area: text; font-size: 16.5px; color: var(--muted-foreground); }
+@media (max-width: 560px) { .guides .list a { grid-template-columns: 32px minmax(0, 1fr) auto; padding: 20px 0; } .guides .list b { font-size: 19px; } }

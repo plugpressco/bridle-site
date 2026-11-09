@@ -1,0 +1,49 @@
+---
+// One guide from its data (src/data/guides.ts), in the legal pages' layout:
+// contents on the left, the text on the right. The Markdown copy renders from
+// the same data.
+import { GUIDES, inline, type Guide, type GuideBlock } from '../data/guides';
+interface Props { guide: Guide }
+const { guide } = Astro.props;
+const others = GUIDES.filter((g) => g.slug !== guide.slug);
+const toc = [...guide.parts.map((p) => ({ id: p.id, title: p.title })), { id: 'questions', title: 'Questions' }, { id: 'pro', title: 'With Bridle Pro' }];
+const html = (b: GuideBlock) =>
+  typeof b === 'string'
+    ? `<p>${inline(b)}</p>`
+    : 'list' in b
+      ? `<ul>${b.list.map((l) => `<li>${inline(l)}</li>`).join('')}</ul>`
+      : `<ol class="steps">${b.steps.map((s) => `<li>${inline(s)}</li>`).join('')}</ol>`;
+---
+<div class="wrap legal guide">
+  <nav class="toc" aria-label="On this page">
+    <b>On this page</b>
+    {toc.map((t) => <a href={`#${t.id}`}>{t.title}</a>)}
+    <a class="back" href="/guides/">All guides</a>
+  </nav>
+  <article class="prose">
+    <p class="eyebrow"><a href="/guides/">Guides</a></p>
+    <h1><span>{guide.title[0]}</span><span class="g">{guide.title[1]}</span></h1>
+    <p class="lead">{guide.lead}</p>
+    {guide.parts.map((p) => (
+      <section id={p.id}>
+        <h2>{p.title}</h2>
+        <Fragment set:html={p.body.map(html).join('')} />
+      </section>
+    ))}
+    <section id="questions">
+      <h2>Questions</h2>
+      {guide.faq.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
+    </section>
+    <section id="pro">
+      <h2>With Bridle Pro</h2>
+      <div class="box">
+        <Fragment set:html={guide.pro.map(html).join('')} />
+        <p><a class="tlink" href="/pro/">Bridle Pro and pricing</a></p>
+      </div>
+    </section>
+    <section class="more" aria-labelledby="h-more">
+      <h2 id="h-more">More guides</h2>
+      <ul>{others.map((g) => <li><a href={`/guides/${g.slug}/`}>{g.label}</a> <span>{g.summary}</span></li>)}</ul>
+    </section>
+  </article>
+</div>
