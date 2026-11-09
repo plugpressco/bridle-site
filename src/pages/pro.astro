@@ -10,7 +10,7 @@ import Faq from '../components/Faq.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 import { PRO_FAQ } from '../data/faq';
-import { SITE, AI, PRO, money, count } from '../data/site';
+import { SITE, AI, PRO, money, sitesLabel } from '../data/site';
 
 const page = PAGES.pro;
 const jsonLd = [
@@ -19,7 +19,7 @@ const jsonLd = [
     name: 'Bridle Pro',
     description: 'Adds chat on your other sites, live chat, business hours, order lookups, missing answers and team reminders to Bridle, the AI support agent for WordPress.',
     brand: { '@type': 'Brand', name: SITE.name },
-    offers: { '@type': 'Offer', name: 'Pay once, every site', price: String(PRO.first.price), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` },
+    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` })),
   },
   {
     '@type': 'FAQPage',
@@ -30,7 +30,7 @@ const jsonLd = [
 <Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Bridle Pro', path: page.path }]}>
   <PageHero
     eyebrow="Bridle Pro"
-    title={['Pay once', 'Use it on every site']}
+    title={['Pay once', 'Keep it for good']}
     lead="Bridle is free. Pro adds more for a growing shop."
     art="key"
     cta={{ href: '#price', label: 'See the price' }}
@@ -50,7 +50,7 @@ const jsonLd = [
       <p class="eyebrow">The price</p>
       <h2 id="h-price"><span>Early buyers pay less</span><span class="g">It goes up every 20 sales</span></h2>
     </div>
-    <div class="wrap"><div class="solo"><Price /></div></div>
+    <div class="wrap"><Price /></div>
   </section>
 
   <section class="block" id="ai" aria-labelledby="h-ai">
@@ -59,10 +59,7 @@ const jsonLd = [
       <h2 id="h-ai"><span>No AI key?</span><span class="g">{AI.free} free answers a month</span></h2>
     </div>
     <div class="wrap">
-      <ul class="packs big3">
-        {AI.packs.map((p) => <li><b>{money(p.price)}</b><span>{count(p.answers)} more answers</span></li>)}
-      </ul>
-      <p class="fine after">Packs have no end date.</p>
+      <p class="lead">Every site gets {AI.free} free AI answers a month. Pro comes with more. Need extra? Top up from {money(AI.topUpFrom)} inside Bridle.</p>
     </div>
   </section>
 
@@ -71,12 +68,5 @@ const jsonLd = [
 </Base>
 
 <style is:global>
-  .solo { max-width: 480px; }
   .after { margin-top: 18px; }
-  .packs.big3 { margin: 0; }
-  .packs.big3 li { padding: 26px 24px; gap: 4px; border-radius: 18px; background: #fff; }
-  .packs.big3 b { font-size: 40px; font-weight: 400; letter-spacing: -0.03em; }
-  .packs.big3 span { font-size: 16px; color: var(--ink); }
-  @media (max-width: 860px) { .packs.big3 { grid-template-columns: minmax(0, 1fr); } }
-  @media (max-width: 560px) { .packs.big3 li { grid-template-columns: minmax(0, 1fr); } }
 </style>

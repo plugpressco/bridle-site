@@ -66,19 +66,25 @@ Off until both halves are set: the widget's site key in `TURNSTILE_SITEKEY` (`sr
 
 ## Bridle Pro price (Polar)
 
-One plan: every Pro feature, every site, pay once. The first 10 buyers pay $49, then the price goes up $20 every 20 sales, to $199 at licence 170 (`src/data/deal.json`, Fahim, 9 November 2026). After 170, Pro is sold by the year.
+Three licences, every Pro feature in each, pay once (Fahim, 9 November 2026). Plans, Polar product ids and steps live in `src/data/deal.json`:
 
-- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid Bridle Pro orders on Polar (cached 60 seconds) and answers `{ state, sold, total, price, from, to, left, next, live }`. The price cards (`src/components/Price.astro`, `src/scripts/deal.js`) show it once Polar answers; until then they show step 1 from the build, never a made-up count.
-- `GET` or `POST /api/checkout` (`checkout.ts`) opens a Polar checkout at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
+| Licence | First price | Bridle AI answers | Polar product |
+| --- | --- | --- | --- |
+| 1 site | $49 | 1,000 | `07324385-8d18-45b7-bbdb-5df03c8d7241` |
+| 3 sites | $79 | 3,000 | `1deeedec-94ad-4e5b-90f6-ad7a0b80c0c6` |
+| 10 sites | $149 | 10,000 | `317c578e-7ed6-4a48-9260-277c65481d0e` |
+
+All three go up $20 every 20 sales, counting every Bridle Pro sale together: sales 1 to 10 pay the first prices, 11 to 30 pay $69 / $99 / $169, and so on. Pay once ends after sale 170; then Pro is yearly. When the answers run out, buyers top up inside the plugin (from $10); the site only says so.
+
+- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid orders across the three products on Polar (cached 60 seconds) and answers `{ state, sold, total, step, from, to, left, rise, plans: [{ key, sites, answers, price, next }], live }`. The cards (`src/components/Price.astro`, `src/scripts/deal.js`) show it once Polar answers; until then they show the first prices from the build, never a made-up count.
+- `GET` or `POST /api/checkout?plan=1|3|10` (`checkout.ts`) opens a Polar checkout for that plan's product at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
 - `CHECKOUT_OPEN` in `src/data/site.ts` is the one launch switch. While it is `false` every price button says "Join the waitlist" and `/api/checkout` sends people back to `/pro/#price`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
 
-**Polar setup (owner, once):**
+**Polar setup (owner):** the three products already exist in the PlugPress organization (`70df29ff-afca-407d-abbb-747a76a8b62f`, also in `deal.json`). Keep them private, with their licence-key benefits.
 
-1. In the PlugPress organization, create one product, **Bridle Pro**: a one-time purchase, a fixed price (any amount; each checkout sets the step price), and **private**, so only `/api/checkout` can sell it.
-2. Add a **License keys** benefit to it: prefix `BRIDLE`, no expiry, **no activation limit** (unlimited sites). This is the key Bridle Pro's licence screen takes.
-3. Create an **organization access token** with the scopes `orders:read` and `checkouts:write`.
-4. On the Spacefast Space `bridle`, set `POLAR_TOKEN` (as a secret), `POLAR_ORG_ID` and `POLAR_PRODUCT_ID`. Check it: `curl -s https://bridle.to/api/deal` says `"live":true`.
-5. On launch day set `CHECKOUT_OPEN = true`, build and publish.
+1. Create an **organization access token** with the scopes `orders:read` and `checkouts:write`.
+2. On the Spacefast Space `bridle`, set `POLAR_TOKEN` as a secret. That's the only variable (`POLAR_ORG_ID` is optional; the id is in `deal.json`). Check it: `curl -s https://bridle.to/api/deal` says `"live":true`.
+3. On launch day set `CHECKOUT_OPEN = true`, build and publish.
 
 ## At launch
 

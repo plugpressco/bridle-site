@@ -1,5 +1,5 @@
 ---
-// Free and Pro as two plain groups of features, and Pro's one price.
+// Free and Pro as two plain groups of features, and Pro's three licences.
 import Features from '../Features.astro';
 import Price from '../Price.astro';
 import { FREE_FEATURES, PRO_FEATURES } from '../../data/site';
@@ -16,10 +16,8 @@ import { FREE_FEATURES, PRO_FEATURES } from '../../data/site';
     </div>
     <div class="tier pro">
       <p class="tag"><b>Bridle Pro</b> pay once</p>
-      <div class="prorow">
-        <Features items={PRO_FEATURES} cols={2} tone="blue" />
-        <Price />
-      </div>
+      <Features items={PRO_FEATURES} tone="blue" />
+      <Price />
     </div>
   </div>
 </section>

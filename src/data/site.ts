@@ -1,8 +1,9 @@
 // One place for facts that show up on more than one page. Change a number here
 // and every page, its Markdown copy, llms.txt and the JSON-LD follow.
-// Prices: one Bridle Pro plan, decided by Fahim on 9 November 2026 (by
-// question): $49 for the first 10, then $20 more every 20 customers, up to
-// $199 at licence 170. Then Pro is sold by the year. Steps in deal.json.
+// Prices (Fahim, 9 November 2026): three Bridle Pro licences, 1, 3 and 10
+// sites, each with Bridle AI answers. All three go up $20 every 20 sales,
+// counting every Bridle Pro sale together; pay once ends after sale 170, then
+// Pro is yearly. Plans, Polar product ids and steps live in deal.json.
 import DEAL_DATA from './deal.json';
 
 export const SITE = {
@@ -48,7 +49,7 @@ export const AI = {
     { answers: 5000, price: 45 },
     { answers: 25000, price: 200 },
   ],
-  proGift: 5000,
+  topUpFrom: 10,
 };
 
 // Launch switch: false shows "Join the waitlist" on every price button. Set it
@@ -56,8 +57,13 @@ export const AI = {
 // and the buttons open a Polar checkout at the current price.
 export const CHECKOUT_OPEN = false;
 
-export type Step = { price: number; from: number; to: number };
-export const DEAL: { total: number; refundDays: number; steps: Step[] } = DEAL_DATA;
+export type Step = { from: number; to: number };
+export type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
+export const DEAL: { total: number; refundDays: number; rise: number; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
+
+// A plan's price at step i (0 = the first 10 sales).
+export const priceAt = (plan: Plan, i: number) => plan.base + DEAL.rise * i;
+export const sitesLabel = (n: number) => (n === 1 ? '1 site' : `${n} sites`);
 
 // What each plan does: an icon, a short name, one short line.
 export type Feature = { icon: string; name: string; text: string };
@@ -80,12 +86,14 @@ export const PRO_FEATURES: Feature[] = [
   { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
 ];
 
-// Bridle Pro: one plan, every Pro feature, unlimited sites, pay once.
+// Bridle Pro: three licences, every Pro feature in each, pay once.
 export const PRO = {
   total: DEAL.total,
   refundDays: DEAL.refundDays,
+  rise: DEAL.rise,
   steps: DEAL.steps,
   first: DEAL.steps[0],
+  plans: DEAL.plans,
   features: PRO_FEATURES,
 };
 

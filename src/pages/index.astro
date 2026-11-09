@@ -30,7 +30,7 @@ const jsonLd = [
     offers: [
       { '@type': 'Offer', name: 'Bridle', price: '0', priceCurrency: 'USD' },
       ...AI.packs.map((p) => ({ '@type': 'Offer', name: `Bridle AI, ${p.answers} answers`, price: String(p.price), priceCurrency: 'USD' })),
-      { '@type': 'Offer', name: 'Bridle Pro, pay once, every site', price: String(PRO.first.price), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` },
+      ...PRO.plans.map((p) => ({ '@type': 'Offer', name: `Bridle Pro, pay once, ${p.sites === 1 ? '1 site' : `${p.sites} sites`}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` })),
     ],
   },
   {

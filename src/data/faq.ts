@@ -23,8 +23,6 @@ export const FAQ: QA[] = [
   },
 ];
 
-const last = PRO.steps[PRO.steps.length - 1];
-
 export const PRO_FAQ: QA[] = [
   {
     q: 'Does Pro take anything away from free?',
@@ -32,11 +30,15 @@ export const PRO_FAQ: QA[] = [
   },
   {
     q: 'Why does the price go up?',
-    a: `The first ${PRO.first.to} buyers pay ${money(PRO.first.price)}. Then it goes up $20 every 20 sales, to ${money(last.price)}. After ${PRO.total} sales, Pro is yearly.`,
+    a: `Early buyers pay less. All three prices go up ${money(PRO.rise)} every 20 sales. After ${PRO.total} sales, Pro is yearly.`,
   },
   {
     q: 'What does pay once mean?',
     a: 'You pay one time. You get updates and help for as long as we make Bridle Pro.',
+  },
+  {
+    q: 'What if my AI answers run out?',
+    a: `Top up inside Bridle, from ${money(AI.topUpFrom)}. Or use your own AI key, with no limit.`,
   },
   {
     q: 'Can I get my money back?',

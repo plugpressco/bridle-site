@@ -1,15 +1,22 @@
 {
   "total": 170,
   "refundDays": 30,
+  "rise": 20,
+  "orgId": "70df29ff-afca-407d-abbb-747a76a8b62f",
   "steps": [
-    { "price": 49, "from": 1, "to": 10 },
-    { "price": 69, "from": 11, "to": 30 },
-    { "price": 89, "from": 31, "to": 50 },
-    { "price": 109, "from": 51, "to": 70 },
-    { "price": 129, "from": 71, "to": 90 },
-    { "price": 149, "from": 91, "to": 110 },
-    { "price": 169, "from": 111, "to": 130 },
-    { "price": 189, "from": 131, "to": 150 },
-    { "price": 199, "from": 151, "to": 170 }
+    { "from": 1, "to": 10 },
+    { "from": 11, "to": 30 },
+    { "from": 31, "to": 50 },
+    { "from": 51, "to": 70 },
+    { "from": 71, "to": 90 },
+    { "from": 91, "to": 110 },
+    { "from": 111, "to": 130 },
+    { "from": 131, "to": 150 },
+    { "from": 151, "to": 170 }
+  ],
+  "plans": [
+    { "key": "1", "sites": 1, "base": 49, "answers": 1000, "productId": "07324385-8d18-45b7-bbdb-5df03c8d7241" },
+    { "key": "3", "sites": 3, "base": 79, "answers": 3000, "productId": "1deeedec-94ad-4e5b-90f6-ad7a0b80c0c6" },
+    { "key": "10", "sites": 10, "base": 149, "answers": 10000, "productId": "317c578e-7ed6-4a48-9260-277c65481d0e" }
   ]
 }
