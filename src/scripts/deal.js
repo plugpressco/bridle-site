@@ -36,6 +36,7 @@ function paint() {
 	set('unit', 'pay once, for ' + sitesLabel(p.sites));
 	set('answers', count(p.answers));
 	set('next', money(price + DEAL.rise));
+	set('next2', money(price + 2 * DEAL.rise));
 	all('[data-pro-then]').forEach(function (n) { n.hidden = !hasNext; });
 	all('[data-buy]').forEach(function (b) {
 		var key = b.getAttribute('data-buy') === 'follow' ? p.key : b.getAttribute('data-buy');
@@ -68,6 +69,22 @@ function counters() {
 all('[data-sites]').forEach(function (b) {
 	b.addEventListener('click', function () { state.sites = b.getAttribute('data-sites'); paint(); });
 });
+
+// The countdown to the deal's real end (deal.json endsAt), every second.
+function countdown() {
+	var ms = Date.parse(DEAL.endsAt) - Date.now();
+	var two = function (n) { return (n < 10 ? '0' : '') + n; };
+	all('[data-cd]').forEach(function (box) {
+		box.hidden = ms <= 0;
+		if (ms <= 0) return;
+		var s = Math.floor(ms / 1000);
+		box.querySelector('[data-cd-d]').textContent = two(Math.floor(s / 86400));
+		box.querySelector('[data-cd-h]').textContent = two(Math.floor(s / 3600) % 24);
+		box.querySelector('[data-cd-m]').textContent = two(Math.floor(s / 60) % 60);
+		box.querySelector('[data-cd-s]').textContent = two(s % 60);
+	});
+}
+if (document.querySelector('[data-cd]')) { countdown(); setInterval(countdown, 1000); }
 
 if (document.querySelector('[data-price], [data-pro], [data-chart], [data-counters]')) {
 	paint();

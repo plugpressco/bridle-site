@@ -4,10 +4,10 @@
 // way also"). Drawn in code from Bridle's own blues and a few amber dots, so
 // there are no image files and no generated art (src/scripts/dither.js).
 // `from` is where the cloud rises from. Decorative only.
-interface Props { from?: 'bottom' | 'right'; class?: string }
-const { from = 'bottom', class: cls } = Astro.props;
+interface Props { from?: 'bottom' | 'right'; tone?: 'warm' | 'night'; class?: string }
+const { from = 'bottom', tone = 'warm', class: cls } = Astro.props;
 ---
-<canvas class:list={['dither', cls]} data-dither data-from={from} aria-hidden="true"></canvas>
+<canvas class:list={['dither', cls]} data-dither data-from={from} data-tone={tone} aria-hidden="true"></canvas>
 
 <script>
   import '../scripts/dither.js';
