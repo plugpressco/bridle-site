@@ -1,0 +1,31 @@
+---
+// The one button set (design v3): solid Bridle blue and soft blue, 8 px
+// corners, 40 / 48 / 52 px tall; a white one for the blue deal panel; and the
+// text link. The arrow (›) moves 2 px on hover.
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'soft' | 'white' | 'link';
+  size?: 'sm' | 'md' | 'lg';
+  arrow?: boolean;
+  class?: string;
+  type?: 'button' | 'submit';
+  [attr: string]: unknown;
+}
+const { href, variant = 'primary', size = 'md', arrow = false, class: cls, type = 'button', ...attrs } = Astro.props;
+const look = {
+  primary: 'bg-brand-600 text-white hover:bg-brand-700',
+  soft: 'bg-brand-100 text-brand-700 hover:bg-brand-200',
+  white: 'bg-white text-foreground hover:bg-brand-50',
+  link: 'text-foreground underline decoration-input underline-offset-4 hover:decoration-current',
+}[variant];
+const sized = variant === 'link'
+  ? 'min-h-11 text-[16px]'
+  : { sm: 'h-10 px-3.5 text-[15px]', md: 'h-12 px-5 text-[16px]', lg: 'h-[52px] px-[22px] text-[16.5px]' }[size];
+const external = typeof href === 'string' && /^https?:/.test(href) && !href.startsWith('https://bridle.to');
+const classes = ['btn group/btn inline-flex items-center gap-2 whitespace-nowrap font-medium leading-none transition-colors duration-150 cursor-pointer disabled:opacity-60', variant !== 'link' && 'justify-center rounded-control no-underline', look, sized, cls];
+---
+{href ? (
+  <a href={href} class:list={classes} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} {...attrs}><slot />{arrow && <span class="transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true">›</span>}</a>
+) : (
+  <button type={type} class:list={classes} {...attrs}><slot />{arrow && <span class="transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true">›</span>}</button>
+)}

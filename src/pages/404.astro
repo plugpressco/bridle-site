@@ -1,17 +1,14 @@
 ---
 // Page not found. Not for search engines.
 import Base from '../layouts/Base.astro';
+import Section from '../components/ui/Section.astro';
+import HeadingPair from '../components/ui/HeadingPair.astro';
+import Button from '../components/ui/Button.astro';
 ---
 <Base title="Page not found | Bridle" description="This page doesn’t exist. Go back to the Bridle home page." noindex waitlist={false}>
-  <div class="wrap note-page">
-    <svg class="i done" aria-hidden="true"><use href="#i-help" /></svg>
-    <h1><span>This page got away</span><span class="g">The link may be old or wrong</span></h1>
-    <a class="tlink" href="/">Go to the home page</a>
-  </div>
+  <Section inner="grid min-h-[52vh] content-center justify-items-start gap-6">
+    <svg class="i size-11 text-brand-500" aria-hidden="true"><use href="#i-help" /></svg>
+    <HeadingPair as="h1" size="title" first="This page got away" second="The link may be old or wrong" />
+    <Button variant="link" href="/">Go to the home page</Button>
+  </Section>
 </Base>
-
-<style is:global>
-  .note-page { display: grid; gap: 26px; justify-items: start; align-content: center; min-height: 52vh; padding-top: 40px; }
-  .note-page .done { width: 44px; height: 44px; color: var(--brand); }
-  .note-page h1 { font-size: clamp(40px, 5vw, 68px); }
-</style>

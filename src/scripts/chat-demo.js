@@ -2,10 +2,10 @@
    then a refund question goes to a person, who will reply by email and in the
    bubble. Words are the plugin's own (Services\ChatWidget::config()). Runs
    only while on screen; with reduced motion it shows the finished chat. */
-import { reduce, el, wash } from './kit.js';
+import { reduce, el } from './util.js';
 
 document.querySelectorAll('[data-chatdemo]').forEach(function (box) {
-	wash(box.querySelector('canvas'));
+
 	var log = box.querySelector('.bc-log'), form = box.querySelector('.bc-form');
 	var input = box.querySelector('.bc-in'), btn = box.querySelector('.bc-btn');
 	var comp = box.querySelector('.bc-comp span');

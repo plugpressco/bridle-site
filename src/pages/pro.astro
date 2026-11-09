@@ -1,59 +1,21 @@
 ---
-// /pro/: Bridle Pro's Black Friday deal. Three licences to pay once, the
-// price going up $20 every 20 sales, ending at Cyber Monday or sale 170
-// (src/data/deal.json). Until launch every button joins the waitlist
-// (CHECKOUT_OPEN in src/data/site.ts).
-import Base from '../layouts/Base.astro';
-import PageHero from '../components/PageHero.astro';
-import Features from '../components/Features.astro';
-import Price from '../components/Price.astro';
-import Faq from '../components/Faq.astro';
-import Closing from '../components/Closing.astro';
-import { PAGES } from '../data/pages';
-import { PRO_FAQ } from '../data/faq';
-import { SITE, PRO, PRO_INCLUDES, sitesLabel } from '../data/site';
-
-const page = PAGES.pro;
-const jsonLd = [
-  {
-    '@type': 'Product',
-    name: 'Bridle Pro',
-    description: 'Adds chat on your other sites, live chat, order lookups, missing answers, business hours and workflows to Bridle, the AI support agent for WordPress.',
-    brand: { '@type': 'Brand', name: SITE.name },
-    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pro/#price` })),
-  },
-  {
-    '@type': 'FAQPage',
-    mainEntity: PRO_FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  },
-];
+// /pro/ moved to /pricing/ (10 November 2026). The plugin's guide links and
+// older posts still point here, so this page sends them on at once, keeping
+// any #section. Not for search engines (noindex, out of the sitemap); the
+// canonical names the new address.
 ---
-<Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Bridle Pro', path: page.path }]}>
-  <PageHero
-    eyebrow="Bridle Pro · Black Friday"
-    title={['Pay once for Pro', 'Black Friday only']}
-    lead="Every Pro feature, updates for life. Early buyers pay less."
-    art="key"
-    cta={{ href: '#price', label: 'See the prices' }}
-    more={{ href: '#join', label: 'Join the waitlist' }}
-  />
-
-  <section class="block" id="price" aria-labelledby="h-price">
-    <div class="head">
-      <p class="eyebrow">Pick your licence</p>
-      <h2 id="h-price"><span>Pick how many sites</span><span class="g">Pay once. It goes up every 20 sales.</span></h2>
-    </div>
-    <div class="wrap"><Price /></div>
-  </section>
-
-  <section class="block" aria-labelledby="h-incl">
-    <div class="head">
-      <p class="eyebrow">In every licence</p>
-      <h2 id="h-incl"><span>All of Pro</span><span class="g">Whichever you pick</span></h2>
-    </div>
-    <div class="wrap"><Features items={PRO_INCLUDES} tone="blue" cols={4} /></div>
-  </section>
-
-  <Faq items={PRO_FAQ} title={['Questions', 'About the deal']} />
-  <Closing line1="Black Friday only" line2="Pay once, keep it" lead="Join the waitlist. We email you when the deal opens." source="pro" />
-</Base>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bridle pricing</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://bridle.to/pricing/" />
+    <meta http-equiv="refresh" content="0; url=/pricing/" />
+    <script is:inline>location.replace('/pricing/' + location.search + (location.hash === '#price' ? '#plans' : location.hash));</script>
+  </head>
+  <body>
+    <p>Bridle Pro and its prices are on <a href="/pricing/">bridle.to/pricing/</a>.</p>
+  </body>
+</html>

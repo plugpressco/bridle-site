@@ -1,0 +1,20 @@
+---
+// 2 What it does (08-copy.md §2): one big real screen, then the six as a
+// quiet list. One picture, more space (owner after v2: "too busy").
+import Shot from '../Shot.astro';
+const items = [
+  { name: 'Ready to send', text: 'Replies wait for you, already written.' },
+  { name: 'Shows its sources', text: 'Every reply shows where each fact came from.' },
+  { name: 'Knows your business', text: 'It reads your docs, pages, products and past replies.' },
+  { name: 'Sorts your mail', text: 'Receipts and newsletters go to Updates. Scams go to Spam.' },
+  { name: 'Answers on your site', text: 'A chat bubble answers visitors from the same docs.' },
+  { name: 'Sends when it’s sure', text: 'Turn on Auto and sure answers send after 15 minutes. Stop any of them.' },
+];
+---
+<section id="email" aria-labelledby="h-does">
+  <div class="opener"><h2 class="h2" id="h-does">Every email comes with a reply.</h2><p class="sub">Read it and send it. Or let the sure ones go out by themselves.</p></div>
+  <div class="panel big"><Shot name="inbox-groups" width={820} height={566} alt="Ready to send in Bridle: four replies with Draft ready, and a refund under Needs you." /></div>
+  <div class="flist">
+    {items.map((i) => <div><h3>{i.name}</h3><p>{i.text}</p></div>)}
+  </div>
+</section>

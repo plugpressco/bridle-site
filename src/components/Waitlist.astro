@@ -1,21 +1,24 @@
 ---
-// The waitlist form. Posts to /api/waitlist with fetch (src/scripts/waitlist.js),
-// or as a plain form without JavaScript, which lands on /thanks/.
+// The waitlist form, shown until launch (LAUNCHED in src/data/site.ts) where a
+// button would say "Get Bridle free". Posts to /api/waitlist with fetch
+// (src/scripts/waitlist.js), or as a plain form without JavaScript, which
+// lands on /thanks/. `note` is the line under it.
+import Button from './ui/Button.astro';
 import { TURNSTILE_SITEKEY } from '../data/site';
-interface Props { source: string; proof?: boolean }
-const { source, proof = true } = Astro.props;
+interface Props { source: string; note?: string; class?: string }
+const { source, note, class: cls } = Astro.props;
 ---
-<div data-form data-sitekey={TURNSTILE_SITEKEY || undefined}>
-  <form class="signup" action="/api/waitlist" method="post">
-    <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+<div class:list={['w-full max-w-[470px] [&.joined_.signup]:hidden [&_.share]:mt-3 [&_.share]:block [&_.share]:text-[15px] [&_.share]:text-muted-foreground [&_.share_:is(a,button)]:cursor-pointer [&_.share_:is(a,button)]:text-foreground [&_.share_:is(a,button)]:underline [&_.share_:is(a,button)]:decoration-input [&_.share_:is(a,button)]:underline-offset-3', cls]} data-form data-sitekey={TURNSTILE_SITEKEY || undefined}>
+  <form class="signup flex gap-1.5 rounded-card border border-input bg-card p-1.5 transition focus-within:border-ring focus-within:ring-4 focus-within:ring-ring/25 max-sm:flex-col" action="/api/waitlist" method="post">
+    <label class="absolute -left-[10000px] size-px overflow-hidden" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
     <input type="hidden" name="source" value={source} />
     <input type="hidden" name="ref" value="" />
-    <input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address" />
-    <button type="submit">Join the waitlist</button>
+    <input class="h-12 min-w-0 flex-1 bg-transparent px-3 text-[17px] text-foreground outline-none placeholder:text-gray" type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address" />
+    <Button type="submit" arrow>Join the waitlist</Button>
   </form>
-  <div class="ts"></div>
-  <p class="msg" role="status" aria-live="polite"></p>
-  {proof && <p class="proof"><img src="/fahim.jpg" alt="" width="24" height="24" /><span>Built by the team behind <a href="https://saddle.to">Saddle</a></span></p>}
+  <div class="ts mt-2.5 empty:hidden"></div>
+  <p class="msg mt-3 text-[15px] empty:hidden [&.err]:text-[#c2410c] in-[.joined]:m-0 in-[.joined]:flex in-[.joined]:min-h-15 in-[.joined]:items-center in-[.joined]:gap-2.5 in-[.joined]:rounded-card in-[.joined]:border in-[.joined]:border-border in-[.joined]:bg-card in-[.joined]:px-4 in-[.joined]:text-[16px] in-[.joined]:text-foreground [&_svg]:size-5 [&_svg]:text-brand-600" role="status" aria-live="polite"></p>
+  {note && <p class="proof by mt-3.5">{note}</p>}
 </div>
 
 <script>

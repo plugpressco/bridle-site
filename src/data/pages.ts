@@ -1,58 +1,91 @@
 // Each page's title, description and Markdown copy, used by the HTML pages,
 // their .md copies, llms.txt and llms-full.txt. Keep each Markdown copy in
 // step with its page: it must say the same thing, in the same plain words.
-import { SITE, AI, PRO, PRO_INCLUDES, DEMO, FREE_FEATURES, money, count, priceAt, sitesLabel, type Feature } from './site';
+import { SITE, AI, PRO, DEMO, LAUNCHED, WPORG_URL, money, count, priceAt, sitesLabel, type Feature } from './site';
+import { RIVALS, PEOPLE, CHECKED, monthly, money as cents } from './cost';
 import { FAQ, PRO_FAQ, type QA } from './faq';
 import { PRIVACY, TERMS, docMd } from './legal';
 import { GUIDES, GUIDES_INDEX, guideMd, guidesIndexMd } from './guides';
 
 const qa = (list: QA[]) => list.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
 const feats = (list: Feature[]) => list.map((f) => `- **${f.name}.** ${f.text}`).join('\n');
-const plans = PRO.plans.map((p, i) => `- **${sitesLabel(p.sites)}${i === 1 ? ' (our pick)' : ''}:** ${money(p.base)}, pay once. Updates and support for life, ${count(p.answers)} AI answers.`).join('\n');
+const plans = PRO.plans.map((p) => `- **${sitesLabel(p.sites)}:** ${money(p.base)}, pay once, with ${count(p.answers)} AI answers.`).join('\n');
 const ladder = PRO.steps.map((st, i) => `- Sales ${st.from} to ${st.to}: ${PRO.plans.map((p) => money(priceAt(p, i))).join(' / ')}`).join('\n');
-const waitlist = `Bridle is coming to WordPress.org soon. Join the waitlist at ${SITE.url}/#join and we email you on launch day.`;
+const waitlist = LAUNCHED
+  ? `Get Bridle free on WordPress.org: ${WPORG_URL}`
+  : `Bridle is coming to WordPress.org soon. Join the waitlist at ${SITE.url}/#join and we’ll email you the day it’s on WordPress.org.`;
+const at300 = monthly(300);
+const costLines = [`- Bridle, with Bridle AI: ${cents(at300.bridle)} a month`, ...RIVALS.map((r) => `- ${r.name} ${r.plan}: ${cents(at300[r.key])} a month (${r.source})`)].join('\n');
+const counted = `${PEOPLE} people, billed yearly. Prices checked on ${CHECKED} on each company’s pricing page: Help Scout Standard ($25 a person, $0.75 per AI answer), Intercom Essential ($29 a person, $0.99 per AI answer), Zendesk Suite Team ($55 a person, $1.50 to $2.00 per AI answer). Bridle counts one Bridle AI answer as $0.01 after the ${AI.free} free each month.`;
 
 export type PageInfo = { path: string; title: string; description: string; md: string };
 
 export const PAGES: Record<string, PageInfo> = {
   home: {
     path: '/',
-    title: 'Bridle: the AI support agent for WordPress',
+    title: 'Bridle: AI support agent for WordPress',
     description:
-      'Bridle answers your support email and website chat from your own docs, inside WordPress. The hard ones come to you. A free plugin, coming soon.',
-    md: `# AI writes the replies. You hold the reins.
+      'Bridle answers your support email and site chat from your own docs, checks every fact and hands the hard ones to you. Free for WordPress.',
+    md: `# Your support email answers itself. You check the hard ones.
 
-${SITE.definition}
+AI support agent for WordPress. Bridle writes each reply from your docs, checks every fact and hands you the ones it can’t answer.
 
 ${waitlist}
 
-## Every email comes with a reply
+Built by the team behind Saddle (${SITE.saddle}).
 
-Forward your support email to Bridle. Each email shows up in WordPress with a reply ready. You read it. You send it.
+## Every email comes with a reply.
 
-## A chat that answers, and calls you when it can’t
+Read it and send it. Or let the sure ones go out by themselves.
 
-- Answers from your docs
-- Never guesses
-- Sends the hard ones to you
+- **Ready to send.** Replies wait for you, already written.
+- **Shows its sources.** Every reply shows where each fact came from.
+- **Knows your business.** It reads your docs, pages, products and past replies.
+- **Sorts your mail.** Receipts and newsletters go to Updates. Scams go to Spam.
+- **Answers on your site.** A chat bubble answers visitors from the same docs.
+- **Sends when it’s sure.** Turn on Auto and sure answers send after 15 minutes. Stop any of them.
 
-More: ${SITE.url}/chat/
+## It checks before it speaks.
 
-## Works with Claude and ChatGPT
+No fact without a source. The hard ones go to you.
 
-Answer support right from the AI app you use. Nothing sends without you.
+Before a reply counts as ready, Bridle checks every quote and link against your docs, pages and products. If one doesn’t match, the reply waits for you.
 
-## Bridle: free for everyone
+Refunds, billing, legal questions and upset customers always go to a person, even in Auto.
 
-${feats(FREE_FEATURES)}
+The chat says it’s an AI. When it isn’t sure, it asks for an email address and you answer.
 
-## Bridle Pro: pay once
+## About a cent an answer.
 
-${feats(PRO.features)}
+Or nothing, with your own AI key.
 
-**Black Friday:** Bridle Pro, pay once from ${money(Math.min(...PRO.plans.map((p) => p.base)))}. Ends ${PRO.endsLabel}. More: ${SITE.url}/pro/
+Help desks charge $0.75 to $2.00 each time their AI solves a question, plus a monthly price per person. Bridle AI costs $10 for 1,000 answers, and the first ${AI.free} each month are free.
 
-## Questions
+At 300 AI answers a month, for ${PEOPLE} people:
+
+${costLines}
+
+${counted}
+
+## Start in three steps.
+
+All inside WordPress. No new app to learn.
+
+1. **Install Bridle.** Free from WordPress.org. Use Bridle AI, or connect your own AI key.
+2. **Forward your support email.** Keep your address. Bridle gives you one to forward to, with steps for Gmail and Outlook.
+3. **Turn on chat.** One switch puts the chat bubble on your site.
+
+Visitors load one small script, and only when chat is on. Replies are written in the background, never while a page loads.
+
+## Pay once for Bridle Pro.
+
+Only until Cyber Monday. Pro adds chat on your other sites, live chat with your hours, and order and licence lookups. ${money(PRO.plans[0].base)}, pay once, for 1 site. The price goes up ${money(PRO.rise)} every 20 sales. ${PRO.refundDays}-day refund. All plans: ${SITE.url}/pricing/
+
+## A note from the founder.
+
+Hi, I’m Fahim. We make WordPress plugins at PlugPress, the team behind Saddle and Mailpuff. Every day we answer the same questions by email. So we built Bridle for our own inbox. It writes the reply from our docs. We read it and send it. The hard ones stay with us. Bridle is free on WordPress.org, and it stays free. Pro pays for the work. Questions? Just reply. I read every email. Fahim Reza, founder, PlugPress (${SITE.email})
+
+## Questions, answered.
 
 ${qa(FAQ)}
 
@@ -60,7 +93,7 @@ ${qa(FAQ)}
 
 - Live demo: ${SITE.url}/demo/
 - Bridle Chat: ${SITE.url}/chat/
-- Bridle Pro: ${SITE.url}/pro/
+- Pricing: ${SITE.url}/pricing/
 - Guides: ${SITE.url}/guides/
 - Privacy: ${SITE.url}/privacy/
 - Made by ${SITE.company} (${SITE.companyUrl}), the team behind Saddle (${SITE.saddle}). Email: ${SITE.email}
@@ -126,37 +159,77 @@ You reply from your Inbox. They get it anywhere.
 
 ${feats(PRO.features.slice(0, 2))}
 
-More: ${SITE.url}/pro/
+More: ${SITE.url}/pricing/
 `,
   },
-  pro: {
-    path: '/pro/',
-    title: 'Bridle Pro: pay once, Black Friday only',
+  pricing: {
+    path: '/pricing/',
+    title: 'Bridle pricing: free, or Pro pay once',
     description:
-      'Bridle Pro for Black Friday: pay once and keep it. $49 for 1 site, $79 for 3, $149 for 10, with AI answers and updates for life. Ends November 30.',
-    md: `# Bridle Pro: pay once, Black Friday only
+      'Bridle is free. Bridle Pro is pay once until Cyber Monday: $49 for 1 site, $79 for 3, $149 for 10, AI answers included. 30-day refund.',
+    md: `# Free to use. Pay once for Pro.
 
-Every Pro feature, updates for life. Early buyers pay less.
+Bridle is free on WordPress.org. Bridle Pro adds more, and until Cyber Monday you pay for it once.
 
 ${waitlist}
 
-## Pick how many sites
+## Three ways to pay
 
-The Black Friday deal ends on ${PRO.endsLabel} (11:59 pm New York time), or sooner if all ${PRO.total} sell. First ${PRO.first.to} sales at these prices. Then all three go up ${money(PRO.rise)} every 20 sales:
+- **Bridle: $0, free for good.** Sorting, reply drafts, fact checks, Auto, the chat bubble and AI apps. On any number of sites.
+- **Bridle AI: ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)} answers.** For Bridle without your own AI key. The first ${AI.free} answers each month are free. Bigger packs: ${AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answers)}`).join(', ')}. Packs never run out. Buy inside Bridle when you need more.
+- **Bridle Pro, pay once (Black Friday).** Everything in Bridle, plus chat on your other sites, live chat, order lookups, missing answers and workflows.
 
 ${plans}
 
-How the price steps up:
+## Pay once. Keep it for life.
+
+Until Cyber Monday (Monday, ${PRO.endsLabel}, at 11:59 pm New York time), or until ${PRO.total} are sold. The first ${PRO.first.to} sales at these prices, then all three go up ${money(PRO.rise)} every 20 sales:
 
 ${ladder}
 
-After the deal, Pro is sold by the year.
+Updates and support for life. ${PRO.refundDays}-day refund. After the deal, Pro is sold by the year.
 
-## In every licence
+## What you get with Pro.
 
-${feats(PRO_INCLUDES)}
+- **Chat on other sites.** Paste one line on any site. Chats come to this inbox.
+- **Live chat.** Jump into a chat while the visitor is still there. Set your hours.
+- **Orders and licences.** Replies can say where an order is or if a licence is active. WooCommerce, Easy Digital Downloads, Polar and Freemius.
+- **Missing answers.** See what it couldn’t answer. Turn a question into a doc in one click.
+- **Workflows.** A nudge when someone waits too long. Quiet chats close by themselves.
+- **AI answers included.** ${PRO.plans.map((p) => count(p.answers)).join(', ').replace(/, ([^,]*)$/, ' or $1')} with your plan. Top up from ${money(AI.topUpFrom)}.
 
-## Questions
+## Compare plans.
+
+Everything that answers your customers is free.
+
+| | Bridle | Bridle Pro |
+|---|---|---|
+| Email: sorting, reply drafts, fact checks, Auto, rewrite and translate | Yes | Yes |
+| Chat bubble on this site | Yes | Yes |
+| Chat on your other sites | | Yes |
+| Live chat and business hours | | Yes |
+| Help docs (Bridle KB, free plugin) | Yes | Yes |
+| WooCommerce customer card | Yes | Every order and subscription |
+| Easy Digital Downloads, Polar and Freemius lookups | | Yes |
+| Missing answers, with “write a doc” | | Yes |
+| Teammates | As many as you like | As many as you like |
+| AI apps (Claude, ChatGPT) over MCP | Yes | Yes |
+| Late-reply nudges, auto-resolve, share new mail | | Yes |
+| Your own AI key | No limit | No limit |
+| Bridle AI answers | ${AI.free} free a month | ${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included |
+| Updates | From WordPress.org | For life |
+| Support | WordPress.org forum | By email, for life |
+| Price | $0 | ${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once |
+
+## About a cent an answer.
+
+At 300 AI answers a month:
+
+${costLines}
+
+How we counted: ${counted}
+
+## Questions about paying.
 
 ${qa(PRO_FAQ)}
 `,

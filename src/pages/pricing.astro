@@ -1,0 +1,47 @@
+---
+// /pricing/ (design v3, approved 10 November 2026). Copy word for word from
+// planning/landing/pages/pricing/08-copy.md: three ways to pay, the deal,
+// what Pro adds, compare plans, the cost next to others, questions about
+// paying. Bridle Pro is pay once until Cyber Monday or sale 170
+// (src/data/deal.json); until launch every buy button joins the waitlist
+// (LAUNCHED in src/data/site.ts). /pro/ redirects here.
+import Base from '../layouts/Base.astro';
+import Plans from '../components/pricing/Plans.astro';
+import Ladder from '../components/pricing/Ladder.astro';
+import ProAdds from '../components/pricing/ProAdds.astro';
+import Compare from '../components/pricing/Compare.astro';
+import Cost from '../components/Cost.astro';
+import Faq from '../components/ui/Faq.astro';
+import { PAGES } from '../data/pages';
+import { PRO_FAQ } from '../data/faq';
+import { SITE, PRO, sitesLabel } from '../data/site';
+
+const page = PAGES.pricing;
+const jsonLd = [
+  {
+    '@type': 'Product',
+    name: 'Bridle Pro',
+    description: 'Adds chat on your other sites, live chat, order and licence lookups, missing answers and workflows to Bridle, the AI support agent for WordPress.',
+    brand: { '@type': 'Brand', name: SITE.name },
+    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pricing/#plans` })),
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: PRO_FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Pricing', path: page.path }]}>
+  <div class="wrap stack-sections">
+    <Plans />
+    <Ladder />
+    <ProAdds />
+    <Compare />
+    <Cost id="how" counted />
+    <Faq items={PRO_FAQ} title="Questions about paying." id="questions" />
+  </div>
+</Base>
+
+<script>
+  import '../scripts/deal.js';
+</script>

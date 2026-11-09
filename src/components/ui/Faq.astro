@@ -1,0 +1,23 @@
+---
+// Questions (design v3): the title on the left, one list on the right with
+// 1 px row lines, the first answer open. Native <details>, so the answers stay
+// in the HTML for search and AI apps (FAQPage JSON-LD on the page). A
+// question with an id can be linked to (/#ai-apps opens it, src/scripts/nav.js).
+import type { QA } from '../../data/faq';
+import { SITE } from '../../data/site';
+interface Props { items: QA[]; title: string; id?: string }
+const { items, title, id = 'faq' } = Astro.props;
+---
+<section id={id} aria-labelledby={`h-${id}`}>
+  <div class="two">
+    <div><h2 class="h2" id={`h-${id}`}>{title}</h2><p class="sub">Can’t find yours? <a class="lnk text-[length:inherit]" href={`mailto:${SITE.email}`}>Email us.</a></p></div>
+    <div class="faq">
+      {items.map((f, i) => (
+        <details open={i === 0} id={f.id}>
+          <summary>{f.q}<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

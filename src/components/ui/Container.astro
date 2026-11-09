@@ -1,0 +1,7 @@
+---
+// One content width for everything: the menu, every section and the footer
+// share these edges (1200 px of content, 24 px gutters).
+interface Props { class?: string; [attr: string]: unknown }
+const { class: cls, ...attrs } = Astro.props;
+---
+<div class:list={['wrap w-full', cls]} {...attrs}><slot /></div>

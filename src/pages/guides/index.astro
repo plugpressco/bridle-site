@@ -1,27 +1,26 @@
 ---
 // /guides/: every guide, one line each.
 import Base from '../../layouts/Base.astro';
+import Section from '../../components/ui/Section.astro';
+import HeadingPair from '../../components/ui/HeadingPair.astro';
 import { GUIDES } from '../../data/guides';
 import { PAGES } from '../../data/pages';
 const page = PAGES.guides;
 ---
-<Base title={page.title} description={page.description} crumbs={[{ name: 'Guides', path: page.path }]}>
-  <div class="wrap guides">
-    <header class="prose">
-      <p class="eyebrow">Guides</p>
-      <h1><span>Answer support with Bridle</span><span class="g">One job at a time</span></h1>
-      <p class="lead">{GUIDES.length} short guides. What free Bridle does, how to set it up, and what Pro adds.</p>
-    </header>
-    <ul class="list">
+<Base title={page.title} description={page.description} waitlist={false} crumbs={[{ name: 'Guides', path: page.path }]}>
+  <Section pad="top">
+    <HeadingPair as="h1" size="title" eyebrow="Guides" first="Answer support with Bridle" second="One job at a time" lead={`${GUIDES.length} short guides. What free Bridle does, how to set it up, and what Pro adds.`} />
+    <ul class="mt-10 max-w-[880px] border-t border-border md:mt-14">
       {GUIDES.map((g, i) => (
-        <li>
-          <a href={`/guides/${g.slug}/`}>
-            <span class="num">0{i + 1}</span>
-            <b>{g.label}</b>
-            <span>{g.summary}</span>
+        <li class="border-b border-border">
+          <a class="group grid grid-cols-[32px_minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-1 py-5 text-foreground no-underline sm:grid-cols-[48px_minmax(0,1fr)_auto] sm:px-1 sm:py-6" href={`/guides/${g.slug}/`}>
+            <span class="row-span-2 font-mono text-[13px] font-medium text-brand-600">0{i + 1}</span>
+            <b class="text-[19px] font-medium tracking-[-0.01em] sm:text-[21px]">{g.label}</b>
+            <span class="row-span-2 self-center text-muted-foreground transition-transform group-hover:translate-x-[3px] group-hover:text-foreground" aria-hidden="true">→</span>
+            <span class="text-[16.5px] text-muted-foreground">{g.summary}</span>
           </a>
         </li>
       ))}
     </ul>
-  </div>
+  </Section>
 </Base>

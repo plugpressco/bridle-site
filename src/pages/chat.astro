@@ -3,6 +3,11 @@
 // claim here is in the plugin's AGENTS.md §6 "Bridle Chat".
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import Section from '../components/ui/Section.astro';
+import HeadingPair from '../components/ui/HeadingPair.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+import Points from '../components/Points.astro';
 import ChatDemo from '../components/ChatDemo.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
@@ -20,74 +25,50 @@ const after = [
   { icon: 'i-clock', title: 'A real wait time', text: 'Based on how fast you reply.' },
 ];
 const handled = ['Says it is an AI', 'Blocks spam bots', 'Your colour, your icon'];
+const opener = 'mb-10 md:mb-14';
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
   <PageHero
     eyebrow="Bridle Chat · free"
     title={['A chat that answers', 'From what you wrote']}
     lead="It answers visitors from your docs. The rest come to you."
-    art="chat"
+    shot={{ name: 'chat-answer', width: 400, height: 680, alt: 'Bridle’s chat on a website, answering a question with a numbered source.' }}
     more={{ href: '#demo', label: 'See it answer' }}
   />
 
-  <section class="block" id="demo" aria-labelledby="h-demo">
-    <div class="head">
-      <p class="eyebrow">On your site</p>
-      <h2 id="h-demo"><span>Answers in seconds</span><span class="g">Or finds you</span></h2>
-    </div>
-    <div class="wrap"><ChatDemo /></div>
-  </section>
+  <Section id="demo" labelledby="h-demo">
+    <HeadingPair id="h-demo" eyebrow="On your site" first="Answers in seconds" second="Or finds you" class={opener} />
+    <ChatDemo />
+  </Section>
 
-  <section class="block" aria-labelledby="h-how">
-    <div class="head">
-      <p class="eyebrow">How it works</p>
-      <h2 id="h-how"><span>Look, check, answer</span><span class="g">Or pass it to you</span></h2>
-    </div>
-    <div class="wrap flush">
-      <div class="grid">
-        {how.map((h, i) => <div><span class="num">0{i + 1}</span><h3>{h.title}</h3><p>{h.text}</p></div>)}
-      </div>
-    </div>
-  </section>
+  <Section labelledby="h-how">
+    <HeadingPair id="h-how" eyebrow="How it works" first="Look, check, answer" second="Or pass it to you" class={opener} />
+    <Points items={how} numbered />
+  </Section>
 
-  <section class="block" aria-labelledby="h-after">
-    <div class="head">
-      <p class="eyebrow">When you take over</p>
-      <h2 id="h-after"><span>You reply from your Inbox</span><span class="g">They get it anywhere</span></h2>
-    </div>
-    <div class="wrap flush">
-      <div class="grid">
-        {after.map((a) => <div><span class="ico"><svg class="i"><use href={`#${a.icon}`} /></svg></span><h3>{a.title}</h3><p>{a.text}</p></div>)}
-      </div>
-    </div>
-  </section>
+  <Section labelledby="h-after">
+    <HeadingPair id="h-after" eyebrow="When you take over" first="You reply from your Inbox" second="They get it anywhere" class={opener} />
+    <Points items={after} />
+  </Section>
 
-  <section class="block" aria-labelledby="h-handled">
-    <div class="wrap duo">
-      <div>
-        <p class="eyebrow">Built in</p>
-        <h2 id="h-handled"><span>Already done</span><span class="g">Just switch it on</span></h2>
-      </div>
-      <ul class="ticks">{handled.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
-    </div>
-  </section>
+  <Section labelledby="h-handled" inner="grid items-end gap-8 md:grid-cols-2">
+    <HeadingPair id="h-handled" eyebrow="Built in" first="Already done" second="Just switch it on" />
+    <ul class="grid gap-4 md:grid-cols-2 md:gap-x-7">{handled.map((f) => <li class="flex items-start gap-2.5 text-[16.5px] leading-snug"><svg class="i mt-[3px] size-[17px] text-brand-600"><use href="#i-check" /></svg>{f}</li>)}</ul>
+  </Section>
 
-  <section class="block" aria-labelledby="h-pro">
-    <div class="head">
-      <p class="eyebrow">With Bridle Pro</p>
-      <h2 id="h-pro"><span>One Inbox for every site</span><span class="g">And live chat too</span></h2>
-    </div>
-    <div class="wrap duo">
+  <Section labelledby="h-pro">
+    <HeadingPair id="h-pro" eyebrow="With Bridle Pro" first="One Inbox for every site" second="And live chat too" class={opener} />
+    <div class="grid gap-5 md:grid-cols-2">
       {PRO.features.slice(0, 2).map((f) => (
-        <div class="card">
-          <span class="ico blue"><svg class="i"><use href={`#${f.icon}`} /></svg></span>
-          <h3>{f.name}</h3>
-          <p>{f.text}</p>
-          <a class="tlink blue" href="/pro/">See Bridle Pro</a>
-        </div>
+        <Card class="flex flex-col">
+          <span class="mb-5 grid size-10 place-items-center rounded-control bg-brand-100 text-brand-600"><svg class="i size-[19px]" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
+          <h3 class="text-[21px] font-medium tracking-[-0.01em]">{f.name}</h3>
+          <p class="mt-2 text-[16.5px] text-muted-foreground">{f.text}</p>
+          <Button variant="link" href="/pricing/" class="mt-auto self-start pt-4">See Bridle Pro ›</Button>
+        </Card>
       ))}
     </div>
-  </section>
+  </Section>
 
-  <Closing line1="Let the chat answer" line2="You take the hard ones" source="chat" />
+  <Closing title="Let the chat answer." second="You take the hard ones." source="chat" wrap />
 </Base>

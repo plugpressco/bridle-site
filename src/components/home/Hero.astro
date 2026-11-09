@@ -1,25 +1,60 @@
 ---
-// The dot field: support mail drifts in as a tangle, threads through the mark
-// and leaves as three calm reins (src/scripts/home.js, hero()).
+// 1 Hero (08-copy.md §1, headline A): the copy on the left; on the right the
+// one moving picture, the product working: an email arrives, the reply writes
+// itself with two checked sources, Send, then a refund goes to Needs you.
+// Drawn at the app's own size from its styles; flat; a pause button; with
+// reduced motion it rests on its last frame (src/scripts/hero.js).
+import Button from '../ui/Button.astro';
 import Waitlist from '../Waitlist.astro';
+import { LAUNCHED, WPORG_URL } from '../../data/site';
+const use = (id: string) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
 ---
-<div class="hero" id="hero">
-  <canvas class="dots" aria-hidden="true"></canvas>
-  <div class="wrap intro" data-mask>
-    <p class="eyebrow r" data-mask>AI support for <b>WordPress</b></p>
-    <h1 class="r" style="--d:.05s"><span data-mask>AI writes the replies</span><span class="g" data-mask>You hold the reins</span></h1>
-    <div class="under">
-      <p class="lead r" style="--d:.12s" data-mask>It answers your support email and chat. The hard ones come to you.</p>
-      <div class="r" style="--d:.18s" data-mask><Waitlist source="hero" /><a class="tlink demo-link" href="/demo/">Try the live demo</a></div>
-    </div>
+<section class="hero" aria-labelledby="h-hero">
+  <div class="copy">
+    <p class="kicker">AI support agent for WordPress</p>
+    <h1 class="h1" id="h-hero">Your support email answers itself. <span class="soft">You check the hard ones.</span></h1>
+    <p class="lead">Bridle writes each reply from your docs, checks every fact and hands you the ones it can’t answer.</p>
+    {LAUNCHED ? (
+      <>
+        <div class="ctas"><Button size="lg" arrow href={WPORG_URL}>Get Bridle free</Button><Button size="lg" variant="soft" href="/demo/">Try the live demo</Button></div>
+        <p class="by">Built by the team behind Saddle.</p>
+      </>
+    ) : (
+      <>
+        <Waitlist source="hero" />
+        <div class="ctas -mt-2"><a class="lnk" href="/demo/">Try the live demo ›</a></div>
+        <p class="by">We’ll email you the day it’s on WordPress.org. Built by the team behind Saddle.</p>
+      </>
+    )}
   </div>
+  <div class="panel hero-pic" role="img" aria-label="An email comes in, Bridle drafts a reply with its sources, and a refund question goes to a person.">
+    <div class="stage ui loop" id="loop" aria-hidden="true">
+      <div class="letter m1">
+        <div class="lhead"><svg class="face" data-seed="maya@example.com" viewBox="0 0 32 32"></svg><div class="who"><b>Maya Chen</b><span>to support@acmesliders.com</span></div><span class="when">9:12 AM</span></div>
+        <p class="lbody">Hi! Where is my order? I bought it on Monday.</p>
+      </div>
+      <div class="draft d1">
+        <div class="dhead"><svg class="face sm" data-bot viewBox="0 0 32 32"></svg><div><b>Bridle</b><span class="meta">Draft · High confidence · Verified</span></div><span class="chips"><span class="chip ready c-ready"><Fragment set:html={use('d-spark')} />Draft ready</span><span class="chip sent c-sent"><Fragment set:html={use('d-check')} />Sent</span></span></div>
+        <div class="typing"><i></i><i></i><i></i></div>
+        <p class="dbody">Hi Maya, orders ship within 2 working days<sup>1</sup>. You can track yours from the link in your receipt<sup>2</sup>.</p>
+        <div class="srcs-wrap grid gap-2"><span class="hide-src">Hide sources</span>
+          <div class="srcs">
+            <div class="src"><span class="n">1</span><b>Help doc <small>· Shipping times</small></b><em>✓ Checked</em></div>
+            <div class="src"><span class="n">2</span><b>Help doc <small>· Where is my order?</small></b><em>✓ Checked</em></div>
+          </div>
+        </div>
+        <div class="dacts"><span class="send"><Fragment set:html={use('d-send')} />Send as is</span><span><Fragment set:html={use('d-edit')} />Edit</span><span><Fragment set:html={use('d-wand')} />Rewrite</span><span><Fragment set:html={use('d-redo')} />Redraft</span><span class="right"><Fragment set:html={use('d-trash')} />Discard</span></div>
+      </div>
+      <div class="m2">
+        <p class="glabel">Needs you <span>1</span></p>
+        <div class="irow"><svg class="face" data-seed="tom@shop.test" viewBox="0 0 32 32"></svg><div class="t"><b>Tom Price<small>Refund for last month</small></b><span><span class="chip need c-need"><Fragment set:html={use('d-alert')} />Refund</span>Can I get a refund for last month?</span></div><time>2m</time></div>
+      </div>
+    </div>
+    <button type="button" class="pause" id="pause" aria-label="Pause the animation"><svg aria-hidden="true"><use href="#d-pause" /></svg></button>
+  </div>
+</section>
 
-  <figure class="band" id="band" style="margin:0">
-    <figcaption class="sr">Mail comes in as a mess of dots. Bridle sorts it into three rows: answered, waiting for you, and filed away.</figcaption>
-    <div class="gate" aria-hidden="true"><svg><use href="#mark-gate" /></svg></div>
-    <div class="lane" data-k="sent" aria-hidden="true"><i></i><span>Answered</span><b>0</b></div>
-    <div class="lane" data-k="mine" aria-hidden="true"><i></i><span>Waits for you</span><b>0</b></div>
-    <div class="lane" data-k="filed" aria-hidden="true"><i></i><span>Filed away</span><b>0</b></div>
-    <div class="tip" aria-hidden="true"></div>
-  </figure>
-</div>
+<script>
+  import '../../scripts/faces.js';
+  import '../../scripts/hero.js';
+</script>

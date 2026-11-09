@@ -1,33 +1,84 @@
 ---
-// The menu: the icon, three plain links and the launch pill, which goes to
-// the waitlist. Calm chrome, no dropdowns (the app's top bar has none either).
-import Brand from './Brand.astro';
+// The menu (design v3; the owner: "i love helpscout menu.. dont copy but
+// brainstorm on this"): a floating white capsule, flat, that grows into a
+// rounded panel when Product or Resources opens, and dims the page behind.
+// Each item is a blue name and one plain line. On phones a Menu button opens
+// a full-height sheet. Esc closes either; focus stays inside while open
+// (src/scripts/nav.js).
+import Mark from './Brand.astro';
+import { SITE, LAUNCHED, WPORG_URL } from '../data/site';
 interface Props { join?: string }
-const { join = '#join' } = Astro.props;
+const { join = '/#join' } = Astro.props;
 const path = Astro.url.pathname;
-const links = [
-  { href: '/#how', label: 'How it works', wide: true },
-  { href: '/chat/', label: 'Chat' },
-  { href: '/demo/', label: 'Demo', wide: true },
-  { href: '/pro/', label: 'Pro' },
+const product = [
+  { label: 'Email', text: 'Answers your support email', href: '/#email' },
+  { label: 'Chat', text: 'Answers visitors on your site', href: '/chat/' },
+  { label: 'Docs', text: 'A help center your AI reads', href: '/guides/knowledge-gaps/' },
+  { label: 'AI apps', text: 'Claude and ChatGPT work your inbox', href: '/#ai-apps' },
 ];
-
+const resources = [
+  [
+    { label: 'Guides', text: 'Set up each part, step by step', href: '/guides/' },
+    { label: 'Live demo', text: 'Try Bridle in your browser', href: '/demo/' },
+  ],
+  [
+    { label: 'About PlugPress', text: 'The team behind Saddle and Mailpuff', href: SITE.companyUrl },
+    { label: 'Contact', text: 'Email us. A person answers.', href: `mailto:${SITE.email}` },
+  ],
+];
+const get = LAUNCHED ? { label: 'Get Bridle free', href: WPORG_URL } : { label: 'Join the waitlist', href: join };
+const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ---
-<header class="nav" data-nav>
-  <div class="wrap">
-    <Brand />
-    <nav class="links" aria-label="Main">
-      {links.map((l) => <a href={l.href} class:list={{ wide: l.wide }} aria-current={path === l.href || (l.href !== '/' && !l.href.includes('#') && path.startsWith(l.href)) ? 'page' : undefined}>{l.label}</a>)}
-    </nav>
-    <a class="soon" href={join}><i aria-hidden="true"></i><span>Launching soon<em>, join the waitlist</em></span></a>
-  </div>
+<header class="navwrap">
+  <nav class="cap" id="cap" aria-label="Main">
+    <div class="bar">
+      <Mark />
+      <div class="links">
+        <button type="button" class="trig" id="t-product" aria-expanded="false" aria-controls="m-product">Product <Fragment set:html={down} /></button>
+        <a href="/pricing/" aria-current={path.startsWith('/pricing/') ? 'page' : undefined}>Pricing</a>
+        <button type="button" class="trig" id="t-resources" aria-expanded="false" aria-controls="m-resources">Resources <Fragment set:html={down} /></button>
+      </div>
+      <div class="acts">
+        <a class="btn inline-flex h-10 items-center rounded-control bg-brand-100 px-3.5 text-[15px] font-medium text-brand-700 no-underline hover:bg-brand-200" href="/demo/">Try the demo</a>
+        <a class="btn group/btn inline-flex h-10 items-center gap-2 rounded-control bg-brand-600 px-3.5 text-[15px] font-medium text-white no-underline hover:bg-brand-700" href={get.href}>{get.label} <span class="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true">›</span></a>
+      </div>
+      <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="sheet">Menu</button>
+    </div>
+    <div class="drop" id="drop"><div class="drop-in">
+      <div class="mpanel" id="m-product" hidden>
+        <div class="mcols">
+          {product.map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}
+        </div>
+        <div class="mrow">
+          <a class="mcard" href="/demo/"><span class="thumb"><picture><source srcset="/img/inbox-groups.avif" type="image/avif" /><img src="/img/inbox-groups.webp" alt="" width="820" height="566" loading="lazy" decoding="async" /></picture></span><span><b>Try the live demo</b><span>A real WordPress in your browser</span></span></a>
+          <div class="mlinks"><a href="/pricing/">Bridle Pro ›</a><a href="/guides/">Guides ›</a></div>
+        </div>
+      </div>
+      <div class="mpanel" id="m-resources" hidden>
+        <div class="mcols two-c">
+          {resources.map((col) => <div class="grid gap-0.5">{col.map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>)}
+        </div>
+        <div class="mcards2">
+          <a class="mc blue" href="/pricing/"><b>Black Friday deal</b><span>Pay once for Bridle Pro. Only until Cyber Monday.</span></a>
+          <a class="mc plain" href={SITE.saddle}><b>Built by the team behind Saddle.</b><span>Saddle links WordPress to Claude, ChatGPT and Cursor.</span></a>
+        </div>
+      </div>
+    </div></div>
+  </nav>
 </header>
+<div class="dim" id="dim" hidden></div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="sheet-top"><Mark /><button type="button" class="close-btn" id="sheet-close">Close</button></div>
+  <div><h4>Product</h4>{product.map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
+  <div><h4>Pricing</h4><a class="mitem" href="/pricing/"><b>Bridle Pro</b><span>Pay once for Bridle Pro. Only until Cyber Monday.</span></a></div>
+  <div><h4>Resources</h4>{resources.flat().map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
+  <div class="grid gap-2.5">
+    <a class="btn inline-flex h-12 items-center justify-center gap-2 rounded-control bg-brand-600 text-[16px] font-medium text-white no-underline" href={get.href}>{get.label} <span aria-hidden="true">›</span></a>
+    <a class="btn inline-flex h-12 items-center justify-center rounded-control bg-brand-100 text-[16px] font-medium text-brand-700 no-underline" href="/demo/">Try the demo</a>
+  </div>
+</div>
 
 <script>
-  const nav = document.querySelector<HTMLElement>('[data-nav]');
-  if (nav) {
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 4);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
+  import '../scripts/nav.js';
 </script>

@@ -1,28 +1,24 @@
 ---
 // Bridle Chat as a visitor sees it, drawn like the real bubble (the plugin's
 // src/chat): an answer with its source, then a refund handed to a person.
-// Played by src/scripts/chat-demo.js.
-import '../styles/demo.css';
+// Played by src/scripts/chat-demo.js; the messages it adds are styled in
+// site.css (.cpanel). Flat, in a soft blue panel (design v3: no shadows).
+const icon = 'fill-none stroke-current [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:2]';
 ---
-<div class="cpanel" data-chatdemo>
-  <canvas class="dots" aria-hidden="true"></canvas>
-  <figure class="site" aria-label="A visitor asks the chat bubble on a store's site. It answers from a help page and shows the source. Asked for a refund, it hands the chat to a person and asks where to send the reply." style="margin:0">
-    <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>lumenslider.com/pricing</span></div>
-    <div class="page" aria-hidden="true"><b></b><i></i><i></i><i class="s"></i><u></u><u></u><u></u></div>
-  </figure>
-  <div class="bc" aria-hidden="true">
-    <div class="bc-panel">
-      <div class="bc-head">
-        <span class="bc-ava">L</span>
-        <div><b>Lumen Slider</b><small>AI assistant · a person can help</small></div>
-        <svg class="bc-ico" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="18.5" cy="12" r="1.3" fill="currentColor"/></svg>
-        <svg class="bc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>
+<div class="cpanel relative isolate flex h-[600px] items-center justify-center overflow-hidden rounded-panel bg-brand-50 px-3 sm:h-[640px]" data-chatdemo role="img" aria-label="A visitor asks the chat bubble on a store's site. It answers from a help page and shows the source. Asked for a refund, it hands the chat to a person and asks where to send the reply.">
+  <div class="flex w-full flex-col items-end gap-3 text-[14.5px] leading-[1.45] sm:w-[360px]" aria-hidden="true">
+    <div class="flex h-[520px] w-full flex-col overflow-hidden rounded-[16px] border border-border bg-card">
+      <div class="flex items-center gap-[11px] bg-brand-600 py-3.5 pr-3.5 pl-4 text-white">
+        <span class="grid size-[34px] flex-none place-items-center rounded-full bg-white/20 text-[14px] font-semibold">L</span>
+        <div class="min-w-0 flex-1 leading-[1.3]"><b class="block text-[15px] font-semibold">Lumen Slider</b><small class="flex items-center gap-1.5 whitespace-nowrap text-[12px] opacity-85 before:size-[7px] before:rounded-full before:bg-[#4ade80] before:content-['']">AI assistant · a person can help</small></div>
+        <svg class="size-[18px] opacity-90" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="18.5" cy="12" r="1.3" fill="currentColor"/></svg>
+        <svg class:list={['size-[18px] opacity-90', icon]} viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>
       </div>
-      <div class="bc-log"></div>
-      <div class="bc-form"><small>Where should we send the reply?</small><span class="bc-in"></span><span class="bc-btn">Send to a person</span></div>
-      <div class="bc-comp"><span>Ask a question…</span><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18.5V6M6.5 11.5 12 6l5.5 5.5"/></svg></b></div>
+      <div class="bc-log flex flex-1 flex-col gap-2 overflow-hidden bg-card px-3.5 pt-4 pb-2.5"></div>
+      <div class="bc-form gap-2 border-t border-border bg-card px-3.5 py-3"><small class="text-[13px] text-muted-foreground">Where should we send the reply?</small><span class="bc-in block h-[38px] rounded-[12px] border border-brand-600 px-[11px] py-2"></span><span class="bc-btn justify-self-end rounded-[12px] bg-brand-600 px-3.5 py-[7px] font-medium text-white transition-transform">Send to a person</span></div>
+      <div class="bc-comp mx-3 mt-1 mb-3 flex items-center gap-1.5 rounded-[22px] border border-border py-[5px] pr-[5px] pl-3.5"><span class="min-w-0 flex-1 overflow-hidden whitespace-nowrap">Ask a question…</span><b class="grid size-8 flex-none place-items-center rounded-full bg-brand-600 text-white"><svg class:list={['size-[17px]', icon]} viewBox="0 0 24 24"><path d="M12 18.5V6M6.5 11.5 12 6l5.5 5.5"/></svg></b></div>
     </div>
-    <span class="bc-launch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9.5 6 6 6-6"/></svg></span>
+    <span class="hidden size-[52px] place-items-center rounded-full bg-brand-600 text-white sm:grid"><svg class:list={['size-[26px]', icon]} viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></svg></span>
   </div>
 </div>
 

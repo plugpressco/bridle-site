@@ -1,29 +1,29 @@
 ---
-// The dark closing card on every page: the waitlist, and dots that settle
-// into the mark (settle() in src/scripts/kit.js).
+// The closing call (home 08-copy.md §9, and the end of the inner pages): a
+// soft blue panel with the next step and Bridle Chat open beside it. Before
+// launch the button is the waitlist form (id="join", the menu's target).
+import Button from './ui/Button.astro';
 import Waitlist from './Waitlist.astro';
-interface Props { line1?: string; line2?: string; lead?: string; source?: string }
+import { LAUNCHED, WPORG_URL } from '../data/site';
+interface Props { title?: string; second?: string; sub?: string; source?: string; wrap?: boolean }
 const {
-  line1 = 'Support in minutes',
-  line2 = 'Not your whole morning',
-  lead = 'Free on WordPress.org soon. We email you the day it’s out.',
+  title = 'Try it on your own inbox.',
+  second,
+  sub = 'Install it, forward one address, and see your first reply.',
   source = 'footer',
+  wrap = false,
 } = Astro.props;
+const Outer = wrap ? 'div' : Fragment;
+const outer = wrap ? { class: 'wrap pt-9 pb-[72px] md:pt-[60px] md:pb-[120px]' } : {};
 ---
-<section class="block" id="join" aria-labelledby="h-join">
-  <div class="closing" data-closing>
-    <canvas class="dots" aria-hidden="true"></canvas>
-    <div>
-      <h2 id="h-join"><span>{line1}</span><span class="g">{line2}</span></h2>
-      <p class="lead">{lead}</p>
-      <Waitlist source={source} />
+<Outer {...outer}><section class="panel" id="join" aria-labelledby="h-close">
+  <div class="closing">
+    <div class="txt">
+      <div><h2 class="h2" id="h-close">{title}{second && <> <span class="soft">{second}</span></>}</h2><p class="sub">{sub}</p></div>
+      {LAUNCHED
+        ? <div class="ctas"><Button size="lg" arrow href={WPORG_URL}>Get Bridle free</Button><Button size="lg" variant="white" href="/demo/">Try the live demo</Button></div>
+        : <><Waitlist source={source} /><div class="ctas -mt-2"><a class="lnk" href="/demo/">Try the live demo ›</a></div></>}
     </div>
-    <div class="markart" aria-hidden="true"></div>
+    <div class="chat"><div class="win"><picture><source srcset="/img/chat-answer.avif" type="image/avif" /><img src="/img/chat-answer.webp" width="400" height="680" alt="Bridle’s chat on a website, answering a question with a numbered source." loading="lazy" decoding="async" /></picture></div></div>
   </div>
-</section>
-
-<script>
-  import { settle } from '../scripts/kit.js';
-  const box = document.querySelector<HTMLElement>('[data-closing]');
-  if (box) settle(box, box.querySelector('.markart'), { palette: ['#2e2e2c', '#679eee', '#a7c5f2'] });
-</script>
+</section></Outer>

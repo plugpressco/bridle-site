@@ -268,7 +268,7 @@ export function guideMd(g: Guide, site: string): string {
     g.lead,
     ...g.parts.map((p) => `## ${p.title}\n\n${p.body.map(block).join('\n\n')}`),
     `## Questions\n\n${g.faq.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}`,
-    `## With Bridle Pro\n\n${g.pro.map(block).join('\n\n')}\n\nPricing: ${site}/pro/`,
+    `## With Bridle Pro\n\n${g.pro.map(block).join('\n\n')}\n\nPricing: ${site}/pricing/`,
   ]
     .join('\n\n')
     .replace(/\]\(\//g, `](${site}/`);

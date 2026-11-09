@@ -1,43 +1,40 @@
 ---
-// The footer: what Bridle is in one line, three short columns, the fine print.
-import Brand from './Brand.astro';
+// The footer (design v3): the mark and the fine print, then four short
+// columns of plain links.
+import Mark from './Brand.astro';
 import { SITE } from '../data/site';
 const year = new Date().getFullYear();
+const cols = [
+  { title: 'Product', links: [
+    { href: '/#email', label: 'Email replies' },
+    { href: '/chat/', label: 'Bridle Chat' },
+    { href: '/demo/', label: 'Live demo' },
+    { href: '/pricing/', label: 'Pricing' },
+  ] },
+  { title: 'Resources', links: [
+    { href: '/guides/', label: 'Guides' },
+    { href: '/llms.txt', label: 'llms.txt' },
+  ] },
+  { title: 'Company', links: [
+    { href: SITE.companyUrl, label: 'PlugPress' },
+    { href: SITE.saddle, label: 'Saddle' },
+    { href: `mailto:${SITE.email}`, label: 'Contact' },
+  ] },
+  { title: 'Legal', links: [
+    { href: '/privacy/', label: 'Privacy' },
+    { href: '/terms/', label: 'Terms' },
+    { href: '/terms/#refunds', label: 'Refunds' },
+  ] },
+];
 ---
 <footer class="foot">
   <div class="wrap">
-    <div class="about">
-      <Brand />
-      <p>{SITE.definition}</p>
-    </div>
-    <div class="cols">
-      <nav aria-label="Product">
-        <h2>Product</h2>
-        <a href="/#how">How it works</a>
-        <a href="/chat/">Bridle Chat</a>
-        <a href="/#agents">AI apps</a>
-        <a href="/demo/">Live demo</a>
-        <a href="/pro/">Bridle Pro</a>
-        <a href="/guides/">Guides</a>
+    <div><Mark /><p class="small mt-2.5">© {year} {SITE.company}. Bridle is GPL.</p></div>
+    {cols.map((c) => (
+      <nav aria-label={c.title}>
+        <h2>{c.title}</h2>
+        {c.links.map((l) => <a href={l.href}>{l.label}</a>)}
       </nav>
-      <nav aria-label="Legal">
-        <h2>Legal</h2>
-        <a href="/privacy/">Privacy</a>
-        <a href="/privacy/#relay">Email relay</a>
-        <a href="/privacy/#processors">Sub-processors</a>
-        <a href="/terms/">Terms</a>
-      </nav>
-      <nav aria-label="Company">
-        <h2>Company</h2>
-        <a href={SITE.companyUrl}>PlugPress</a>
-        <a href={SITE.saddle}>Saddle</a>
-        <a href={`mailto:${SITE.email}`}>Contact</a>
-        <a href="/llms.txt">llms.txt</a>
-      </nav>
-    </div>
-  </div>
-  <div class="wrap base">
-    <span>{SITE.requires} · use your own AI key or ours</span>
-    <span>© {year} {SITE.company}. Bridle is GPL.</span>
+    ))}
   </div>
 </footer>
