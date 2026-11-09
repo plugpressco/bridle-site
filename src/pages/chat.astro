@@ -10,22 +10,22 @@ import { PRO } from '../data/site';
 
 const page = PAGES.chat;
 const how = [
-  { title: 'It looks it up', text: 'Bridle KB docs, pages and posts, WooCommerce products and your past replies, with names removed.' },
-  { title: 'It checks itself', text: 'Every quote and link must be in a source. If not, or if it isn’t sure, it doesn’t guess.' },
-  { title: 'It hands off', text: 'Refunds, billing, legal, security and upset visitors go to a person. The visitor leaves an email and the chat lands in your Inbox.' },
+  { title: 'It looks it up', text: 'Docs, pages, products, past replies.' },
+  { title: 'It checks itself', text: 'Not sure? It doesn’t guess.' },
+  { title: 'It hands off', text: 'Refunds and upset visitors go to you.' },
 ];
 const after = [
-  { icon: 'i-message', title: 'In the bubble', text: 'Your reply shows up in the chat while they are still on your site.' },
-  { icon: 'i-inbox', title: 'Or by email', text: 'Not seen within 3 minutes? It goes to their inbox, in the same thread.' },
-  { icon: 'i-clock', title: 'With an honest promise', text: 'The reply time it promises comes from how fast you really answered over the last 7 days.' },
+  { icon: 'i-message', title: 'In the bubble', text: 'While they’re still on your site.' },
+  { icon: 'i-inbox', title: 'Or by email', text: 'If they’ve left, same thread.' },
+  { icon: 'i-clock', title: 'An honest promise', text: 'Your real reply time.' },
 ];
-const handled = ['Says it is an AI in its header', 'Limits per visitor and per site', 'Optional Cloudflare Turnstile against bots', 'Every chat saved; answered chats file as Resolved', 'Your colour and your greeting', 'Your own AI key, or Bridle AI'];
+const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your greeting'];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
   <PageHero
     eyebrow="Bridle Chat · free in Bridle"
-    title={['A chat bubble that answers', 'From what you already wrote']}
-    lead="Visitors ask in their own words. Bridle answers from your docs, pages and past replies, checks every fact, and hands the rest to a person."
+    title={['A chat that answers', 'From what you wrote']}
+    lead="It answers visitors from your docs, and hands the rest to you."
     art="chat"
     more={{ href: '#demo', label: 'See it answer' }}
   />
@@ -51,12 +51,9 @@ const handled = ['Says it is an AI in its header', 'Limits per visitor and per s
   </section>
 
   <section class="block" aria-labelledby="h-after">
-    <div class="head split">
-      <div>
-        <p class="eyebrow">After a handoff</p>
-        <h2 id="h-after"><span>One conversation</span><span class="g">In the bubble and by email</span></h2>
-      </div>
-      <p class="lead">You reply from your Inbox, like any email. Bridle gets it to the visitor wherever they are.</p>
+    <div class="head">
+      <p class="eyebrow">After a handoff</p>
+      <h2 id="h-after"><span>You reply from your Inbox</span><span class="g">It reaches them anywhere</span></h2>
     </div>
     <div class="wrap flush">
       <div class="grid">
@@ -69,9 +66,9 @@ const handled = ['Says it is an AI in its header', 'Limits per visitor and per s
     <div class="wrap duo">
       <div>
         <p class="eyebrow">The small print</p>
-        <h2 id="h-handled"><span>Already handled</span><span class="g">Switch it on and go</span></h2>
+        <h2 id="h-handled"><span>Already handled</span><span class="g">Switch it on</span></h2>
       </div>
-      <ul class="ticks two">{handled.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
+      <ul class="ticks">{handled.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
     </div>
   </section>
 

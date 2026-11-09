@@ -5,13 +5,13 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
 import Closing from '../components/Closing.astro';
-import { PAGES, COMPARE } from '../data/pages';
+import { PAGES } from '../data/pages';
 import { PRO_FAQ } from '../data/faq';
 import { SITE, AI, PRO, money, count } from '../data/site';
 
 const page = PAGES.pro;
 const icons = ['i-globe', 'i-live', 'i-bag', 'i-help'];
-const includes = ['Every Pro feature', 'Updates and support for life', `${count(AI.proGift)} Bridle AI answers`, `${PRO.refundDays}-day refund`];
+const includes = ['Every Pro feature', 'Updates for life', `${count(AI.proGift)} AI answers`, `${PRO.refundDays}-day refund`];
 const jsonLd = [
   {
     '@type': 'Product',
@@ -29,16 +29,16 @@ const jsonLd = [
 <Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Bridle Pro', path: page.path }]}>
   <PageHero
     eyebrow="Bridle Pro"
-    title={['Everything in Bridle is free', 'Pro is for the business around it']}
-    lead={`Pro adds chat on your other sites, live takeover, order lookups and the questions your agent couldn’t answer. It opens on launch day, with a founders’ price for the first ${PRO.total}.`}
+    title={['Bridle is free', 'Pro when you grow']}
+    lead={`Pay once. Founders’ price for the first ${PRO.total}.`}
     art="key"
     more={{ href: '#pricing', label: 'See pricing' }}
   />
 
   <section class="block" aria-labelledby="h-adds">
     <div class="head">
-      <p class="eyebrow">What Pro adds</p>
-      <h2 id="h-adds"><span>Four things a business asks for</span><span class="g">Added, never taken from free</span></h2>
+      <p class="eyebrow">Features</p>
+      <h2 id="h-adds"><span>What Pro adds</span><span class="g">Never taken from free</span></h2>
     </div>
     <div class="wrap flush">
       <div class="grid" style="--n:4">
@@ -48,12 +48,9 @@ const jsonLd = [
   </section>
 
   <section class="block" id="pricing" aria-labelledby="h-pricing">
-    <div class="head split">
-      <div>
-        <p class="eyebrow">Founders’ lifetime</p>
-        <h2 id="h-pricing"><span>Pay once</span><span class="g">For our first {PRO.total} customers</span></h2>
-      </div>
-      <p class="lead">The price rises every {PRO.step} licences. After licence {PRO.total}, lifetime closes for good.</p>
+    <div class="head">
+      <p class="eyebrow">Founders’ lifetime</p>
+      <h2 id="h-pricing"><span>Pay once</span><span class="g">Price rises every {PRO.step} sold</span></h2>
     </div>
     <div class="wrap plans">
       {PRO.plans.map((p, i) => (
@@ -66,46 +63,23 @@ const jsonLd = [
         </div>
       ))}
     </div>
-    <p class="wrap fine after">Then yearly: {PRO.plans.map((p) => `${money(p.yearly)} for ${p.label.toLowerCase()}`).join(', ')}. A yearly licence that ends keeps working, without updates.</p>
+    <p class="wrap fine after">After {PRO.total} licences: {PRO.plans.map((p) => money(p.yearly)).join(', ')} a year.</p>
   </section>
 
   <section class="block" id="ai" aria-labelledby="h-ai">
-    <div class="head split">
-      <div>
-        <p class="eyebrow">Bridle AI</p>
-        <h2 id="h-ai"><span>No AI key?</span><span class="g">Answers by the pack</span></h2>
-      </div>
-      <p class="lead">Every site gets {AI.free} answers a month free. Packs never expire, and only checked answers count. Your own key, when connected, is always used first.</p>
+    <div class="head">
+      <p class="eyebrow">Bridle AI</p>
+      <h2 id="h-ai"><span>No AI key?</span><span class="g">{AI.free} answers a month free</span></h2>
     </div>
     <div class="wrap">
       <ul class="packs big3">
-        {AI.packs.map((p) => <li><b>{money(p.price)}</b><span>{count(p.answers)} answers</span><small>{(p.price / p.answers * 100).toFixed(1).replace(/\.0$/, '')}¢ an answer</small></li>)}
+        {AI.packs.map((p) => <li><b>{money(p.price)}</b><span>{count(p.answers)} answers</span></li>)}
       </ul>
     </div>
   </section>
 
-  <section class="block" aria-labelledby="h-compare">
-    <div class="head">
-      <p class="eyebrow">Side by side</p>
-      <h2 id="h-compare"><span>Free and Pro</span><span class="g">Free stays complete</span></h2>
-    </div>
-    <div class="wrap">
-      <table class="compare">
-        <thead><tr><th scope="col"><span class="sr">Feature</span></th><th scope="col">Bridle</th><th scope="col">Bridle Pro</th></tr></thead>
-        <tbody>
-          {COMPARE.map((r) => (
-            <tr>
-              <th scope="row">{r[0]}</th>
-              {[r[1], r[2]].map((c) => <td>{c === 'Yes' ? <svg class="i yes" role="img" aria-label="Yes"><use href="#i-check" /></svg> : c === 'No' ? <span class="no" aria-label="No">–</span> : c}</td>)}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <Faq items={PRO_FAQ} title={['Questions', 'About Pro and packs']} />
-  <Closing line1="Founders’ price" line2="On launch day" lead="Join the waitlist and we email you the day Bridle and Bridle Pro go live." source="pro" />
+  <Faq items={PRO_FAQ} title={['Questions', 'About Pro']} />
+  <Closing line1="Founders’ price" line2="On launch day" lead="We email you the day it opens." source="pro" />
 </Base>
 
 <style is:global>
@@ -122,13 +96,6 @@ const jsonLd = [
   .packs.big3 b { font-size: 40px; font-weight: 400; letter-spacing: -0.03em; }
   .packs.big3 span { font-size: 16px; color: var(--ink); }
   .packs.big3 small { font-size: 14px; color: var(--muted-foreground); }
-  .compare { width: 100%; border-collapse: collapse; font-size: 17px; }
-  .compare th, .compare td { padding: 16px 12px; border-bottom: var(--hair) solid var(--border); text-align: center; }
-  .compare thead th { font-size: 15px; font-weight: 560; border-bottom-color: var(--input); }
-  .compare tbody th { padding-left: 0; text-align: left; font-weight: 400; }
-  .compare td { width: 22%; color: var(--ink-2); font-size: 15.5px; }
-  .compare .yes { width: 18px; height: 18px; margin: 0 auto; color: var(--brand-ink); }
-  .compare .no { color: var(--gray); }
   @media (max-width: 860px) {
     .plans { grid-template-columns: minmax(0, 1fr); }
     .packs.big3 { grid-template-columns: minmax(0, 1fr); }
@@ -136,8 +103,5 @@ const jsonLd = [
   @media (max-width: 560px) {
     .packs.big3 li { grid-template-columns: minmax(0, 1fr); }
     .plans .card { padding: 26px 22px; }
-    .compare { font-size: 15px; }
-    .compare th, .compare td { padding: 13px 6px; }
-    .compare td { width: 26%; font-size: 14px; }
   }
 </style>

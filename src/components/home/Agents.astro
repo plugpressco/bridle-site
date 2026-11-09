@@ -11,11 +11,11 @@ const apps = [
 <section class="block" id="agents" aria-labelledby="h-agents">
   <div class="head">
     <p class="eyebrow">Bring your own agent</p>
-    <h2 id="h-agents"><span>Works with ChatGPT, Claude and Codex</span><span class="g">You decide if they can send</span></h2>
+    <h2 id="h-agents"><span>Works with your AI agent</span><span class="g">Sending waits for you</span></h2>
   </div>
   <div class="wrap agents" id="agents-demo">
     <div class="pick">
-      <p class="lead">Already work in Claude or ChatGPT? Connect it over MCP and answer support from there. Its drafts land in Bridle, checked the same way.</p>
+      <p class="lead">Answer support from Claude, ChatGPT or Codex, over MCP.</p>
       <div class="apps" role="group" aria-label="Pick an agent to see it work">
         {apps.map((a) => (
           <button type="button" class="app" data-agent={a.key} aria-pressed={a.on ? 'true' : 'false'}><span class="tile"><svg aria-hidden="true"><use href={`#${a.logo}`} /></svg></span>{a.name}</button>
