@@ -1,8 +1,10 @@
 ---
 // An inner page's opening: eyebrow, two-tone title, lead, the waitlist and a
 // second link, beside halftone art that settles into a shape (src/scripts/art.js).
-interface Props { eyebrow: string; title: [string, string]; lead: string; art: 'chat' | 'key'; more?: { href: string; label: string } }
-const { eyebrow, title, lead, art, more } = Astro.props;
+// `cta` replaces the waitlist as the main button (the demo page opens Playground).
+interface Props { eyebrow: string; title: [string, string]; lead: string; art: 'chat' | 'key'; more?: { href: string; label: string }; cta?: { href: string; label: string } }
+const { eyebrow, title, lead, art, more, cta } = Astro.props;
+const external = (href: string) => /^https?:/.test(href);
 ---
 <div class="wrap phero">
   <div>
@@ -10,7 +12,7 @@ const { eyebrow, title, lead, art, more } = Astro.props;
     <h1 class="r" style="--d:.05s"><span>{title[0]}</span><span class="g">{title[1]}</span></h1>
     <p class="lead r" style="--d:.12s">{lead}</p>
     <div class="ctas r" style="--d:.18s">
-      <a class="btn" href="#join">Join the waitlist</a>
+      {cta ? <a class="btn" href={cta.href} target={external(cta.href) ? '_blank' : undefined} rel={external(cta.href) ? 'noopener' : undefined}>{cta.label}</a> : <a class="btn" href="#join">Join the waitlist</a>}
       {more && <a class="tlink" href={more.href}>{more.label}</a>}
     </div>
   </div>

@@ -80,3 +80,19 @@ Rows live in the `waitlist` table: email (unique), source (`hero` / `footer` / `
 bridle.to is on Cloudflare (Dotyard account). The apex A records and the verification TXT records for Spacefast are DNS-only (grey cloud); proxying them breaks verification and TLS. MX, SPF, DKIM and DMARC belong to Email Routing; leave them alone.
 
 `www.bridle.to` is the exception. Spacefast never issued a certificate for the www twin, so its two A records are proxied (orange cloud), and the Cloudflare Redirect Rule "www to bridle.to" sends `https://www.bridle.to/*` to `https://bridle.to/${1}` with a 301, keeping the query string. Plain `http://www` already redirects at the origin. If Spacefast ever serves www itself, set those records back to DNS-only and delete the rule.
+
+## Live demo (/demo/)
+
+`/demo/` opens WordPress Playground with `public/demo/blueprint.json`, which Playground fetches from
+`raw.githubusercontent.com/plugpressco/bridle-site/main/public/demo/` (GitHub sends the CORS header
+Playground needs). It installs the free Bridle and Bridle KB from the zips beside it, adds two
+mu-plugins (`demo-ai.php`, a stand-in AI provider that answers with the best matching doc passage,
+not a real model; `demo-relay.php`, so nothing registers on the real email relay) and runs
+`seed.php` (a made-up shop, docs, an inbox, six emails, drafts, Chat on). Bridle Pro is never in it.
+
+With each Bridle or Bridle KB release: `npm run zip` in each plugin, copy the zips to
+`public/demo/bridle.zip` and `public/demo/bridle-kb.zip`, and push to main. Edit
+`blueprint.template.json`, then regenerate `blueprint.json`:
+`sed "s#{{BASE}}#https://raw.githubusercontent.com/plugpressco/bridle-site/main/public/demo/#g" public/demo/blueprint.template.json > public/demo/blueprint.json`.
+To test locally: serve `public/demo/` on a port, write a copy with that base, and run
+`npx @wp-playground/cli@latest server --blueprint=<copy>`.
