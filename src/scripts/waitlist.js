@@ -46,7 +46,7 @@ document.querySelectorAll('form.signup').forEach(function (form) {
 		var btn = form.querySelector('button');
 		var data = Object.fromEntries(new FormData(form));
 		btn.disabled = true;
-		msg.className = 'msg';
+		msg.classList.remove('err');
 		msg.textContent = '';
 		human().then(function (token) {
 			if (token) data['cf-turnstile-response'] = token;
@@ -76,7 +76,7 @@ document.querySelectorAll('form.signup').forEach(function (form) {
 			share.append('Know someone drowning in support mail? ', copy, ' or ', post, '.');
 			box.insertBefore(share, box.querySelector('.proof'));
 		}).catch(function (err) {
-			msg.className = 'msg err';
+			msg.classList.add('err');
 			msg.textContent = err && err.message && err.message !== 'Failed to fetch' ? err.message : 'Network error. Please try again.';
 		}).finally(function () {
 			btn.disabled = false;

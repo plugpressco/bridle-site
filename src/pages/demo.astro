@@ -2,6 +2,9 @@
 // /demo/: Bridle in WordPress Playground (public/demo/blueprint.json).
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import Section from '../components/ui/Section.astro';
+import HeadingPair from '../components/ui/HeadingPair.astro';
+import Points from '../components/Points.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 import { DEMO } from '../data/site';
@@ -28,27 +31,15 @@ const notes = [
     more={{ href: '#join', label: 'Join the waitlist' }}
   />
 
-  <section class="block" aria-labelledby="h-try">
-    <div class="head">
-      <p class="eyebrow">What to try</p>
-      <h2 id="h-try"><span>Three things to try</span><span class="g">A minute each</span></h2>
-    </div>
-    <div class="wrap flush">
-      <div class="grid">
-        {tries.map((t, i) => <div><span class="num">0{i + 1}</span><h3>{t.title}</h3><p>{t.text}</p></div>)}
-      </div>
-    </div>
-  </section>
+  <Section labelledby="h-try">
+    <HeadingPair id="h-try" eyebrow="What to try" first="Three things to try" second="A minute each" class="mb-10 md:mb-14" />
+    <Points items={tries} numbered />
+  </Section>
 
-  <section class="block" aria-labelledby="h-notes">
-    <div class="head">
-      <p class="eyebrow">Good to know</p>
-      <h2 id="h-notes"><span>A demo</span><span class="g">Not your site</span></h2>
-    </div>
-    <div class="wrap">
-      <ul class="ticks">{notes.map((n) => <li>{n}</li>)}</ul>
-    </div>
-  </section>
+  <Section labelledby="h-notes">
+    <HeadingPair id="h-notes" eyebrow="Good to know" first="A demo" second="Not your site" class="mb-10 md:mb-14" />
+    <ul class="grid gap-2.5">{notes.map((n) => <li class="text-[16.5px] leading-snug">{n}</li>)}</ul>
+  </Section>
 
   <Closing />
 </Base>

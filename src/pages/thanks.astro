@@ -3,26 +3,23 @@
 // plain form post with a 303 here), and where Polar sends a Bridle Pro buyer
 // (?checkout_id=…). Not for search engines.
 import Base from '../layouts/Base.astro';
+import Section from '../components/ui/Section.astro';
+import HeadingPair from '../components/ui/HeadingPair.astro';
+import Button from '../components/ui/Button.astro';
 ---
 <Base title="You’re on the list | Bridle" description="Thanks for joining the Bridle waitlist. We email you the day Bridle is live on WordPress.org." noindex waitlist={false}>
-  <div class="wrap note-page">
-    <svg class="i done" aria-hidden="true"><use href="#i-check-circle" /></svg>
-    <h1 data-thanks><span>You’re on the list</span><span class="g">We email you on launch day</span></h1>
-    <a class="tlink" href="/">Back to Bridle</a>
-  </div>
+  <Section inner="grid min-h-[52vh] content-center justify-items-start gap-6">
+    <svg class="i size-11 text-brand-500" aria-hidden="true"><use href="#i-check-circle" /></svg>
+    <HeadingPair as="h1" size="title" first="You’re on the list" second="We email you on launch day" data-thanks />
+    <Button variant="link" href="/">Back to Bridle</Button>
+  </Section>
 </Base>
 
 <script>
   // Back from a Polar checkout: thank the buyer instead.
   if (new URLSearchParams(location.search).has('checkout_id')) {
     const h = document.querySelector('[data-thanks]');
-    if (h) h.innerHTML = '<span>Thanks for buying Bridle Pro</span><span class="g">Your licence key is in your email</span>';
+    if (h) h.innerHTML = '<span class="block">Thanks for buying Bridle Pro</span><span class="block text-muted-foreground">Your licence key is in your email</span>';
     document.title = 'Thanks for buying Bridle Pro | Bridle';
   }
 </script>
-
-<style is:global>
-  .note-page { display: grid; gap: 26px; justify-items: start; align-content: center; min-height: 52vh; padding-top: 40px; }
-  .note-page .done { width: 44px; height: 44px; color: var(--brand); }
-  .note-page h1 { font-size: clamp(40px, 5vw, 68px); }
-</style>

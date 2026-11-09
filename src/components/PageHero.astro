@@ -1,23 +1,24 @@
 ---
-// An inner page's opening: eyebrow, two-tone title, lead, the waitlist and a
-// second link, beside halftone art that settles into a shape (src/scripts/art.js).
-// `cta` replaces the waitlist as the main button (the demo page opens Playground).
+// An inner page's opening: eyebrow, two-tone title, lead, the main button and
+// a second link, beside halftone art that settles into a shape
+// (src/scripts/art.js) in a tinted well. `cta` replaces the waitlist as the
+// main button (the demo page opens Playground).
+import Section from './ui/Section.astro';
+import HeadingPair from './ui/HeadingPair.astro';
+import Button from './ui/Button.astro';
 interface Props { eyebrow: string; title: [string, string]; lead: string; art: 'chat' | 'key'; more?: { href: string; label: string }; cta?: { href: string; label: string } }
 const { eyebrow, title, lead, art, more, cta } = Astro.props;
-const external = (href: string) => /^https?:/.test(href);
 ---
-<div class="wrap phero">
-  <div>
-    <p class="eyebrow r">{eyebrow}</p>
-    <h1 class="r" style="--d:.05s"><span>{title[0]}</span><span class="g">{title[1]}</span></h1>
-    <p class="lead r" style="--d:.12s">{lead}</p>
-    <div class="ctas r" style="--d:.18s">
-      {cta ? <a class="btn" href={cta.href} target={external(cta.href) ? '_blank' : undefined} rel={external(cta.href) ? 'noopener' : undefined}>{cta.label}</a> : <a class="btn" href="#join">Join the waitlist</a>}
-      {more && <a class="tlink" href={more.href}>{more.label}</a>}
+<Section line pad="top" inner="grid items-center gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:gap-16">
+  <div class="animate-rise">
+    <HeadingPair as="h1" size="title" eyebrow={eyebrow} first={title[0]} second={title[1]} lead={lead} />
+    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+      {cta ? <Button href={cta.href}>{cta.label}</Button> : <Button href="#join">Join the waitlist</Button>}
+      {more && <Button variant="link" href={more.href}>{more.label}</Button>}
     </div>
   </div>
-  <div class="art" data-shape={art} aria-hidden="true"><canvas class="dots"></canvas></div>
-</div>
+  <div class="relative aspect-video overflow-hidden rounded-card bg-brand-50 max-md:order-first md:aspect-[1/0.92]" data-shape={art} aria-hidden="true"><canvas class="dots"></canvas></div>
+</Section>
 
 <script>
   import '../scripts/art.js';

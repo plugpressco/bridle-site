@@ -1,25 +1,30 @@
 ---
 // The dot field: support mail drifts in as a tangle, threads through the mark
-// and leaves as three calm reins (src/scripts/home.js, hero()).
+// and leaves as three calm reins (src/scripts/home.js, hero()). The field
+// fills the hero inside the rails; the line under it runs the full window.
+import Container from '../ui/Container.astro';
+import HeadingPair from '../ui/HeadingPair.astro';
+import Button from '../ui/Button.astro';
 import Waitlist from '../Waitlist.astro';
 ---
-<div class="hero" id="hero">
-  <canvas class="dots" aria-hidden="true"></canvas>
-  <div class="wrap intro" data-mask>
-    <p class="eyebrow r" data-mask>AI support for <b>WordPress</b></p>
-    <h1 class="r" style="--d:.05s"><span data-mask>AI writes the replies</span><span class="g" data-mask>You hold the reins</span></h1>
-    <div class="under">
-      <p class="lead r" style="--d:.12s" data-mask>It answers your support email and chat. The hard ones come to you.</p>
-      <div class="r" style="--d:.18s" data-mask><Waitlist source="hero" /><a class="tlink demo-link" href="/demo/">Try the live demo</a></div>
+<div class="border-b border-border sm:px-6">
+  <Container id="hero" class="relative isolate flex min-h-[max(calc(100svh-65px),640px)] flex-col overflow-hidden">
+    <canvas class="dots -z-10" aria-hidden="true"></canvas>
+    <div class="pt-8 md:pt-14">
+      <HeadingPair as="h1" size="display" eyebrow="AI support for <b>WordPress</b>" first="AI writes the replies" second="You hold the reins" class="animate-rise" data-mask />
+      <div class="mt-7 grid items-end gap-x-16 gap-y-7 md:mt-9 md:grid-cols-[minmax(0,1fr)_minmax(0,470px)]">
+        <p class="max-w-[27em] animate-rise text-lead text-ink-2 [animation-delay:.12s]" data-mask>It answers your support email and chat. The hard ones come to you.</p>
+        <div class="animate-rise [animation-delay:.18s]" data-mask><Waitlist source="hero" /><Button variant="link" href="/demo/" class="mt-1">Try the live demo</Button></div>
+      </div>
     </div>
-  </div>
 
-  <figure class="band" id="band" style="margin:0">
-    <figcaption class="sr">Mail comes in as a mess of dots. Bridle sorts it into three rows: answered, waiting for you, and filed away.</figcaption>
-    <div class="gate" aria-hidden="true"><svg><use href="#mark-gate" /></svg></div>
-    <div class="lane" data-k="sent" aria-hidden="true"><i></i><span>Answered</span><b>0</b></div>
-    <div class="lane" data-k="mine" aria-hidden="true"><i></i><span>Waits for you</span><b>0</b></div>
-    <div class="lane" data-k="filed" aria-hidden="true"><i></i><span>Filed away</span><b>0</b></div>
-    <div class="tip" aria-hidden="true"></div>
-  </figure>
+    <figure class="relative m-0 min-h-[290px] flex-1 md:min-h-[300px]" id="band">
+      <figcaption class="sr-only">Mail comes in as a mess of dots. Bridle sorts it into three rows: answered, waiting for you, and filed away.</figcaption>
+      <div class="gate" aria-hidden="true"><svg><use href="#mark-gate" /></svg></div>
+      <div class="lane" data-k="sent" aria-hidden="true"><i></i><span>Answered</span><b>0</b></div>
+      <div class="lane" data-k="mine" aria-hidden="true"><i></i><span>Waits for you</span><b>0</b></div>
+      <div class="lane" data-k="filed" aria-hidden="true"><i></i><span>Filed away</span><b>0</b></div>
+      <div class="tip" aria-hidden="true"></div>
+    </figure>
+  </Container>
 </div>

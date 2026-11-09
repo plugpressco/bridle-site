@@ -1,43 +1,50 @@
 ---
-// The footer: what Bridle is in one line, three short columns, the fine print.
+// The footer: what Bridle is in one line, three short columns, the fine
+// print. The end of the page takes the one soft tint; the rails run through.
 import Brand from './Brand.astro';
+import Container from './ui/Container.astro';
 import { SITE } from '../data/site';
 const year = new Date().getFullYear();
+const cols = [
+  { title: 'Product', links: [
+    { href: '/#how', label: 'How it works' },
+    { href: '/chat/', label: 'Bridle Chat' },
+    { href: '/#agents', label: 'AI apps' },
+    { href: '/demo/', label: 'Live demo' },
+    { href: '/pro/', label: 'Bridle Pro' },
+    { href: '/guides/', label: 'Guides' },
+  ] },
+  { title: 'Legal', links: [
+    { href: '/privacy/', label: 'Privacy' },
+    { href: '/privacy/#relay', label: 'Email relay' },
+    { href: '/privacy/#processors', label: 'Sub-processors' },
+    { href: '/terms/', label: 'Terms' },
+  ] },
+  { title: 'Company', links: [
+    { href: SITE.companyUrl, label: 'PlugPress' },
+    { href: SITE.saddle, label: 'Saddle' },
+    { href: `mailto:${SITE.email}`, label: 'Contact' },
+    { href: '/llms.txt', label: 'llms.txt' },
+  ] },
+];
 ---
-<footer class="foot">
-  <div class="wrap">
-    <div class="about">
+<footer class="bg-background sm:px-6">
+  <Container class="flex flex-col gap-10 pt-14 pb-12 md:flex-row md:justify-between">
+    <div class="grid max-w-[22em] content-start gap-3.5">
       <Brand />
-      <p>{SITE.definition}</p>
+      <p class="text-[15px] text-muted-foreground">{SITE.definition}</p>
     </div>
-    <div class="cols">
-      <nav aria-label="Product">
-        <h2>Product</h2>
-        <a href="/#how">How it works</a>
-        <a href="/chat/">Bridle Chat</a>
-        <a href="/#agents">AI apps</a>
-        <a href="/demo/">Live demo</a>
-        <a href="/pro/">Bridle Pro</a>
-        <a href="/guides/">Guides</a>
-      </nav>
-      <nav aria-label="Legal">
-        <h2>Legal</h2>
-        <a href="/privacy/">Privacy</a>
-        <a href="/privacy/#relay">Email relay</a>
-        <a href="/privacy/#processors">Sub-processors</a>
-        <a href="/terms/">Terms</a>
-      </nav>
-      <nav aria-label="Company">
-        <h2>Company</h2>
-        <a href={SITE.companyUrl}>PlugPress</a>
-        <a href={SITE.saddle}>Saddle</a>
-        <a href={`mailto:${SITE.email}`}>Contact</a>
-        <a href="/llms.txt">llms.txt</a>
-      </nav>
+    <div class="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 sm:gap-x-16">
+      {cols.map((c) => (
+        <nav class="grid content-start gap-0.5" aria-label={c.title}>
+          <h2 class="mb-2 text-[14px] font-medium">{c.title}</h2>
+          {c.links.map((l) => <a class="py-1 text-[15px] text-muted-foreground no-underline hover:text-foreground" href={l.href}>{l.label}</a>)}
+        </nav>
+      ))}
     </div>
-  </div>
-  <div class="wrap base">
+  </Container>
+  <Container class="flex flex-col gap-1.5 border-t border-border py-6 text-[14px] text-gray md:flex-row md:justify-between">
     <span>{SITE.requires} · use your own AI key or ours</span>
     <span>© {year} {SITE.company}. Bridle is GPL.</span>
-  </div>
+  </Container>
 </footer>

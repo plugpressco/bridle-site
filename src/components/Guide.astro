@@ -2,6 +2,9 @@
 // One guide from its data (src/data/guides.ts), in the legal pages' layout:
 // contents on the left, the text on the right. The Markdown copy renders from
 // the same data.
+import Section from './ui/Section.astro';
+import HeadingPair from './ui/HeadingPair.astro';
+import Button from './ui/Button.astro';
 import { GUIDES, inline, type Guide, type GuideBlock } from '../data/guides';
 interface Props { guide: Guide }
 const { guide } = Astro.props;
@@ -14,16 +17,14 @@ const html = (b: GuideBlock) =>
       ? `<ul>${b.list.map((l) => `<li>${inline(l)}</li>`).join('')}</ul>`
       : `<ol class="steps">${b.steps.map((s) => `<li>${inline(s)}</li>`).join('')}</ol>`;
 ---
-<div class="wrap legal guide">
-  <nav class="toc" aria-label="On this page">
-    <b>On this page</b>
-    {toc.map((t) => <a href={`#${t.id}`}>{t.title}</a>)}
-    <a class="back" href="/guides/">All guides</a>
+<Section pad="top" inner="grid gap-16 md:grid-cols-[220px_minmax(0,1fr)]">
+  <nav class="hidden content-start gap-0.5 self-start text-[15px] md:sticky md:top-24 md:grid" aria-label="On this page">
+    <b class="mb-2 text-[14px] font-medium">On this page</b>
+    {toc.map((t) => <a class="py-1 text-muted-foreground no-underline hover:text-foreground" href={`#${t.id}`}>{t.title}</a>)}
+    <a class="mt-3.5 py-1 text-brand-600 no-underline" href="/guides/">All guides</a>
   </nav>
   <article class="prose">
-    <p class="eyebrow"><a href="/guides/">Guides</a></p>
-    <h1><span>{guide.title[0]}</span><span class="g">{guide.title[1]}</span></h1>
-    <p class="lead">{guide.lead}</p>
+    <HeadingPair as="h1" size="title" eyebrow={`<a class="text-muted-foreground no-underline hover:text-foreground" href="/guides/">Guides</a>`} first={guide.title[0]} second={guide.title[1]} lead={guide.lead} />
     {guide.parts.map((p) => (
       <section id={p.id}>
         <h2>{p.title}</h2>
@@ -36,14 +37,14 @@ const html = (b: GuideBlock) =>
     </section>
     <section id="pro">
       <h2>With Bridle Pro</h2>
-      <div class="box">
+      <div class="rounded-card border border-border bg-card px-6 py-5.5 [&_p]:text-[16px]">
         <Fragment set:html={guide.pro.map(html).join('')} />
-        <p><a class="tlink" href="/pro/">Bridle Pro and pricing</a></p>
+        <p><Button variant="link" href="/pro/" class="no-underline">Bridle Pro and pricing</Button></p>
       </div>
     </section>
-    <section class="more" aria-labelledby="h-more">
+    <section aria-labelledby="h-more">
       <h2 id="h-more">More guides</h2>
-      <ul>{others.map((g) => <li><a href={`/guides/${g.slug}/`}>{g.label}</a> <span>{g.summary}</span></li>)}</ul>
+      <ul class="!list-none !pl-0">{others.map((g) => <li class="!mt-0 grid gap-0.5 border-t border-border py-3.5"><a href={`/guides/${g.slug}/`}>{g.label}</a> <span class="text-[15.5px] text-muted-foreground">{g.summary}</span></li>)}</ul>
     </section>
   </article>
-</div>
+</Section>

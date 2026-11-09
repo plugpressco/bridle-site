@@ -1,33 +1,149 @@
 ---
-// The menu: the icon, three plain links and the launch pill, which goes to
-// the waitlist. Calm chrome, no dropdowns (the app's top bar has none either).
+// The menu (owner's rules, landing-page/references/rules.md, Navigation):
+// plain text links only, no icons and no description lines. Product and
+// Resources each open a few columns of three or four links under headings
+// that link to their pages; then Pricing and one button. The bar shares the
+// page's left and right edges. On phones: one full-width sheet behind a
+// button; Esc closes it and focus stays inside while it is open.
 import Brand from './Brand.astro';
+import Container from './ui/Container.astro';
+import Button from './ui/Button.astro';
+import { GUIDES } from '../data/guides';
 interface Props { join?: string }
 const { join = '#join' } = Astro.props;
-const path = Astro.url.pathname;
-const links = [
-  { href: '/#how', label: 'How it works', wide: true },
-  { href: '/chat/', label: 'Chat' },
-  { href: '/demo/', label: 'Demo', wide: true },
-  { href: '/pro/', label: 'Pro' },
+type Col = { head: string; href: string; links: { label: string; href: string }[] };
+const menus: { id: string; label: string; cols: Col[] }[] = [
+  {
+    id: 'product',
+    label: 'Product',
+    cols: [
+      { head: 'Bridle', href: '/', links: [
+        { label: 'Email replies', href: '/#how' },
+        { label: 'Bridle Chat', href: '/chat/' },
+        { label: 'AI apps', href: '/#agents' },
+        { label: 'Live demo', href: '/demo/' },
+      ] },
+      { head: 'Bridle Pro', href: '/pro/', links: [
+        { label: 'Black Friday prices', href: '/pro/#price' },
+        { label: 'What’s in Pro', href: '/pro/#incl' },
+        { label: 'Questions', href: '/pro/#faq' },
+      ] },
+    ],
+  },
+  {
+    id: 'resources',
+    label: 'Resources',
+    cols: [
+      { head: 'Guides', href: '/guides/', links: GUIDES.slice(0, 4).map((g) => ({ label: g.label, href: `/guides/${g.slug}/` })) },
+      { head: 'Legal', href: '/privacy/', links: [
+        { label: 'Privacy', href: '/privacy/' },
+        { label: 'Email relay', href: '/privacy/#relay' },
+        { label: 'Terms', href: '/terms/' },
+      ] },
+    ],
+  },
 ];
-
+const path = Astro.url.pathname;
+const item = 'inline-flex h-9 items-center gap-1.5 rounded-control px-3 text-[15px] text-ink-2 no-underline transition-colors hover:bg-secondary hover:text-foreground';
 ---
-<header class="nav" data-nav>
-  <div class="wrap">
+<header class="sticky top-0 z-40 border-b border-border bg-white sm:px-6" data-nav>
+  <Container class="relative flex h-16 items-center gap-6 lg:gap-8">
     <Brand />
-    <nav class="links" aria-label="Main">
-      {links.map((l) => <a href={l.href} class:list={{ wide: l.wide }} aria-current={path === l.href || (l.href !== '/' && !l.href.includes('#') && path.startsWith(l.href)) ? 'page' : undefined}>{l.label}</a>)}
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
+      {menus.map((m) => (
+        <div class="group/mi relative" data-mi>
+          <button type="button" class:list={[item, 'cursor-pointer aria-expanded:bg-secondary aria-expanded:text-foreground']} aria-expanded="false" aria-controls={`menu-${m.id}`}>
+            {m.label}
+            <svg class="size-3 fill-none stroke-gray transition-transform duration-200 group-data-[open]/mi:rotate-180 [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:1.6]" viewBox="0 0 12 12" aria-hidden="true"><path d="m3 4.5 3 3 3-3" /></svg>
+          </button>
+          <div id={`menu-${m.id}`} class="invisible absolute top-full left-0 z-10 translate-y-1 pt-3 opacity-0 transition duration-200 group-data-[open]/mi:visible group-data-[open]/mi:translate-y-0 group-data-[open]/mi:opacity-100 group-hover/mi:visible group-hover/mi:translate-y-0 group-hover/mi:opacity-100">
+            <div class="grid w-max grid-flow-col gap-12 rounded-card border border-border bg-card px-7 pt-6 pb-5 shadow-soft">
+              {m.cols.map((c) => (
+                <div class="min-w-[170px]">
+                  <a class="mb-1.5 block border-b border-border pb-3 text-[14px] font-medium text-foreground no-underline hover:text-brand-600" href={c.href}>{c.head}</a>
+                  <ul>{c.links.map((l) => <li><a class="block py-1.5 text-[15px] text-muted-foreground no-underline hover:text-foreground" href={l.href}>{l.label}</a></li>)}</ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+      <a class={item} href="/pro/" aria-current={path.startsWith('/pro/') ? 'page' : undefined}>Pricing</a>
     </nav>
-    <a class="soon" href={join}><i aria-hidden="true"></i><span>Launching soon<em>, join the waitlist</em></span></a>
+    <Button href={join} size="sm" class="ml-auto max-[359px]:hidden">Join the waitlist</Button>
+    <button type="button" class="inline-flex size-10 flex-none cursor-pointer items-center justify-center rounded-control text-foreground shadow-[inset_0_0_0_1px_var(--color-border)] max-[359px]:ml-auto md:hidden" aria-expanded="false" aria-controls="phone-menu" aria-label="Open the menu" data-burger>
+      <svg class="size-[18px] fill-none stroke-current [stroke-linecap:round] [stroke-width:1.7] in-data-[sheet]:hidden" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 6h12M3 12h12" /></svg>
+      <svg class="hidden size-[18px] fill-none stroke-current [stroke-linecap:round] [stroke-width:1.7] in-data-[sheet]:block" viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 4.5l9 9M13.5 4.5l-9 9" /></svg>
+    </button>
+  </Container>
+
+  <div id="phone-menu" class="fixed inset-x-0 top-[65px] bottom-0 overflow-y-auto overscroll-contain bg-card px-4 pt-2 pb-10 md:hidden" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    {menus.flatMap((m) => m.cols).map((c) => (
+      <div class="grid border-b border-border py-4">
+        <a class="py-1.5 text-[17px] font-medium text-foreground no-underline" href={c.href}>{c.head}</a>
+        {c.links.map((l) => <a class="py-2 text-[16px] text-muted-foreground no-underline" href={l.href}>{l.label}</a>)}
+      </div>
+    ))}
+    <div class="grid gap-4 py-5">
+      <a class="py-1.5 text-[17px] font-medium text-foreground no-underline" href="/pro/">Pricing</a>
+      <Button href={join} class="w-full">Join the waitlist</Button>
+    </div>
   </div>
 </header>
 
 <script>
   const nav = document.querySelector<HTMLElement>('[data-nav]');
   if (nav) {
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 4);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Desktop menus: open on hover (CSS) and on click; Esc, a click outside
+    // or tabbing out closes them.
+    const items = [...nav.querySelectorAll<HTMLElement>('[data-mi]')];
+    const setOpen = (mi: HTMLElement, open: boolean) => {
+      mi.toggleAttribute('data-open', open);
+      mi.querySelector('button')?.setAttribute('aria-expanded', String(open));
+    };
+    items.forEach((mi) => {
+      const b = mi.querySelector('button')!;
+      b.addEventListener('click', () => {
+        const open = !mi.hasAttribute('data-open');
+        items.forEach((x) => setOpen(x, false));
+        setOpen(mi, open);
+      });
+      mi.addEventListener('focusout', (e) => {
+        if (!mi.contains(e.relatedTarget as Node)) setOpen(mi, false);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target as Node)) items.forEach((x) => setOpen(x, false));
+    });
+
+    // Phone sheet: a modal list. Esc closes it, Tab stays inside it, the page
+    // behind does not scroll, and focus goes back to the button.
+    const burger = nav.querySelector<HTMLButtonElement>('[data-burger]')!;
+    const sheet = nav.querySelector<HTMLElement>('#phone-menu')!;
+    const focusables = () => [burger, ...sheet.querySelectorAll<HTMLElement>('a[href], button')];
+    const setSheet = (open: boolean) => {
+      sheet.hidden = !open;
+      nav.toggleAttribute('data-sheet', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close the menu' : 'Open the menu');
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+      if (open) sheet.querySelector<HTMLElement>('a')?.focus();
+    };
+    burger.addEventListener('click', () => setSheet(sheet.hidden));
+    sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setSheet(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!sheet.hidden) { setSheet(false); burger.focus(); return; }
+        const open = items.find((x) => x.hasAttribute('data-open'));
+        if (open) { setOpen(open, false); open.querySelector('button')?.focus(); }
+      }
+      if (e.key === 'Tab' && !sheet.hidden) {
+        const f = focusables();
+        const i = f.indexOf(document.activeElement as HTMLElement);
+        if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+      }
+    });
+    matchMedia('(min-width: 768px)').addEventListener('change', (q) => { if (q.matches && !sheet.hidden) setSheet(false); });
   }
 </script>

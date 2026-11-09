@@ -5,32 +5,34 @@
 // /api/deal once Polar answers (never a made-up number) and keeps the
 // countdown in days and hours. The buttons join the waitlist until
 // CHECKOUT_OPEN (src/data/site.ts) is true, then open a Polar checkout.
+import Card from './ui/Card.astro';
+import Button from './ui/Button.astro';
 import { PRO, CHECKOUT_OPEN, money, count, sitesLabel } from '../data/site';
 const first = PRO.first;
 ---
-<div class="deal" data-deal data-open={CHECKOUT_OPEN ? '1' : undefined} data-ends={PRO.endsAt}>
-  <div class="deal-top">
-    <p class="deal-ends"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg><span data-deal-ends>Black Friday deal. Ends {PRO.endsLabel}.</span></p>
-    <p class="deal-line"><b data-deal-left>First {first.to} sales at these prices.</b> <span data-deal-next>Then +{money(PRO.rise)}.</span></p>
+<div data-deal data-open={CHECKOUT_OPEN ? '1' : undefined} data-ends={PRO.endsAt}>
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2.5">
+    <p class="inline-flex items-center gap-2 rounded-full bg-brand-100 px-3.5 py-2 text-[15px] font-medium text-brand-600"><svg class="i size-4" aria-hidden="true"><use href="#i-clock" /></svg><span data-deal-ends>Black Friday deal. Ends {PRO.endsLabel}.</span></p>
+    <p class="text-[15.5px] text-muted-foreground"><b class="font-medium text-foreground" data-deal-left>First {first.to} sales at these prices.</b> <span data-deal-next>Then +{money(PRO.rise)}.</span></p>
   </div>
-  <div class="plans3">
+  <div class="grid gap-5 md:grid-cols-3">
     {PRO.plans.map((p, i) => (
-      <div class:list={['card', 'plan', { pick: i === 1 }]} data-plan={p.key}>
-        <div class="plan-head">
-          <h3>{sitesLabel(p.sites)}</h3>
-          {i === 1 && <span class="pick-tag">Our pick</span>}
+      <Card class:list={['flex flex-col', i === 1 && 'border-brand-500 shadow-[0_0_0_1px_var(--color-brand-500)]']} data-plan={p.key}>
+        <div class="flex min-h-7 items-center justify-between gap-2.5">
+          <h3 class="text-[18px] font-medium">{sitesLabel(p.sites)}</h3>
+          {i === 1 && <span class="rounded-full bg-brand-600 px-2.5 py-1 text-[13px] font-medium text-white">Our pick</span>}
         </div>
-        <p class="amount"><b data-plan-price>{money(p.base)}</b></p>
-        <p class="once">Pay once</p>
-        <ul class="ticks">
-          <li><svg class="i"><use href="#i-check" /></svg>Updates and support for life</li>
-          <li><svg class="i"><use href="#i-check" /></svg>Use it on {sitesLabel(p.sites)}</li>
-          <li><svg class="i"><use href="#i-check" /></svg>{count(p.answers)} AI answers</li>
+        <p class="mt-4.5 mb-0.5"><b class="text-[56px] leading-none font-light tracking-[-0.04em]" data-plan-price>{money(p.base)}</b></p>
+        <p class="mb-5.5 text-[16px] text-muted-foreground">Pay once</p>
+        <ul class="mb-7 grid gap-2.5">
+          <li class="flex items-start gap-2.5 text-[16.5px] leading-snug"><svg class="i mt-[3px] size-[17px] text-brand-600"><use href="#i-check" /></svg>Updates and support for life</li>
+          <li class="flex items-start gap-2.5 text-[16.5px] leading-snug"><svg class="i mt-[3px] size-[17px] text-brand-600"><use href="#i-check" /></svg>Use it on {sitesLabel(p.sites)}</li>
+          <li class="flex items-start gap-2.5 text-[16.5px] leading-snug"><svg class="i mt-[3px] size-[17px] text-brand-600"><use href="#i-check" /></svg>{count(p.answers)} AI answers</li>
         </ul>
         {CHECKOUT_OPEN
-          ? <a class:list={['btn', { ghost: i !== 1 }]} href={`/api/checkout?plan=${p.key}`} data-plan-buy>Get it for {money(p.base)}</a>
-          : <a class:list={['btn', { ghost: i !== 1 }]} href="#join">Join the waitlist</a>}
-      </div>
+          ? <Button variant={i === 1 ? 'primary' : 'quiet'} class="mt-auto w-full" href={`/api/checkout?plan=${p.key}`} data-plan-buy>Get it for {money(p.base)}</Button>
+          : <Button variant={i === 1 ? 'primary' : 'quiet'} class="mt-auto w-full" href="#join">Join the waitlist</Button>}
+      </Card>
     ))}
   </div>
 </div>

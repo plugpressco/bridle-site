@@ -19,6 +19,6 @@ const jsonLd = [{
   publisher: { '@id': 'https://plugpress.io/#org' },
 }];
 ---
-<Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Guides', path: '/guides/' }, { name: guide.label, path: page.path }]}>
+<Base title={page.title} description={page.description} jsonLd={jsonLd} waitlist={false} crumbs={[{ name: 'Guides', path: '/guides/' }, { name: guide.label, path: page.path }]}>
   <GuidePage guide={guide} />
 </Base>

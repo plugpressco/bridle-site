@@ -1,0 +1,28 @@
+---
+// The one button set (owner's rules): a primary fill and a quiet hairline
+// button, 4 px corners, 48 px tall with 24 px sides (40 px with 20 px sides
+// in the menu), regular weight; and the text link. All share one arrow.
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'quiet' | 'link';
+  size?: 'md' | 'sm';
+  arrow?: boolean;
+  class?: string;
+  type?: 'button' | 'submit';
+  [attr: string]: unknown;
+}
+const { href, variant = 'primary', size = 'md', arrow = variant === 'link', class: cls, type = 'button', ...attrs } = Astro.props;
+const look = {
+  primary: 'rounded-control bg-foreground text-white hover:bg-[#333331]',
+  quiet: 'rounded-control bg-card text-foreground shadow-[inset_0_0_0_1px_var(--color-input)] hover:bg-secondary',
+  link: 'min-h-11 font-medium text-brand-600 hover:text-brand-700',
+}[variant];
+const sized = variant === 'link' ? 'text-[16px]' : size === 'sm' ? 'h-10 px-5 text-[15px]' : 'h-12 px-6 text-[16px]';
+const external = typeof href === 'string' && /^https?:/.test(href);
+const classes = ['group/btn inline-flex items-center justify-center gap-2 whitespace-nowrap leading-none no-underline transition-colors duration-150 cursor-pointer active:translate-y-px disabled:opacity-60', look, sized, cls];
+---
+{href ? (
+  <a href={href} class:list={classes} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} {...attrs}><slot />{arrow && <svg class="size-2.5 flex-none overflow-visible fill-none stroke-current [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:1.7]" viewBox="0 0 10 10" aria-hidden="true"><path class="opacity-0 transition-opacity group-hover/btn:opacity-100" d="M0.5 5h7" /><path class="transition-transform group-hover/btn:translate-x-[3px]" d="M3 1.5 6.5 5 3 8.5" /></svg>}</a>
+) : (
+  <button type={type} class:list={classes} {...attrs}><slot /></button>
+)}

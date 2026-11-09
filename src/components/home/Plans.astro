@@ -1,27 +1,28 @@
 ---
 // Free and Pro as two plain groups of features, then one slim Black Friday
 // line to /pro/ (the prices live there, not twice).
+import Section from '../ui/Section.astro';
+import HeadingPair from '../ui/HeadingPair.astro';
+import Button from '../ui/Button.astro';
 import Features from '../Features.astro';
 import { FREE_FEATURES, PRO_FEATURES, PRO, money } from '../../data/site';
 const from = Math.min(...PRO.plans.map((p) => p.base));
+const tag = 'mb-8 border-b border-border pb-3.5 text-[16px] text-muted-foreground';
 ---
-<section class="block" id="plans" aria-labelledby="h-plans">
-  <div class="head">
-    <p class="eyebrow">Free and Pro</p>
-    <h2 id="h-plans"><span>Free for everyone</span><span class="g">Pro when you grow</span></h2>
-  </div>
-  <div class="wrap tiers">
-    <div class="tier">
-      <p class="tag"><b>Bridle</b> $0, nothing locked</p>
+<Section id="plans" labelledby="h-plans">
+  <HeadingPair id="h-plans" eyebrow="Free and Pro" first="Free for everyone" second="Pro when you grow" class="mb-10 md:mb-14" />
+  <div class="grid gap-16">
+    <div>
+      <p class={tag}><b class="mr-2.5 text-[20px] font-medium text-foreground">Bridle</b> $0, nothing locked</p>
       <Features items={FREE_FEATURES} />
     </div>
-    <div class="tier pro">
-      <p class="tag"><b>Bridle Pro</b> one more plugin</p>
+    <div>
+      <p class={tag}><b class="mr-2.5 text-[20px] font-medium text-foreground">Bridle Pro</b> one more plugin</p>
       <Features items={PRO_FEATURES} tone="blue" />
-      <div class="bf-strip">
-        <p><span class="bf-tag">Black Friday</span>Bridle Pro, pay once from {money(from)}. Ends {PRO.endsLabel}.</p>
-        <a class="btn" href="/pro/">See the deal</a>
+      <div class="mt-11 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 rounded-card bg-brand-50 p-5 sm:py-4 sm:pr-4 sm:pl-6">
+        <p class="text-[17px]"><span class="mr-3 inline-block rounded-full bg-brand-600 px-2.5 py-0.5 align-[2px] text-[13px] font-medium text-white">Black Friday</span>Bridle Pro, pay once from {money(from)}. Ends {PRO.endsLabel}.</p>
+        <Button href="/pro/" class="max-sm:w-full">See the deal</Button>
       </div>
     </div>
   </div>
-</section>
+</Section>

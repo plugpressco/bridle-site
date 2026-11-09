@@ -1,5 +1,8 @@
 ---
 // Bridle Chat on the home page: three facts beside the bubble, playing.
+import Section from '../ui/Section.astro';
+import HeadingPair from '../ui/HeadingPair.astro';
+import Button from '../ui/Button.astro';
 import ChatDemo from '../ChatDemo.astro';
 const points = [
   { icon: 'i-book', text: 'Answers from your docs' },
@@ -7,18 +10,15 @@ const points = [
   { icon: 'i-user', text: 'Sends the hard ones to you' },
 ];
 ---
-<section class="block" id="chat" aria-labelledby="h-chat">
-  <div class="head">
-    <p class="eyebrow">Bridle Chat</p>
-    <h2 id="h-chat"><span>A chat that answers</span><span class="g">And calls you when it can’t</span></h2>
-  </div>
-  <div class="wrap chatrow">
-    <div class="points">
-      <ul>
-        {points.map((p) => <li><svg class="i"><use href={`#${p.icon}`} /></svg>{p.text}</li>)}
+<Section id="chat" labelledby="h-chat">
+  <HeadingPair id="h-chat" eyebrow="Bridle Chat" first="A chat that answers" second="And calls you when it can’t" class="mb-10 md:mb-14" />
+  <div class="grid items-center gap-9 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:gap-12">
+    <div>
+      <ul class="mb-5 grid gap-4">
+        {points.map((p) => <li class="flex items-start gap-3 text-[19px] leading-snug"><svg class="i mt-0.5 size-5 text-brand-600" aria-hidden="true"><use href={`#${p.icon}`} /></svg>{p.text}</li>)}
       </ul>
-      <a class="tlink blue" href="/chat/">See the chat</a>
+      <Button variant="link" href="/chat/">See the chat</Button>
     </div>
     <ChatDemo />
   </div>
-</section>
+</Section>

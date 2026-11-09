@@ -1,0 +1,23 @@
+---
+// A title in two tones: the first line in ink, the second in grey. Light
+// weight, tight tracking at display sizes. An optional eyebrow above and a
+// lead under it, with the same gaps everywhere.
+interface Props {
+  id?: string;
+  as?: 'h1' | 'h2';
+  first: string;
+  second?: string;
+  eyebrow?: string;
+  lead?: string;
+  size?: 'display' | 'title' | 'section';
+  class?: string;
+  [attr: string]: unknown;
+}
+const { id, as: Tag = 'h2', first, second, eyebrow, lead, size = 'section', class: cls, ...attrs } = Astro.props;
+const sizes = { display: 'text-display', title: 'text-title', section: 'text-section' };
+---
+<div class:list={['grid content-start gap-4', cls]}>
+  {eyebrow && <p class="text-[15px] text-muted-foreground [&_b]:font-normal [&_b]:text-foreground" set:html={eyebrow} />}
+  <Tag id={id} class:list={[sizes[size], 'font-light']} {...attrs}><span class="block">{first}</span>{second && <span class="block text-muted-foreground">{second}</span>}</Tag>
+  {lead && <p class="max-w-[34em] text-lead text-ink-2">{lead}</p>}
+</div>

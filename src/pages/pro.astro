@@ -5,9 +5,11 @@
 // (CHECKOUT_OPEN in src/data/site.ts).
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import Section from '../components/ui/Section.astro';
+import HeadingPair from '../components/ui/HeadingPair.astro';
+import Faq from '../components/ui/Faq.astro';
 import Features from '../components/Features.astro';
 import Price from '../components/Price.astro';
-import Faq from '../components/Faq.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 import { PRO_FAQ } from '../data/faq';
@@ -38,21 +40,15 @@ const jsonLd = [
     more={{ href: '#join', label: 'Join the waitlist' }}
   />
 
-  <section class="block" id="price" aria-labelledby="h-price">
-    <div class="head">
-      <p class="eyebrow">Pick your licence</p>
-      <h2 id="h-price"><span>Pick how many sites</span><span class="g">Pay once. It goes up every 20 sales.</span></h2>
-    </div>
-    <div class="wrap"><Price /></div>
-  </section>
+  <Section id="price" labelledby="h-price">
+    <HeadingPair id="h-price" eyebrow="Pick your licence" first="Pick how many sites" second="Pay once. It goes up every 20 sales." class="mb-10 md:mb-14" />
+    <Price />
+  </Section>
 
-  <section class="block" aria-labelledby="h-incl">
-    <div class="head">
-      <p class="eyebrow">In every licence</p>
-      <h2 id="h-incl"><span>All of Pro</span><span class="g">Whichever you pick</span></h2>
-    </div>
-    <div class="wrap"><Features items={PRO_INCLUDES} tone="blue" cols={4} /></div>
-  </section>
+  <Section id="incl" labelledby="h-incl">
+    <HeadingPair id="h-incl" eyebrow="In every licence" first="All of Pro" second="Whichever you pick" class="mb-10 md:mb-14" />
+    <Features items={PRO_INCLUDES} tone="blue" cols={4} />
+  </Section>
 
   <Faq items={PRO_FAQ} title={['Questions', 'About the deal']} />
   <Closing line1="Black Friday only" line2="Pay once, keep it" lead="Join the waitlist. We email you when the deal opens." source="pro" />

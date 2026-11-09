@@ -21,11 +21,12 @@ npm run preview    # serves dist/ (without the waitlist function)
 | `src/data/site.ts` | Shared facts: the one-sentence definition, contact, Turnstile site key, Bridle AI packs, Pro plans and prices. Change a number here and every page, Markdown copy and JSON-LD follows |
 | `src/data/pages.ts` | Each page's title, description and Markdown copy. The Markdown must say what the page says |
 | `src/data/faq.ts`, `src/data/legal.ts` | Questions; privacy and terms as data (the pages and their Markdown copies render from it) |
-| `src/components/` | The menu, footer, waitlist form, closing card, chat demo; home sections in `home/` |
+| `src/components/ui/` | The primitives every page is built from: `Container` (the one content width, with the rails), `Section`, `HeadingPair`, `Button` (primary, quiet, link), `Card`, `Faq` |
+| `src/components/` | The menu (plain links, Product and Resources panels, a phone sheet), footer, waitlist form, closing call, chat demo; home sections in `home/` |
 | `src/scripts/kit.js` | The halftone dot engine every picture is drawn with, the dot-matrix faces and `settle()` (dots that settle into a shape) |
 | `src/scripts/home.js` | The home page's moving pictures from the approved v11 page: the dot-field hero, the product window, three dot stories, the AI apps chat |
 | `src/scripts/chat-demo.js` | Bridle Chat, played, in the plugin's own words |
-| `src/styles/` | `global.css` (tokens and shared pieces), `home.css`, `demo.css` |
+| `src/styles/site.css` | The one stylesheet: Tailwind v4 (`@tailwindcss/vite`, pinned), the `@theme` tokens mirroring the plugin's (`bridle/src/app/styles/theme.css`), the prose for privacy, terms and guides, and the moving product pictures that scripts drive |
 | `spacefast/functions/api/waitlist.ts` | `POST /api/waitlist`: stores sign-ups in the Space's MySQL (table `waitlist`) |
 | `sf.jsonc` | Declares the Functions runtime with `database: true` (that's what gives the function `env.DB`). Copied into `dist/` by the build |
 | `public/` | Fonts (Mona Sans, Geist Mono, OFL), icons, `og.png`, `fahim.jpg` |

@@ -1,6 +1,9 @@
 ---
-// The dark closing card on every page: the waitlist, and dots that settle
-// into the mark (settle() in src/scripts/kit.js).
+// The closing call on every page: the waitlist beside dots that settle into
+// the mark (settle() in src/scripts/kit.js). The end of the page takes the
+// one soft tint, and the picture sits in a white well.
+import Section from './ui/Section.astro';
+import HeadingPair from './ui/HeadingPair.astro';
 import Waitlist from './Waitlist.astro';
 interface Props { line1?: string; line2?: string; lead?: string; source?: string }
 const {
@@ -10,20 +13,21 @@ const {
   source = 'footer',
 } = Astro.props;
 ---
-<section class="block" id="join" aria-labelledby="h-join">
-  <div class="closing" data-closing>
-    <canvas class="dots" aria-hidden="true"></canvas>
+<Section id="join" labelledby="h-join" tone="tint">
+  <div class="grid items-center gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:gap-16">
     <div>
-      <h2 id="h-join"><span>{line1}</span><span class="g">{line2}</span></h2>
-      <p class="lead">{lead}</p>
-      <Waitlist source={source} />
+      <HeadingPair id="h-join" first={line1} second={line2} lead={lead} />
+      <div class="mt-8"><Waitlist source={source} /></div>
     </div>
-    <div class="markart" aria-hidden="true"></div>
+    <div class="relative h-[260px] overflow-hidden rounded-card bg-card md:h-[380px]" data-closing aria-hidden="true">
+      <canvas class="dots"></canvas>
+      <div class="markart absolute inset-0"></div>
+    </div>
   </div>
-</section>
+</Section>
 
 <script>
   import { settle } from '../scripts/kit.js';
   const box = document.querySelector<HTMLElement>('[data-closing]');
-  if (box) settle(box, box.querySelector('.markart'), { palette: ['#2e2e2c', '#679eee', '#a7c5f2'] });
+  if (box) settle(box, box.querySelector('.markart'), { palette: ['#dddcd6', '#679eee', '#a7c5f2'], scale: 0.62, max: 280 });
 </script>

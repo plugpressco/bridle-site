@@ -2,7 +2,7 @@
 // Every page uses this layout: one title, one description, a canonical address
 // ending in a slash, Open Graph and Twitter cards, JSON-LD, the Markdown copy
 // for AI apps, then the menu, the page and the footer.
-import '../styles/global.css';
+import '../styles/site.css';
 import Symbols from '../components/Symbols.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -64,7 +64,7 @@ const graph = [
     <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="preload" href="/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <meta name="theme-color" content="#fcfcf9" />
+    <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
@@ -87,7 +87,7 @@ const graph = [
     <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
   <body>
-    <a class="skip" href="#main">Skip to the content</a>
+    <a class="absolute -top-16 left-4 z-50 rounded-control bg-foreground px-4 py-2.5 text-white no-underline focus:top-3" href="#main">Skip to the content</a>
     <Symbols />
     <Nav join={waitlist ? '#join' : '/#join'} />
     <main id="main">

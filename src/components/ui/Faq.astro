@@ -1,0 +1,27 @@
+---
+// Questions (owner's rules): one white box with small corners and a light
+// hairline, row lines edge to edge, compact rows of about 64 px, a small
+// filled chevron, the first answer open. Native <details>, so the answers
+// stay in the HTML for search and AI apps (FAQPage JSON-LD on the page).
+import Section from './Section.astro';
+import HeadingPair from './HeadingPair.astro';
+import type { QA } from '../../data/faq';
+interface Props { items: QA[]; title?: [string, string]; tone?: 'white' | 'tint'; id?: string }
+const { items, title = ['Questions', 'Asked before launch'], tone = 'white', id = 'faq' } = Astro.props;
+---
+<Section id={id} labelledby={`h-${id}`} tone={tone}>
+  <div class="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16">
+    <HeadingPair id={`h-${id}`} first={title[0]} second={title[1]} class="self-start md:sticky md:top-28" />
+    <div class="faq-rows overflow-hidden rounded-card border border-border bg-card">
+      {items.map((f, i) => (
+        <details open={i === 0} class="group border-b border-border last:border-b-0">
+          <summary class="flex min-h-16 cursor-pointer items-center justify-between gap-5 px-5 py-4 text-[17px] font-medium transition-colors hover:text-brand-600 md:px-6">
+            {f.q}
+            <svg class="size-2.5 flex-none text-gray transition-transform duration-300 group-open:rotate-180" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3h8L5 8z" fill="currentColor" /></svg>
+          </summary>
+          <p class="max-w-[40em] px-5 pb-6 text-[16.5px] text-muted-foreground md:px-6">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</Section>

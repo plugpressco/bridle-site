@@ -1,15 +1,15 @@
 ---
 // The product window: an email arrives, a draft writes itself from a real
-// source, and you send (src/scripts/home.js, product()).
+// source, and you send (src/scripts/home.js, product()). Its look is in
+// site.css (#panel), since the script drives its states.
+import Section from '../ui/Section.astro';
+import HeadingPair from '../ui/HeadingPair.astro';
 ---
-<section class="block" id="how" aria-labelledby="h-product">
-  <div class="head">
-    <p class="eyebrow">In your WordPress</p>
-    <h2 id="h-product"><span>Every email comes with a reply</span><span class="g">You read it. You send it.</span></h2>
-  </div>
-  <div class="panel" id="panel">
-    <canvas class="dots" aria-hidden="true"></canvas>
-    <figure class="window" aria-label="Bridle in WordPress: an email comes in, a reply writes itself from your docs, and you send it." style="margin:0">
+<Section id="how" labelledby="h-product">
+  <HeadingPair id="h-product" eyebrow="In your WordPress" first="Every email comes with a reply" second="You read it. You send it." class="mb-10 md:mb-14" />
+  <div class="relative isolate h-[560px] overflow-hidden rounded-card bg-brand-50 sm:h-[clamp(520px,58vw,660px)]" id="panel">
+    <canvas class="dots -z-10" aria-hidden="true"></canvas>
+    <figure class="window m-0" aria-label="Bridle in WordPress: an email comes in, a reply writes itself from your docs, and you send it.">
       <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>yourstore.com/wp-admin · Bridle</span></div>
       <div class="list" aria-hidden="true">
         <h3>Inbox <small>Needs a reply</small></h3>
@@ -34,4 +34,4 @@
     </figure>
     <div class="dock" aria-hidden="true"><span class="on">Inbox<b id="n-imbox">6</b></span><span>Updates</span><span>Resolved</span><i></i><svg class="i"><use href="#i-shield" /></svg><svg class="i"><use href="#i-trash" /></svg></div>
   </div>
-</section>
+</Section>
