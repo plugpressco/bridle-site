@@ -4,14 +4,19 @@
    slowly while on screen; with reduced motion it is drawn once and stays. */
 var CELL = 3;
 var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(function (n) { return (n + 0.5) / 16; });
-var COLORS = [[212, 227, 250], [167, 197, 242], [103, 158, 238], [45, 111, 205]];
-var AMBER = [242, 181, 29];
+// Ramps, low to high: warm sun into coral into Bridle blue on the sand panels;
+// on the blue deal panel, light blue into sun, coral and white.
+var RAMPS = {
+	warm: [[255, 232, 191], [255, 209, 102], [255, 138, 101], [106, 155, 242], [31, 99, 230]],
+	night: [[63, 124, 236], [157, 188, 247], [255, 209, 102], [255, 138, 101], [255, 255, 255]],
+};
 var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function hash(x, y) { var h = (x * 374761393 + y * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967295; }
 
 function setup(cv) {
 	var from = cv.getAttribute('data-from') || 'bottom';
+	var ramp = RAMPS[cv.getAttribute('data-tone')] || RAMPS.warm;
 	var ctx = cv.getContext('2d');
 	var img = null, W = 0, H = 0, visible = false, raf = 0, last = 0, t = Math.random() * 100;
 	function size() {
@@ -32,8 +37,8 @@ function setup(cv) {
 				var f = 0.55 + 0.22 * Math.sin(x * 0.045 + t * 0.5) * Math.cos(y * 0.07 - t * 0.35) + 0.23 * Math.sin((x + y * 0.6) * 0.022 + t * 0.25);
 				var v = f * edge * side * 1.45;
 				if (v <= BAYER[(y & 3) * 4 + (x & 3)]) { d[i + 3] = 0; continue; }
-				var c = v > 0.92 ? COLORS[3] : v > 0.7 ? COLORS[2] : v > 0.45 ? COLORS[1] : COLORS[0];
-				if (v > 0.75 && hash(x, y) < 0.05) c = AMBER;
+				var c = v > 0.95 ? ramp[4] : v > 0.8 ? ramp[3] : v > 0.64 ? ramp[2] : v > 0.47 ? ramp[1] : ramp[0];
+				if (v > 0.6 && hash(x, y) < 0.03) c = ramp[4];
 				d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2]; d[i + 3] = 255;
 			}
 		}
