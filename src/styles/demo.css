@@ -1,0 +1,74 @@
+/* Bridle Chat as a visitor sees it (src/components/ChatDemo.astro), drawn like
+   the plugin's real bubble (src/chat/styles.js): white panel, soft log, the
+   owner's colour for the visitor and the launcher. */
+.cpanel { --bc-accent: #2d6fcd; --bc-line: #e6e6e1; --bc-soft: #f5f5f2; --bc-muted: #6b6b66; position: relative; isolation: isolate; height: 640px; overflow: hidden; border: var(--hair) solid var(--border); border-radius: 28px; background: linear-gradient(180deg, var(--paper) 0%, #f2f5fa 100%); }
+.cpanel > canvas { z-index: -1; }
+.cpanel .site { position: absolute; left: 7%; top: 52px; width: 78%; height: 720px; display: grid; grid-template-rows: 44px 1fr; overflow: hidden; border: var(--hair) solid var(--input); border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgb(24 24 24 / .05), 0 40px 80px -40px rgb(24 24 24 / .45); }
+.cpanel .bar { display: flex; align-items: center; gap: 8px; padding: 0 16px; border-bottom: var(--hair) solid var(--border); background: var(--secondary); }
+.cpanel .bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--input); }
+.cpanel .bar span { flex: 1; min-width: 0; margin-right: 49px; overflow: hidden; text-align: center; text-overflow: ellipsis; white-space: nowrap; font: 12px var(--mono); letter-spacing: 0; color: var(--gray); }
+.cpanel .page { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; gap: 14px 18px; padding: 44px 40px; }
+.cpanel .page b, .cpanel .page i { grid-column: 1 / -1; display: block; height: 12px; border-radius: 6px; background: var(--secondary); }
+.cpanel .page b { width: 52%; height: 30px; margin-bottom: 10px; background: #ececea; }
+.cpanel .page i { width: 78%; }
+.cpanel .page i.s { width: 46%; margin-bottom: 18px; }
+.cpanel .page u { display: block; height: 150px; border: var(--hair) solid var(--border); border-radius: 12px; background: #fcfcfb; }
+
+.cpanel .bc { position: absolute; z-index: 2; right: clamp(16px, 5%, 56px); bottom: 22px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; font-size: 14.5px; line-height: 1.45; letter-spacing: 0; }
+.cpanel .bc-panel { display: flex; flex-direction: column; width: 360px; height: 520px; overflow: hidden; border: 1px solid var(--bc-line); border-radius: 16px; background: #fff; box-shadow: 0 16px 48px rgb(24 24 24 / .18); }
+.cpanel .bc-head { display: flex; align-items: center; gap: 10px; padding: 13px 14px 11px 16px; border-bottom: 1px solid var(--bc-line); }
+.cpanel .bc-head div { flex: 1; min-width: 0; line-height: 1.3; }
+.cpanel .bc-head b { display: block; font-size: 15px; font-weight: 600; }
+.cpanel .bc-head small { display: block; font-size: 12px; color: var(--bc-muted); }
+.cpanel .bc-head svg { width: 16px; height: 16px; color: var(--bc-muted); }
+.cpanel .bc-log { flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 14px; overflow: hidden; background: var(--bc-soft); }
+.cpanel .bc-msg { max-width: 86%; padding: 8px 12px; border-radius: 14px; animation: bc-in .3s var(--ease); }
+.cpanel .bc-msg.bot { align-self: flex-start; border: 1px solid var(--bc-line); border-bottom-left-radius: 4px; background: #fff; }
+.cpanel .bc-msg.visitor { align-self: flex-end; border-bottom-right-radius: 4px; background: var(--bc-accent); color: #fff; }
+.cpanel .bc-msg.note { align-self: center; max-width: 100%; padding: 2px 6px; font-size: 13px; text-align: center; color: var(--bc-muted); }
+.cpanel .bc-msg.thinking p { color: var(--bc-muted); }
+.cpanel .bc-msg.thinking p::after { content: ""; display: inline-block; width: 14px; height: 4px; margin-left: 4px; background: radial-gradient(circle closest-side, currentColor 90%, transparent) 0 50% / 4.6px 4px repeat-x; animation: dots 1s steps(4) infinite; clip-path: inset(0 100% 0 0); }
+@keyframes dots { to { clip-path: inset(0 -1px 0 0); } }
+@keyframes bc-in { from { opacity: 0; transform: translateY(6px); } }
+.cpanel .bc-src { display: grid; margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--bc-line); font-size: 12.5px; }
+.cpanel .bc-src small { font-size: 12px; font-weight: 600; color: var(--bc-muted); }
+.cpanel .bc-src span { color: var(--bc-accent); }
+.cpanel .bc-form { display: none; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--bc-line); background: #fff; }
+.cpanel .bc-form.on { display: grid; animation: bc-in .3s var(--ease); }
+.cpanel .bc-form small { font-size: 13px; color: var(--bc-muted); }
+.cpanel .bc-in { display: block; height: 38px; padding: 8px 11px; border: 1px solid var(--bc-accent); border-radius: 10px; box-shadow: 0 0 0 3px rgb(45 111 205 / .15); }
+.cpanel .bc-btn { justify-self: end; padding: 7px 13px; border-radius: 10px; background: #181818; color: #fff; font-weight: 500; transition: transform .12s; }
+.cpanel .bc-btn.press { transform: scale(.94); }
+.cpanel .bc-comp { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--bc-line); }
+.cpanel .bc-comp span { flex: 1; min-width: 0; padding: 8px 11px; border: 1px solid var(--bc-line); border-radius: 10px; color: #a8a8a8; white-space: nowrap; overflow: hidden; }
+.cpanel .bc-comp span.on { color: var(--ink); }
+.cpanel .bc-comp b { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--bc-accent); color: #fff; }
+.cpanel .bc-comp svg { width: 17px; height: 17px; }
+.cpanel .bc-foot { display: flex; align-items: center; gap: 12px; padding: 7px 16px 9px; font-size: 12px; color: var(--bc-muted); }
+.cpanel .bc-foot span:first-child, .cpanel .bc-foot span:nth-child(2) { font-weight: 500; color: var(--ink); }
+.cpanel .bc-foot em { flex: 1; }
+.cpanel .bc-launch { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--bc-accent); color: #fff; box-shadow: 0 8px 24px rgb(24 24 24 / .18); }
+.cpanel .bc-launch svg { width: 24px; height: 24px; }
+
+@media (max-width: 860px) {
+	.cpanel .site { left: 16px; width: calc(100% - 32px); }
+}
+@media (max-width: 560px) {
+	.cpanel { height: 600px; border-radius: 22px; }
+	.cpanel .site { top: 28px; }
+	.cpanel .page { padding: 28px 20px; grid-template-columns: minmax(0, 1fr); }
+	.cpanel .page u:nth-of-type(n+2) { display: none; }
+	.cpanel .bc { left: 12px; right: 12px; bottom: 14px; }
+	.cpanel .bc-panel { width: 100%; height: 500px; }
+	.cpanel .bc-launch { display: none; }
+}
+
+/* Home: three facts beside the demo. */
+.chatrow { display: grid; grid-template-columns: minmax(0, .62fr) minmax(0, 1.38fr); gap: 48px; align-items: center; }
+.points ul { display: grid; gap: 18px; margin: 0 0 26px; padding: 0; list-style: none; }
+.points li { display: flex; align-items: flex-start; gap: 12px; font-size: 19px; line-height: 1.4; letter-spacing: -0.005em; }
+.points li svg { width: 20px; height: 20px; margin-top: 2px; color: var(--brand-ink); }
+.points .muted { font-size: 16px; margin-bottom: 10px; }
+@media (max-width: 1000px) {
+	.chatrow { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+}

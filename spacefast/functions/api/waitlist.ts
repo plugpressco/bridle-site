@@ -2,14 +2,17 @@
  * POST /api/waitlist — store a waitlist signup in the Space's own MySQL.
  *
  * Accepts JSON (the page's fetch) or a plain form post (answered with a 303
- * to /thanks.html). Duplicate emails and bot traps get the same success
+ * to /thanks/). Duplicate emails and bot traps get the same success
  * response, so the endpoint never reveals who signed up or what tripped.
  *
  * Bot defences, cheapest first:
  * 1. Honeypot: bots fill the hidden "website" field.
  * 2. Too fast: the page reports how long it was open; under MIN_MS is a script.
- * 3. Cloudflare Turnstile: the page sends a token; siteverify must say it is
- *    valid, for this action, from an approved hostname (fail closed).
+ * 3. Cloudflare Turnstile, once TURNSTILE_SECRET is set on the Space: the page
+ *    sends a token; siteverify must say it is valid, for this action, from an
+ *    approved hostname (fail closed). Without the secret this step is skipped,
+ *    so the form works before Turnstile is set up (the site key lives in
+ *    src/data/site.ts; set both together).
  * 4. Rate limit: at most LIMIT signups per visitor per hour, keyed by a hash
  *    of their IP that changes every day (no raw IPs are stored).
  */
@@ -113,7 +116,7 @@ export async function POST( request: Request, context: { env: Env } ) {
 
 	const reply = ( status: number, payload: Record<string, unknown> ) => {
 		if ( isJson ) return Response.json( payload, { status } );
-		if ( status < 400 ) return Response.redirect( new URL( '/thanks.html', request.url ).toString(), 303 );
+		if ( status < 400 ) return Response.redirect( new URL( '/thanks/', request.url ).toString(), 303 );
 		return new Response( String( payload.error ), { status, headers: { 'content-type': 'text/plain; charset=utf-8' } } );
 	};
 
@@ -127,10 +130,10 @@ export async function POST( request: Request, context: { env: Env } ) {
 	const elapsed = Number( body.elapsed );
 	if ( Number.isFinite( elapsed ) && elapsed < MIN_MS ) return reply( 200, { ok: true } );
 
-	// 3. Turnstile.
+	// 3. Turnstile, when the Space has its secret.
 	const ip = clientIp( request );
 	const token = clip( body[ 'cf-turnstile-response' ], 2048 ) || clip( body.token, 2048 );
-	if ( ! ( await humanVerified( env, token, ip ) ) ) {
+	if ( env.TURNSTILE_SECRET && ! ( await humanVerified( env, token, ip ) ) ) {
 		return reply( 403, {
 			error: isJson
 				? 'We could not check that you are a person. Please try again.'

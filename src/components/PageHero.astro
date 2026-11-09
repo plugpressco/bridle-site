@@ -1,0 +1,22 @@
+---
+// An inner page's opening: eyebrow, two-tone title, lead, the waitlist and a
+// second link, beside halftone art that settles into a shape (src/scripts/art.js).
+interface Props { eyebrow: string; title: [string, string]; lead: string; art: 'chat' | 'key'; more?: { href: string; label: string } }
+const { eyebrow, title, lead, art, more } = Astro.props;
+---
+<div class="wrap phero">
+  <div>
+    <p class="eyebrow r">{eyebrow}</p>
+    <h1 class="r" style="--d:.05s"><span>{title[0]}</span><span class="g">{title[1]}</span></h1>
+    <p class="lead r" style="--d:.12s">{lead}</p>
+    <div class="ctas r" style="--d:.18s">
+      <a class="btn" href="#join">Join the waitlist</a>
+      {more && <a class="tlink" href={more.href}>{more.label}</a>}
+    </div>
+  </div>
+  <div class="art" data-shape={art} aria-hidden="true"><canvas class="dots"></canvas></div>
+</div>
+
+<script>
+  import '../scripts/art.js';
+</script>

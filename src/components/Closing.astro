@@ -1,0 +1,29 @@
+---
+// The dark closing card on every page: the waitlist, and dots that settle
+// into the mark (settle() in src/scripts/kit.js).
+import Waitlist from './Waitlist.astro';
+interface Props { line1?: string; line2?: string; lead?: string; source?: string }
+const {
+  line1 = 'Support in minutes',
+  line2 = 'Not your whole morning',
+  lead = 'Bridle is a free WordPress plugin, launching soon. Get the download link the day it ships.',
+  source = 'footer',
+} = Astro.props;
+---
+<section class="block" id="join" aria-labelledby="h-join">
+  <div class="closing" data-closing>
+    <canvas class="dots" aria-hidden="true"></canvas>
+    <div>
+      <h2 id="h-join"><span>{line1}</span><span class="g">{line2}</span></h2>
+      <p class="lead">{lead}</p>
+      <Waitlist source={source} />
+    </div>
+    <div class="markart" aria-hidden="true"></div>
+  </div>
+</section>
+
+<script>
+  import { settle } from '../scripts/kit.js';
+  const box = document.querySelector<HTMLElement>('[data-closing]');
+  if (box) settle(box, box.querySelector('.markart'), { palette: ['#2e2e2c', '#679eee', '#a7c5f2'] });
+</script>

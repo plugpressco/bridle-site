@@ -1,0 +1,25 @@
+---
+// Free and Pro, side by side. Free is complete; Pro is a separate plugin.
+import { PRO, money } from '../../data/site';
+const free = ['Email agent with Draft and Auto', 'Bridle Chat on your site', 'Bridle KB help center', 'AI apps over MCP', 'Unlimited inboxes and teammates'];
+const from = Math.min(...PRO.plans.map((p) => p.lifetime[0]));
+---
+<section class="block" id="plans" aria-labelledby="h-plans">
+  <div class="head">
+    <p class="eyebrow">Free and Pro</p>
+    <h2 id="h-plans"><span>Free on WordPress.org</span><span class="g">Pro when you grow</span></h2>
+  </div>
+  <div class="wrap duo">
+    <div class="card">
+      <h3>Bridle</h3>
+      <p class="big">$0 <small>forever, no locked features</small></p>
+      <ul class="ticks">{free.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
+    </div>
+    <div class="card dark">
+      <h3>Bridle Pro</h3>
+      <p class="big">From {money(from)} <small>once, for our first {PRO.total} customers</small></p>
+      <ul class="ticks">{PRO.features.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f.title}</li>)}</ul>
+      <a class="tlink" href="/pro/">See Bridle Pro</a>
+    </div>
+  </div>
+</section>

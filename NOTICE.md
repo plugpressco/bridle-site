@@ -4,10 +4,11 @@ The page's own code, copy, mark and photo are © 2026 PlugPress, all rights rese
 
 | What | Where | Licence |
 |---|---|---|
-| Mona Sans, © 2022 The Mona Sans Project Authors | `fonts/mona-sans-latin.woff2` | SIL Open Font License 1.1, see `fonts/OFL-mona-sans.txt` |
-| Geist Mono, © 2024 The Geist Project Authors | `fonts/geist-mono-latin.woff2` | SIL Open Font License 1.1, see `fonts/OFL-geist-mono.txt` |
-| Agent logo paths (OpenAI, Claude, Codex, Cursor, MCP) from LobeHub Icons, © LobeHub | inline in `index.html` | MIT, below |
-| Interface icons from Lucide, © Lucide Contributors | inline in `index.html` | ISC |
+| Mona Sans, © 2022 The Mona Sans Project Authors | `public/fonts/mona-sans-latin.woff2` | SIL Open Font License 1.1, see `public/fonts/OFL-mona-sans.txt` |
+| Geist Mono, © 2024 The Geist Project Authors | `public/fonts/geist-mono-latin.woff2` | SIL Open Font License 1.1, see `public/fonts/OFL-geist-mono.txt` |
+| Agent logo paths (OpenAI, Claude, Codex, Cursor, MCP) from LobeHub Icons, © LobeHub | `src/components/Symbols.astro` | MIT, below |
+| Interface icons from Lucide, © Lucide Contributors | `src/components/Symbols.astro` | ISC |
+| Astro and @astrojs/sitemap (build tools only, not shipped in the pages) | `package.json` | MIT |
 | Figtree and Gabarito (earlier commits only) | `fonts/` in git history | SIL Open Font License 1.1 |
 
 The ChatGPT, Codex, Claude, Cursor and Model Context Protocol names and logos are trademarks of their owners. They appear only to say Bridle works with them.

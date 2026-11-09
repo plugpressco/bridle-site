@@ -1,0 +1,96 @@
+---
+// /chat/: Bridle Chat, free in Bridle (plugin #114, follow-up #120). Every
+// claim here is in the plugin's AGENTS.md §6 "Bridle Chat".
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ChatDemo from '../components/ChatDemo.astro';
+import Closing from '../components/Closing.astro';
+import { PAGES } from '../data/pages';
+import { PRO } from '../data/site';
+
+const page = PAGES.chat;
+const how = [
+  { title: 'It looks it up', text: 'Bridle KB docs, pages and posts, WooCommerce products and your past replies, with names removed.' },
+  { title: 'It checks itself', text: 'Every quote and link must be in a source. If not, or if it isn’t sure, it doesn’t guess.' },
+  { title: 'It hands off', text: 'Refunds, billing, legal, security and upset visitors go to a person. The visitor leaves an email and the chat lands in your Inbox.' },
+];
+const after = [
+  { icon: 'i-message', title: 'In the bubble', text: 'Your reply shows up in the chat while they are still on your site.' },
+  { icon: 'i-inbox', title: 'Or by email', text: 'Not seen within 3 minutes? It goes to their inbox, in the same thread.' },
+  { icon: 'i-clock', title: 'With an honest promise', text: 'The reply time it promises comes from how fast you really answered over the last 7 days.' },
+];
+const handled = ['Says it is an AI in its header', 'Limits per visitor and per site', 'Optional Cloudflare Turnstile against bots', 'Every chat saved; answered chats file as Resolved', 'Your colour and your greeting', 'Your own AI key, or Bridle AI'];
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
+  <PageHero
+    eyebrow="Bridle Chat · free in Bridle"
+    title={['A chat bubble that answers', 'From what you already wrote']}
+    lead="Visitors ask in their own words. Bridle answers from your docs, pages and past replies, checks every fact, and hands the rest to a person."
+    art="chat"
+    more={{ href: '#demo', label: 'See it answer' }}
+  />
+
+  <section class="block" id="demo" aria-labelledby="h-demo">
+    <div class="head">
+      <p class="eyebrow">On your site</p>
+      <h2 id="h-demo"><span>It answers in seconds</span><span class="g">Or says who will</span></h2>
+    </div>
+    <div class="wrap"><ChatDemo /></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-how">
+    <div class="head">
+      <p class="eyebrow">How it answers</p>
+      <h2 id="h-how"><span>Looks it up, checks it</span><span class="g">Or hands it over</span></h2>
+    </div>
+    <div class="wrap flush">
+      <div class="grid">
+        {how.map((h, i) => <div><span class="num">0{i + 1}</span><h3>{h.title}</h3><p>{h.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-after">
+    <div class="head split">
+      <div>
+        <p class="eyebrow">After a handoff</p>
+        <h2 id="h-after"><span>One conversation</span><span class="g">In the bubble and by email</span></h2>
+      </div>
+      <p class="lead">You reply from your Inbox, like any email. Bridle gets it to the visitor wherever they are.</p>
+    </div>
+    <div class="wrap flush">
+      <div class="grid">
+        {after.map((a) => <div><span class="ico"><svg class="i"><use href={`#${a.icon}`} /></svg></span><h3>{a.title}</h3><p>{a.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-handled">
+    <div class="wrap duo">
+      <div>
+        <p class="eyebrow">The small print</p>
+        <h2 id="h-handled"><span>Already handled</span><span class="g">Switch it on and go</span></h2>
+      </div>
+      <ul class="ticks two">{handled.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-pro">
+    <div class="head">
+      <p class="eyebrow">With Bridle Pro</p>
+      <h2 id="h-pro"><span>One Inbox for every site</span><span class="g">And live when you want it</span></h2>
+    </div>
+    <div class="wrap duo">
+      {PRO.features.slice(0, 2).map((f, i) => (
+        <div class="card">
+          <span class="ico blue"><svg class="i"><use href={i ? '#i-live' : '#i-globe'} /></svg></span>
+          <h3>{f.title}</h3>
+          <p>{f.text}</p>
+          <a class="tlink blue" href="/pro/">See Bridle Pro</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <Closing line1="Let the bubble answer" line2="Keep the hard ones" source="chat" />
+</Base>

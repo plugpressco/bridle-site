@@ -1,0 +1,32 @@
+---
+// The menu: the icon, three plain links and the launch pill, which goes to
+// the waitlist. Calm chrome, no dropdowns (the app's top bar has none either).
+import Brand from './Brand.astro';
+interface Props { join?: string }
+const { join = '#join' } = Astro.props;
+const path = Astro.url.pathname;
+const links = [
+  { href: '/#how', label: 'How it works', wide: true },
+  { href: '/chat/', label: 'Chat' },
+  { href: '/pro/', label: 'Pro' },
+];
+
+---
+<header class="nav" data-nav>
+  <div class="wrap">
+    <Brand />
+    <nav class="links" aria-label="Main">
+      {links.map((l) => <a href={l.href} class:list={{ wide: l.wide }} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>)}
+    </nav>
+    <a class="soon" href={join}><i aria-hidden="true"></i><span>Launching soon<em>, join the waitlist</em></span></a>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  if (nav) {
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 4);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

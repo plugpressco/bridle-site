@@ -1,0 +1,28 @@
+---
+// What the agent reads. Each is a switch in Settings → Knowledge.
+const sources = [
+  { icon: 'i-book', title: 'Bridle KB', text: 'Your help center, a free plugin of its own' },
+  { icon: 'i-file', title: 'Pages and posts', text: 'What your site already explains' },
+  { icon: 'i-bag', title: 'WooCommerce products', text: 'Prices, versions and details' },
+  { icon: 'i-history', title: 'Past replies', text: 'How you answered before, names removed' },
+  { icon: 'i-text', title: 'Snippets and instructions', text: 'Your tone and your rules' },
+];
+---
+<section class="block" id="knowledge" aria-labelledby="h-know">
+  <div class="head">
+    <p class="eyebrow">Knowledge</p>
+    <h2 id="h-know"><span>It reads what you already wrote</span><span class="g">And checks every fact</span></h2>
+    <p class="lead">A draft is ready only when every quote and link in it is found in your sources. Unsure means no guess.</p>
+  </div>
+  <div class="wrap flush">
+    <div class="grid sources" style="--n:5">
+      {sources.map((s) => (
+        <div>
+          <span class="ico"><svg class="i"><use href={`#${s.icon}`} /></svg></span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

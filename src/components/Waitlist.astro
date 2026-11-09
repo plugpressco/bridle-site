@@ -1,0 +1,23 @@
+---
+// The waitlist form. Posts to /api/waitlist with fetch (src/scripts/waitlist.js),
+// or as a plain form without JavaScript, which lands on /thanks/.
+import { TURNSTILE_SITEKEY } from '../data/site';
+interface Props { source: string; proof?: boolean }
+const { source, proof = true } = Astro.props;
+---
+<div data-form data-sitekey={TURNSTILE_SITEKEY || undefined}>
+  <form class="signup" action="/api/waitlist" method="post">
+    <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    <input type="hidden" name="source" value={source} />
+    <input type="hidden" name="ref" value="" />
+    <input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@yourstore.com" aria-label="Email address" />
+    <button type="submit">Join the waitlist</button>
+  </form>
+  <div class="ts"></div>
+  <p class="msg" role="status" aria-live="polite"></p>
+  {proof && <p class="proof"><img src="/fahim.jpg" alt="" width="24" height="24" /><span>Built by the team behind <a href="https://saddle.to">Saddle</a></span></p>}
+</div>
+
+<script>
+  import '../scripts/waitlist.js';
+</script>

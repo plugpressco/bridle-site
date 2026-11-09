@@ -1,0 +1,37 @@
+---
+// The product window: an email arrives, a draft writes itself from a real
+// source, and you send (src/scripts/home.js, product()).
+---
+<section class="block" id="how" aria-labelledby="h-product">
+  <div class="head">
+    <p class="eyebrow">Inside wp-admin</p>
+    <h2 id="h-product"><span>Every email arrives with its answer</span><span class="g">You only check the hard ones</span></h2>
+  </div>
+  <div class="panel" id="panel">
+    <canvas class="dots" aria-hidden="true"></canvas>
+    <figure class="window" aria-label="Bridle inside WordPress: an email arrives, a reply writes itself from your saved replies, docs and past answers, and goes out on its own when every fact checks out." style="margin:0">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>yourstore.com/wp-admin · Bridle</span></div>
+      <div class="list" aria-hidden="true">
+        <h3>Inbox <small>Needs a reply</small></h3>
+        <div id="rows"></div>
+      </div>
+      <div class="thread" id="thread" data-s="new" aria-hidden="true">
+        <div class="tin">
+          <div class="who">
+            <span class="face" data-face></span>
+            <div><b></b><small></small></div>
+            <span class="chip" data-k="new">New</span>
+          </div>
+          <p class="subj"></p>
+          <p class="body"></p>
+          <div class="reply">
+            <div class="rh"><span class="lbl"><svg class="i"><use href="#i-sparkles" /></svg>Draft</span><span class="src"></span></div>
+            <p class="txt"><span class="t"></span><span class="rest"></span></p>
+          </div>
+          <div class="act"><span class="ok"><svg class="i"><use href="#i-check" /></svg>Checked against your docs</span><span class="send">Send</span></div>
+        </div>
+      </div>
+    </figure>
+    <div class="dock" aria-hidden="true"><span class="on">Inbox<b id="n-imbox">6</b></span><span>Updates</span><span>Resolved</span><i></i><svg class="i"><use href="#i-shield" /></svg><svg class="i"><use href="#i-trash" /></svg></div>
+  </div>
+</section>
