@@ -25,23 +25,19 @@ export const FAQ: QA[] = [
 
 export const PRO_FAQ: QA[] = [
   {
-    q: 'Does Pro take anything away from free?',
-    a: 'No. Free stays whole. Pro only adds.',
+    q: 'What happens after Black Friday?',
+    a: `The pay-once deal ends on ${PRO.endsLabel}, or sooner if all ${PRO.total} sell. Then Pro is sold by the year. If you bought once, you keep it.`,
   },
   {
-    q: 'Why does the price go up?',
-    a: `Early buyers pay less. All three prices go up ${money(PRO.rise)} every 20 sales. After ${PRO.total} sales, Pro is yearly.`,
+    q: 'Do I keep it forever?',
+    a: 'Yes. You pay once and Pro is yours. You get updates and support for as long as we make Bridle Pro.',
   },
   {
-    q: 'What does pay once mean?',
-    a: 'You pay one time. You get updates and help for as long as we make Bridle Pro.',
+    q: 'Can I move it to another site?',
+    a: 'Yes. Remove the key from one site and add it to another.',
   },
   {
     q: 'What if my AI answers run out?',
     a: `Top up inside Bridle, from ${money(AI.topUpFrom)}. Or use your own AI key, with no limit.`,
-  },
-  {
-    q: 'Can I get my money back?',
-    a: `Yes, within ${PRO.refundDays} days. Just email us.`,
   },
 ];

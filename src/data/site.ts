@@ -1,9 +1,11 @@
 // One place for facts that show up on more than one page. Change a number here
 // and every page, its Markdown copy, llms.txt and the JSON-LD follow.
 // Prices (Fahim, 9 November 2026): three Bridle Pro licences, 1, 3 and 10
-// sites, each with Bridle AI answers. All three go up $20 every 20 sales,
-// counting every Bridle Pro sale together; pay once ends after sale 170, then
-// Pro is yearly. Plans, Polar product ids and steps live in deal.json.
+// sites, each with Bridle AI answers, sold to pay once as a Black Friday
+// deal. All three go up $20 every 20 sales, counting every Bridle Pro sale
+// together. The deal ends at endsAt (Cyber Monday, 11:59 pm New York) or
+// after sale 170, whichever comes first; then Pro is yearly. Plans, Polar
+// product ids, steps and the end live in deal.json.
 import DEAL_DATA from './deal.json';
 
 export const SITE = {
@@ -59,7 +61,7 @@ export const CHECKOUT_OPEN = false;
 
 export type Step = { from: number; to: number };
 export type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
-export const DEAL: { total: number; refundDays: number; rise: number; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
+export const DEAL: { total: number; refundDays: number; rise: number; endsAt: string; endsLabel: string; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
 
 // A plan's price at step i (0 = the first 10 sales).
 export const priceAt = (plan: Plan, i: number) => plan.base + DEAL.rise * i;
@@ -86,11 +88,25 @@ export const PRO_FEATURES: Feature[] = [
   { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
 ];
 
+// Every Pro licence includes: the highlight grid on /pro/.
+export const PRO_INCLUDES: Feature[] = [
+  { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
+  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
+  { icon: 'i-bag', name: 'Orders and licences', text: 'Reads their orders before it replies.' },
+  { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
+  { icon: 'i-clock', name: 'Business hours', text: 'Tells people when you are back.' },
+  { icon: 'i-history', name: 'Workflows', text: 'A nudge when someone waits too long.' },
+  { icon: 'i-sparkles', name: 'AI answers', text: `Included. Top up from $${AI.topUpFrom}.` },
+  { icon: 'i-shield', name: `${DEAL.refundDays}-day refund`, text: 'Not happy? Get your money back.' },
+];
+
 // Bridle Pro: three licences, every Pro feature in each, pay once.
 export const PRO = {
   total: DEAL.total,
   refundDays: DEAL.refundDays,
   rise: DEAL.rise,
+  endsAt: DEAL.endsAt,
+  endsLabel: DEAL.endsLabel,
   steps: DEAL.steps,
   first: DEAL.steps[0],
   plans: DEAL.plans,

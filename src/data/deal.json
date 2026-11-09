@@ -2,6 +2,8 @@
   "total": 170,
   "refundDays": 30,
   "rise": 20,
+  "endsAt": "2026-12-01T04:59:59Z",
+  "endsLabel": "November 30",
   "orgId": "48c10ba8-ba09-435f-ba30-75ce00a4cf82",
   "steps": [
     { "from": 1, "to": 10 },

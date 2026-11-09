@@ -1,7 +1,8 @@
 ---
-// /pro/: Bridle Pro. One plan, every site, pay once; the price goes up every
-// 20 sales (src/data/deal.json, decided 2026-11-09). Until launch every
-// button joins the waitlist (CHECKOUT_OPEN in src/data/site.ts).
+// /pro/: Bridle Pro's Black Friday deal. Three licences to pay once, the
+// price going up $20 every 20 sales, ending at Cyber Monday or sale 170
+// (src/data/deal.json). Until launch every button joins the waitlist
+// (CHECKOUT_OPEN in src/data/site.ts).
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Features from '../components/Features.astro';
@@ -10,16 +11,16 @@ import Faq from '../components/Faq.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 import { PRO_FAQ } from '../data/faq';
-import { SITE, AI, PRO, money, sitesLabel } from '../data/site';
+import { SITE, PRO, PRO_INCLUDES, sitesLabel } from '../data/site';
 
 const page = PAGES.pro;
 const jsonLd = [
   {
     '@type': 'Product',
     name: 'Bridle Pro',
-    description: 'Adds chat on your other sites, live chat, business hours, order lookups, missing answers and team reminders to Bridle, the AI support agent for WordPress.',
+    description: 'Adds chat on your other sites, live chat, order lookups, missing answers, business hours and workflows to Bridle, the AI support agent for WordPress.',
     brand: { '@type': 'Brand', name: SITE.name },
-    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` })),
+    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pro/#price` })),
   },
   {
     '@type': 'FAQPage',
@@ -29,44 +30,30 @@ const jsonLd = [
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Bridle Pro', path: page.path }]}>
   <PageHero
-    eyebrow="Bridle Pro"
-    title={['Pay once', 'Keep it for good']}
-    lead="Bridle is free. Pro adds more for a growing shop."
+    eyebrow="Bridle Pro · Black Friday"
+    title={['Pay once for Pro', 'Black Friday only']}
+    lead="Every Pro feature, updates for life. Early buyers pay less."
     art="key"
-    cta={{ href: '#price', label: 'See the price' }}
+    cta={{ href: '#price', label: 'See the prices' }}
     more={{ href: '#join', label: 'Join the waitlist' }}
   />
 
-  <section class="block" aria-labelledby="h-adds">
-    <div class="head">
-      <p class="eyebrow">What you get</p>
-      <h2 id="h-adds"><span>Six things Pro adds</span><span class="g">Free never loses a thing</span></h2>
-    </div>
-    <div class="wrap"><Features items={PRO.features} tone="blue" /></div>
-  </section>
-
   <section class="block" id="price" aria-labelledby="h-price">
     <div class="head">
-      <p class="eyebrow">The price</p>
-      <h2 id="h-price"><span>Early buyers pay less</span><span class="g">It goes up every 20 sales</span></h2>
+      <p class="eyebrow">Pick your licence</p>
+      <h2 id="h-price"><span>Pick how many sites</span><span class="g">Pay once. It goes up every 20 sales.</span></h2>
     </div>
     <div class="wrap"><Price /></div>
   </section>
 
-  <section class="block" id="ai" aria-labelledby="h-ai">
+  <section class="block" aria-labelledby="h-incl">
     <div class="head">
-      <p class="eyebrow">Bridle AI</p>
-      <h2 id="h-ai"><span>No AI key?</span><span class="g">{AI.free} free answers a month</span></h2>
+      <p class="eyebrow">In every licence</p>
+      <h2 id="h-incl"><span>All of Pro</span><span class="g">Whichever you pick</span></h2>
     </div>
-    <div class="wrap">
-      <p class="lead">Every site gets {AI.free} free AI answers a month. Pro comes with more. Need extra? Top up from {money(AI.topUpFrom)} inside Bridle.</p>
-    </div>
+    <div class="wrap"><Features items={PRO_INCLUDES} tone="blue" cols={4} /></div>
   </section>
 
-  <Faq items={PRO_FAQ} title={['Questions', 'About Pro']} />
-  <Closing line1="Early buyers pay less" line2="Be one of them" lead="Join the waitlist. We email you on launch day." source="pro" />
+  <Faq items={PRO_FAQ} title={['Questions', 'About the deal']} />
+  <Closing line1="Black Friday only" line2="Pay once, keep it" lead="Join the waitlist. We email you when the deal opens." source="pro" />
 </Base>
-
-<style is:global>
-  .after { margin-top: 18px; }
-</style>

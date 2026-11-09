@@ -1,8 +1,9 @@
 ---
-// Free and Pro as two plain groups of features, and Pro's three licences.
+// Free and Pro as two plain groups of features, then one slim Black Friday
+// line to /pro/ (the prices live there, not twice).
 import Features from '../Features.astro';
-import Price from '../Price.astro';
-import { FREE_FEATURES, PRO_FEATURES } from '../../data/site';
+import { FREE_FEATURES, PRO_FEATURES, PRO, money } from '../../data/site';
+const from = Math.min(...PRO.plans.map((p) => p.base));
 ---
 <section class="block" id="plans" aria-labelledby="h-plans">
   <div class="head">
@@ -15,9 +16,12 @@ import { FREE_FEATURES, PRO_FEATURES } from '../../data/site';
       <Features items={FREE_FEATURES} />
     </div>
     <div class="tier pro">
-      <p class="tag"><b>Bridle Pro</b> pay once</p>
+      <p class="tag"><b>Bridle Pro</b> one more plugin</p>
       <Features items={PRO_FEATURES} tone="blue" />
-      <Price />
+      <div class="bf-strip">
+        <p><span class="bf-tag">Black Friday</span>Bridle Pro, pay once from {money(from)}. Ends {PRO.endsLabel}.</p>
+        <a class="btn" href="/pro/">See the deal</a>
+      </div>
     </div>
   </div>
 </section>

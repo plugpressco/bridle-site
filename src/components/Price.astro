@@ -1,22 +1,31 @@
 ---
-// Bridle Pro's three licences, side by side, with the step line once above
-// them. The first paint shows step 1 from deal.json; src/scripts/deal.js
-// swaps in the live prices from /api/deal once Polar answers (never a
-// made-up number). The buttons join the waitlist until CHECKOUT_OPEN
-// (src/data/site.ts) is true, then open a Polar checkout for that plan.
-import { PRO, AI, CHECKOUT_OPEN, money, count, sitesLabel } from '../data/site';
+// Bridle Pro's Black Friday deal: a calm countdown, the step line, and the
+// three licences side by side (3 sites is our pick). The first paint shows
+// step 1 from deal.json; src/scripts/deal.js swaps in the live prices from
+// /api/deal once Polar answers (never a made-up number) and keeps the
+// countdown in days and hours. The buttons join the waitlist until
+// CHECKOUT_OPEN (src/data/site.ts) is true, then open a Polar checkout.
+import { PRO, CHECKOUT_OPEN, money, count, sitesLabel } from '../data/site';
 const first = PRO.first;
 ---
-<div class="deal" data-deal data-open={CHECKOUT_OPEN ? '1' : undefined}>
-  <p class="deal-line"><b data-deal-left>First {first.to} sales at these prices.</b> <span data-deal-next>Then +{money(PRO.rise)}.</span></p>
+<div class="deal" data-deal data-open={CHECKOUT_OPEN ? '1' : undefined} data-ends={PRO.endsAt}>
+  <div class="deal-top">
+    <p class="deal-ends"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg><span data-deal-ends>Black Friday deal. Ends {PRO.endsLabel}.</span></p>
+    <p class="deal-line"><b data-deal-left>First {first.to} sales at these prices.</b> <span data-deal-next>Then +{money(PRO.rise)}.</span></p>
+  </div>
   <div class="plans3">
     {PRO.plans.map((p, i) => (
-      <div class:list={['card', 'plan', { dark: i === 1 }]} data-plan={p.key}>
-        <h3>{sitesLabel(p.sites)}</h3>
-        <p class="amount"><b data-plan-price>{money(p.base)}</b><span>pay once</span></p>
+      <div class:list={['card', 'plan', { pick: i === 1 }]} data-plan={p.key}>
+        <div class="plan-head">
+          <h3>{sitesLabel(p.sites)}</h3>
+          {i === 1 && <span class="pick-tag">Our pick</span>}
+        </div>
+        <p class="amount"><b data-plan-price>{money(p.base)}</b></p>
+        <p class="once">Pay once</p>
         <ul class="ticks">
+          <li><svg class="i"><use href="#i-check" /></svg>Updates and support for life</li>
+          <li><svg class="i"><use href="#i-check" /></svg>Use it on {sitesLabel(p.sites)}</li>
           <li><svg class="i"><use href="#i-check" /></svg>{count(p.answers)} AI answers</li>
-          <li><svg class="i"><use href="#i-check" /></svg>Every Pro feature</li>
         </ul>
         {CHECKOUT_OPEN
           ? <a class:list={['btn', { ghost: i !== 1 }]} href={`/api/checkout?plan=${p.key}`} data-plan-buy>Get it for {money(p.base)}</a>
@@ -24,7 +33,6 @@ const first = PRO.first;
       </div>
     ))}
   </div>
-  <p class="fine">AI answers run out? Top up from {money(AI.topUpFrom)}. {PRO.refundDays}-day refund.</p>
 </div>
 
 <script>

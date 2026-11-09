@@ -3,15 +3,16 @@
 // private on Polar, so this is the only way to buy them; each checkout sets
 // the step's price itself (an ad-hoc price). The step comes from all Bridle
 // Pro sales together. Before launch (CHECKOUT_OPEN false in
-// src/data/site.ts), without POLAR_TOKEN, for an unknown plan, or after sale
-// 170, it goes back to the prices on /pro/.
+// src/data/site.ts), without POLAR_TOKEN, for an unknown plan, after the
+// Black Friday deal ends (endsAt) or after sale 170, it goes back to the
+// prices on /pro/.
 //
 // Space variables: POLAR_TOKEN (secret). POLAR_ORG_ID is optional.
 
 type Env = Record<string, string | undefined>;
 type Step = { from: number; to: number };
 type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
-const DEAL = /*DEAL_JSON*/ null as unknown as { total: number; rise: number; orgId: string; steps: Step[]; plans: Plan[] };
+const DEAL = /*DEAL_JSON*/ null as unknown as { total: number; rise: number; endsAt: string; orgId: string; steps: Step[]; plans: Plan[] };
 const OPEN = /*CHECKOUT_OPEN*/ false;
 
 const back = (request: Request, why = '') =>
@@ -34,6 +35,7 @@ export async function GET(request: Request, context: { env: Env }) {
   const url = new URL(request.url);
   const plan = DEAL.plans.find((p) => p.key === url.searchParams.get('plan'));
   if (!OPEN || !env.POLAR_TOKEN || !plan) return back(request);
+  if (Date.now() > Date.parse(DEAL.endsAt)) return back(request, 'closed');
 
   let sold: number;
   try {

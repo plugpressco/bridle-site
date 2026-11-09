@@ -1,14 +1,14 @@
 // Each page's title, description and Markdown copy, used by the HTML pages,
 // their .md copies, llms.txt and llms-full.txt. Keep each Markdown copy in
 // step with its page: it must say the same thing, in the same plain words.
-import { SITE, AI, PRO, DEMO, FREE_FEATURES, money, count, priceAt, sitesLabel, type Feature } from './site';
+import { SITE, AI, PRO, PRO_INCLUDES, DEMO, FREE_FEATURES, money, count, priceAt, sitesLabel, type Feature } from './site';
 import { FAQ, PRO_FAQ, type QA } from './faq';
 import { PRIVACY, TERMS, docMd } from './legal';
 import { GUIDES, GUIDES_INDEX, guideMd, guidesIndexMd } from './guides';
 
 const qa = (list: QA[]) => list.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
 const feats = (list: Feature[]) => list.map((f) => `- **${f.name}.** ${f.text}`).join('\n');
-const plans = PRO.plans.map((p) => `- **${sitesLabel(p.sites)}:** ${money(p.base)}, pay once, ${count(p.answers)} AI answers`).join('\n');
+const plans = PRO.plans.map((p, i) => `- **${sitesLabel(p.sites)}${i === 1 ? ' (our pick)' : ''}:** ${money(p.base)}, pay once. Updates and support for life, ${count(p.answers)} AI answers.`).join('\n');
 const ladder = PRO.steps.map((st, i) => `- Sales ${st.from} to ${st.to}: ${PRO.plans.map((p) => money(priceAt(p, i))).join(' / ')}`).join('\n');
 const waitlist = `Bridle is coming to WordPress.org soon. Join the waitlist at ${SITE.url}/#join and we email you on launch day.`;
 
@@ -50,9 +50,7 @@ ${feats(FREE_FEATURES)}
 
 ${feats(PRO.features)}
 
-${plans}
-
-First ${PRO.first.to} sales at these prices. Then +${money(PRO.rise)} every 20 sales. More: ${SITE.url}/pro/
+**Black Friday:** Bridle Pro, pay once from ${money(Math.min(...PRO.plans.map((p) => p.base)))}. Ends ${PRO.endsLabel}. More: ${SITE.url}/pro/
 
 ## Questions
 
@@ -133,34 +131,30 @@ More: ${SITE.url}/pro/
   },
   pro: {
     path: '/pro/',
-    title: 'Bridle Pro: pay once, keep it for good',
+    title: 'Bridle Pro: pay once, Black Friday only',
     description:
-      'Bridle Pro adds live chat, chat on other sites, order lookups and more. Pay once: $49 for 1 site, $79 for 3, $149 for 10. Early buyers pay less.',
-    md: `# Bridle Pro: pay once, keep it for good
+      'Bridle Pro for Black Friday: pay once and keep it. $49 for 1 site, $79 for 3, $149 for 10, with AI answers and updates for life. Ends November 30.',
+    md: `# Bridle Pro: pay once, Black Friday only
 
-Bridle is free. Pro adds more for a growing shop.
+Every Pro feature, updates for life. Early buyers pay less.
 
 ${waitlist}
 
-## Six things Pro adds
+## Pick how many sites
 
-${feats(PRO.features)}
-
-## The price: early buyers pay less
-
-Three licences. Every Pro feature in each. Pay once.
+The Black Friday deal ends on ${PRO.endsLabel} (11:59 pm New York time), or sooner if all ${PRO.total} sell. First ${PRO.first.to} sales at these prices. Then all three go up ${money(PRO.rise)} every 20 sales:
 
 ${plans}
 
-First ${PRO.first.to} sales at these prices. Then all three go up ${money(PRO.rise)} every 20 sales, counting every Bridle Pro sale:
+How the price steps up:
 
 ${ladder}
 
-After ${PRO.total} sales, Pro is sold by the year. ${PRO.refundDays}-day refund.
+After the deal, Pro is sold by the year.
 
-## No AI key?
+## In every licence
 
-Every site gets ${AI.free} free AI answers a month. Pro comes with more. Need extra? Top up from ${money(AI.topUpFrom)} inside Bridle.
+${feats(PRO_INCLUDES)}
 
 ## Questions
 

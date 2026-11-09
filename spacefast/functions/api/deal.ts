@@ -2,7 +2,8 @@
 // three Bridle Pro products on Polar (cached for 60 seconds): one counter for
 // all of them. Answers
 // { state, sold, total, step, from, to, left, rise, plans: [{ key, sites, answers, price, next }], live }.
-// state: open (pay once) or closed (all 170 sold: Pro is yearly now).
+// state: open (pay once) or closed (the Black Friday deal ended at endsAt,
+// or all 170 sold: Pro is yearly now).
 // Without POLAR_TOKEN it answers live: false and the page keeps the first
 // prices it was built with.
 //
@@ -14,7 +15,7 @@
 type Env = Record<string, string | undefined>;
 type Step = { from: number; to: number };
 type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
-const DEAL = /*DEAL_JSON*/ null as unknown as { total: number; rise: number; orgId: string; steps: Step[]; plans: Plan[] };
+const DEAL = /*DEAL_JSON*/ null as unknown as { total: number; rise: number; endsAt: string; orgId: string; steps: Step[]; plans: Plan[] };
 
 let cache: { at: number; sold: number } | null = null;
 
@@ -33,9 +34,9 @@ async function countSold(env: Env): Promise<number> {
   return cache.sold;
 }
 
-function dealAt(sold: number) {
+function dealAt(sold: number, now = Date.now()) {
   const i = DEAL.steps.findIndex((s) => sold < s.to);
-  const open = i >= 0 && sold < DEAL.total;
+  const open = i >= 0 && sold < DEAL.total && now <= Date.parse(DEAL.endsAt);
   const at = open ? i : DEAL.steps.length - 1;
   const step = DEAL.steps[at];
   const hasNext = open && at + 1 < DEAL.steps.length;
@@ -43,6 +44,7 @@ function dealAt(sold: number) {
     state: open ? 'open' : 'closed',
     sold,
     total: DEAL.total,
+    endsAt: DEAL.endsAt,
     step: at,
     from: step.from,
     to: step.to,
