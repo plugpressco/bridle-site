@@ -4,7 +4,7 @@
    with how long the page has been open, and resets the widget after every
    attempt, since a token works once. Without a key the form posts without a
    token, and the function's other checks still apply. */
-import { el, icon } from './kit.js';
+import { el, icon } from './util.js';
 
 var loadedAt = performance.now();
 var params = new URLSearchParams(location.search);

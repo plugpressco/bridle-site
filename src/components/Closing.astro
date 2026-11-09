@@ -1,33 +1,29 @@
 ---
-// The closing call on every page: the waitlist beside dots that settle into
-// the mark (settle() in src/scripts/kit.js). The end of the page takes the
-// one soft tint, and the picture sits in a white well.
-import Section from './ui/Section.astro';
-import HeadingPair from './ui/HeadingPair.astro';
+// The closing call (home 08-copy.md §9, and the end of the inner pages): a
+// soft blue panel with the next step and Bridle Chat open beside it. Before
+// launch the button is the waitlist form (id="join", the menu's target).
+import Button from './ui/Button.astro';
 import Waitlist from './Waitlist.astro';
-interface Props { line1?: string; line2?: string; lead?: string; source?: string }
+import { LAUNCHED, WPORG_URL } from '../data/site';
+interface Props { title?: string; second?: string; sub?: string; source?: string; wrap?: boolean }
 const {
-  line1 = 'Support in minutes',
-  line2 = 'Not your whole morning',
-  lead = 'Free on WordPress.org soon. We email you the day it’s out.',
+  title = 'Try it on your own inbox.',
+  second,
+  sub = 'Install it, forward one address, and see your first reply.',
   source = 'footer',
+  wrap = false,
 } = Astro.props;
+const Outer = wrap ? 'div' : Fragment;
+const outer = wrap ? { class: 'wrap pt-9 pb-[72px] md:pt-[60px] md:pb-[120px]' } : {};
 ---
-<Section id="join" labelledby="h-join" tone="tint">
-  <div class="grid items-center gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:gap-16">
-    <div>
-      <HeadingPair id="h-join" first={line1} second={line2} lead={lead} />
-      <div class="mt-8"><Waitlist source={source} /></div>
+<Outer {...outer}><section class="panel" id="join" aria-labelledby="h-close">
+  <div class="closing">
+    <div class="txt">
+      <div><h2 class="h2" id="h-close">{title}{second && <> <span class="soft">{second}</span></>}</h2><p class="sub">{sub}</p></div>
+      {LAUNCHED
+        ? <div class="ctas"><Button size="lg" arrow href={WPORG_URL}>Get Bridle free</Button><Button size="lg" variant="white" href="/demo/">Try the live demo</Button></div>
+        : <><Waitlist source={source} /><div class="ctas -mt-2"><a class="lnk" href="/demo/">Try the live demo ›</a></div></>}
     </div>
-    <div class="relative h-[260px] overflow-hidden rounded-card bg-card md:h-[380px]" data-closing aria-hidden="true">
-      <canvas class="dots"></canvas>
-      <div class="markart absolute inset-0"></div>
-    </div>
+    <div class="chat"><div class="win"><picture><source srcset="/img/chat-answer.avif" type="image/avif" /><img src="/img/chat-answer.webp" width="400" height="680" alt="Bridle’s chat on a website, answering a question with a numbered source." loading="lazy" decoding="async" /></picture></div></div>
   </div>
-</Section>
-
-<script>
-  import { settle } from '../scripts/kit.js';
-  const box = document.querySelector<HTMLElement>('[data-closing]');
-  if (box) settle(box, box.querySelector('.markart'), { palette: ['#dddcd6', '#679eee', '#a7c5f2'], scale: 0.62, max: 280 });
-</script>
+</section></Outer>

@@ -1,9 +1,7 @@
 ---
-// One content width for everything (owner's rule: "header container and hero
-// container not match"). The menu, every section and the footer share these
-// left and right edges, with a 1 px rail on each side; content sits 16 to
-// 32 px inside the rails.
-interface Props { class?: string; rails?: boolean; [attr: string]: unknown }
-const { class: cls, rails = true, ...attrs } = Astro.props;
+// One content width for everything: the menu, every section and the footer
+// share these edges (1200 px of content, 24 px gutters).
+interface Props { class?: string; [attr: string]: unknown }
+const { class: cls, ...attrs } = Astro.props;
 ---
-<div class:list={['mx-auto w-full max-w-[1246px] px-4 sm:px-8', rails && 'border-x border-border', cls]} {...attrs}><slot /></div>
+<div class:list={['wrap w-full', cls]} {...attrs}><slot /></div>

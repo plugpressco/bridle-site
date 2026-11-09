@@ -1,0 +1,41 @@
+---
+// 6 The Black Friday deal, short (08-copy.md §6): the page's one blue panel.
+// Price from deal.json; the live counters (sales left at this price, days
+// left) come from /api/deal and the end date (src/scripts/deal.js), and stay
+// hidden until they are real. Before launch the button joins the waitlist.
+import Button from '../ui/Button.astro';
+import { PRO, LAUNCHED, money } from '../../data/site';
+interface Props { join: string }
+const { join } = Astro.props;
+const one = PRO.plans[0];
+---
+<section class="panel blue" aria-labelledby="h-deal" data-deal data-ends={PRO.endsAt}>
+  <div class="deal">
+    <div>
+      <h2 class="h2" id="h-deal">Pay once for Bridle Pro.</h2><p class="sub">Only until Cyber Monday.</p>
+      <div class="what"><b>What Pro adds</b>
+        <span><svg aria-hidden="true"><use href="#d-check" /></svg>Chat on your other sites</span>
+        <span><svg aria-hidden="true"><use href="#d-check" /></svg>Live chat, with your hours</span>
+        <span><svg aria-hidden="true"><use href="#d-check" /></svg>Order and licence lookups</span>
+      </div>
+    </div>
+    <div class="dside">
+      <div class="price"><b data-price={one.key}>{money(one.base)}</b><span>pay once, for 1 site</span></div>
+      <div class="counters" data-counters hidden>
+        <div data-left-box hidden><b class="tab" data-left></b><span data-left-label>left at {money(one.base)}</span></div>
+        <div data-days-box hidden><b class="tab" data-days></b><span>days left</span></div>
+      </div>
+      <div class="prog" data-prog hidden aria-hidden="true"><i></i></div>
+      <p>The price goes up {money(PRO.rise)} every 20 sales.</p>
+      {LAUNCHED
+        ? <Button variant="white" size="lg" arrow href={`/api/checkout?plan=${one.key}`} data-buy={one.key} data-buy-label="Get Bridle Pro, {price}">Get Bridle Pro, {money(one.base)}</Button>
+        : <Button variant="white" size="lg" arrow href={join}>Join the waitlist</Button>}
+      {!LAUNCHED && <p class="text-[15px]">The deal opens on launch day.</p>}
+      <div class="row"><a href="/pricing/">See all plans ›</a><span>{PRO.refundDays}-day refund.</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/deal.js';
+</script>

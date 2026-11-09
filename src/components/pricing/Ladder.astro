@@ -1,0 +1,40 @@
+---
+// Pricing 3, the deal (pricing/08-copy.md §3): the price steps as a chart
+// drawn to scale from deal.json (it follows the sites switch), and the live
+// counters beside it. Before launch the box holds the waitlist (id="join").
+import Button from '../ui/Button.astro';
+import Waitlist from '../Waitlist.astro';
+import { PRO, LAUNCHED, money } from '../../data/site';
+const one = PRO.plans[0];
+const top = one.base + PRO.rise * (PRO.steps.length - 1);
+---
+<section aria-labelledby="h-ladder" data-ends={PRO.endsAt}>
+  <div class="ladder">
+    <div>
+      <div class="opener"><h2 class="h2" id="h-ladder">Pay once. Keep it for life.</h2><p class="sub">Until Cyber Monday, or until {PRO.total} are sold.</p></div>
+      <div class="chart" data-chart role="img" aria-label={`Bridle Pro’s price goes up ${money(PRO.rise)} every 20 sales, from ${money(one.base)} to ${money(top)} for 1 site. You are here: the first ${PRO.first.to} sales.`}>
+        {PRO.steps.map((st, i) => {
+          const price = one.base + PRO.rise * i;
+          return (
+            <div class:list={['col', i === 0 && 'now']}>
+              {i === 0 && <span class="here">You are here.</span>}
+              <span class="v">{money(price)}</span><i style={`height:${Math.round((price / top) * 220)}px`}></i><span class="s">{st.from}–{st.to}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+    <div class="lbox">
+      <div class="counters" data-counters hidden>
+        <div data-left-box hidden><b class="tab" data-left></b><span class="small">left at this price</span></div>
+        <div data-days-box hidden><b class="tab" data-days></b><span class="small">days left</span></div>
+      </div>
+      <div class="prog" data-prog hidden aria-hidden="true"><i></i></div>
+      <p>Updates and support for life. {PRO.refundDays}-day refund.</p>
+      {LAUNCHED
+        ? <Button size="lg" arrow href={`/api/checkout?plan=${one.key}`} data-buy="follow" data-buy-label="Get Bridle Pro, {price}">Get Bridle Pro, {money(one.base)}</Button>
+        : <div id="join" class="grid gap-2"><Waitlist source="pro" /><p class="small">The deal opens on launch day.</p></div>}
+      <p class="small">Ends Monday, {PRO.endsLabel}, at 11:59 pm New York time.</p>
+    </div>
+  </div>
+</section>

@@ -5,7 +5,7 @@
 // Pro sales together. Before launch (CHECKOUT_OPEN false in
 // src/data/site.ts), without POLAR_TOKEN, for an unknown plan, after the
 // Black Friday deal ends (endsAt) or after sale 170, it goes back to the
-// prices on /pro/.
+// prices on /pricing/.
 //
 // Space variables: POLAR_TOKEN (secret). POLAR_ORG_ID is optional.
 
@@ -16,7 +16,7 @@ const DEAL = /*DEAL_JSON*/ null as unknown as { total: number; rise: number; end
 const OPEN = /*CHECKOUT_OPEN*/ false;
 
 const back = (request: Request, why = '') =>
-  Response.redirect(new URL(`/pro/${why ? `?checkout=${why}` : ''}#price`, request.url).toString(), 303);
+  Response.redirect(new URL(`/pricing/${why ? `?checkout=${why}` : ''}#plans`, request.url).toString(), 303);
 
 async function countSold(env: Env): Promise<number> {
   const url = new URL('/v1/orders/', env.POLAR_API || 'https://api.polar.sh');
@@ -55,7 +55,7 @@ export async function GET(request: Request, context: { env: Env }) {
       prices: { [plan.productId]: [{ amount_type: 'fixed', price_amount: price * 100, price_currency: 'usd' }] },
       allow_discount_codes: false,
       success_url: `${url.origin}/thanks/?checkout_id={CHECKOUT_ID}`,
-      return_url: `${url.origin}/pro/#price`,
+      return_url: `${url.origin}/pricing/#plans`,
       metadata: { deal: 'bridle-pro-pay-once', plan: plan.key, sites: plan.sites, answers: plan.answers, step_price: price, licences_sold_before: sold },
     }),
   });

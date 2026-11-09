@@ -1,13 +1,13 @@
 ---
-// A band the full width of the window, with the rails running through it.
-// Sections are told apart by their background: white, or the one soft tint
-// (the closing call and the footer). `line` draws the window-wide line under
-// a page's opening. One section rhythm: 72 px on phones, 96 px on desktop
-// (`pad="top"` for a page's opening band).
+// A section of an inner page. White, or the one soft tint (blue 50) as a
+// flat 12 px panel. 72 px apart on phones, 120 px on desktop; `pad="top"` for
+// a page's opening.
 import Container from './Container.astro';
-interface Props { id?: string; tone?: 'white' | 'tint'; labelledby?: string; label?: string; line?: boolean; pad?: 'section' | 'top'; class?: string; inner?: string }
-const { id, tone = 'white', labelledby, label, line = false, pad = 'section', class: cls, inner } = Astro.props;
+interface Props { id?: string; tone?: 'white' | 'tint'; labelledby?: string; label?: string; pad?: 'section' | 'top'; class?: string; inner?: string }
+const { id, tone = 'white', labelledby, label, pad = 'section', class: cls, inner } = Astro.props;
 ---
-<section id={id} aria-labelledby={labelledby} aria-label={label} class:list={['sm:px-6', tone === 'tint' ? 'bg-background' : 'bg-card', line && 'border-b border-border', cls]}>
-  <Container class:list={[pad === 'top' ? 'pt-12 pb-16 md:pt-20 md:pb-24' : 'py-18 md:py-24', inner]}><slot /></Container>
+<section id={id} aria-labelledby={labelledby} aria-label={label} class={cls}>
+  <Container class:list={[pad === 'top' ? 'pt-14 pb-12 md:pt-24 md:pb-16' : 'py-9 md:py-[60px]']}>
+    <div class:list={[tone === 'tint' && 'rounded-panel bg-background px-6 py-10 md:px-16 md:py-16', inner]}><slot /></div>
+  </Container>
 </section>

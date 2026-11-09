@@ -1,18 +1,22 @@
 ---
-// The home page. The pictures (hero, product window, dot stories, AI apps
-// chat, closing) are the approved v11 page's. One idea per section, short
-// plain words (owner, 2026-11-09: "simple, catchy, a 12 year old gets it").
+// The home page (design v3, approved 10 November 2026:
+// planning/landing/pages/home/11-design.html). Copy word for word from
+// planning/landing/pages/home/08-copy.md, in its order: hero, what it does,
+// checks, cost, three steps, the deal, the founder's note, questions,
+// closing. One moving picture (the hero), one navy panel, one blue panel.
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
-import Product from '../components/home/Product.astro';
-import Chat from '../components/home/Chat.astro';
-import Agents from '../components/home/Agents.astro';
-import Plans from '../components/home/Plans.astro';
+import Does from '../components/home/Does.astro';
+import Checks from '../components/home/Checks.astro';
+import Cost from '../components/Cost.astro';
+import Steps from '../components/home/Steps.astro';
+import Deal from '../components/home/Deal.astro';
+import Founder from '../components/home/Founder.astro';
 import Faq from '../components/ui/Faq.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 import { FAQ } from '../data/faq';
-import { SITE, AI, PRO } from '../data/site';
+import { SITE, AI, PRO, sitesLabel } from '../data/site';
 
 const page = PAGES.home;
 const jsonLd = [
@@ -29,7 +33,7 @@ const jsonLd = [
     offers: [
       { '@type': 'Offer', name: 'Bridle', price: '0', priceCurrency: 'USD' },
       ...AI.packs.map((p) => ({ '@type': 'Offer', name: `Bridle AI, ${p.answers} answers`, price: String(p.price), priceCurrency: 'USD' })),
-      ...PRO.plans.map((p) => ({ '@type': 'Offer', name: `Bridle Pro, pay once, ${p.sites === 1 ? '1 site' : `${p.sites} sites`}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` })),
+      ...PRO.plans.map((p) => ({ '@type': 'Offer', name: `Bridle Pro, pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pricing/#plans` })),
     ],
   },
   {
@@ -39,15 +43,15 @@ const jsonLd = [
 ];
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd}>
-  <Hero />
-  <Product />
-  <Chat />
-  <Agents />
-  <Plans />
-  <Faq items={FAQ} />
-  <Closing />
+  <div class="wrap stack-sections">
+    <Hero />
+    <Does />
+    <Checks />
+    <Cost id="cost" />
+    <Steps />
+    <Deal join="#join" />
+    <Founder />
+    <Faq items={FAQ} title="Questions, answered." />
+    <Closing source="footer" />
+  </div>
 </Base>
-
-<script>
-  import '../scripts/home.js';
-</script>

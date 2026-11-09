@@ -32,7 +32,7 @@ const opener = 'mb-10 md:mb-14';
     eyebrow="Bridle Chat · free"
     title={['A chat that answers', 'From what you wrote']}
     lead="It answers visitors from your docs. The rest come to you."
-    art="chat"
+    shot={{ name: 'chat-answer', width: 400, height: 680, alt: 'Bridle’s chat on a website, answering a question with a numbered source.' }}
     more={{ href: '#demo', label: 'See it answer' }}
   />
 
@@ -61,14 +61,14 @@ const opener = 'mb-10 md:mb-14';
     <div class="grid gap-5 md:grid-cols-2">
       {PRO.features.slice(0, 2).map((f) => (
         <Card class="flex flex-col">
-          <span class="mb-5 grid size-10 place-items-center rounded-card bg-brand-100 text-brand-600"><svg class="i size-[19px]" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
+          <span class="mb-5 grid size-10 place-items-center rounded-control bg-brand-100 text-brand-600"><svg class="i size-[19px]" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
           <h3 class="text-[21px] font-medium tracking-[-0.01em]">{f.name}</h3>
           <p class="mt-2 text-[16.5px] text-muted-foreground">{f.text}</p>
-          <Button variant="link" href="/pro/" class="mt-auto self-start pt-4">See Bridle Pro</Button>
+          <Button variant="link" href="/pricing/" class="mt-auto self-start pt-4">See Bridle Pro ›</Button>
         </Card>
       ))}
     </div>
   </Section>
 
-  <Closing line1="Let the chat answer" line2="You take the hard ones" source="chat" />
+  <Closing title="Let the chat answer." second="You take the hard ones." source="chat" wrap />
 </Base>

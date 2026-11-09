@@ -1,25 +1,27 @@
 ---
-// An inner page's opening: eyebrow, two-tone title, lead, the main button and
-// a second link, beside halftone art that settles into a shape
-// (src/scripts/art.js) in a tinted well. `cta` replaces the waitlist as the
-// main button (the demo page opens Playground).
-import Section from './ui/Section.astro';
+// An inner page's opening (design v3): kicker, two-tone title, lead, the main
+// button and a second link, beside one real Bridle screen at its real size in
+// a soft blue panel, cropped by the panel's edge. Before launch the main
+// button joins the waitlist (#join, the closing form) unless `cta` is given.
 import HeadingPair from './ui/HeadingPair.astro';
 import Button from './ui/Button.astro';
-interface Props { eyebrow: string; title: [string, string]; lead: string; art: 'chat' | 'key'; more?: { href: string; label: string }; cta?: { href: string; label: string } }
-const { eyebrow, title, lead, art, more, cta } = Astro.props;
+import Shot from './Shot.astro';
+import { LAUNCHED, WPORG_URL } from '../data/site';
+interface Props {
+  eyebrow: string;
+  title: [string, string];
+  lead: string;
+  shot: { name: string; width: number; height: number; alt: string };
+  more?: { href: string; label: string };
+  cta?: { href: string; label: string };
+}
+const { eyebrow, title, lead, shot, more, cta } = Astro.props;
+const main = cta || (LAUNCHED ? { href: WPORG_URL, label: 'Get Bridle free' } : { href: '#join', label: 'Join the waitlist' });
 ---
-<Section line pad="top" inner="grid items-center gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:gap-16">
-  <div class="animate-rise">
-    <HeadingPair as="h1" size="title" eyebrow={eyebrow} first={title[0]} second={title[1]} lead={lead} />
-    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-      {cta ? <Button href={cta.href}>{cta.label}</Button> : <Button href="#join">Join the waitlist</Button>}
-      {more && <Button variant="link" href={more.href}>{more.label}</Button>}
-    </div>
+<div class="wrap"><section class="hero pb-9 md:pb-[60px]" aria-labelledby="h-page">
+  <div class="copy">
+    <HeadingPair as="h1" id="h-page" size="title" eyebrow={eyebrow} first={title[0]} second={title[1]} lead={lead} />
+    <div class="ctas"><Button size="lg" arrow href={main.href}>{main.label}</Button>{more && <Button size="lg" variant="soft" href={more.href}>{more.label}</Button>}</div>
   </div>
-  <div class="relative aspect-video overflow-hidden rounded-card bg-brand-50 max-md:order-first md:aspect-[1/0.92]" data-shape={art} aria-hidden="true"><canvas class="dots"></canvas></div>
-</Section>
-
-<script>
-  import '../scripts/art.js';
-</script>
+  <div class="panel h-[420px] md:h-[520px]"><div class="absolute top-8 left-6 md:top-12 md:left-12"><Shot name={shot.name} width={shot.width} height={shot.height} alt={shot.alt} eager /></div></div>
+</section></div>

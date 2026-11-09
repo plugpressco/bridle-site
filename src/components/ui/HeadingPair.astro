@@ -1,7 +1,7 @@
 ---
-// A title in two tones: the first line in ink, the second in grey. Light
-// weight, tight tracking at display sizes. An optional eyebrow above and a
-// lead under it, with the same gaps everywhere.
+// A heading in two tones (design v3): the first sentence in navy, the second
+// in soft grey, both Geist 500 with tight tracking. An optional kicker above
+// and a lead under it, with the same gaps everywhere.
 interface Props {
   id?: string;
   as?: 'h1' | 'h2';
@@ -14,10 +14,13 @@ interface Props {
   [attr: string]: unknown;
 }
 const { id, as: Tag = 'h2', first, second, eyebrow, lead, size = 'section', class: cls, ...attrs } = Astro.props;
-const sizes = { display: 'text-display', title: 'text-title', section: 'text-section' };
+const sizes = { display: 'h1', title: 'h1x', section: 'h2' };
+// Two sentences run on in one line ("Free to use. Pay once for Pro.");
+// two short phrases without full stops sit on two lines.
+const inline = /[.?!]$/.test(first);
 ---
 <div class:list={['grid content-start gap-4', cls]}>
-  {eyebrow && <p class="text-[15px] text-muted-foreground [&_b]:font-normal [&_b]:text-foreground" set:html={eyebrow} />}
-  <Tag id={id} class:list={[sizes[size], 'font-light']} {...attrs}><span class="block">{first}</span>{second && <span class="block text-muted-foreground">{second}</span>}</Tag>
-  {lead && <p class="max-w-[34em] text-lead text-ink-2">{lead}</p>}
+  {eyebrow && <p class="kicker [&_a]:no-underline [&_a]:text-muted-foreground [&_a:hover]:text-foreground" set:html={eyebrow} />}
+  <Tag id={id} class={sizes[size]} {...attrs}>{first}{second && (inline ? <> <span class="soft">{second}</span></> : <span class="soft block">{second}</span>)}</Tag>
+  {lead && <p class="lead text-ink-2">{lead}</p>}
 </div>

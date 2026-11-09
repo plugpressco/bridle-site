@@ -17,19 +17,18 @@ npm run preview    # serves dist/ (without the waitlist function)
 
 | Path | What |
 |---|---|
-| `src/pages/` | `index` (home), `chat`, `pro`, `privacy`, `terms`, `thanks` (the no-JavaScript waitlist landing, noindex), `404`; plus `llms.txt`, `llms-full.txt`, `robots.txt` and a `.md` copy of every page |
+| `src/pages/` | `index` (home), `pricing`, `chat`, `demo`, `guides`, `privacy`, `terms`, `thanks` (the no-JavaScript waitlist landing, noindex), `404`, and `pro` (noindex: sends `/pro/` on to `/pricing/`, out of the sitemap); plus `llms.txt`, `llms-full.txt`, `robots.txt` and a `.md` copy of every page |
 | `src/data/site.ts` | Shared facts: the one-sentence definition, contact, Turnstile site key, Bridle AI packs, Pro plans and prices. Change a number here and every page, Markdown copy and JSON-LD follows |
 | `src/data/pages.ts` | Each page's title, description and Markdown copy. The Markdown must say what the page says |
-| `src/data/faq.ts`, `src/data/legal.ts` | Questions; privacy and terms as data (the pages and their Markdown copies render from it) |
-| `src/components/ui/` | The primitives every page is built from: `Container` (the one content width, with the rails), `Section`, `HeadingPair`, `Button` (primary, quiet, link), `Card`, `Faq` |
-| `src/components/` | The menu (plain links, Product and Resources panels, a phone sheet), footer, waitlist form, closing call, chat demo; home sections in `home/` |
-| `src/scripts/kit.js` | The halftone dot engine every picture is drawn with, the dot-matrix faces and `settle()` (dots that settle into a shape) |
-| `src/scripts/home.js` | The home page's moving pictures from the approved v11 page: the dot-field hero, the product window, three dot stories, the AI apps chat |
+| `src/data/faq.ts`, `src/data/legal.ts`, `src/data/cost.ts` | Questions; privacy and terms as data (the pages and their Markdown copies render from it); the cost comparison's prices, sources and the day they were checked |
+| `src/components/ui/` | The primitives every page is built from: `Container` (the one content width), `Section`, `HeadingPair`, `Button` (primary, soft, white, link), `Card`, `Faq` |
+| `src/components/` | The menu (a floating capsule that grows into a panel; a phone sheet), footer, waitlist form, closing call, cost comparison, real screens (`Shot`), chat demo; home sections in `home/`, pricing sections in `pricing/` |
+| `src/scripts/` | `nav.js` (the menu), `hero.js` (the hero loop's pause), `faces.js` (the plugin's dot-matrix faces), `cost.js` (the slider), `deal.js` (live deal: counters, sites switch, price chart, buy buttons), `waitlist.js`, `util.js` |
 | `src/scripts/chat-demo.js` | Bridle Chat, played, in the plugin's own words |
-| `src/styles/site.css` | The one stylesheet: Tailwind v4 (`@tailwindcss/vite`, pinned), the `@theme` tokens mirroring the plugin's (`bridle/src/app/styles/theme.css`), the prose for privacy, terms and guides, and the moving product pictures that scripts drive |
+| `src/styles/site.css` | The one stylesheet: Tailwind v4 (`@tailwindcss/vite`, pinned), the `@theme` tokens of design v3 (mirrored in `planning/landing/brand/tokens.css`), the landing sections' pieces, the prose for privacy, terms and guides |
 | `spacefast/functions/api/waitlist.ts` | `POST /api/waitlist`: stores sign-ups in the Space's MySQL (table `waitlist`) |
 | `sf.jsonc` | Declares the Functions runtime with `database: true` (that's what gives the function `env.DB`). Copied into `dist/` by the build |
-| `public/` | Fonts (Mona Sans, Geist Mono, OFL), icons, `og.png`, `fahim.jpg` |
+| `public/` | Fonts (Geist, Geist Mono, OFL), real Bridle screens in `img/` (AVIF and WebP), icons, `og.png`, `fahim.jpg` |
 | `public/touch-icon-180.png` | 180×180, full bleed; iOS rounds the corners. Not `/apple-touch-icon.png`: the host answers that path with its own default |
 | `NOTICE.md` | Third-party licences: fonts (OFL), agent logos (MIT), interface icons (ISC) |
 
@@ -55,7 +54,7 @@ After a publish, check the form still saves and the pages answer:
 ```bash
 curl -s -X POST https://bridle.to/api/waitlist -H 'content-type: application/json' -d '{"email":"smoke-test@example.com","source":"smoke-test"}'
 # {"ok":true}  (a 500 means env.DB is missing)
-for p in / /chat/ /pro/ /privacy/ /terms/ /index.md /pro.md /llms.txt /robots.txt /sitemap-index.xml; do printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "https://bridle.to$p"; done
+for p in / /pricing/ /chat/ /pro/ /privacy/ /terms/ /index.md /pricing.md /llms.txt /robots.txt /sitemap-index.xml; do printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "https://bridle.to$p"; done
 curl -sI https://bridle.to | grep -i x-spacefast-version
 ```
 
@@ -77,9 +76,9 @@ Three licences, every Pro feature in each, pay once (Fahim, 9 November 2026). Pl
 
 All three go up $20 every 20 sales, counting every Bridle Pro sale together: sales 1 to 10 pay the first prices, 11 to 30 pay $69 / $99 / $169, and so on. Pay once ends after sale 170; then Pro is yearly. When the answers run out, buyers top up inside the plugin (from $10); the site only says so.
 
-- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid orders across the three products on Polar (cached 60 seconds) and answers `{ state, sold, total, step, from, to, left, rise, plans: [{ key, sites, answers, price, next }], live }`. The cards (`src/components/Price.astro`, `src/scripts/deal.js`) show it once Polar answers; until then they show the first prices from the build, never a made-up count.
+- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid orders across the three products on Polar (cached 60 seconds) and answers `{ state, sold, total, step, from, to, left, rise, plans: [{ key, sites, answers, price, next }], live }`. The pricing page and the home deal panel (`src/scripts/deal.js`) show it once Polar answers; until then they show the first prices from the build and only the days left (from `endsAt`), never a made-up count.
 - `GET` or `POST /api/checkout?plan=1|3|10` (`checkout.ts`) opens a Polar checkout for that plan's product at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
-- `CHECKOUT_OPEN` in `src/data/site.ts` is the one launch switch. While it is `false` every price button says "Join the waitlist" and `/api/checkout` sends people back to `/pro/#price`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
+- `CHECKOUT_OPEN` in `src/data/site.ts` (also exported as `LAUNCHED`) is the one launch switch. While it is `false` every "Get Bridle free" and price button is the waitlist and `/api/checkout` sends people back to `/pricing/#plans`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
 
 **Polar setup (owner):** the three products already exist in Bridle's own Polar organization (slug `bridle`, `48c10ba8-ba09-435f-ba30-75ce00a4cf82`, also in `deal.json`; its own org so Bridle can be sold apart from Mailpuff). Keep them private, with their licence-key benefits.
 
@@ -89,8 +88,7 @@ All three go up $20 every 20 sales, counting every Bridle Pro sale together: sal
 
 ## At launch
 
-- Set `CHECKOUT_OPEN = true` (above). Swap the other waitlist calls to action for "Get Bridle free" (WordPress.org).
-- Change the "When can I get it?" answer and the "Launching soon" pill.
+- Set `CHECKOUT_OPEN = true` (above): every waitlist form becomes "Get Bridle free" (to `WPORG_URL`, check the slug once approved) and the Pro buttons open checkout.
 - Give `hello@bridle.to` its own Email Routing rule (today it falls through the relay's catch-all to the fallback mailbox).
 
 ## Signups

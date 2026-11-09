@@ -24,6 +24,8 @@ export const SITE = {
   saddle: 'https://saddle.to',
   requires: 'WordPress 7.0+ · PHP 8.1+',
   updated: '9 November 2026',
+  // The prices in the cost comparison were read on this day (src/data/cost.ts).
+  pricesChecked: '10 November 2026',
 };
 
 // The live demo: WordPress Playground in the visitor's browser, set up by the
@@ -54,10 +56,17 @@ export const AI = {
   topUpFrom: 10,
 };
 
-// Launch switch: false shows "Join the waitlist" on every price button. Set it
-// to true on launch day (with the Polar variables on the Space, see README)
-// and the buttons open a Polar checkout at the current price.
+// Launch switch, one for the whole site: false shows the waitlist (an email
+// field and "Join the waitlist") wherever a button would say "Get Bridle
+// free" or buy Pro. Set it to true on launch day, once Bridle is live on
+// WordPress.org and the Polar variables are on the Space (see README): the
+// free buttons then go to WPORG_URL and the Pro buttons open a Polar checkout
+// at the current price.
 export const CHECKOUT_OPEN = false;
+export const LAUNCHED = CHECKOUT_OPEN;
+// Bridle's page on WordPress.org (the slug we asked for; check it once the
+// plugin is approved).
+export const WPORG_URL = 'https://wordpress.org/plugins/bridle/';
 
 export type Step = { from: number; to: number };
 export type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
@@ -70,15 +79,6 @@ export const sitesLabel = (n: number) => (n === 1 ? '1 site' : `${n} sites`);
 // What each plan does: an icon, a short name, one short line.
 export type Feature = { icon: string; name: string; text: string };
 
-export const FREE_FEATURES: Feature[] = [
-  { icon: 'i-inbox', name: 'Sorts your mail', text: 'Spam and receipts go away. People stay.' },
-  { icon: 'i-sparkles', name: 'Writes the reply', text: 'From your docs and old replies.' },
-  { icon: 'i-check-circle', name: 'Checks every fact', text: 'Not sure? It asks you first.' },
-  { icon: 'i-message', name: 'Chat on your site', text: 'Answers visitors right away.' },
-  { icon: 'i-book', name: 'Help center', text: 'Your docs, easy to search.' },
-  { icon: 'i-key', name: 'Your own AI key', text: `Or ${AI.free} free answers a month.` },
-];
-
 export const PRO_FEATURES: Feature[] = [
   { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
   { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
@@ -86,18 +86,6 @@ export const PRO_FEATURES: Feature[] = [
   { icon: 'i-bag', name: 'Order lookups', text: 'Reads their orders before it replies.' },
   { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
   { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
-];
-
-// Every Pro licence includes: the highlight grid on /pro/.
-export const PRO_INCLUDES: Feature[] = [
-  { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
-  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
-  { icon: 'i-bag', name: 'Orders and licences', text: 'Reads their orders before it replies.' },
-  { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
-  { icon: 'i-clock', name: 'Business hours', text: 'Tells people when you are back.' },
-  { icon: 'i-history', name: 'Workflows', text: 'A nudge when someone waits too long.' },
-  { icon: 'i-sparkles', name: 'AI answers', text: `Included. Top up from $${AI.topUpFrom}.` },
-  { icon: 'i-shield', name: `${DEAL.refundDays}-day refund`, text: 'Not happy? Get your money back.' },
 ];
 
 // Bridle Pro: three licences, every Pro feature in each, pay once.

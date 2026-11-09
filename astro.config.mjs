@@ -11,5 +11,5 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'always' },
   vite: { plugins: [tailwindcss()] },
-  integrations: [sitemap({ filter: (page) => !page.includes('/thanks/') && !page.includes('/404') })],
+  integrations: [sitemap({ filter: (page) => !page.includes('/thanks/') && !page.includes('/404') && !page.endsWith('/pro/') })],
 });

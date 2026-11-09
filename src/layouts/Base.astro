@@ -13,7 +13,8 @@ interface Props {
   description: string;
   jsonLd?: object[];
   noindex?: boolean;
-  // Pages with a waitlist form load Turnstile (when a site key is set).
+  // Pages with a waitlist form load Turnstile (when a site key is set) and
+  // point the menu's button at their own form (#join).
   waitlist?: boolean;
   crumbs?: { name: string; path: string }[];
 }
@@ -63,7 +64,7 @@ const graph = [
     <!-- Not /apple-touch-icon.png: the host answers that path with its own default. -->
     <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="preload" href="/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
@@ -73,7 +74,7 @@ const graph = [
     <meta property="og:image" content={og} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Bridle: AI writes the replies, you hold the reins." />
+    <meta property="og:image:alt" content="Bridle: your support email answers itself. You check the hard ones." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -87,7 +88,7 @@ const graph = [
     <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
   <body>
-    <a class="absolute -top-16 left-4 z-50 rounded-control bg-foreground px-4 py-2.5 text-white no-underline focus:top-3" href="#main">Skip to the content</a>
+    <a class="absolute -top-16 left-4 z-[80] rounded-control bg-foreground px-4 py-2.5 text-white no-underline focus:top-3" href="#main">Skip to the content</a>
     <Symbols />
     <Nav join={waitlist ? '#join' : '/#join'} />
     <main id="main">
