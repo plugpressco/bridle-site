@@ -15,16 +15,27 @@ document.querySelectorAll('[data-chatdemo]').forEach(function (box) {
 	var gate = function () { return new Promise(function (res) { (function c() { if (visible && !document.hidden) res(); else setTimeout(c, 250); })(); }); };
 	var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }).then(gate); };
 	var scroll = function () { log.scrollTop = log.scrollHeight; };
+	// Like the plugin's bubble (#142): answers sit beside the chat's face,
+	// sources are numbered, and "looking it up" is three dots.
 	var say = function (cls, text, from) {
 		var m = el('div', 'bc-msg ' + cls);
-		m.appendChild(el('p', null, text));
+		if (/thinking/.test(cls)) {
+			m.append(el('i'), el('i'), el('i'));
+		} else {
+			m.appendChild(el('p', null, text));
+		}
 		if (from) {
 			var s = el('div', 'bc-src');
-			s.append(el('small', null, 'From'), el('span', null, from));
+			s.append(el('span', 'n', '1'), el('span', null, from));
 			m.appendChild(s);
 		}
-		log.appendChild(m); scroll();
-		return m;
+		var node = m;
+		if (/bot/.test(cls) && !/thinking/.test(cls)) {
+			node = el('div', 'bc-turn');
+			node.append(el('span', 'bc-ava sm', 'L'), m);
+		}
+		log.appendChild(node); scroll();
+		return node;
 	};
 	var type = function (node, text, ms) {
 		node.textContent = '';
