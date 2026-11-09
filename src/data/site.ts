@@ -53,7 +53,7 @@ export const PRO = {
   features: [
     { title: 'Chat on your other sites', text: 'Paste one script tag on any site, WordPress or not. Every chat lands in the same Inbox, tagged by site.' },
     { title: 'Take over a chat live', text: 'See who is chatting right now and answer them yourself, while they are still on the page.' },
-    { title: 'Order and licence lookups', text: 'The agent reads the customer’s orders and licences before it answers, in email and in chat.' },
+    { title: 'Order and licence lookups', text: 'The agent reads the customer’s orders and licences before it answers their email: WooCommerce, Easy Digital Downloads, Polar and Freemius.' },
     { title: 'What it couldn’t answer', text: 'Questions the agent had to hand over, grouped by topic, each with a button to write the missing doc.' },
   ],
 };
