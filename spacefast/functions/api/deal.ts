@@ -7,7 +7,7 @@
 // prices it was built with.
 //
 // Space variables: POLAR_TOKEN (secret, scopes orders:read and
-// checkouts:write). POLAR_ORG_ID is optional (deal.json has PlugPress's).
+// checkouts:write). POLAR_ORG_ID is optional (deal.json has Bridle's).
 // Plans, product ids and steps come from src/data/deal.json (put in by
 // scripts/postbuild.mjs).
 

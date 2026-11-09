@@ -70,9 +70,9 @@ Three licences, every Pro feature in each, pay once (Fahim, 9 November 2026). Pl
 
 | Licence | First price | Bridle AI answers | Polar product |
 | --- | --- | --- | --- |
-| 1 site | $49 | 1,000 | `07324385-8d18-45b7-bbdb-5df03c8d7241` |
-| 3 sites | $79 | 3,000 | `1deeedec-94ad-4e5b-90f6-ad7a0b80c0c6` |
-| 10 sites | $149 | 10,000 | `317c578e-7ed6-4a48-9260-277c65481d0e` |
+| 1 site | $49 | 1,000 | `0cd62812-7220-414d-b915-5bb2973530e8` |
+| 3 sites | $79 | 3,000 | `ecfdec26-784a-4d25-bc3a-abd39aeeb443` |
+| 10 sites | $149 | 10,000 | `2f6e2605-4cbc-4e3d-b582-5739eb8c7e0d` |
 
 All three go up $20 every 20 sales, counting every Bridle Pro sale together: sales 1 to 10 pay the first prices, 11 to 30 pay $69 / $99 / $169, and so on. Pay once ends after sale 170; then Pro is yearly. When the answers run out, buyers top up inside the plugin (from $10); the site only says so.
 
@@ -80,7 +80,7 @@ All three go up $20 every 20 sales, counting every Bridle Pro sale together: sal
 - `GET` or `POST /api/checkout?plan=1|3|10` (`checkout.ts`) opens a Polar checkout for that plan's product at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
 - `CHECKOUT_OPEN` in `src/data/site.ts` is the one launch switch. While it is `false` every price button says "Join the waitlist" and `/api/checkout` sends people back to `/pro/#price`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
 
-**Polar setup (owner):** the three products already exist in the PlugPress organization (`70df29ff-afca-407d-abbb-747a76a8b62f`, also in `deal.json`). Keep them private, with their licence-key benefits.
+**Polar setup (owner):** the three products already exist in Bridle's own Polar organization (slug `bridle`, `48c10ba8-ba09-435f-ba30-75ce00a4cf82`, also in `deal.json`; its own org so Bridle can be sold apart from Mailpuff). Keep them private, with their licence-key benefits.
 
 1. Create an **organization access token** with the scopes `orders:read` and `checkouts:write`.
 2. On the Spacefast Space `bridle`, set `POLAR_TOKEN` as a secret. That's the only variable (`POLAR_ORG_ID` is optional; the id is in `deal.json`). Check it: `curl -s https://bridle.to/api/deal` says `"live":true`.

@@ -2,7 +2,7 @@
   "total": 170,
   "refundDays": 30,
   "rise": 20,
-  "orgId": "70df29ff-afca-407d-abbb-747a76a8b62f",
+  "orgId": "48c10ba8-ba09-435f-ba30-75ce00a4cf82",
   "steps": [
     { "from": 1, "to": 10 },
     { "from": 11, "to": 30 },
@@ -15,8 +15,8 @@
     { "from": 151, "to": 170 }
   ],
   "plans": [
-    { "key": "1", "sites": 1, "base": 49, "answers": 1000, "productId": "07324385-8d18-45b7-bbdb-5df03c8d7241" },
-    { "key": "3", "sites": 3, "base": 79, "answers": 3000, "productId": "1deeedec-94ad-4e5b-90f6-ad7a0b80c0c6" },
-    { "key": "10", "sites": 10, "base": 149, "answers": 10000, "productId": "317c578e-7ed6-4a48-9260-277c65481d0e" }
+    { "key": "1", "sites": 1, "base": 49, "answers": 1000, "productId": "0cd62812-7220-414d-b915-5bb2973530e8" },
+    { "key": "3", "sites": 3, "base": 79, "answers": 3000, "productId": "ecfdec26-784a-4d25-bc3a-abd39aeeb443" },
+    { "key": "10", "sites": 10, "base": 149, "answers": 10000, "productId": "2f6e2605-4cbc-4e3d-b582-5739eb8c7e0d" }
   ]
 }
