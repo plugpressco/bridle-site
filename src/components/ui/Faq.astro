@@ -8,7 +8,7 @@ import { SITE } from '../../data/site';
 interface Props { items: QA[]; title: string; id?: string }
 const { items, title, id = 'faq' } = Astro.props;
 ---
-<section id={id} aria-labelledby={`h-${id}`}>
+<section class="band" id={id} aria-labelledby={`h-${id}`}>
   <div class="two">
     <div><h2 class="h2" id={`h-${id}`}>{title}</h2><p class="sub">Can’t find yours? <a class="lnk text-[length:inherit]" href={`mailto:${SITE.email}`}>Email us.</a></p></div>
     <div class="faq">

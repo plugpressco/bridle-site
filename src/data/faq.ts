@@ -8,36 +8,36 @@ export type QA = { q: string; a: string; id?: string };
 export const FAQ: QA[] = [
   {
     q: 'Will my customers know it’s an AI?',
-    a: 'Yes. The chat says so at the top. Anyone can ask for a person, and the hard questions come to you.',
+    a: 'Yes. The chat says so, and anyone can ask for a person.',
   },
   {
     q: 'Can it send replies by itself?',
-    a: 'Only if you turn on Auto. Then sure answers wait 15 minutes so you can stop them. Refunds, billing, legal questions and upset customers always wait for you.',
+    a: 'Only if you turn on Auto. Each reply waits 15 minutes, so you can stop it. Refunds, billing and upset customers always wait for you.',
   },
   {
     q: 'What if it doesn’t know the answer?',
-    a: 'It doesn’t guess. It leaves a note on why and the reply is yours to write. With Pro, these questions become a list of docs to write.',
+    a: 'It doesn’t guess. The reply is yours to write.',
   },
   {
     q: 'Do I need an AI key?',
-    a: `No. Bridle AI gives you ${AI.free} answers a month free, then ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}, and packs never run out. Or connect your own key in WordPress and pay your AI company directly.`,
+    a: `No. You get ${AI.free} free answers a month, then ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}. Or use your own key.`,
   },
   {
     q: 'Will it slow down my site?',
-    a: 'Visitors load one small script, and only when chat is on. Replies are written in the background.',
+    a: 'No. Visitors load one small script, only when chat is on.',
   },
   {
     q: 'Where is my data kept?',
-    a: 'In your WordPress. Mail passes through our relay on the way in, and the relay doesn’t keep it. The AI you choose reads each message to write the reply.',
+    a: 'In your WordPress. Our mail relay passes mail on and keeps nothing.',
   },
   {
     id: 'ai-apps',
     q: 'Does it work with Claude or ChatGPT?',
-    a: 'Yes. They can read your inbox and write drafts. They can only send if you allow it.',
+    a: 'Yes. They can read your inbox and write drafts. Sending needs your OK.',
   },
   {
     q: 'Is there a charge per person?',
-    a: 'No. Add teammates as WordPress users, as many as you like.',
+    a: 'No. Add as many teammates as you like.',
   },
 ];
 

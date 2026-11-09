@@ -1,21 +1,22 @@
 ---
-// The menu (design v3; the owner: "i love helpscout menu.. dont copy but
-// brainstorm on this"): a floating white capsule, flat, that grows into a
-// rounded panel when Product or Resources opens, and dims the page behind.
-// Each item is a blue name and one plain line. On phones a Menu button opens
-// a full-height sheet. Esc closes either; focus stays inside while open
-// (src/scripts/nav.js).
+// The menu: Bridle's own (owner, 2026-11-10: the capsule "look copy helpscout
+// make it better"). A plain full-width bar that gets a hairline once you
+// scroll. Product opens a panel under it: the four parts of Bridle on the left,
+// and on the right a real Bridle screen that changes with the item you point
+// at. Resources is a short plain list. On phones a Menu button opens a
+// full-height sheet. Esc closes; focus stays inside (src/scripts/nav.js).
 import Mark from './Brand.astro';
 import { SITE, LAUNCHED, WPORG_URL } from '../data/site';
 interface Props { join?: string }
 const { join = '/#join' } = Astro.props;
 const path = Astro.url.pathname;
 const product = [
-  { label: 'Email', text: 'Answers your support email', href: '/#email' },
-  { label: 'Chat', text: 'Answers visitors on your site', href: '/chat/' },
-  { label: 'Docs', text: 'A help center your AI reads', href: '/guides/knowledge-gaps/' },
-  { label: 'AI apps', text: 'Claude and ChatGPT work your inbox', href: '/#ai-apps' },
+  { key: 'email', label: 'Email', text: 'Answers your support email', href: '/#email' },
+  { key: 'chat', label: 'Chat', text: 'Answers visitors on your site', href: '/chat/' },
+  { key: 'docs', label: 'Docs', text: 'A help center your AI reads', href: '/guides/knowledge-gaps/' },
+  { key: 'apps', label: 'AI apps', text: 'Claude and ChatGPT work your inbox', href: '/#ai-apps' },
 ];
+const shot = (name: string, w: number, h: number) => `<picture><source srcset="/img/${name}.avif" type="image/avif" /><img class="screen" src="/img/${name}.webp" width="${w}" height="${h}" alt="" loading="lazy" decoding="async" /></picture>`;
 const resources = [
   [
     { label: 'Guides', text: 'Set up each part, step by step', href: '/guides/' },
@@ -46,21 +47,23 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
     </div>
     <div class="drop" id="drop"><div class="drop-in">
       <div class="mpanel" id="m-product" hidden>
-        <div class="mcols">
-          {product.map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}
-        </div>
-        <div class="mrow">
-          <a class="mcard" href="/demo/"><span class="thumb"><picture><source srcset="/img/inbox-groups.avif" type="image/avif" /><img src="/img/inbox-groups.webp" alt="" width="820" height="566" loading="lazy" decoding="async" /></picture></span><span><b>Try the live demo</b><span>A real WordPress in your browser</span></span></a>
-          <div class="mlinks"><a href="/pricing/">Bridle Pro ›</a><a href="/guides/">Guides ›</a></div>
+        <div class="mprod">
+          <div class="mlist">
+            {product.map((i, n) => <a class:list={['mitem', n === 0 && 'on']} href={i.href} data-prev={i.key}><b>{i.label}</b><span>{i.text}</span></a>)}
+            <div class="mfoot"><a href="/demo/">Try the live demo ›</a><a href="/pricing/">Bridle Pro ›</a></div>
+          </div>
+          <div class="mprev" aria-hidden="true">
+            <figure class="on" data-pane="email"><Fragment set:html={shot('inbox-groups', 820, 566)} /></figure>
+            <figure data-pane="chat"><Fragment set:html={shot('chat-answer', 400, 680)} /></figure>
+            <figure data-pane="docs"><Fragment set:html={shot('conversation-draft', 803, 723)} /></figure>
+            <figure data-pane="apps"><div class="apps"><p class="q"><b>You, in Claude</b>Answer the easy ones in my Bridle inbox.</p><p class="a"><b>Claude</b>I wrote 3 drafts in Bridle. Sending needs your OK.</p></div></figure>
+          </div>
         </div>
       </div>
       <div class="mpanel" id="m-resources" hidden>
-        <div class="mcols two-c">
-          {resources.map((col) => <div class="grid gap-0.5">{col.map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>)}
-        </div>
-        <div class="mcards2">
-          <a class="mc blue" href="/pricing/"><b>Black Friday deal</b><span>Pay once for Bridle Pro. Only until Cyber Monday.</span></a>
-          <a class="mc plain" href={SITE.saddle}><b>Built by the team behind Saddle.</b><span>Saddle links WordPress to Claude, ChatGPT and Cursor.</span></a>
+        <div class="mres">
+          <div><h4>Learn</h4>{resources[0].map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
+          <div><h4>Company</h4>{resources[1].map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
         </div>
       </div>
     </div></div>

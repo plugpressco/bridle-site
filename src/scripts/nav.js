@@ -1,6 +1,7 @@
-/* The capsule menu (src/components/Nav.astro). Product and Resources open on
-   hover (with a fine pointer), click, or keyboard focus; the capsule grows
-   into a panel and the page behind dims. Esc closes and gives focus back to
+/* The menu (src/components/Nav.astro). Product and Resources open on hover
+   (with a fine pointer), click, or keyboard focus; a panel drops under the bar
+   and the page behind dims a little. In Product, the item you point at or
+   focus shows its real Bridle screen on the right. Esc closes and gives focus back to
    the button; Tab walks into the open panel and out to the next item. On
    phones the Menu button
    opens a full-height sheet with the same groups (focus stays inside it). Also opens a question on
@@ -115,3 +116,24 @@ var openTarget = function () {
 };
 openTarget();
 window.addEventListener('hashchange', openTarget);
+
+// Product's preview: the item under the pointer (or keyboard focus) shows its
+// screen; the bar gets its hairline once the page scrolls.
+var prev = document.querySelector('.mprev');
+if (prev) {
+	var show = function (key) {
+		document.querySelectorAll('.mlist .mitem').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-prev') === key); });
+		prev.querySelectorAll('figure').forEach(function (f) { f.classList.toggle('on', f.getAttribute('data-pane') === key); });
+	};
+	document.querySelectorAll('.mlist .mitem').forEach(function (a) {
+		var k = a.getAttribute('data-prev');
+		a.addEventListener('mouseenter', function () { show(k); });
+		a.addEventListener('focus', function () { show(k); });
+	});
+}
+var navwrap = document.querySelector('.navwrap');
+if (navwrap) {
+	var onScroll = function () { navwrap.classList.toggle('scrolled', window.scrollY > 4); };
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+}
