@@ -28,7 +28,7 @@ export const SITE = {
 const DEMO_BLUEPRINT = 'https://raw.githubusercontent.com/plugpressco/bridle-site/main/public/demo/blueprint.json';
 export const DEMO = {
   blueprint: DEMO_BLUEPRINT,
-  url: `https://playground.wordpress.net/?blueprint-url=${encodeURIComponent(DEMO_BLUEPRINT)}`,
+  url: `https://playground.wordpress.net/?mode=seamless&blueprint-url=${encodeURIComponent(DEMO_BLUEPRINT)}`,
 };
 
 // Cloudflare Turnstile on the waitlist. Empty = off: the form posts without a
