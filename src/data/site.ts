@@ -21,6 +21,16 @@ export const SITE = {
   updated: '9 November 2026',
 };
 
+// The live demo: WordPress Playground in the visitor's browser, set up by the
+// blueprint in public/demo/ (Bridle and Bridle KB from their zips, a stand-in
+// AI, a stubbed relay, sample mail). Playground fetches it from GitHub, which
+// sends the CORS header it needs. Rebuild the zips with each release.
+const DEMO_BLUEPRINT = 'https://raw.githubusercontent.com/plugpressco/bridle-site/main/public/demo/blueprint.json';
+export const DEMO = {
+  blueprint: DEMO_BLUEPRINT,
+  url: `https://playground.wordpress.net/?mode=seamless&blueprint-url=${encodeURIComponent(DEMO_BLUEPRINT)}`,
+};
+
 // Cloudflare Turnstile on the waitlist. Empty = off: the form posts without a
 // token and the function skips the check. To turn it on, put the widget's
 // site key here AND set TURNSTILE_SECRET and TURNSTILE_HOSTNAMES
@@ -51,10 +61,10 @@ export const PRO = {
     { key: 'agency', label: 'Unlimited sites', sites: 0, lifetime: [299, 349, 399, 449], yearly: 299 },
   ],
   features: [
-    { title: 'Chat on your other sites', text: 'Paste one script tag on any site, WordPress or not. Every chat lands in the same Inbox, tagged by site.' },
-    { title: 'Take over a chat live', text: 'See who is chatting right now and answer them yourself, while they are still on the page.' },
-    { title: 'Order and licence lookups', text: 'The agent reads the customer’s orders and licences before it answers their email: WooCommerce, Easy Digital Downloads, Polar and Freemius.' },
-    { title: 'What it couldn’t answer', text: 'Questions the agent had to hand over, grouped by topic, each with a button to write the missing doc.' },
+    { title: 'Chat on your other sites', text: 'One script tag. One Inbox.' },
+    { title: 'Take over a chat live', text: 'Answer while they’re still on the page.' },
+    { title: 'Order and licence lookups', text: 'WooCommerce, EDD, Polar and Freemius, in every draft.' },
+    { title: 'What it couldn’t answer', text: 'Grouped by topic, one click to write the doc.' },
   ],
 };
 

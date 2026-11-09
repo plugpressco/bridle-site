@@ -1,15 +1,13 @@
 ---
 // The home page. The pictures (hero, product window, dot stories, AI apps
-// chat, closing) are the approved v11 page's; the new sections say what the
-// rest of Bridle does, one idea each, with less text.
+// chat, closing) are the approved v11 page's. One idea per section, few words
+// (owner, 2026-11-09: "cleaner, clutter free, too much text").
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
 import Product from '../components/home/Product.astro';
 import Cells from '../components/home/Cells.astro';
-import Knowledge from '../components/home/Knowledge.astro';
 import Chat from '../components/home/Chat.astro';
 import Agents from '../components/home/Agents.astro';
-import Ai from '../components/home/Ai.astro';
 import Plans from '../components/home/Plans.astro';
 import Faq from '../components/Faq.astro';
 import Closing from '../components/Closing.astro';
@@ -46,10 +44,8 @@ const jsonLd = [
   <Hero />
   <Product />
   <Cells />
-  <Knowledge />
   <Chat />
   <Agents />
-  <Ai />
   <Plans />
   <Faq items={FAQ} />
   <Closing />

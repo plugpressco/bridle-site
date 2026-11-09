@@ -1,7 +1,7 @@
 // Each page's title, description and Markdown copy, used by the HTML pages,
 // their .md copies, llms.txt and llms-full.txt. Keep each Markdown copy in
 // step with its page: it must say the same thing.
-import { SITE, AI, PRO, money, count } from './site';
+import { SITE, AI, PRO, DEMO, money, count } from './site';
 import { FAQ, PRO_FAQ, type QA } from './faq';
 import { PRIVACY, TERMS, docMd } from './legal';
 import { GUIDES, GUIDES_INDEX, guideMd, guidesIndexMd } from './guides';
@@ -96,6 +96,31 @@ ${qa(FAQ)}
 - Built by the team behind Saddle: ${SITE.saddle}
 - Made by ${SITE.company} (${SITE.companyUrl}). Contact: ${SITE.email}
 `,
+  },
+  demo: {
+    path: '/demo/',
+    title: 'Bridle live demo: try it in your browser',
+    description:
+      'Open Bridle in a WordPress that runs in your browser, with a sample support inbox, drafts ready to send and a chat bubble. Nothing to install, nothing kept.',
+    md: `# Bridle live demo: try it in your browser
+
+Open Bridle in a WordPress that runs in your browser with WordPress Playground. Nothing to install, and nothing is kept when you close the tab.
+
+Open the demo: ${DEMO.url}
+
+## What to try
+
+- **Home:** four replies ready to send, and one refund that waits for you.
+- **Inbox:** open a draft, see the sources it used, press Send. The receipt is already in Updates.
+- **Chat:** visit the site and ask the bubble a question.
+
+## What is different from your site
+
+- The AI is a stand-in: it answers with the best matching passage from the demo's docs. With your own key, a real model writes the replies.
+- Mail doesn't arrive: the sample emails are already in. On your site you forward your support address to Bridle.
+- It shows the free plugin and Bridle KB. Bridle Pro is on the Pro page: ${SITE.url}/pro/
+
+${waitlist}`,
   },
   chat: {
     path: '/chat/',
