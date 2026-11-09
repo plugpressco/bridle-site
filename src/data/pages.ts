@@ -75,7 +75,7 @@ Only until Cyber Monday. Pro adds chat on your other sites, live chat with your 
 
 ## A note from the founder.
 
-Hi, I’m Fahim. At PlugPress we make WordPress plugins like Saddle and Mailpuff. Every day we answer the same questions by email. So we built Bridle for our own inbox. It writes the reply. We check it and send it. Bridle is free, and it stays free. Questions? Just reply. I read every email. Fahim Reza, founder, PlugPress (${SITE.email})
+“Every day we answer the same questions by email. So we built Bridle for our own inbox.” It writes the reply. We check it and send it. Bridle is free, and it stays free. Fahim Reza, founder, PlugPress (${SITE.email})
 
 ## Questions, answered.
 

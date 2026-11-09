@@ -1,19 +1,18 @@
 ---
-// 7 A note from the founder (08-copy.md §7), shown as the email it is. The
-// lines were confirmed true by the owner on 10 November 2026.
+// 7 A note from the founder, as a quote (owner, 2026-11-10: the email card
+// looked "worried ... not professional"). The lines were confirmed true by the
+// owner on 10 November 2026. Soft peach, the page's one warm tint.
 import { SITE } from '../../data/site';
 ---
-<section class="band" aria-labelledby="h-founder">
-  <div class="solo">
-    <h2 class="h2" id="h-founder">A note from the founder.</h2>
-    <div class="letterbox">
-      <div class="from"><img src="/fahim.jpg" width="52" height="52" alt="Fahim Reza" loading="lazy" decoding="async" /><div><b>Fahim Reza</b><span>PlugPress, to you</span></div></div>
-      <p>Hi, I’m Fahim.</p>
-      <p>At PlugPress we make WordPress plugins like Saddle and Mailpuff. Every day we answer the same questions by email.</p>
-      <p>So we built Bridle for our own inbox. It writes the reply. We check it and send it.</p>
-      <p>Bridle is free, and it stays free. Questions? Just reply. I read every email.</p>
-      <p class="sig">Fahim Reza, founder, PlugPress</p>
-      <a class="btn inline-flex h-10 items-center justify-center self-start justify-self-start rounded-control bg-brand-100 px-3.5 text-[15px] font-medium text-brand-700 no-underline hover:bg-brand-200" href={`mailto:${SITE.email}`}>Reply</a>
+<section class="band peach" aria-labelledby="h-founder">
+  <div class="founder">
+    <img class="fphoto" src="/fahim.jpg" width="120" height="120" alt="Fahim Reza" loading="lazy" decoding="async" />
+    <div class="fq">
+      <h2 class="sr-only" id="h-founder">A note from the founder.</h2>
+      <blockquote><p>“Every day we answer the same questions by email. So we built Bridle for our own inbox.”</p></blockquote>
+      <p class="fbody">It writes the reply. We check it and send it. Bridle is free, and it stays free.</p>
+      <div class="fsig"><b>Fahim Reza</b><span>Founder, PlugPress. The team behind Saddle and Mailpuff.</span></div>
+      <a class="lnk" href={`mailto:${SITE.email}`}>Write to Fahim ›</a>
     </div>
   </div>
 </section>

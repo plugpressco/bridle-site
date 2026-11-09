@@ -1,6 +1,7 @@
 ---
-// The closing call (home 08-copy.md §9, and the end of the inner pages): a
-// soft blue panel with the next step and Bridle Chat open beside it. Before
+// The closing call (home 08-copy.md §9, and the end of the inner pages): one
+// centred call on sand, with the warm dot art rising under it (owner,
+// 2026-11-10: cleaner, more logical; the cut-off chat picture went). Before
 // launch the button is the waitlist form (id="join", the menu's target).
 import Button from './ui/Button.astro';
 import Waitlist from './Waitlist.astro';
@@ -17,15 +18,13 @@ const {
 const Outer = wrap ? 'div' : Fragment;
 const outer = wrap ? { class: 'wrap pt-9 pb-[72px] md:pt-[60px] md:pb-[120px]' } : {};
 ---
-<Outer {...outer}><section class="panel" id="join" aria-labelledby="h-close">
-  <Dither from="right" />
+<Outer {...outer}><section class="panel closer" id="join" aria-labelledby="h-close">
+  <Dither />
   <div class="closing">
-    <div class="txt">
-      <div><h2 class="h2" id="h-close">{title}{second && <> <span class="soft">{second}</span></>}</h2>{sub && <p class="sub">{sub}</p>}</div>
-      {LAUNCHED
-        ? <div class="ctas"><Button size="lg" arrow href={WPORG_URL}>Get Bridle free</Button><Button size="lg" variant="white" href="/demo/">Try the live demo</Button></div>
-        : <Waitlist source={source} />}
-    </div>
-    <div class="chat"><div class="win"><picture><source srcset="/img/chat-answer.avif" type="image/avif" /><img src="/img/chat-answer.webp" width="400" height="680" alt="Bridle’s chat on a website, answering a question with a numbered source." loading="lazy" decoding="async" /></picture></div></div>
+    <h2 class="h2" id="h-close">{title}{second && <> <span class="soft">{second}</span></>}</h2>
+    {sub && <p class="sub">{sub}</p>}
+    {LAUNCHED
+      ? <div class="ctas justify-center"><Button size="lg" arrow href={WPORG_URL}>Get Bridle free</Button><Button size="lg" variant="white" href="/demo/">Try the live demo</Button></div>
+      : <Waitlist source={source} />}
   </div>
 </section></Outer>

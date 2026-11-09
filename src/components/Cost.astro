@@ -4,8 +4,8 @@
 // src/data/cost.ts; the first paint is already right for 300 answers.
 import { RIVALS, PEOPLE, CHECKED, monthly, money } from '../data/cost';
 import { AI } from '../data/site';
-interface Props { id: string; counted?: boolean }
-const { id, counted = false } = Astro.props;
+interface Props { id: string; counted?: boolean; tone?: string }
+const { id, counted = false, tone = 'white' } = Astro.props;
 const N = 300;
 const c = monthly(N);
 const max = Math.max(...Object.values(c));
@@ -14,7 +14,7 @@ const rows = [{ key: 'bridle', label: 'Bridle, Bridle AI', me: true }, ...RIVALS
 const data = JSON.stringify({ free: AI.free, per: AI.packs[0].price / AI.packs[0].answers, people: PEOPLE, rivals: RIVALS.map(({ key, seat, perAnswer, included }) => ({ key, seat, perAnswer, included })) });
 const first = RIVALS[0];
 ---
-<section class="band" aria-labelledby={`h-${id}`} id={id}>
+<section class:list={['band', tone]} aria-labelledby={`h-${id}`} id={id}>
   <div class="cost" data-cost={data}>
     <div>
       <h2 class="h2" id={`h-${id}`}>About a cent an answer.</h2><p class="sub">Or free with your own AI key.</p>
