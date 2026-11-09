@@ -21,6 +21,16 @@ export const SITE = {
   updated: '9 November 2026',
 };
 
+// The live demo: WordPress Playground in the visitor's browser, set up by the
+// blueprint in public/demo/ (Bridle and Bridle KB from their zips, a stand-in
+// AI, a stubbed relay, sample mail). Playground fetches it from GitHub, which
+// sends the CORS header it needs. Rebuild the zips with each release.
+const DEMO_BLUEPRINT = 'https://raw.githubusercontent.com/plugpressco/bridle-site/main/public/demo/blueprint.json';
+export const DEMO = {
+  blueprint: DEMO_BLUEPRINT,
+  url: `https://playground.wordpress.net/?blueprint-url=${encodeURIComponent(DEMO_BLUEPRINT)}`,
+};
+
 // Cloudflare Turnstile on the waitlist. Empty = off: the form posts without a
 // token and the function skips the check. To turn it on, put the widget's
 // site key here AND set TURNSTILE_SECRET and TURNSTILE_HOSTNAMES

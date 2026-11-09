@@ -1,0 +1,55 @@
+---
+// /demo/: Bridle in WordPress Playground (public/demo/blueprint.json).
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Closing from '../components/Closing.astro';
+import { PAGES } from '../data/pages';
+import { DEMO } from '../data/site';
+
+const page = PAGES.demo;
+const tries = [
+  { title: 'Home', text: 'Four replies ready to send, and one refund that waits for you.' },
+  { title: 'Inbox', text: 'Open a draft, see the sources it used, press Send. The receipt is already in Updates.' },
+  { title: 'Chat', text: 'Visit the site and ask the bubble a question.' },
+];
+const notes = [
+  'The AI is a stand-in: it answers with the best matching passage from the demo’s docs. With your own key, a real model writes the replies.',
+  'Mail doesn’t arrive: the sample emails are already in. On your site you forward your support address to Bridle.',
+  'It shows the free plugin and Bridle KB. Pro is on the Pro page.',
+  'It runs in your browser and is gone when you close the tab.',
+];
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Live demo', path: page.path }]}>
+  <PageHero
+    eyebrow="Live demo · WordPress Playground"
+    title={['Try Bridle in your browser', 'Nothing to install']}
+    lead="A sample support inbox for a made-up plugin shop, with drafts ready to send and a chat bubble. It takes about half a minute to start."
+    art="chat"
+    cta={{ href: DEMO.url, label: 'Open the live demo' }}
+    more={{ href: '#join', label: 'Join the waitlist' }}
+  />
+
+  <section class="block" aria-labelledby="h-try">
+    <div class="head">
+      <p class="eyebrow">What to try</p>
+      <h2 id="h-try"><span>Three places to look</span><span class="g">Each takes a minute</span></h2>
+    </div>
+    <div class="wrap flush">
+      <div class="grid">
+        {tries.map((t, i) => <div><span class="num">0{i + 1}</span><h3>{t.title}</h3><p>{t.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-notes">
+    <div class="head">
+      <p class="eyebrow">Good to know</p>
+      <h2 id="h-notes"><span>A demo, not your site</span><span class="g">Here is what differs</span></h2>
+    </div>
+    <div class="wrap">
+      <ul class="ticks">{notes.map((n) => <li>{n}</li>)}</ul>
+    </div>
+  </section>
+
+  <Closing />
+</Base>

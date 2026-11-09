@@ -1,0 +1,21 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "Bridle live demo",
+		"description": "Bridle and Bridle KB on a sample support inbox. The AI is a stand-in that answers from the docs.",
+		"author": "PlugPress",
+		"categories": [ "Support" ]
+	},
+	"landingPage": "/wp-admin/admin.php?page=bridle#/home",
+	"preferredVersions": { "php": "8.3", "wp": "latest" },
+	"login": true,
+	"steps": [
+		{ "step": "installPlugin", "pluginData": { "resource": "url", "url": "{{BASE}}bridle-kb.zip" }, "options": { "activate": true } },
+		{ "step": "installPlugin", "pluginData": { "resource": "url", "url": "{{BASE}}bridle.zip" }, "options": { "activate": true } },
+		{ "step": "mkdir", "path": "/wordpress/wp-content/mu-plugins" },
+		{ "step": "writeFile", "path": "/wordpress/wp-content/mu-plugins/bridle-demo-ai.php", "data": { "resource": "url", "url": "{{BASE}}demo-ai.php" } },
+		{ "step": "writeFile", "path": "/wordpress/wp-content/mu-plugins/bridle-demo-relay.php", "data": { "resource": "url", "url": "{{BASE}}demo-relay.php" } },
+		{ "step": "writeFile", "path": "/wordpress/bridle-demo-seed.php", "data": { "resource": "url", "url": "{{BASE}}seed.php" } },
+		{ "step": "runPHP", "code": "<?php require '/wordpress/bridle-demo-seed.php';" }
+	]
+}
