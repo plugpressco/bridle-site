@@ -6,6 +6,7 @@
 // reduced motion it rests on its last frame (src/scripts/hero.js).
 import Button from '../ui/Button.astro';
 import Waitlist from '../Waitlist.astro';
+import Dither from '../Dither.astro';
 import { LAUNCHED, WPORG_URL } from '../../data/site';
 const use = (id: string) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
 ---
@@ -22,12 +23,12 @@ const use = (id: string) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`
     ) : (
       <>
         <Waitlist source="hero" />
-        <div class="ctas -mt-2"><a class="lnk" href="/demo/">Try the live demo ›</a></div>
-        <p class="by">We’ll email you the day it’s on WordPress.org. Built by the team behind Saddle.</p>
+        <p class="by">Built by the team behind Saddle.</p>
       </>
     )}
   </div>
   <div class="panel hero-pic" role="img" aria-label="An email comes in, Bridle drafts a reply with its sources, and a refund question goes to a person.">
+    <Dither />
     <div class="stage ui loop" id="loop" aria-hidden="true">
       <div class="letter m1">
         <div class="lhead"><svg class="face" data-seed="maya@example.com" viewBox="0 0 32 32"></svg><div class="who"><b>Maya Chen</b><span>to support@acmesliders.com</span></div><span class="when">9:12 AM</span></div>

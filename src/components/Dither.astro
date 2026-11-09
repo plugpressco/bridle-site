@@ -1,0 +1,14 @@
+---
+// A dithered cloud of dots behind a product picture (owner, 2026-11-10, on
+// helpscout.com's pictures: "nice effect images... try find a way present that
+// way also"). Drawn in code from Bridle's own blues and a few amber dots, so
+// there are no image files and no generated art (src/scripts/dither.js).
+// `from` is where the cloud rises from. Decorative only.
+interface Props { from?: 'bottom' | 'right'; class?: string }
+const { from = 'bottom', class: cls } = Astro.props;
+---
+<canvas class:list={['dither', cls]} data-dither data-from={from} aria-hidden="true"></canvas>
+
+<script>
+  import '../scripts/dither.js';
+</script>

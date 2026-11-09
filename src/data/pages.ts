@@ -36,30 +36,26 @@ Built by the team behind Saddle (${SITE.saddle}).
 
 ## Every email comes with a reply.
 
-Read it and send it. Or let the sure ones go out by themselves.
+Read it, then send it.
 
 - **Ready to send.** Replies wait for you, already written.
-- **Shows its sources.** Every reply shows where each fact came from.
 - **Knows your business.** It reads your docs, pages, products and past replies.
-- **Sorts your mail.** Receipts and newsletters go to Updates. Scams go to Spam.
-- **Answers on your site.** A chat bubble answers visitors from the same docs.
-- **Sends when it’s sure.** Turn on Auto and sure answers send after 15 minutes. Stop any of them.
+- **Sorts your mail.** Receipts go to Updates. Scams go to Spam.
+- **Chat on your site.** It answers visitors from the same docs.
 
 ## It checks before it speaks.
 
-No fact without a source. The hard ones go to you.
+No fact without a source.
 
-Before a reply counts as ready, Bridle checks every quote and link against your docs, pages and products. If one doesn’t match, the reply waits for you.
+Every quote and link must match your docs. If one doesn’t, the reply waits for you.
 
-Refunds, billing, legal questions and upset customers always go to a person, even in Auto.
-
-The chat says it’s an AI. When it isn’t sure, it asks for an email address and you answer.
+Refunds, billing and upset customers always go to you.
 
 ## About a cent an answer.
 
-Or nothing, with your own AI key.
+Or free with your own AI key.
 
-Help desks charge $0.75 to $2.00 each time their AI solves a question, plus a monthly price per person. Bridle AI costs $10 for 1,000 answers, and the first ${AI.free} each month are free.
+Other help desks charge up to $2 each time their AI answers, plus a price per person.
 
 At 300 AI answers a month, for ${PEOPLE} people:
 
@@ -69,13 +65,9 @@ ${counted}
 
 ## Start in three steps.
 
-All inside WordPress. No new app to learn.
-
-1. **Install Bridle.** Free from WordPress.org. Use Bridle AI, or connect your own AI key.
-2. **Forward your support email.** Keep your address. Bridle gives you one to forward to, with steps for Gmail and Outlook.
-3. **Turn on chat.** One switch puts the chat bubble on your site.
-
-Visitors load one small script, and only when chat is on. Replies are written in the background, never while a page loads.
+1. **Install Bridle.** Free from WordPress.org.
+2. **Forward your support email.** Keep your address. We show you how.
+3. **Turn on chat.** One switch adds it to your site.
 
 ## Pay once for Bridle Pro.
 
@@ -83,7 +75,7 @@ Only until Cyber Monday. Pro adds chat on your other sites, live chat with your 
 
 ## A note from the founder.
 
-Hi, I’m Fahim. We make WordPress plugins at PlugPress, the team behind Saddle and Mailpuff. Every day we answer the same questions by email. So we built Bridle for our own inbox. It writes the reply from our docs. We read it and send it. The hard ones stay with us. Bridle is free on WordPress.org, and it stays free. Pro pays for the work. Questions? Just reply. I read every email. Fahim Reza, founder, PlugPress (${SITE.email})
+Hi, I’m Fahim. At PlugPress we make WordPress plugins like Saddle and Mailpuff. Every day we answer the same questions by email. So we built Bridle for our own inbox. It writes the reply. We check it and send it. Bridle is free, and it stays free. Questions? Just reply. I read every email. Fahim Reza, founder, PlugPress (${SITE.email})
 
 ## Questions, answered.
 

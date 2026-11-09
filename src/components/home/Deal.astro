@@ -30,7 +30,6 @@ const one = PRO.plans[0];
       {LAUNCHED
         ? <Button variant="white" size="lg" arrow href={`/api/checkout?plan=${one.key}`} data-buy={one.key} data-buy-label="Get Bridle Pro, {price}">Get Bridle Pro, {money(one.base)}</Button>
         : <Button variant="white" size="lg" arrow href={join}>Join the waitlist</Button>}
-      {!LAUNCHED && <p class="text-[15px]">The deal opens on launch day.</p>}
       <div class="row"><a href="/pricing/">See all plans ›</a><span>{PRO.refundDays}-day refund.</span></div>
     </div>
   </div>
