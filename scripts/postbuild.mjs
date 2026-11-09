@@ -44,10 +44,21 @@ if (problems.length) {
 }
 console.log('SEO check passed');
 
-// 2. Functions and the runtime config
+// 2. Functions and the runtime config. The price functions get the steps
+//    from src/data/deal.json and the launch switch from src/data/site.ts
+//    (CHECKOUT_OPEN), so the page and the checkout never disagree.
 mkdirSync(join(dist, 'functions'), { recursive: true });
 cpSync('spacefast/functions', join(dist, 'functions'), { recursive: true });
 cpSync('sf.jsonc', join(dist, 'sf.jsonc'));
+const dealJson = JSON.stringify(JSON.parse(readFileSync('src/data/deal.json', 'utf8')));
+const checkoutOpen = /export const CHECKOUT_OPEN = true;/.test(readFileSync('src/data/site.ts', 'utf8'));
+for (const f of readdirSync(join(dist, 'functions', 'api'))) {
+  const p = join(dist, 'functions', 'api', f);
+  const src = readFileSync(p, 'utf8');
+  if (src.includes('/*DEAL_JSON*/') || src.includes('/*CHECKOUT_OPEN*/')) {
+    writeFileSync(p, src.replace('/*DEAL_JSON*/ null', dealJson).replace('/*CHECKOUT_OPEN*/ false', String(checkoutOpen)));
+  }
+}
 
 // 3. Markdown copies as functions
 for (const path of walk(dist, '.md')) {

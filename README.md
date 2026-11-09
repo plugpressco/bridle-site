@@ -38,7 +38,7 @@ Every build writes `sitemap-index.xml`, `robots.txt` (all crawlers allowed; `/ap
 
 ## Writing rules
 
-Sentence case, like the app. Short, plain sentences. No dashes as punctuation, no filler. Claim only what Bridle does today, or what ships on launch day with the plan's prices. Credit "the team behind Saddle", never Divi Torque.
+Sentence case, like the app. Words a 12-year-old knows, one idea per line, no explaining how it works inside (Fahim, 9 November 2026). No dashes as punctuation, no filler words (seamless, leverage, unlock and friends). Each feature is an icon, a 2 to 4 word name and one short line (`FREE_FEATURES`, `PRO_FEATURES` in `src/data/site.ts`). Claim only what Bridle does today, or what ships on launch day. Credit "the team behind Saddle", never Divi Torque.
 
 ## Publish (owner)
 
@@ -64,12 +64,27 @@ The first publish of this Astro build replaces the single-page v11 site (one `in
 
 Off until both halves are set: the widget's site key in `TURNSTILE_SITEKEY` (`src/data/site.ts`) and `TURNSTILE_SECRET` plus `TURNSTILE_HOSTNAMES` (`bridle.to,www.bridle.to`) on the Space. Without the secret the function skips the check; the honeypot, the too-fast check and the per-visitor rate limit always run. A secret on the Space with no site key in the page refuses every sign-up, so set them together.
 
+## Bridle Pro price (Polar)
+
+One plan: every Pro feature, every site, pay once. The first 10 buyers pay $49, then the price goes up $20 every 20 sales, to $199 at licence 170 (`src/data/deal.json`, Fahim, 9 November 2026). After 170, Pro is sold by the year.
+
+- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid Bridle Pro orders on Polar (cached 60 seconds) and answers `{ state, sold, total, price, from, to, left, next, live }`. The price cards (`src/components/Price.astro`, `src/scripts/deal.js`) show it once Polar answers; until then they show step 1 from the build, never a made-up count.
+- `GET` or `POST /api/checkout` (`checkout.ts`) opens a Polar checkout at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
+- `CHECKOUT_OPEN` in `src/data/site.ts` is the one launch switch. While it is `false` every price button says "Join the waitlist" and `/api/checkout` sends people back to `/pro/#price`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
+
+**Polar setup (owner, once):**
+
+1. In the PlugPress organization, create one product, **Bridle Pro**: a one-time purchase, a fixed price (any amount; each checkout sets the step price), and **private**, so only `/api/checkout` can sell it.
+2. Add a **License keys** benefit to it: prefix `BRIDLE`, no expiry, **no activation limit** (unlimited sites). This is the key Bridle Pro's licence screen takes.
+3. Create an **organization access token** with the scopes `orders:read` and `checkouts:write`.
+4. On the Spacefast Space `bridle`, set `POLAR_TOKEN` (as a secret), `POLAR_ORG_ID` and `POLAR_PRODUCT_ID`. Check it: `curl -s https://bridle.to/api/deal` says `"live":true`.
+5. On launch day set `CHECKOUT_OPEN = true`, build and publish.
+
 ## At launch
 
-- Swap the waitlist calls to action for "Get Bridle free" (WordPress.org) and open the Pro checkout (Polar, like mailpuff.io's `/api/checkout` and `/api/deal`).
-- Change the "When can I install it?" answer and the "Launching soon" pill.
+- Set `CHECKOUT_OPEN = true` (above). Swap the other waitlist calls to action for "Get Bridle free" (WordPress.org).
+- Change the "When can I get it?" answer and the "Launching soon" pill.
 - Give `hello@bridle.to` its own Email Routing rule (today it falls through the relay's catch-all to the fallback mailbox).
-- Point the plugin readme's Terms and Privacy links at https://bridle.to/terms/ and https://bridle.to/privacy/.
 
 ## Signups
 

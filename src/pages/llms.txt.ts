@@ -9,7 +9,7 @@ export const GET: APIRoute = ({ site }) => {
 
 > ${SITE.definition}
 
-Bridle is a free WordPress plugin, launching soon on WordPress.org. Bridle Pro is a separate plugin sold on bridle.to from launch day.
+Bridle is a free WordPress plugin, coming soon to WordPress.org. Bridle Pro is a paid add-on, sold on bridle.to from launch day.
 
 ## Pages
 

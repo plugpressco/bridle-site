@@ -1,11 +1,10 @@
 ---
 // The home page. The pictures (hero, product window, dot stories, AI apps
-// chat, closing) are the approved v11 page's. One idea per section, few words
-// (owner, 2026-11-09: "cleaner, clutter free, too much text").
+// chat, closing) are the approved v11 page's. One idea per section, short
+// plain words (owner, 2026-11-09: "simple, catchy, a 12 year old gets it").
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
 import Product from '../components/home/Product.astro';
-import Cells from '../components/home/Cells.astro';
 import Chat from '../components/home/Chat.astro';
 import Agents from '../components/home/Agents.astro';
 import Plans from '../components/home/Plans.astro';
@@ -31,7 +30,7 @@ const jsonLd = [
     offers: [
       { '@type': 'Offer', name: 'Bridle', price: '0', priceCurrency: 'USD' },
       ...AI.packs.map((p) => ({ '@type': 'Offer', name: `Bridle AI, ${p.answers} answers`, price: String(p.price), priceCurrency: 'USD' })),
-      { '@type': 'Offer', name: 'Bridle Pro, lifetime licence for 1 site', price: String(PRO.plans[0].lifetime[0]), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/` },
+      { '@type': 'Offer', name: 'Bridle Pro, pay once, every site', price: String(PRO.first.price), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#price` },
     ],
   },
   {
@@ -43,7 +42,6 @@ const jsonLd = [
 <Base title={page.title} description={page.description} jsonLd={jsonLd}>
   <Hero />
   <Product />
-  <Cells />
   <Chat />
   <Agents />
   <Plans />

@@ -137,9 +137,9 @@ export const TERMS: Doc = {
       title: 'Bridle Pro',
       body: [
         { list: [
-          'A licence covers the number of sites in its plan.',
-          `Lifetime licences are sold to the first ${PRO.total} customers only. They include updates and support for as long as we make Bridle Pro.`,
-          'Yearly licences renew each year until you cancel. If a licence ends, Pro keeps working; it stops getting updates and support.',
+          'A Bridle Pro licence covers all your sites.',
+          `Pay-once licences are sold to the first ${PRO.total} customers only. The price goes up as they sell, as shown on the Pro page. They include updates and support for as long as we make Bridle Pro.`,
+          'After that, Pro is sold by the year. Yearly licences renew each year until you cancel. If a licence ends, Pro keeps working; it stops getting updates and support.',
           `Each Pro licence comes with ${AI.proGift.toLocaleString('en-US')} Bridle AI answers, once, for one of its sites.`,
         ] },
       ],

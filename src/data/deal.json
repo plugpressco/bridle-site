@@ -1,0 +1,15 @@
+{
+  "total": 170,
+  "refundDays": 30,
+  "steps": [
+    { "price": 49, "from": 1, "to": 10 },
+    { "price": 69, "from": 11, "to": 30 },
+    { "price": 89, "from": 31, "to": 50 },
+    { "price": 109, "from": 51, "to": 70 },
+    { "price": 129, "from": 71, "to": 90 },
+    { "price": 149, "from": 91, "to": 110 },
+    { "price": 169, "from": 111, "to": 130 },
+    { "price": 189, "from": 131, "to": 150 },
+    { "price": 199, "from": 151, "to": 170 }
+  ]
+}

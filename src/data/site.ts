@@ -1,14 +1,16 @@
 // One place for facts that show up on more than one page. Change a number here
 // and every page, its Markdown copy, llms.txt and the JSON-LD follow.
-// Prices and plans: ~/Workspace/bridle/planning/BRIDLE-PRO.md §11 (decided by
-// Fahim, 2 November 2026).
+// Prices: one Bridle Pro plan, decided by Fahim on 9 November 2026 (by
+// question): $49 for the first 10, then $20 more every 20 customers, up to
+// $199 at licence 170. Then Pro is sold by the year. Steps in deal.json.
+import DEAL_DATA from './deal.json';
 
 export const SITE = {
   name: 'Bridle',
   url: 'https://bridle.to',
   // The same sentence everywhere: home, llms.txt, the JSON-LD.
   definition:
-    'Bridle is an AI support agent for WordPress. It answers support email and website chat from your own docs and past replies, and hands the hard ones to you.',
+    'Bridle is an AI support agent for WordPress. It answers your support email and chat from your own docs. The hard ones come to you.',
   // Mail to bridle.to goes through the email relay's catch-all, which hands
   // addresses no site registered to PlugPress's fallback mailbox. Give
   // hello@ its own Email Routing rule before launch.
@@ -49,23 +51,42 @@ export const AI = {
   proGift: 5000,
 };
 
-// Bridle Pro. Founders' lifetime for the first 200 licences, a new price every
-// 50, then yearly. Nothing is sold until launch.
+// Launch switch: false shows "Join the waitlist" on every price button. Set it
+// to true on launch day (with the Polar variables on the Space, see README)
+// and the buttons open a Polar checkout at the current price.
+export const CHECKOUT_OPEN = false;
+
+export type Step = { price: number; from: number; to: number };
+export const DEAL: { total: number; refundDays: number; steps: Step[] } = DEAL_DATA;
+
+// What each plan does: an icon, a short name, one short line.
+export type Feature = { icon: string; name: string; text: string };
+
+export const FREE_FEATURES: Feature[] = [
+  { icon: 'i-inbox', name: 'Sorts your mail', text: 'Spam and receipts go away. People stay.' },
+  { icon: 'i-sparkles', name: 'Writes the reply', text: 'From your docs and old replies.' },
+  { icon: 'i-check-circle', name: 'Checks every fact', text: 'Not sure? It asks you first.' },
+  { icon: 'i-message', name: 'Chat on your site', text: 'Answers visitors right away.' },
+  { icon: 'i-book', name: 'Help center', text: 'Your docs, easy to search.' },
+  { icon: 'i-key', name: 'Your own AI key', text: `Or ${AI.free} free answers a month.` },
+];
+
+export const PRO_FEATURES: Feature[] = [
+  { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
+  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
+  { icon: 'i-clock', name: 'Business hours', text: 'Tells people when you are back.' },
+  { icon: 'i-bag', name: 'Order lookups', text: 'Reads their orders before it replies.' },
+  { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
+  { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
+];
+
+// Bridle Pro: one plan, every Pro feature, unlimited sites, pay once.
 export const PRO = {
-  total: 200,
-  step: 50,
-  refundDays: 30,
-  plans: [
-    { key: 'solo', label: '1 site', sites: 1, lifetime: [79, 99, 119, 139], yearly: 79 },
-    { key: 'business', label: '5 sites', sites: 5, lifetime: [149, 179, 209, 239], yearly: 149 },
-    { key: 'agency', label: 'Unlimited sites', sites: 0, lifetime: [299, 349, 399, 449], yearly: 299 },
-  ],
-  features: [
-    { title: 'Chat on your other sites', text: 'One script tag. One Inbox.' },
-    { title: 'Take over a chat live', text: 'Answer while they’re still on the page.' },
-    { title: 'Order and licence lookups', text: 'WooCommerce, EDD, Polar and Freemius, in every draft.' },
-    { title: 'What it couldn’t answer', text: 'Grouped by topic, one click to write the doc.' },
-  ],
+  total: DEAL.total,
+  refundDays: DEAL.refundDays,
+  steps: DEAL.steps,
+  first: DEAL.steps[0],
+  features: PRO_FEATURES,
 };
 
 export const money = (n: number) => '$' + n.toLocaleString('en-US');

@@ -10,22 +10,22 @@ import { PRO } from '../data/site';
 
 const page = PAGES.chat;
 const how = [
-  { title: 'It looks it up', text: 'Docs, pages, products, past replies.' },
-  { title: 'It checks itself', text: 'Not sure? It doesn’t guess.' },
-  { title: 'It hands off', text: 'Refunds and upset visitors go to you.' },
+  { title: 'It looks it up', text: 'In your docs, pages and old replies.' },
+  { title: 'It checks', text: 'Not sure? It won’t guess.' },
+  { title: 'It hands off', text: 'Refunds and angry people go to you.' },
 ];
 const after = [
-  { icon: 'i-message', title: 'In the bubble', text: 'While they’re still on your site.' },
-  { icon: 'i-inbox', title: 'Or by email', text: 'If they’ve left, same thread.' },
-  { icon: 'i-clock', title: 'An honest promise', text: 'Your real reply time.' },
+  { icon: 'i-message', title: 'In the chat', text: 'If they are still on your site.' },
+  { icon: 'i-inbox', title: 'Or by email', text: 'If they already left.' },
+  { icon: 'i-clock', title: 'A real wait time', text: 'Based on how fast you reply.' },
 ];
-const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your greeting'];
+const handled = ['Says it is an AI', 'Blocks spam bots', 'Your colour, your icon'];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
   <PageHero
-    eyebrow="Bridle Chat · free in Bridle"
+    eyebrow="Bridle Chat · free"
     title={['A chat that answers', 'From what you wrote']}
-    lead="It answers visitors from your docs, and hands the rest to you."
+    lead="It answers visitors from your docs. The rest come to you."
     art="chat"
     more={{ href: '#demo', label: 'See it answer' }}
   />
@@ -33,15 +33,15 @@ const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your
   <section class="block" id="demo" aria-labelledby="h-demo">
     <div class="head">
       <p class="eyebrow">On your site</p>
-      <h2 id="h-demo"><span>It answers in seconds</span><span class="g">Or says who will</span></h2>
+      <h2 id="h-demo"><span>Answers in seconds</span><span class="g">Or finds you</span></h2>
     </div>
     <div class="wrap"><ChatDemo /></div>
   </section>
 
   <section class="block" aria-labelledby="h-how">
     <div class="head">
-      <p class="eyebrow">How it answers</p>
-      <h2 id="h-how"><span>Looks it up, checks it</span><span class="g">Or hands it over</span></h2>
+      <p class="eyebrow">How it works</p>
+      <h2 id="h-how"><span>Look, check, answer</span><span class="g">Or pass it to you</span></h2>
     </div>
     <div class="wrap flush">
       <div class="grid">
@@ -52,8 +52,8 @@ const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your
 
   <section class="block" aria-labelledby="h-after">
     <div class="head">
-      <p class="eyebrow">After a handoff</p>
-      <h2 id="h-after"><span>You reply from your Inbox</span><span class="g">It reaches them anywhere</span></h2>
+      <p class="eyebrow">When you take over</p>
+      <h2 id="h-after"><span>You reply from your Inbox</span><span class="g">They get it anywhere</span></h2>
     </div>
     <div class="wrap flush">
       <div class="grid">
@@ -65,8 +65,8 @@ const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your
   <section class="block" aria-labelledby="h-handled">
     <div class="wrap duo">
       <div>
-        <p class="eyebrow">The small print</p>
-        <h2 id="h-handled"><span>Already handled</span><span class="g">Switch it on</span></h2>
+        <p class="eyebrow">Built in</p>
+        <h2 id="h-handled"><span>Already done</span><span class="g">Just switch it on</span></h2>
       </div>
       <ul class="ticks">{handled.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
     </div>
@@ -75,13 +75,13 @@ const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your
   <section class="block" aria-labelledby="h-pro">
     <div class="head">
       <p class="eyebrow">With Bridle Pro</p>
-      <h2 id="h-pro"><span>One Inbox for every site</span><span class="g">And live when you want it</span></h2>
+      <h2 id="h-pro"><span>One Inbox for every site</span><span class="g">And live chat too</span></h2>
     </div>
     <div class="wrap duo">
-      {PRO.features.slice(0, 2).map((f, i) => (
+      {PRO.features.slice(0, 2).map((f) => (
         <div class="card">
-          <span class="ico blue"><svg class="i"><use href={i ? '#i-live' : '#i-globe'} /></svg></span>
-          <h3>{f.title}</h3>
+          <span class="ico blue"><svg class="i"><use href={`#${f.icon}`} /></svg></span>
+          <h3>{f.name}</h3>
           <p>{f.text}</p>
           <a class="tlink blue" href="/pro/">See Bridle Pro</a>
         </div>
@@ -89,5 +89,5 @@ const handled = ['Says it is an AI', 'Limits and bot checks', 'Your colour, your
     </div>
   </section>
 
-  <Closing line1="Let the bubble answer" line2="Keep the hard ones" source="chat" />
+  <Closing line1="Let the chat answer" line2="You take the hard ones" source="chat" />
 </Base>
