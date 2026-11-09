@@ -1,24 +1,26 @@
 ---
-// /pro/: Bridle Pro and the prices (BRIDLE-PRO.md §11, decided 2026-11-02).
-// Nothing is sold before launch: every button joins the waitlist.
+// /pro/: Bridle Pro's Black Friday deal. Three licences to pay once, the
+// price going up $20 every 20 sales, ending at Cyber Monday or sale 170
+// (src/data/deal.json). Until launch every button joins the waitlist
+// (CHECKOUT_OPEN in src/data/site.ts).
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import Features from '../components/Features.astro';
+import Price from '../components/Price.astro';
 import Faq from '../components/Faq.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 import { PRO_FAQ } from '../data/faq';
-import { SITE, AI, PRO, money, count } from '../data/site';
+import { SITE, PRO, PRO_INCLUDES, sitesLabel } from '../data/site';
 
 const page = PAGES.pro;
-const icons = ['i-globe', 'i-live', 'i-bag', 'i-help'];
-const includes = ['Every Pro feature', 'Updates for life', `${count(AI.proGift)} AI answers`, `${PRO.refundDays}-day refund`];
 const jsonLd = [
   {
     '@type': 'Product',
     name: 'Bridle Pro',
-    description: 'A plugin that adds chat on your other sites, live takeover, order lookups and unanswered questions to Bridle, the AI support agent for WordPress.',
+    description: 'Adds chat on your other sites, live chat, order lookups, missing answers, business hours and workflows to Bridle, the AI support agent for WordPress.',
     brand: { '@type': 'Brand', name: SITE.name },
-    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Founders’ lifetime, ${p.label.toLowerCase()}`, price: String(p.lifetime[0]), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url: `${SITE.url}/pro/#pricing` })),
+    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pro/#price` })),
   },
   {
     '@type': 'FAQPage',
@@ -28,80 +30,30 @@ const jsonLd = [
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Bridle Pro', path: page.path }]}>
   <PageHero
-    eyebrow="Bridle Pro"
-    title={['Bridle is free', 'Pro when you grow']}
-    lead={`Pay once. Founders’ price for the first ${PRO.total}.`}
+    eyebrow="Bridle Pro · Black Friday"
+    title={['Pay once for Pro', 'Black Friday only']}
+    lead="Every Pro feature, updates for life. Early buyers pay less."
     art="key"
-    more={{ href: '#pricing', label: 'See pricing' }}
+    cta={{ href: '#price', label: 'See the prices' }}
+    more={{ href: '#join', label: 'Join the waitlist' }}
   />
 
-  <section class="block" aria-labelledby="h-adds">
+  <section class="block" id="price" aria-labelledby="h-price">
     <div class="head">
-      <p class="eyebrow">Features</p>
-      <h2 id="h-adds"><span>What Pro adds</span><span class="g">Never taken from free</span></h2>
+      <p class="eyebrow">Pick your licence</p>
+      <h2 id="h-price"><span>Pick how many sites</span><span class="g">Pay once. It goes up every 20 sales.</span></h2>
     </div>
-    <div class="wrap flush">
-      <div class="grid" style="--n:4">
-        {PRO.features.map((f, i) => <div><span class="ico blue"><svg class="i"><use href={`#${icons[i]}`} /></svg></span><h3>{f.title}</h3><p>{f.text}</p></div>)}
-      </div>
-    </div>
+    <div class="wrap"><Price /></div>
   </section>
 
-  <section class="block" id="pricing" aria-labelledby="h-pricing">
+  <section class="block" aria-labelledby="h-incl">
     <div class="head">
-      <p class="eyebrow">Founders’ lifetime</p>
-      <h2 id="h-pricing"><span>Pay once</span><span class="g">Price rises every {PRO.step} sold</span></h2>
+      <p class="eyebrow">In every licence</p>
+      <h2 id="h-incl"><span>All of Pro</span><span class="g">Whichever you pick</span></h2>
     </div>
-    <div class="wrap plans">
-      {PRO.plans.map((p, i) => (
-        <div class:list={['card', { dark: i === 1 }]}>
-          <h3>{p.label}</h3>
-          <p class="big">{money(p.lifetime[0])} <small>once · then {p.lifetime.slice(1).map(money).join(', ')}</small></p>
-          <ul class="ticks">{includes.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
-          <a class:list={['btn', { ghost: i !== 1 }]} href="#join">Join the waitlist</a>
-          <p class="opens">Opens on launch day</p>
-        </div>
-      ))}
-    </div>
-    <p class="wrap fine after">After {PRO.total} licences: {PRO.plans.map((p) => money(p.yearly)).join(', ')} a year.</p>
+    <div class="wrap"><Features items={PRO_INCLUDES} tone="blue" cols={4} /></div>
   </section>
 
-  <section class="block" id="ai" aria-labelledby="h-ai">
-    <div class="head">
-      <p class="eyebrow">Bridle AI</p>
-      <h2 id="h-ai"><span>No AI key?</span><span class="g">{AI.free} answers a month free</span></h2>
-    </div>
-    <div class="wrap">
-      <ul class="packs big3">
-        {AI.packs.map((p) => <li><b>{money(p.price)}</b><span>{count(p.answers)} answers</span></li>)}
-      </ul>
-    </div>
-  </section>
-
-  <Faq items={PRO_FAQ} title={['Questions', 'About Pro']} />
-  <Closing line1="Founders’ price" line2="On launch day" lead="We email you the day it opens." source="pro" />
+  <Faq items={PRO_FAQ} title={['Questions', 'About the deal']} />
+  <Closing line1="Black Friday only" line2="Pay once, keep it" lead="Join the waitlist. We email you when the deal opens." source="pro" />
 </Base>
-
-<style is:global>
-  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-  .plans .card { display: flex; flex-direction: column; padding: 32px; }
-  .plans .card .ticks { margin-bottom: 30px; }
-  .plans .card .btn { margin-top: auto; }
-  .plans .card.dark .btn { background: var(--paper); color: var(--ink); }
-  .plans .card.dark .btn:hover { background: #fff; }
-  .plans .opens { margin-top: 12px; font-size: 14px; text-align: center; color: var(--gray); }
-  .after { margin-top: 22px; }
-  .packs.big3 { margin: 0; }
-  .packs.big3 li { padding: 26px 24px; gap: 4px; border-radius: 18px; background: #fff; }
-  .packs.big3 b { font-size: 40px; font-weight: 400; letter-spacing: -0.03em; }
-  .packs.big3 span { font-size: 16px; color: var(--ink); }
-  .packs.big3 small { font-size: 14px; color: var(--muted-foreground); }
-  @media (max-width: 860px) {
-    .plans { grid-template-columns: minmax(0, 1fr); }
-    .packs.big3 { grid-template-columns: minmax(0, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .packs.big3 li { grid-template-columns: minmax(0, 1fr); }
-    .plans .card { padding: 26px 22px; }
-  }
-</style>

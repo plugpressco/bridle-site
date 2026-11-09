@@ -38,7 +38,7 @@ Every build writes `sitemap-index.xml`, `robots.txt` (all crawlers allowed; `/ap
 
 ## Writing rules
 
-Sentence case, like the app. Short, plain sentences. No dashes as punctuation, no filler. Claim only what Bridle does today, or what ships on launch day with the plan's prices. Credit "the team behind Saddle", never Divi Torque.
+Sentence case, like the app. Words a 12-year-old knows, one idea per line, no explaining how it works inside (Fahim, 9 November 2026). No dashes as punctuation, no filler words (seamless, leverage, unlock and friends). Each feature is an icon, a 2 to 4 word name and one short line (`FREE_FEATURES`, `PRO_FEATURES` in `src/data/site.ts`). Claim only what Bridle does today, or what ships on launch day. Credit "the team behind Saddle", never Divi Torque.
 
 ## Publish (owner)
 
@@ -64,12 +64,33 @@ The first publish of this Astro build replaces the single-page v11 site (one `in
 
 Off until both halves are set: the widget's site key in `TURNSTILE_SITEKEY` (`src/data/site.ts`) and `TURNSTILE_SECRET` plus `TURNSTILE_HOSTNAMES` (`bridle.to,www.bridle.to`) on the Space. Without the secret the function skips the check; the honeypot, the too-fast check and the per-visitor rate limit always run. A secret on the Space with no site key in the page refuses every sign-up, so set them together.
 
+## Bridle Pro price (Polar)
+
+Three licences, every Pro feature in each, pay once (Fahim, 9 November 2026). Plans, Polar product ids and steps live in `src/data/deal.json`:
+
+| Licence | First price | Bridle AI answers | Polar product |
+| --- | --- | --- | --- |
+| 1 site | $49 | 1,000 | `0cd62812-7220-414d-b915-5bb2973530e8` |
+| 3 sites | $79 | 3,000 | `ecfdec26-784a-4d25-bc3a-abd39aeeb443` |
+| 10 sites | $149 | 10,000 | `2f6e2605-4cbc-4e3d-b582-5739eb8c7e0d` |
+
+All three go up $20 every 20 sales, counting every Bridle Pro sale together: sales 1 to 10 pay the first prices, 11 to 30 pay $69 / $99 / $169, and so on. Pay once ends after sale 170; then Pro is yearly. When the answers run out, buyers top up inside the plugin (from $10); the site only says so.
+
+- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid orders across the three products on Polar (cached 60 seconds) and answers `{ state, sold, total, step, from, to, left, rise, plans: [{ key, sites, answers, price, next }], live }`. The cards (`src/components/Price.astro`, `src/scripts/deal.js`) show it once Polar answers; until then they show the first prices from the build, never a made-up count.
+- `GET` or `POST /api/checkout?plan=1|3|10` (`checkout.ts`) opens a Polar checkout for that plan's product at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
+- `CHECKOUT_OPEN` in `src/data/site.ts` is the one launch switch. While it is `false` every price button says "Join the waitlist" and `/api/checkout` sends people back to `/pro/#price`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
+
+**Polar setup (owner):** the three products already exist in Bridle's own Polar organization (slug `bridle`, `48c10ba8-ba09-435f-ba30-75ce00a4cf82`, also in `deal.json`; its own org so Bridle can be sold apart from Mailpuff). Keep them private, with their licence-key benefits.
+
+1. Create an **organization access token** with the scopes `orders:read` and `checkouts:write`.
+2. On the Spacefast Space `bridle`, set `POLAR_TOKEN` as a secret. That's the only variable (`POLAR_ORG_ID` is optional; the id is in `deal.json`). Check it: `curl -s https://bridle.to/api/deal` says `"live":true`.
+3. On launch day set `CHECKOUT_OPEN = true`, build and publish.
+
 ## At launch
 
-- Swap the waitlist calls to action for "Get Bridle free" (WordPress.org) and open the Pro checkout (Polar, like mailpuff.io's `/api/checkout` and `/api/deal`).
-- Change the "When can I install it?" answer and the "Launching soon" pill.
+- Set `CHECKOUT_OPEN = true` (above). Swap the other waitlist calls to action for "Get Bridle free" (WordPress.org).
+- Change the "When can I get it?" answer and the "Launching soon" pill.
 - Give `hello@bridle.to` its own Email Routing rule (today it falls through the relay's catch-all to the fallback mailbox).
-- Point the plugin readme's Terms and Privacy links at https://bridle.to/terms/ and https://bridle.to/privacy/.
 
 ## Signups
 

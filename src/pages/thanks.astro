@@ -1,15 +1,25 @@
 ---
 // Where the waitlist form lands without JavaScript (the function answers a
-// plain form post with a 303 here). Not for search engines.
+// plain form post with a 303 here), and where Polar sends a Bridle Pro buyer
+// (?checkout_id=…). Not for search engines.
 import Base from '../layouts/Base.astro';
 ---
 <Base title="You’re on the list | Bridle" description="Thanks for joining the Bridle waitlist. We email you the day Bridle is live on WordPress.org." noindex waitlist={false}>
   <div class="wrap note-page">
     <svg class="i done" aria-hidden="true"><use href="#i-check-circle" /></svg>
-    <h1><span>You’re on the list</span><span class="g">We email you on launch day</span></h1>
+    <h1 data-thanks><span>You’re on the list</span><span class="g">We email you on launch day</span></h1>
     <a class="tlink" href="/">Back to Bridle</a>
   </div>
 </Base>
+
+<script>
+  // Back from a Polar checkout: thank the buyer instead.
+  if (new URLSearchParams(location.search).has('checkout_id')) {
+    const h = document.querySelector('[data-thanks]');
+    if (h) h.innerHTML = '<span>Thanks for buying Bridle Pro</span><span class="g">Your licence key is in your email</span>';
+    document.title = 'Thanks for buying Bridle Pro | Bridle';
+  }
+</script>
 
 <style is:global>
   .note-page { display: grid; gap: 26px; justify-items: start; align-content: center; min-height: 52vh; padding-top: 40px; }

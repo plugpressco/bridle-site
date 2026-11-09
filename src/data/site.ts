@@ -1,14 +1,19 @@
 // One place for facts that show up on more than one page. Change a number here
 // and every page, its Markdown copy, llms.txt and the JSON-LD follow.
-// Prices and plans: ~/Workspace/bridle/planning/BRIDLE-PRO.md §11 (decided by
-// Fahim, 2 November 2026).
+// Prices (Fahim, 9 November 2026): three Bridle Pro licences, 1, 3 and 10
+// sites, each with Bridle AI answers, sold to pay once as a Black Friday
+// deal. All three go up $20 every 20 sales, counting every Bridle Pro sale
+// together. The deal ends at endsAt (Cyber Monday, 11:59 pm New York) or
+// after sale 170, whichever comes first; then Pro is yearly. Plans, Polar
+// product ids, steps and the end live in deal.json.
+import DEAL_DATA from './deal.json';
 
 export const SITE = {
   name: 'Bridle',
   url: 'https://bridle.to',
   // The same sentence everywhere: home, llms.txt, the JSON-LD.
   definition:
-    'Bridle is an AI support agent for WordPress. It answers support email and website chat from your own docs and past replies, and hands the hard ones to you.',
+    'Bridle is an AI support agent for WordPress. It answers your support email and chat from your own docs. The hard ones come to you.',
   // Mail to bridle.to goes through the email relay's catch-all, which hands
   // addresses no site registered to PlugPress's fallback mailbox. Give
   // hello@ its own Email Routing rule before launch.
@@ -46,26 +51,66 @@ export const AI = {
     { answers: 5000, price: 45 },
     { answers: 25000, price: 200 },
   ],
-  proGift: 5000,
+  topUpFrom: 10,
 };
 
-// Bridle Pro. Founders' lifetime for the first 200 licences, a new price every
-// 50, then yearly. Nothing is sold until launch.
+// Launch switch: false shows "Join the waitlist" on every price button. Set it
+// to true on launch day (with the Polar variables on the Space, see README)
+// and the buttons open a Polar checkout at the current price.
+export const CHECKOUT_OPEN = false;
+
+export type Step = { from: number; to: number };
+export type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
+export const DEAL: { total: number; refundDays: number; rise: number; endsAt: string; endsLabel: string; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
+
+// A plan's price at step i (0 = the first 10 sales).
+export const priceAt = (plan: Plan, i: number) => plan.base + DEAL.rise * i;
+export const sitesLabel = (n: number) => (n === 1 ? '1 site' : `${n} sites`);
+
+// What each plan does: an icon, a short name, one short line.
+export type Feature = { icon: string; name: string; text: string };
+
+export const FREE_FEATURES: Feature[] = [
+  { icon: 'i-inbox', name: 'Sorts your mail', text: 'Spam and receipts go away. People stay.' },
+  { icon: 'i-sparkles', name: 'Writes the reply', text: 'From your docs and old replies.' },
+  { icon: 'i-check-circle', name: 'Checks every fact', text: 'Not sure? It asks you first.' },
+  { icon: 'i-message', name: 'Chat on your site', text: 'Answers visitors right away.' },
+  { icon: 'i-book', name: 'Help center', text: 'Your docs, easy to search.' },
+  { icon: 'i-key', name: 'Your own AI key', text: `Or ${AI.free} free answers a month.` },
+];
+
+export const PRO_FEATURES: Feature[] = [
+  { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
+  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
+  { icon: 'i-clock', name: 'Business hours', text: 'Tells people when you are back.' },
+  { icon: 'i-bag', name: 'Order lookups', text: 'Reads their orders before it replies.' },
+  { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
+  { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
+];
+
+// Every Pro licence includes: the highlight grid on /pro/.
+export const PRO_INCLUDES: Feature[] = [
+  { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
+  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
+  { icon: 'i-bag', name: 'Orders and licences', text: 'Reads their orders before it replies.' },
+  { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
+  { icon: 'i-clock', name: 'Business hours', text: 'Tells people when you are back.' },
+  { icon: 'i-history', name: 'Workflows', text: 'A nudge when someone waits too long.' },
+  { icon: 'i-sparkles', name: 'AI answers', text: `Included. Top up from $${AI.topUpFrom}.` },
+  { icon: 'i-shield', name: `${DEAL.refundDays}-day refund`, text: 'Not happy? Get your money back.' },
+];
+
+// Bridle Pro: three licences, every Pro feature in each, pay once.
 export const PRO = {
-  total: 200,
-  step: 50,
-  refundDays: 30,
-  plans: [
-    { key: 'solo', label: '1 site', sites: 1, lifetime: [79, 99, 119, 139], yearly: 79 },
-    { key: 'business', label: '5 sites', sites: 5, lifetime: [149, 179, 209, 239], yearly: 149 },
-    { key: 'agency', label: 'Unlimited sites', sites: 0, lifetime: [299, 349, 399, 449], yearly: 299 },
-  ],
-  features: [
-    { title: 'Chat on your other sites', text: 'One script tag. One Inbox.' },
-    { title: 'Take over a chat live', text: 'Answer while they’re still on the page.' },
-    { title: 'Order and licence lookups', text: 'WooCommerce, EDD, Polar and Freemius, in every draft.' },
-    { title: 'What it couldn’t answer', text: 'Grouped by topic, one click to write the doc.' },
-  ],
+  total: DEAL.total,
+  refundDays: DEAL.refundDays,
+  rise: DEAL.rise,
+  endsAt: DEAL.endsAt,
+  endsLabel: DEAL.endsLabel,
+  steps: DEAL.steps,
+  first: DEAL.steps[0],
+  plans: DEAL.plans,
+  features: PRO_FEATURES,
 };
 
 export const money = (n: number) => '$' + n.toLocaleString('en-US');

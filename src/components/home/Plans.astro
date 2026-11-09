@@ -1,25 +1,27 @@
 ---
-// Free and Pro, side by side. Free is complete; Pro is a separate plugin.
-import { PRO, money } from '../../data/site';
-const free = ['Email agent', 'Chat on your site', 'Help center', 'Unlimited inboxes'];
-const from = Math.min(...PRO.plans.map((p) => p.lifetime[0]));
+// Free and Pro as two plain groups of features, then one slim Black Friday
+// line to /pro/ (the prices live there, not twice).
+import Features from '../Features.astro';
+import { FREE_FEATURES, PRO_FEATURES, PRO, money } from '../../data/site';
+const from = Math.min(...PRO.plans.map((p) => p.base));
 ---
 <section class="block" id="plans" aria-labelledby="h-plans">
   <div class="head">
     <p class="eyebrow">Free and Pro</p>
-    <h2 id="h-plans"><span>Free on WordPress.org</span><span class="g">Pro when you grow</span></h2>
+    <h2 id="h-plans"><span>Free for everyone</span><span class="g">Pro when you grow</span></h2>
   </div>
-  <div class="wrap duo">
-    <div class="card">
-      <h3>Bridle</h3>
-      <p class="big">$0 <small>nothing locked</small></p>
-      <ul class="ticks">{free.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f}</li>)}</ul>
+  <div class="wrap tiers">
+    <div class="tier">
+      <p class="tag"><b>Bridle</b> $0, nothing locked</p>
+      <Features items={FREE_FEATURES} />
     </div>
-    <div class="card dark">
-      <h3>Bridle Pro</h3>
-      <p class="big">From {money(from)} <small>once, first {PRO.total} customers</small></p>
-      <ul class="ticks">{PRO.features.map((f) => <li><svg class="i"><use href="#i-check" /></svg>{f.title}</li>)}</ul>
-      <a class="tlink" href="/pro/">See Bridle Pro</a>
+    <div class="tier pro">
+      <p class="tag"><b>Bridle Pro</b> one more plugin</p>
+      <Features items={PRO_FEATURES} tone="blue" />
+      <div class="bf-strip">
+        <p><span class="bf-tag">Black Friday</span>Bridle Pro, pay once from {money(from)}. Ends {PRO.endsLabel}.</p>
+        <a class="btn" href="/pro/">See the deal</a>
+      </div>
     </div>
   </div>
 </section>

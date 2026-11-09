@@ -1,39 +1,43 @@
 // The questions on the home and Pro pages (also their FAQPage JSON-LD and the
-// Markdown copies). Short answers, only what Bridle does today.
-import { AI, PRO } from './site';
+// Markdown copies). Short answers in plain words, only what Bridle does today.
+import { AI, PRO, money } from './site';
 
 export type QA = { q: string; a: string };
 
 export const FAQ: QA[] = [
   {
     q: 'Is Bridle free?',
-    a: `Yes, on WordPress.org with nothing locked. Use your own AI key, or Bridle AI with ${AI.free} free answers a month.`,
+    a: `Yes. Nothing is locked. Use your own AI key, or get ${AI.free} free AI answers a month.`,
   },
   {
-    q: 'Can it send replies without me?',
-    a: 'Only in Auto, and only replies it is sure of, after a 15-minute hold you can stop. Refunds and upset customers always wait for you.',
+    q: 'Can it send replies on its own?',
+    a: 'Only if you turn that on, and only when it is sure. Refunds and angry customers always wait for you.',
   },
   {
     q: 'Where does my data live?',
-    a: 'In your own WordPress database. Mail reaches your site through our relay, which keeps nothing but the inbox address.',
+    a: 'In your own WordPress. We only pass your mail along. We don’t keep it.',
   },
   {
-    q: 'When can I install it?',
-    a: 'Soon, with Bridle Pro on the same day. Join the waitlist and we email you.',
+    q: 'When can I get it?',
+    a: 'Soon. Join the waitlist and we email you on launch day.',
   },
 ];
 
 export const PRO_FAQ: QA[] = [
   {
-    q: 'Does Pro lock anything in Bridle?',
-    a: 'No. Free stays complete. Pro only adds.',
+    q: 'What happens after Black Friday?',
+    a: `The pay-once deal ends on ${PRO.endsLabel}, or sooner if all ${PRO.total} sell. Then Pro is sold by the year. If you bought once, you keep it.`,
   },
   {
-    q: 'What does lifetime mean?',
-    a: 'Pay once, get updates and support for as long as we make Bridle Pro. Only for the first 200 licences.',
+    q: 'Do I keep it forever?',
+    a: 'Yes. You pay once and Pro is yours. You get updates and support for as long as we make Bridle Pro.',
   },
   {
-    q: 'Can I get a refund?',
-    a: `Yes, within ${PRO.refundDays} days. Just email us.`,
+    q: 'Can I move it to another site?',
+    a: 'Yes. Remove the key from one site and add it to another.',
+  },
+  {
+    q: 'What if my AI answers run out?',
+    a: `Top up inside Bridle, from ${money(AI.topUpFrom)}. Or use your own AI key, with no limit.`,
   },
 ];

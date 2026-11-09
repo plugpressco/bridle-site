@@ -1,0 +1,15 @@
+---
+// A plan's features, all drawn the same way: an icon, a short name, one line.
+import type { Feature } from '../data/site';
+interface Props { items: Feature[]; tone?: 'blue' | 'plain'; cols?: number }
+const { items, tone = 'plain', cols = 3 } = Astro.props;
+---
+<ul class="feats" style={`--cols:${cols}`}>
+  {items.map((f) => (
+    <li>
+      <span class:list={['ico', { blue: tone === 'blue' }]}><svg class="i" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
+      <h3>{f.name}</h3>
+      <p>{f.text}</p>
+    </li>
+  ))}
+</ul>
