@@ -550,28 +550,32 @@
 	.tones .tbl td.y:last-child { color: var(--color-brand-600); }
 	@media (max-width: 960px) { .tones { --band-pad: 64px; } .tones .t-sand .board { padding: 20px; } }
 
-	/* Feature pages, Bridle's own: the path (feature/Hero, Path, Checklist). */
-	.phero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 48px 96px; align-items: center; padding-top: 80px; }
-	.fh1 { font-size: clamp(2.6rem, 5vw, 4.25rem); line-height: 1.03; letter-spacing: -0.045em; font-weight: 600; }
-	.flead { max-width: 44ch; margin: 24px 0 32px; font-size: 20px; line-height: 1.55; color: var(--color-ink-2); }
-	.pmini { position: relative; display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
-	.pmini::before { content: ""; position: absolute; left: 19px; top: 24px; bottom: 24px; width: 2px; border-radius: 2px; background: linear-gradient(var(--color-brand-200), var(--color-brand-600)); }
-	.pmini a { position: relative; display: flex; align-items: center; gap: 16px; padding: 8px 0; font-size: 18px; font-weight: 500; color: var(--color-foreground); text-decoration: none; }
-	.pmini a:hover { color: var(--color-brand-600); }
-	.pn { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 999px; background: var(--color-brand-600); box-shadow: 0 0 0 6px var(--color-page); font-size: 16px; font-weight: 600; color: #fff; font-variant-numeric: tabular-nums; }
-	.path { position: relative; display: grid; gap: 72px; margin: 0; padding: 0; list-style: none; }
-	.path::before { content: ""; position: absolute; left: 23px; top: 24px; bottom: 24px; width: 2px; border-radius: 2px; background: linear-gradient(var(--color-brand-200), var(--color-brand-600)); }
-	.pstep { position: relative; display: grid; grid-template-columns: 48px minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px; align-items: start; }
-	.pstep .pn { width: 48px; height: 48px; font-size: 18px; }
-	.ptext { padding-top: 8px; }
-	.ptext h3 { font-size: 26px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 600; }
-	.ptext p { max-width: 40ch; margin-top: 14px; font-size: 17.5px; line-height: 1.6; color: var(--color-ink-2); }
-	.pvis { overflow: hidden; border: 1px solid var(--color-border); border-radius: 16px; background: #fff; }
-	.pvis.is-shot { max-height: 420px; background: var(--color-app); }
-	.pvis.is-shot.end { display: flex; flex-direction: column; justify-content: flex-end; }
-	.pvis.is-shot img { display: block; width: 100%; height: auto; border: 0; border-radius: 0; }
-	.pui { display: grid; place-items: center; min-height: 260px; padding: 40px; background: var(--color-background); }
-	.pui > * { width: 100%; max-width: 380px; }
+	/* Feature pages: big screen rows (feature/Hero, Rows, Checklist). */
+	.rhero { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px 64px; align-items: center; padding-top: 56px; }
+	.fh1 { font-size: clamp(2.5rem, 4.6vw, 4rem); line-height: 1.03; letter-spacing: -0.045em; font-weight: 600; }
+	.flead { max-width: 42ch; margin: 22px 0 32px; font-size: 20px; line-height: 1.55; color: var(--color-ink-2); }
+	.rpanel { position: relative; height: 480px; overflow: hidden; border-radius: 24px; background: linear-gradient(150deg, var(--color-brand-50) 0%, #f6f1ea 60%, var(--color-background) 100%); }
+	.rpanel.tall { height: 560px; }
+	.rpanel .dither { opacity: 0.85; }
+	.rshot { position: absolute; z-index: 1; top: 56px; left: 56px; }
+	.rshot img { display: block; max-width: none; border-radius: 12px; box-shadow: 0 1px 2px rgb(34 32 29 / 0.06), 0 18px 48px -18px rgb(31 99 230 / 0.28); }
+	.rpanel.bottom .rshot { top: auto; bottom: -1px; }
+	.rpanel.bottom .rshot img { border-radius: 12px 0 0 0; }
+	.rpanel.center .rshot { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+	.rpanel.center .rshot img { max-width: min(640px, calc(100vw - 120px)); height: auto; }
+	.rhero .rpanel.center .rshot { top: 48px; transform: translateX(-50%); }
+	.rhero .rpanel.center .rshot img { max-width: none; border-radius: 12px 12px 0 0; }
+	.rui { width: min(460px, calc(100% - 64px)); }
+	.rui .mq { font-size: 16px; }
+	.rui .mq .mpill { font-size: 13.5px; padding: 5px 12px; }
+	.rrow { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 40px 80px; align-items: center; }
+	.rrow.flip { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
+	.rrow.flip .rtext { order: 2; }
+	.rtext p { max-width: 40ch; margin-top: 18px; font-size: 19px; line-height: 1.6; color: var(--color-ink-2); }
+	.rtext ul { display: grid; gap: 10px; margin: 24px 0 0; padding: 0; list-style: none; }
+	.rtext li { display: flex; gap: 12px; font-size: 17px; color: var(--color-foreground); }
+	.rtext li::before { content: "✓"; flex: none; font-weight: 600; color: var(--color-brand-600); }
+	.stack-sections > .rrow + .rrow { margin-top: 120px; }
 	.clist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 	.clist > div { padding: 36px; border: 1px solid var(--color-border); border-radius: 16px; background: #fff; }
 	.clist > .pro { border-color: var(--color-brand-200); background: var(--color-brand-50); }
@@ -581,9 +585,10 @@
 	.clist li::before { content: "✓"; flex: none; font-weight: 600; color: var(--color-brand-600); }
 	.clist .lnk { display: inline-block; margin-top: 24px; }
 	@media (max-width: 960px) {
-		.phero { grid-template-columns: minmax(0, 1fr); padding-top: 40px; } .flead { font-size: 18px; }
-		.path { gap: 48px; } .pstep { grid-template-columns: 40px minmax(0, 1fr); gap: 16px 20px; } .pstep .pn { width: 40px; height: 40px; font-size: 16px; } .path::before { left: 19px; }
-		.pvis { grid-column: 2; } .ptext h3 { font-size: 22px; } .pui { padding: 24px; min-height: 0; }
+		.rhero, .rrow, .rrow.flip { grid-template-columns: minmax(0, 1fr); } .rrow.flip .rtext { order: 0; } .rhero { padding-top: 32px; } .flead { font-size: 18px; }
+		.rpanel, .rpanel.tall { height: 340px; border-radius: 16px; } .rshot { top: 28px; left: 24px; } .rshot img { max-width: none; width: 640px; height: auto; }
+		.rpanel.center .rshot img, .rhero .rpanel.center .rshot img { width: auto; max-width: calc(100vw - 96px); }
+		.stack-sections > .rrow + .rrow { margin-top: 72px; } .rtext p { font-size: 17.5px; }
 		.clist { grid-template-columns: minmax(0, 1fr); } .clist > div { padding: 24px; }
 	}
 	.mq { display: grid; gap: 0; overflow: hidden; border: 1px solid var(--color-border); border-radius: 14px; background: #fff; font-size: 14px; color: var(--color-foreground); box-shadow: 0 12px 32px -16px rgb(34 32 29 / 0.22); }
