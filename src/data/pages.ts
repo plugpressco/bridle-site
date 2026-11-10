@@ -89,8 +89,9 @@ ${qa(FAQ)}
 - Bridle Chat: ${SITE.url}/chat/
 - Pricing: ${SITE.url}/pricing/
 - Guides: ${SITE.url}/guides/
+- Docs: ${SITE.docs}
 - Privacy: ${SITE.url}/privacy/
-- Made by ${SITE.company} (${SITE.companyUrl}), the team behind Saddle (${SITE.saddle}). Email: ${SITE.email}
+- Made by ${SITE.company} (${SITE.companyUrl}), the team behind Saddle (${SITE.saddle}). Support: ${SITE.support}
 `,
   },
   demo: {
@@ -214,7 +215,7 @@ Everything that answers your customers is free.
 | Your own AI key | No limit | No limit |
 | Bridle AI answers | ${AI.free} free a month | ${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included |
 | Updates | ${WPORG_LIVE ? 'From WordPress.org' : 'Free'} | For life |
-| Support | ${WPORG_LIVE ? 'WordPress.org forum' : 'By email'} | By email, for life |
+| Support | ${WPORG_LIVE ? 'WordPress.org forum' : 'Help desk'} | Help desk, for life |
 | Price | $0 | ${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once |
 
 ## About a cent an answer.

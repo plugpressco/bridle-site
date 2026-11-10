@@ -12,7 +12,7 @@ const { items, title, id = 'faq', tone = 'plain' } = Astro.props;
 <section class:list={['band', tone]} id={id} aria-labelledby={`h-${id}`}>
   <div class="faqhead">
     <h2 class="h2" id={`h-${id}`}>{title}</h2>
-    <p class="sub">Can’t find yours? <a class="lnk text-[length:inherit]" href={`mailto:${SITE.email}`}>Email us.</a></p>
+    <p class="sub">Can’t find yours? <a class="lnk text-[length:inherit]" href={SITE.support}>Ask us.</a></p>
   </div>
   <dl class="qa">
     {items.map((f) => <div id={f.id}><dt>{f.q}</dt><dd>{f.a}</dd></div>)}

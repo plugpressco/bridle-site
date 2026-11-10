@@ -103,7 +103,7 @@ export const PRIVACY: Doc = {
 
 export const TERMS: Doc = {
   title: ['Terms', 'Short, and in plain words'],
-  lead: `These terms cover bridle.to, the services PlugPress runs for Bridle (the email relay and Bridle AI) and Bridle Pro licences. Using any of them means you agree to them. Questions go to ${SITE.email}.`,
+  lead: `These terms cover bridle.to, the services PlugPress runs for Bridle (the email relay and Bridle AI) and Bridle Pro licences. Using any of them means you agree to them. Questions go to ${SITE.support}.`,
   parts: [
     {
       id: 'software',
@@ -149,7 +149,7 @@ export const TERMS: Doc = {
       id: 'refunds',
       title: 'Refunds',
       body: [
-        `Bridle Pro: a full refund within ${PRO.refundDays} days of buying. Bridle AI packs: a full refund within ${PRO.refundDays} days if you haven’t used them. Email ${SITE.email}.`,
+        `Bridle Pro: a full refund within ${PRO.refundDays} days of buying. Bridle AI packs: a full refund within ${PRO.refundDays} days if you haven’t used them. Ask at ${SITE.support}.`,
       ],
     },
     {

@@ -5,7 +5,7 @@
 import { RIVALS, PEOPLE, CHECKED, monthly, money } from '../data/cost';
 import { AI } from '../data/site';
 interface Props { id: string; counted?: boolean; tone?: string }
-const { id, counted = false, tone = 'white' } = Astro.props;
+const { id, counted = false, tone = '' } = Astro.props;
 const N = 300;
 const c = monthly(N);
 const max = Math.max(...Object.values(c));

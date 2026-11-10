@@ -130,12 +130,15 @@
 	/* Not `section + section`: a component's inline <script> can sit between two sections. */
 	.stack-sections > section:not(:first-of-type) { margin-top: var(--gap, 24px); }
 	.stack-sections { padding-bottom: 96px; --gap: 24px; }
-	/* Every section after the hero is its own container, so each one clearly
-	   starts and ends (owner, 2026-11-10, pointing at helpscout.com: "section are
-	   not look seperate", "use container ... to highlight"). Flat, 12 px, one
-	   light grey; pictures inside turn white with a hairline. */
-	.stack-sections > section.band { border-radius: var(--radius-panel); background: var(--color-band); padding: 96px 80px; }
-	.stack-sections > section.band .panel:not(.navy):not(.blue) { background: #fff; box-shadow: inset 0 0 0 1px var(--color-border); }
+	/* One section style everywhere (owner, 2026-11-11: "dont force color and
+	   make site consistent design"). A section is a white, flat, 12 px panel
+	   with one hairline on the warm page; pictures and cards inside it sit on
+	   sand. Colour is for accents only: buttons, links, the one blue deal panel.
+	   Text-only sections (founder, questions) sit plain on the page. */
+	.stack-sections > section.band, .panel.lined { border-radius: var(--radius-panel); background: #fff; box-shadow: inset 0 0 0 1px var(--color-border); }
+	.stack-sections > section.band { padding: 96px 80px; }
+	.stack-sections > section.band.plain { background: none; box-shadow: none; padding-inline: 0; }
+	.stack-sections > section.band .panel:not(.blue) { background: var(--color-background); }
 	.stack-sections > .hero + section, .stack-sections > .hero + script + section { margin-top: 72px; }
 	.opener { margin-bottom: 56px; }
 	.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
@@ -143,8 +146,6 @@
 
 	/* Panels: flat, 12 px */
 	.panel { position: relative; overflow: hidden; border-radius: var(--radius-panel); background: var(--color-band); }
-	.panel.navy { background: var(--color-night); color: #c9c2b8; }
-	.panel.navy h2 { color: #fff; }
 	.panel.blue { background: var(--color-brand-600); color: rgb(255 255 255 / 0.96); }
 	.panel.blue h2, .panel.blue h3 { color: #fff; }
 	.screen { display: block; max-width: none; border: 1px solid var(--color-border); border-radius: var(--radius-card); background: var(--color-app); }
@@ -283,14 +284,13 @@
 	.flist h3, .prolist h3 { font-size: 20px; line-height: 1.3; letter-spacing: -0.015em; font-weight: 600; }
 	.flist p, .prolist p { font-size: 16.5px; }
 
-	/* ---------- It checks before it speaks: the one navy panel ---------- */
+	/* ---------- It checks before it speaks ---------- */
 	.checks { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 28px; min-height: 780px; }
-	.checks .txt { display: grid; gap: 18px; align-content: center; padding: 64px 0 56px 56px; }
+	.checks .txt { display: grid; gap: 18px; align-content: center; padding: 96px 0 96px 80px; }
 	.checks .txt .h2 { font-size: clamp(34px, 3vw, 44px); }
-	.checks .txt .sub { color: #c9c2b8; }
-	.checks .txt p.b { font-size: 16.5px; color: #d3dae6; }
-	.checks .vis { position: relative; }
-	.checks .vis img { position: absolute; left: 0; bottom: 0; width: 803px; border-color: #2a3a52; }
+	.checks .txt p.b { font-size: 16.5px; }
+	.checks .vis { position: relative; overflow: hidden; margin: 1px 1px 1px 0; border-radius: 0 11px 11px 0; background: var(--color-background); }
+	.checks .vis img { position: absolute; left: 48px; bottom: 0; width: 803px; }
 
 	/* ---------- Cost ---------- */
 	.cost { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); gap: 72px; align-items: center; }
@@ -316,7 +316,7 @@
 
 	/* ---------- Three steps ---------- */
 	.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-	.steps > div { display: grid; gap: 10px; align-content: start; padding: 32px; border-radius: var(--radius-panel); background: #fff; }
+	.steps > div { display: grid; gap: 10px; align-content: start; padding: 32px; border-radius: var(--radius-panel); background: var(--color-background); }
 	.steps .num { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; border-radius: 50%; background: var(--color-brand-100); font-size: 22px; line-height: 1; font-weight: 600; color: var(--color-brand-700); font-variant-numeric: tabular-nums; }
 	.steps h3 { font-size: 21px; line-height: 1.3; letter-spacing: -0.015em; font-weight: 600; }
 	.steps p { font-size: 16.5px; }
@@ -328,7 +328,7 @@
 	.panel.blue .deal { position: relative; z-index: 1; }
 	.deal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 64px; align-items: center; padding: 88px 80px; }
 	.dtext { display: grid; gap: 0; align-content: center; }
-	.bf { justify-self: start; margin-bottom: 20px; padding: 6px 12px; border-radius: 999px; background: var(--color-sun); font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: var(--color-foreground); }
+	.bf { justify-self: start; margin-bottom: 20px; padding: 6px 12px; border-radius: 999px; background: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: var(--color-brand-700); }
 	.deal .sub { color: rgb(255 255 255 / 0.96); }
 	.cd { display: grid; grid-template-columns: repeat(4, minmax(0, 88px)); gap: 10px; margin-top: 32px; }
 	.cd > div { display: grid; justify-items: center; gap: 2px; padding: 14px 6px 10px; border-radius: var(--radius-card); background: rgb(255 255 255 / 0.12); }
@@ -337,7 +337,7 @@
 	.deal .what { display: grid; gap: 10px; margin-top: 32px; }
 	.deal .what b { font-weight: 600; color: #fff; }
 	.deal .what span { display: flex; align-items: center; gap: 10px; color: #fff; }
-	.deal .what svg { width: 16px; height: 16px; color: var(--color-sun); }
+	.deal .what svg { width: 16px; height: 16px; color: #fff; }
 	.dcard { display: grid; gap: 16px; padding: 32px; border-radius: var(--radius-panel); background: #fff; color: var(--color-ink-2); }
 	.dcard .sw { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: var(--radius-control); background: var(--color-band); }
 	.dcard .sw button { height: 38px; border: 0; border-radius: 6px; background: none; font: 500 15px/1 var(--font-sans); color: var(--color-ink-2); cursor: pointer; }
@@ -356,7 +356,7 @@
 	.rise { font-size: 15px; color: var(--color-muted-foreground); }
 	.dcard .left { display: grid; gap: 8px; font-size: 15px; color: var(--color-foreground); }
 	.dcard .prog { height: 6px; overflow: hidden; border-radius: 3px; background: var(--color-band); }
-	.dcard .prog i { display: block; width: 0; height: 100%; background: var(--color-coral); transition: width 0.6s var(--ease-soft); }
+	.dcard .prog i { display: block; width: 0; height: 100%; background: var(--color-brand-600); transition: width 0.6s var(--ease-soft); }
 	.dcard > .btn { width: 100%; justify-content: center; }
 	.safe { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; list-style: none; font-size: 14.5px; color: var(--color-ink-2); }
 	.safe li { display: flex; align-items: center; gap: 6px; }
@@ -463,15 +463,6 @@
 		.bc-comp span.on { color: var(--color-foreground); }
 	}
 
-	/* Section colours: each section its own calm tint (owner, 2026-11-10:
-	   "every section added same style bg color ... not nice"). Text on each
-	   passes AA (muted 4.9 or more). */
-	.stack-sections > section.band.sky { background: #edf2fc; }
-	.stack-sections > section.band.butter { background: #fdf4dc; }
-	.stack-sections > section.band.peach { background: #fbeae0; }
-	.stack-sections > section.band.sand { background: var(--color-band); }
-	.stack-sections > section.band.white { background: #fff; box-shadow: inset 0 0 0 1px var(--color-border); }
-	.stack-sections > section.band.plain { background: none; padding-inline: 0; }
 
 	/* The founder's note as a quote (Founder.astro). */
 	.founder { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 48px; align-items: start; max-width: 940px; margin-inline: auto; }
@@ -494,7 +485,7 @@
 	.qa dd { max-width: 54ch; margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--color-ink-2); }
 
 	/* The closing call, centred, with the dot art rising under it (Closing.astro). */
-	.closer { background: var(--color-band); }
+	.closer { background: #fff; box-shadow: inset 0 0 0 1px var(--color-border); }
 	.closing { position: relative; z-index: 1; display: grid; justify-items: center; gap: 28px; padding: 112px 24px 220px; text-align: center; }
 	.closing .sub { margin-top: -12px; }
 	.closing > [data-form] { width: 100%; max-width: 470px; }
@@ -521,7 +512,7 @@
 		.steps > div { padding: 24px; }
 		.checks { grid-template-columns: minmax(0, 1fr); gap: 0; min-height: 0; }
 		.checks .txt { padding: 40px 24px 32px; }
-		.checks .vis { height: 520px; }
+		.checks .vis { height: 520px; margin: 0 1px 1px; border-radius: 0 0 11px 11px; }
 		.checks .vis img { left: 24px; }
 		.deal { padding: 48px 20px; gap: 32px; }
 		.dcard { padding: 22px; }

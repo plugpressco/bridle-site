@@ -4,11 +4,12 @@
    slowly while on screen; with reduced motion it is drawn once and stays. */
 var CELL = 3;
 var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(function (n) { return (n + 0.5) / 16; });
-// Ramps, low to high: warm sun into coral into Bridle blue on the sand panels;
-// on the blue deal panel, light blue into sun, coral and white.
+// Ramps, low to high, in Bridle's one blue only (owner, 2026-11-11: "dont
+// force color"): pale blue into brand blue on light panels; on the blue deal
+// panel, a lighter blue into white.
 var RAMPS = {
-	warm: [[255, 232, 191], [255, 209, 102], [255, 138, 101], [106, 155, 242], [31, 99, 230]],
-	night: [[63, 124, 236], [157, 188, 247], [255, 209, 102], [255, 138, 101], [255, 255, 255]],
+	warm: [[229, 237, 253], [200, 218, 251], [157, 188, 247], [106, 155, 242], [31, 99, 230]],
+	night: [[63, 124, 236], [106, 155, 242], [157, 188, 247], [200, 218, 251], [255, 255, 255]],
 };
 var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

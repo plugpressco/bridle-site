@@ -20,11 +20,12 @@ const shot = (name: string, w: number, h: number) => `<picture><source srcset="/
 const resources = [
   [
     { label: 'Guides', text: 'Set up each part, step by step', href: '/guides/' },
+    { label: 'Docs', text: 'Every setting, explained', href: SITE.docs },
     { label: 'Live demo', text: 'Try Bridle in your browser', href: '/demo/' },
   ],
   [
     { label: 'About PlugPress', text: 'The team behind Saddle and Mailpuff', href: SITE.companyUrl },
-    { label: 'Contact', text: 'Email us. A person answers.', href: `mailto:${SITE.email}` },
+    { label: 'Support', text: 'Ask us. A person answers.', href: SITE.support },
   ],
 ];
 const get = LAUNCHED ? { label: 'Get Bridle free', href: FREE_URL } : { label: 'Join the waitlist', href: join };
