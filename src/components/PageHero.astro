@@ -6,7 +6,7 @@
 import HeadingPair from './ui/HeadingPair.astro';
 import Button from './ui/Button.astro';
 import Shot from './Shot.astro';
-import { LAUNCHED, WPORG_URL } from '../data/site';
+import { LAUNCHED, FREE_URL } from '../data/site';
 interface Props {
   eyebrow: string;
   title: [string, string];
@@ -16,7 +16,7 @@ interface Props {
   cta?: { href: string; label: string };
 }
 const { eyebrow, title, lead, shot, more, cta } = Astro.props;
-const main = cta || (LAUNCHED ? { href: WPORG_URL, label: 'Get Bridle free' } : { href: '#join', label: 'Join the waitlist' });
+const main = cta || (LAUNCHED ? { href: FREE_URL, label: 'Get Bridle free' } : { href: '#join', label: 'Join the waitlist' });
 ---
 <div class="wrap"><section class="hero pb-9 md:pb-[60px]" aria-labelledby="h-page">
   <div class="copy">

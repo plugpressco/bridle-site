@@ -7,7 +7,7 @@
 import Button from '../ui/Button.astro';
 import Waitlist from '../Waitlist.astro';
 import Dither from '../Dither.astro';
-import { LAUNCHED, WPORG_URL } from '../../data/site';
+import { LAUNCHED, FREE_URL } from '../../data/site';
 const use = (id: string) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
 ---
 <section class="hero" aria-labelledby="h-hero">
@@ -17,7 +17,7 @@ const use = (id: string) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`
     <p class="lead">Bridle writes each reply from your docs, checks every fact and hands you the ones it can’t answer.</p>
     {LAUNCHED ? (
       <>
-        <div class="ctas"><Button size="lg" arrow href={WPORG_URL}>Get Bridle free</Button><Button size="lg" variant="soft" href="/demo/">Try the live demo</Button></div>
+        <div class="ctas"><Button size="lg" arrow href={FREE_URL}>Get Bridle free</Button><Button size="lg" variant="soft" href="/demo/">Try the live demo</Button></div>
         <p class="by">Built by the team behind Saddle.</p>
       </>
     ) : (

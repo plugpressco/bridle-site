@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { SITE } from '../data/site';
+import { SITE, WPORG_LIVE, LAUNCHED } from '../data/site';
 import { PAGES } from '../data/pages';
 
 // llms.txt: a short map of the site for AI apps (https://llmstxt.org).
@@ -9,7 +9,7 @@ export const GET: APIRoute = ({ site }) => {
 
 > ${SITE.definition}
 
-Bridle is a free WordPress plugin, coming soon to WordPress.org. Bridle Pro is a paid add-on, sold on bridle.to from launch day.
+Bridle is a free WordPress plugin${WPORG_LIVE ? ' on WordPress.org' : ', a free download from bridle.to and soon on WordPress.org'}. Bridle Pro is a paid add-on, sold on bridle.to${LAUNCHED ? '' : ' from launch day'}.
 
 ## Pages
 

@@ -1,7 +1,7 @@
 // Each page's title, description and Markdown copy, used by the HTML pages,
 // their .md copies, llms.txt and llms-full.txt. Keep each Markdown copy in
 // step with its page: it must say the same thing, in the same plain words.
-import { SITE, AI, PRO, INBOXES, DEMO, LAUNCHED, WPORG_URL, money, count, priceAt, sitesLabel, type Feature } from './site';
+import { SITE, AI, PRO, INBOXES, DEMO, LAUNCHED, WPORG_URL, WPORG_LIVE, FREE_FROM, money, count, priceAt, sitesLabel, type Feature } from './site';
 import { RIVALS, PEOPLE, CHECKED, monthly, money as cents } from './cost';
 import { FAQ, PRO_FAQ, type QA } from './faq';
 import { PRIVACY, TERMS, docMd } from './legal';
@@ -12,7 +12,9 @@ const feats = (list: Feature[]) => list.map((f) => `- **${f.name}.** ${f.text}`)
 const plans = PRO.plans.map((p) => `- **${sitesLabel(p.sites)}:** ${money(p.base)}, pay once, with ${count(p.answers)} AI answers.`).join('\n');
 const ladder = PRO.steps.map((st, i) => `- Sales ${st.from} to ${st.to}: ${PRO.plans.map((p) => money(priceAt(p, i))).join(' / ')}`).join('\n');
 const waitlist = LAUNCHED
-  ? `Get Bridle free on WordPress.org: ${WPORG_URL}`
+  ? WPORG_LIVE
+    ? `Get Bridle free on WordPress.org: ${WPORG_URL}`
+    : `Download Bridle free: ${SITE.url}/download/bridle.zip`
   : `Bridle is coming to WordPress.org soon. Join the waitlist at ${SITE.url}/#join and we’ll email you the day it’s on WordPress.org.`;
 const at300 = monthly(300);
 const costLines = [`- Bridle, with Bridle AI: ${cents(at300.bridle)} a month`, ...RIVALS.map((r) => `- ${r.name} ${r.plan}: ${cents(at300[r.key])} a month (${r.source})`)].join('\n');
@@ -65,7 +67,7 @@ ${counted}
 
 ## Start in three steps.
 
-1. **Install Bridle.** Free from WordPress.org.
+1. **Install Bridle.** ${FREE_FROM}
 2. **Forward your support email.** Keep your address. We show you how.
 3. **Turn on chat.** One switch adds it to your site.
 
@@ -161,7 +163,7 @@ More: ${SITE.url}/pricing/
       'Bridle is free. Bridle Pro is pay once until Cyber Monday: $49 for 1 site, $79 for 3, $149 for 10, AI answers included. 30-day refund.',
     md: `# Free to use. Pay once for Pro.
 
-Bridle is free on WordPress.org. Bridle Pro adds more, and until Cyber Monday you pay for it once.
+${WPORG_LIVE ? 'Bridle is free on WordPress.org.' : 'Bridle is free.'} Bridle Pro adds more, and until Cyber Monday you pay for it once.
 
 ${waitlist}
 
@@ -211,8 +213,8 @@ Everything that answers your customers is free.
 | Late-reply nudges, auto-resolve, share new mail | | Yes |
 | Your own AI key | No limit | No limit |
 | Bridle AI answers | ${AI.free} free a month | ${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included |
-| Updates | From WordPress.org | For life |
-| Support | WordPress.org forum | By email, for life |
+| Updates | ${WPORG_LIVE ? 'From WordPress.org' : 'Free'} | For life |
+| Support | ${WPORG_LIVE ? 'WordPress.org forum' : 'By email'} | By email, for life |
 | Price | $0 | ${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once |
 
 ## About a cent an answer.

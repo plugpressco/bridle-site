@@ -67,6 +67,17 @@ export const LAUNCHED = CHECKOUT_OPEN;
 // Bridle's page on WordPress.org (the slug we asked for; check it once the
 // plugin is approved).
 export const WPORG_URL = 'https://wordpress.org/plugins/bridle/';
+// Until WordPress.org approves Bridle (owner, 10 November 2026), "Get Bridle
+// free" downloads the zip from here. A zip install has the same slug, so it
+// updates from WordPress.org by itself once Bridle is listed. Set to true
+// then; the free buttons and words follow.
+export const WPORG_LIVE = false;
+export const ZIP_URL = '/download/bridle.zip';
+// A Bridle Pro buyer's Polar account: the licence key and the Pro download.
+export const ACCOUNT_URL = 'https://polar.sh/bridle/portal';
+export const FREE_URL = WPORG_LIVE ? WPORG_URL : ZIP_URL;
+// Where the free plugin comes from, in words.
+export const FREE_FROM = WPORG_LIVE ? 'Free from WordPress.org.' : 'Free download. Soon on WordPress.org.';
 
 export type Step = { from: number; to: number };
 export type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number | null; productId: string };

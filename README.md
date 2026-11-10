@@ -88,6 +88,15 @@ All three go up $20 every 20 sales, counting every Bridle Pro sale together: sal
 
 ## At launch
 
+Checklist (10 November 2026). Owner first:
+
+1. Merge bridle#175, bridle-pro#22 and this PR.
+2. Polar: attach `bridle-pro-1.0.0.zip` as a downloadable file benefit to all three Pro products (the thanks page sends buyers to `ACCOUNT_URL` for it).
+3. Spacefast Space `bridle`: set `POLAR_TOKEN` (`orders:read`, `checkouts:write`). Check `curl -s https://bridle.to/api/deal` says `"live":true`.
+4. Set `CHECKOUT_OPEN = true`, build, publish. Buy the 1 site plan once with a real card, check the email, key and download, then refund it in Polar.
+
+Until WordPress.org approves Bridle, `WPORG_LIVE = false` makes every "Get Bridle free" download `public/download/bridle.zip` (copy it from `npm run zip` in `../bridle` after each release). A zip install updates from WordPress.org by itself once Bridle is listed; then set `WPORG_LIVE = true`.
+
 - Set `CHECKOUT_OPEN = true` (above): every waitlist form becomes "Get Bridle free" (to `WPORG_URL`, check the slug once approved) and the Pro buttons open checkout.
 - Give `hello@bridle.to` its own Email Routing rule (today it falls through the relay's catch-all to the fallback mailbox).
 
