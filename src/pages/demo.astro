@@ -23,7 +23,6 @@ const notes = [
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Live demo', path: page.path }]}>
   <PageHero
-    eyebrow="Live demo · WordPress Playground"
     title={['Try Bridle in your browser', 'Nothing to install']}
     lead="A sample inbox and chat. Ready in about 30 seconds."
     shot={{ name: 'inbox-groups', width: 820, height: 566, alt: 'The demo’s Inbox in Bridle: four replies ready to send, and a refund that needs you.' }}
@@ -32,12 +31,12 @@ const notes = [
   />
 
   <Section labelledby="h-try">
-    <HeadingPair id="h-try" eyebrow="What to try" first="Three things to try" second="A minute each" class="opener" />
+    <HeadingPair id="h-try" first="Three things to try" second="A minute each" class="opener" />
     <Points items={tries} numbered />
   </Section>
 
   <Section labelledby="h-notes">
-    <HeadingPair id="h-notes" eyebrow="Good to know" first="A demo" second="Not your site" class="opener" />
+    <HeadingPair id="h-notes" first="A demo" second="Not your site" class="opener" />
     <ul class="grid gap-2.5">{notes.map((n) => <li class="text-[16.5px] leading-snug">{n}</li>)}</ul>
   </Section>
 
