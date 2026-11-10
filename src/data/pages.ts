@@ -89,8 +89,9 @@ ${qa(FAQ)}
 - Bridle Chat: ${SITE.url}/chat/
 - Pricing: ${SITE.url}/pricing/
 - Guides: ${SITE.url}/guides/
+- Docs: ${SITE.docs}
 - Privacy: ${SITE.url}/privacy/
-- Made by ${SITE.company} (${SITE.companyUrl}), the team behind Saddle (${SITE.saddle}). Email: ${SITE.email}
+- Made by ${SITE.company} (${SITE.companyUrl}), the team behind Saddle (${SITE.saddle}). Support: ${SITE.support}
 `,
   },
   demo: {
@@ -183,7 +184,169 @@ ${ladder}
 
 Updates and support for life. ${PRO.refundDays}-day refund. After the deal, Pro is sold by the year.
 
-## What you get with Pro.
+## What Pro adds.
+
+- **Chat on other sites.** Paste one line on any site. Chats come to this inbox.
+- **Live chat.** Jump into a chat while the visitor is still there. Set your hours.
+- **Orders and licences.** Replies can say where an order is or if a licence is active. WooCommerce, Easy Digital Downloads, Polar and Freemius.
+- **Missing answers.** See what it couldn’t answer. Turn a question into a doc in one click.
+- **Workflows.** A nudge when someone waits too long. Quiet chats close by themselves.
+- **AI answers included.** ${PRO.plans.map((p) => count(p.answers)).join(', ').replace(/, ([^,]*)$/, ' or $1')} with your plan. Top up from ${money(AI.topUpFrom)}.
+- **More inboxes.** 10, 25 or unlimited with your plan.
+
+## Compare plans.
+
+Everything that answers your customers is free.
+
+| | Bridle | Bridle Pro |
+|---|---|---|
+| Inboxes on the Bridle mail service | ${INBOXES.free} per site | 10, 25 or unlimited |
+| Email: sorting, drafts, fact checks, Auto, rewrite | Yes | Yes |
+| Chat bubble on this site | Yes | Yes |
+| Help docs (Bridle KB, free plugin) | Yes | Yes |
+| AI apps (Claude, ChatGPT) over MCP | Yes | Yes |
+| Teammates and your own AI key | No limit | No limit |
+| Bridle AI answers | ${AI.free} free a month | ${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included |
+| Chat on your other sites | | Yes |
+| Live chat and business hours | | Yes |
+| Order and licence lookups | WooCommerce card | Every order, plus EDD, Polar, Freemius |
+| Missing answers, with “write a doc” | | Yes |
+| Late-reply nudges, auto-resolve, share new mail | | Yes |
+| Updates and support | ${WPORG_LIVE ? 'WordPress.org' : 'Free, help desk'} | For life, help desk |
+| Price | $0 | ${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once |
+
+## About a cent an answer.
+
+Or free with your own AI key.
+
+Other help desks charge up to $2 each time their AI answers, plus a price per person.
+
+At 300 AI answers a month, for ${PEOPLE} people:
+
+${costLines}
+
+${counted}
+
+## Start in three steps.
+
+1. **Install Bridle.** ${FREE_FROM}
+2. **Forward your support email.** Keep your address. We show you how.
+3. **Turn on chat.** One switch adds it to your site.
+
+## Pay once for Bridle Pro.
+
+Only until Cyber Monday. Pro adds chat on your other sites, live chat with your hours, and order and licence lookups. ${money(PRO.plans[0].base)}, pay once, for 1 site. The price goes up ${money(PRO.rise)} every 20 sales. ${PRO.refundDays}-day refund. All plans: ${SITE.url}/pricing/
+
+## A note from the founder.
+
+“Every day we answer the same questions by email. So we built Bridle for our own inbox.” It writes the reply. We check it and send it. Bridle is free, and it stays free. Fahim Reza, founder, PlugPress (${SITE.email})
+
+## Questions, answered.
+
+${qa(FAQ)}
+
+## Links
+
+- Live demo: ${SITE.url}/demo/
+- Bridle Chat: ${SITE.url}/chat/
+- Pricing: ${SITE.url}/pricing/
+- Guides: ${SITE.url}/guides/
+- Docs: ${SITE.docs}
+- Privacy: ${SITE.url}/privacy/
+- Made by ${SITE.company} (${SITE.companyUrl}), the team behind Saddle (${SITE.saddle}). Support: ${SITE.support}
+`,
+  },
+  demo: {
+    path: '/demo/',
+    title: 'Bridle live demo: try it in your browser',
+    description:
+      'Try Bridle right in your browser. A sample inbox with replies ready to send, and a chat to ask. Nothing to install. It’s gone when you close the tab.',
+    md: `# Try Bridle in your browser
+
+Nothing to install. Ready in about 30 seconds.
+
+Open the demo: ${DEMO.url}
+
+## Three things to try
+
+1. **Home.** Four replies, ready to send.
+2. **Inbox.** Open one. Press Send.
+3. **Chat.** Ask the chat a question.
+
+## Good to know
+
+- The AI here is a stand-in. It answers from the demo’s docs.
+- The sample mail is already in.
+- Free plugin only. It’s gone when you close the tab.
+
+${waitlist}`,
+  },
+  chat: {
+    path: '/chat/',
+    title: 'Bridle Chat: an AI chat for your WordPress site',
+    description:
+      'A chat for your WordPress site that answers visitors from your own docs. It never guesses, and it sends the hard questions to you. Free in Bridle.',
+    md: `# Bridle Chat: a chat that answers from what you wrote
+
+It answers visitors from your docs. The rest come to you. Free in Bridle.
+
+${waitlist}
+
+## How it works
+
+1. **It looks it up.** In your docs, pages and old replies.
+2. **It checks.** Not sure? It won’t guess.
+3. **It hands off.** Refunds and angry people go to you.
+
+## When you take over
+
+You reply from your Inbox. They get it anywhere.
+
+- **In the chat,** if they are still on your site.
+- **Or by email,** if they already left.
+- **A real wait time,** based on how fast you reply.
+
+## Already done
+
+- Says it is an AI
+- Blocks spam bots
+- Your colour, your icon
+
+## With Bridle Pro
+
+${feats(PRO.features.slice(0, 2))}
+
+More: ${SITE.url}/pricing/
+`,
+  },
+  pricing: {
+    path: '/pricing/',
+    title: 'Bridle pricing: free, or Pro pay once',
+    description:
+      'Bridle is free. Bridle Pro is pay once until Cyber Monday: $49 for 1 site, $79 for 3, $149 for 10, AI answers included. 30-day refund.',
+    md: `# Free to use. Pay once for Pro.
+
+${WPORG_LIVE ? 'Bridle is free on WordPress.org.' : 'Bridle is free.'} Bridle Pro adds more, and until Cyber Monday you pay for it once.
+
+${waitlist}
+
+## Three ways to pay
+
+- **Bridle: $0, free for good.** Sorting, reply drafts, fact checks, Auto, the chat bubble and AI apps. On any number of sites, with ${INBOXES.free} inboxes each.
+- **Bridle AI: ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)} answers.** For Bridle without your own AI key. The first ${AI.free} answers each month are free. Bigger packs: ${AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answers)}`).join(', ')}. Packs never run out. Buy inside Bridle when you need more.
+- **Bridle Pro, pay once (Black Friday).** Everything in Bridle, plus chat on your other sites, live chat, order lookups, missing answers and workflows.
+
+${plans}
+
+## Pay once. Keep it for life.
+
+Until Cyber Monday (Monday, ${PRO.endsLabel}, at 11:59 pm New York time), or until ${PRO.total} are sold. The first ${PRO.first.to} sales at these prices, then all three go up ${money(PRO.rise)} every 20 sales:
+
+${ladder}
+
+Updates and support for life. ${PRO.refundDays}-day refund. After the deal, Pro is sold by the year.
+
+## What Pro adds.
 
 - **Chat on other sites.** Paste one line on any site. Chats come to this inbox.
 - **Live chat.** Jump into a chat while the visitor is still there. Set your hours.
@@ -214,7 +377,7 @@ Everything that answers your customers is free.
 | Your own AI key | No limit | No limit |
 | Bridle AI answers | ${AI.free} free a month | ${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included |
 | Updates | ${WPORG_LIVE ? 'From WordPress.org' : 'Free'} | For life |
-| Support | ${WPORG_LIVE ? 'WordPress.org forum' : 'By email'} | By email, for life |
+| Support | ${WPORG_LIVE ? 'WordPress.org forum' : 'Help desk'} | Help desk, for life |
 | Price | $0 | ${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once |
 
 ## About a cent an answer.

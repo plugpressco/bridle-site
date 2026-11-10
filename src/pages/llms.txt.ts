@@ -19,7 +19,8 @@ ${Object.values(PAGES).map((p) => `- [${p.title}](${md(p.path)}): ${p.descriptio
 
 - [Full text of this site](${new URL('/llms-full.txt', site).href})
 - Built by the team behind Saddle: ${SITE.saddle}
-- Contact: ${SITE.email}
+- Docs: ${SITE.docs}
+- Support: ${SITE.support}
 `;
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

@@ -5,27 +5,23 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Section from '../components/ui/Section.astro';
 import HeadingPair from '../components/ui/HeadingPair.astro';
-import Card from '../components/ui/Card.astro';
 import Button from '../components/ui/Button.astro';
-import Points from '../components/Points.astro';
 import ChatDemo from '../components/ChatDemo.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
-import { PRO } from '../data/site';
 
 const page = PAGES.chat;
-const how = [
-  { title: 'It looks it up', text: 'In your docs, pages and old replies.' },
-  { title: 'It checks', text: 'Not sure? It won’t guess.' },
-  { title: 'It hands off', text: 'Refunds and angry people go to you.' },
+// One list of what it does: icon, short name, one line (owner, 2026-11-11:
+// "make cleaner simple"). Facts from AGENTS.md §6.
+const does = [
+  { icon: 'i-book', name: 'Looks it up', text: 'In your docs, pages and old replies.' },
+  { icon: 'i-check-circle', name: 'Checks first', text: 'Not sure? It won’t guess.' },
+  { icon: 'i-user', name: 'Hands off', text: 'Refunds and angry people go to you.' },
+  { icon: 'i-message', name: 'You reply in the chat', text: 'If they are still on your site.' },
+  { icon: 'i-inbox', name: 'Or by email', text: 'If they already left.' },
+  { icon: 'i-clock', name: 'A real wait time', text: 'Based on how fast you reply.' },
 ];
-const after = [
-  { icon: 'i-message', title: 'In the chat', text: 'If they are still on your site.' },
-  { icon: 'i-inbox', title: 'Or by email', text: 'If they already left.' },
-  { icon: 'i-clock', title: 'A real wait time', text: 'Based on how fast you reply.' },
-];
-const handled = ['Says it is an AI', 'Blocks spam bots', 'Your colour, your icon'];
-const opener = 'mb-10 md:mb-14';
+const handled = 'Built in: it says it is an AI, blocks spam bots, and uses your colour and icon.';
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
   <PageHero
@@ -37,37 +33,30 @@ const opener = 'mb-10 md:mb-14';
   />
 
   <Section id="demo" labelledby="h-demo">
-    <HeadingPair id="h-demo" eyebrow="On your site" first="Answers in seconds" second="Or finds you" class={opener} />
+    <HeadingPair id="h-demo" first="See it answer." class="opener" />
     <ChatDemo />
   </Section>
 
-  <Section labelledby="h-how">
-    <HeadingPair id="h-how" eyebrow="How it works" first="Look, check, answer" second="Or pass it to you" class={opener} />
-    <Points items={how} numbered />
-  </Section>
-
-  <Section labelledby="h-after">
-    <HeadingPair id="h-after" eyebrow="When you take over" first="You reply from your Inbox" second="They get it anywhere" class={opener} />
-    <Points items={after} />
-  </Section>
-
-  <Section labelledby="h-handled" inner="grid items-end gap-8 md:grid-cols-2">
-    <HeadingPair id="h-handled" eyebrow="Built in" first="Already done" second="Just switch it on" />
-    <ul class="grid gap-4 md:grid-cols-2 md:gap-x-7">{handled.map((f) => <li class="flex items-start gap-2.5 text-[16.5px] leading-snug"><svg class="i mt-[3px] size-[17px] text-brand-600"><use href="#i-check" /></svg>{f}</li>)}</ul>
-  </Section>
-
-  <Section labelledby="h-pro">
-    <HeadingPair id="h-pro" eyebrow="With Bridle Pro" first="One Inbox for every site" second="And live chat too" class={opener} />
-    <div class="grid gap-5 md:grid-cols-2">
-      {PRO.features.slice(0, 2).map((f) => (
-        <Card class="flex flex-col">
-          <span class="mb-5 grid size-10 place-items-center rounded-control bg-brand-100 text-brand-600"><svg class="i size-[19px]" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
-          <h3 class="text-[21px] font-medium tracking-[-0.01em]">{f.name}</h3>
-          <p class="mt-2 text-[16.5px] text-muted-foreground">{f.text}</p>
-          <Button variant="link" href="/pricing/" class="mt-auto self-start pt-4">See Bridle Pro ›</Button>
-        </Card>
+  <Section labelledby="h-does" tone="tint">
+    <h2 class="h2 opener" id="h-does">What it does.</h2>
+    <ul class="feats">
+      {does.map((f) => (
+        <li>
+          <span class="fi"><svg class="i" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
+          <h3>{f.name}</h3>
+          <p>{f.text}</p>
+        </li>
       ))}
+    </ul>
+    <p class="feats-note">{handled}</p>
+  </Section>
+
+  <Section labelledby="h-pro" inner="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto]">
+    <div class="grid gap-4">
+      <h2 class="h2" id="h-pro">More sites? Get Pro.</h2>
+      <p class="lead text-ink-2">Bridle Pro puts the chat on your other sites, one line of code each, and adds live chat.</p>
     </div>
+    <Button href="/pricing/" arrow>See pricing</Button>
   </Section>
 
   <Closing title="Let the chat answer." second="You take the hard ones." source="chat" wrap />

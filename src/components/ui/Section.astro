@@ -1,13 +1,14 @@
 ---
-// A section of an inner page. White, or the one soft tint (blue 50) as a
-// flat 12 px panel. 72 px apart on phones, 120 px on desktop; `pad="top"` for
+// A section of an inner page: open on the page like the home page's, lined up
+// to the one container. Space does the separating: 96 px apart on desktop,
+// 64 on phones. `tone` is kept for old callers and draws nothing. `pad="top"` for
 // a page's opening.
 import Container from './Container.astro';
 interface Props { id?: string; tone?: 'white' | 'tint'; labelledby?: string; label?: string; pad?: 'section' | 'top'; class?: string; inner?: string }
 const { id, tone = 'white', labelledby, label, pad = 'section', class: cls, inner } = Astro.props;
 ---
 <section id={id} aria-labelledby={labelledby} aria-label={label} class={cls}>
-  <Container class:list={[pad === 'top' ? 'pt-14 pb-12 md:pt-24 md:pb-16' : 'py-9 md:py-[60px]']}>
-    <div class:list={[tone === 'tint' && 'rounded-panel bg-background px-6 py-10 md:px-16 md:py-16', inner]}><slot /></div>
+  <Container class:list={[pad === 'top' ? 'pt-10 pb-8 md:pt-16 md:pb-12' : 'py-8 md:py-12']}>
+    <div class:list={[inner]}><slot /></div>
   </Container>
 </section>

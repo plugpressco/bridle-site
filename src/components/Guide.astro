@@ -1,6 +1,6 @@
 ---
 // One guide from its data (src/data/guides.ts), in the legal pages' layout:
-// contents on the left, the text on the right. The Markdown copy renders from
+// one centred 680 px column, easy to read (owner, 2026-11-11). The Markdown copy renders from
 // the same data.
 import Section from './ui/Section.astro';
 import HeadingPair from './ui/HeadingPair.astro';
@@ -9,7 +9,6 @@ import { GUIDES, inline, type Guide, type GuideBlock } from '../data/guides';
 interface Props { guide: Guide }
 const { guide } = Astro.props;
 const others = GUIDES.filter((g) => g.slug !== guide.slug);
-const toc = [...guide.parts.map((p) => ({ id: p.id, title: p.title })), { id: 'questions', title: 'Questions' }, { id: 'pro', title: 'With Bridle Pro' }];
 const html = (b: GuideBlock) =>
   typeof b === 'string'
     ? `<p>${inline(b)}</p>`
@@ -17,13 +16,8 @@ const html = (b: GuideBlock) =>
       ? `<ul>${b.list.map((l) => `<li>${inline(l)}</li>`).join('')}</ul>`
       : `<ol class="steps">${b.steps.map((s) => `<li>${inline(s)}</li>`).join('')}</ol>`;
 ---
-<Section pad="top" inner="grid gap-16 md:grid-cols-[220px_minmax(0,1fr)]">
-  <nav class="hidden content-start gap-0.5 self-start text-[15px] md:sticky md:top-24 md:grid" aria-label="On this page">
-    <b class="mb-2 text-[14px] font-medium">On this page</b>
-    {toc.map((t) => <a class="py-1 text-muted-foreground no-underline hover:text-foreground" href={`#${t.id}`}>{t.title}</a>)}
-    <a class="mt-3.5 py-1 text-brand-600 no-underline" href="/guides/">All guides</a>
-  </nav>
-  <article class="prose">
+<Section pad="top" inner="mx-auto max-w-[680px]">
+  <article class="prose doc">
     <HeadingPair as="h1" size="title" eyebrow={`<a class="text-muted-foreground no-underline hover:text-foreground" href="/guides/">Guides</a>`} first={guide.title[0]} second={guide.title[1]} lead={guide.lead} />
     {guide.parts.map((p) => (
       <section id={p.id}>

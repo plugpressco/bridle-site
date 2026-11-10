@@ -18,6 +18,10 @@ export const SITE = {
   // addresses no site registered to PlugPress's fallback mailbox. Give
   // hello@ its own Email Routing rule before launch.
   email: 'hello@bridle.to',
+  // Help and docs live on PlugPress (owner, 2026-11-11). Use support for every
+  // "contact us"; keep email only where an address is needed (privacy).
+  support: 'https://plugpress.io/support',
+  docs: 'https://plugpress.io/docs-category/bridle/',
   company: 'PlugPress',
   companyUrl: 'https://plugpress.io',
   founder: 'Fahim Reza',
