@@ -23,7 +23,7 @@ export const SITE = {
   founder: 'Fahim Reza',
   saddle: 'https://saddle.to',
   requires: 'WordPress 7.0+ · PHP 8.1+',
-  updated: '9 November 2026',
+  updated: '10 November 2026',
   // The prices in the cost comparison were read on this day (src/data/cost.ts).
   pricesChecked: '10 November 2026',
 };
@@ -67,9 +67,20 @@ export const LAUNCHED = CHECKOUT_OPEN;
 // Bridle's page on WordPress.org (the slug we asked for; check it once the
 // plugin is approved).
 export const WPORG_URL = 'https://wordpress.org/plugins/bridle/';
+// Until WordPress.org approves Bridle (owner, 10 November 2026), "Get Bridle
+// free" downloads the zip from here. A zip install has the same slug, so it
+// updates from WordPress.org by itself once Bridle is listed. Set to true
+// then; the free buttons and words follow.
+export const WPORG_LIVE = false;
+export const ZIP_URL = '/download/bridle.zip';
+// A Bridle Pro buyer's Polar account: the licence key and the Pro download.
+export const ACCOUNT_URL = 'https://polar.sh/bridle/portal';
+export const FREE_URL = WPORG_LIVE ? WPORG_URL : ZIP_URL;
+// Where the free plugin comes from, in words.
+export const FREE_FROM = WPORG_LIVE ? 'Free from WordPress.org.' : 'Free download. Soon on WordPress.org.';
 
 export type Step = { from: number; to: number };
-export type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
+export type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number | null; productId: string };
 export const DEAL: { total: number; refundDays: number; rise: number; endsAt: string; endsLabel: string; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
 
 // A plan's price at step i (0 = the first 10 sales).
@@ -79,6 +90,10 @@ export const sitesLabel = (n: number) => (n === 1 ? '1 site' : `${n} sites`);
 // What each plan does: an icon, a short name, one short line.
 export type Feature = { icon: string; name: string; text: string };
 
+// Inboxes per site on the Bridle mail service (bridle#174): free, then each Pro plan's (deal.json).
+export const INBOXES = { free: 3 };
+export const inboxesLabel = (n: number | null) => (n === null ? 'unlimited inboxes' : `${n} inboxes`);
+
 export const PRO_FEATURES: Feature[] = [
   { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
   { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
@@ -86,6 +101,7 @@ export const PRO_FEATURES: Feature[] = [
   { icon: 'i-bag', name: 'Order lookups', text: 'Reads their orders before it replies.' },
   { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
   { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
+  { icon: 'i-inbox', name: 'More inboxes', text: '10, 25 or as many as you like.' },
 ];
 
 // Bridle Pro: three licences, every Pro feature in each, pay once.

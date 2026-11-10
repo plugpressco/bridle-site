@@ -9,6 +9,7 @@ import DEAL from '../data/deal.json';
 var money = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
 var count = function (n) { return Number(n).toLocaleString('en-US'); };
 var sitesLabel = function (n) { return n === 1 ? '1 site' : n + ' sites'; };
+var inboxesLabel = function (n) { return n == null ? 'unlimited inboxes' : n + ' inboxes'; };
 var all = function (sel) { return document.querySelectorAll(sel); };
 var plan = function (key) { return DEAL.plans.find(function (p) { return p.key === String(key); }) || DEAL.plans[0]; };
 
@@ -35,6 +36,7 @@ function paint() {
 	set('price', money(price));
 	set('unit', 'pay once, for ' + sitesLabel(p.sites));
 	set('answers', count(p.answers));
+	set('inboxes', inboxesLabel(p.inboxes));
 	set('next', money(price + DEAL.rise));
 	set('next2', money(price + 2 * DEAL.rise));
 	all('[data-pro-then]').forEach(function (n) { n.hidden = !hasNext; });

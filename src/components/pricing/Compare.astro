@@ -2,10 +2,11 @@
 // Pricing 5, compare plans (pricing/08-copy.md §5). Every row true to the
 // plugin's AGENTS.md and bridle-pro/README.md; support cells confirmed by the
 // owner on 10 November 2026.
-import { AI, PRO, money, count } from '../../data/site';
+import { AI, PRO, INBOXES, WPORG_LIVE, money, count } from '../../data/site';
 const Y = '✓';
 const groups: { name: string; rows: [string, string, string][] }[] = [
   { name: 'Email', rows: [
+    ['Inboxes on the Bridle mail service', `${INBOXES.free} per site`, '10, 25 or unlimited'],
     ['Sorts mail into Inbox, Updates and Spam', Y, Y],
     ['Reply drafts from your docs, pages, products and past replies', Y, Y],
     ['Every quote and link checked', Y, Y],
@@ -31,8 +32,8 @@ const groups: { name: string; rows: [string, string, string][] }[] = [
     ['Bridle AI answers', `${AI.free} free a month`, `${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included`],
   ] },
   { name: 'Help', rows: [
-    ['Updates', 'From WordPress.org', 'For life'],
-    ['Support', 'WordPress.org forum', 'By email, for life'],
+    ['Updates', WPORG_LIVE ? 'From WordPress.org' : 'Free', 'For life'],
+    ['Support', WPORG_LIVE ? 'WordPress.org forum' : 'By email', 'By email, for life'],
     ['Price', '$0', `${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once`],
   ] },
 ];

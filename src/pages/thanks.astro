@@ -6,11 +6,17 @@ import Base from '../layouts/Base.astro';
 import Section from '../components/ui/Section.astro';
 import HeadingPair from '../components/ui/HeadingPair.astro';
 import Button from '../components/ui/Button.astro';
+import { FREE_URL, WPORG_LIVE, ACCOUNT_URL } from '../data/site';
 ---
 <Base title="You’re on the list | Bridle" description="Thanks for joining the Bridle waitlist. We email you the day Bridle is live on WordPress.org." noindex waitlist={false}>
   <Section inner="grid min-h-[52vh] content-center justify-items-start gap-6">
     <svg class="i size-11 text-brand-500" aria-hidden="true"><use href="#i-check-circle" /></svg>
     <HeadingPair as="h1" size="title" first="You’re on the list" second="We email you on launch day" data-thanks />
+    <ol class="grid gap-2 text-[17px] text-muted-foreground list-decimal pl-5" data-pro-steps hidden>
+      <li>Install Bridle, free: <a class="underline" href={FREE_URL}>{WPORG_LIVE ? 'from WordPress.org' : 'download the zip'}</a>.</li>
+      <li>Download Bridle Pro from <a class="underline" href={ACCOUNT_URL}>your account</a> and install it.</li>
+      <li>Paste your licence key in Bridle › Settings › Bridle Pro.</li>
+    </ol>
     <Button variant="link" href="/">Back to Bridle</Button>
   </Section>
 </Base>
@@ -20,6 +26,8 @@ import Button from '../components/ui/Button.astro';
   if (new URLSearchParams(location.search).has('checkout_id')) {
     const h = document.querySelector('[data-thanks]');
     if (h) h.innerHTML = '<span class="block">Thanks for buying Bridle Pro</span><span class="block text-muted-foreground">Your licence key is in your email</span>';
+    const next = document.querySelector('[data-pro-steps]');
+    if (next) next.hidden = false;
     document.title = 'Thanks for buying Bridle Pro | Bridle';
   }
 </script>

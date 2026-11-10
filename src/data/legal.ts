@@ -20,7 +20,8 @@ export const PRIVACY: Doc = {
         { list: [
           'What it receives: every email sent to your forwarding address, with its headers, body and attachments (up to 10 MB each and 25 MB in all).',
           'What it does: it reads the email’s parts and posts them straight to your site, signed with a secret that only your site and the relay know. It uses no AI and reads the email for nothing else.',
-          'What it keeps: only your inbox registration. That is your site URL, your webhook URL, the inbox code and its secret. Emails are not stored on the relay.',
+          'What it keeps: only your inbox registration. That is your site URL, your webhook URL, the inbox code and its secret, and a list of each site’s inbox codes to count them. Emails are not stored on the relay.',
+          'With Bridle Pro active, your site also sends its licence key with each registration. The relay checks it with Polar, keeps the answer for a day and uses it only to set how many inboxes you may have.',
           'When your site can’t be reached, or an email arrives for an address no site has registered, the relay forwards it to PlugPress’s fallback mailbox so it isn’t lost. We use those emails only to get them to you or to fix delivery, and delete them when that is done.',
         ] },
         'To stop, remove the forwarding rule at your mail host. Switching off or deleting an inbox in Bridle also removes its registration from the relay.',
@@ -115,7 +116,7 @@ export const TERMS: Doc = {
       id: 'relay',
       title: 'The email relay',
       body: [
-        'The relay is free for sites running Bridle. Use it only for your own support mail, never to send or receive spam or anything unlawful. We may limit or stop an address that harms the service or other people.',
+        'The relay is free for sites running Bridle, for up to 3 inboxes per site. A Bridle Pro licence raises that to 10, 25 or unlimited, by plan. Inboxes you had before a limit applied keep working. Use it only for your own support mail, never to send or receive spam or anything unlawful. We may limit or stop an address that harms the service or other people.',
         'We work to keep it running, but we can’t promise it never fails. Keep your original mailbox as the record of your mail.',
       ],
     },
