@@ -124,25 +124,17 @@ ${waitlist}`,
     title: 'Bridle Chat: an AI chat for your WordPress site',
     description:
       'A chat for your WordPress site that answers visitors from your own docs. It never guesses, and it sends the hard questions to you. Free in Bridle.',
-    md: `# Bridle Chat: a chat that answers from what you wrote
+    md: `# Bridle Chat: answers your visitors now, even at 3 am
 
-It answers visitors from your docs. The rest come to you. Free in Bridle.
+Bridle Chat answers from your docs. Anything hard comes to you. Free in Bridle.
 
 ${waitlist}
 
-## How it works
+## What you get
 
-1. **It looks it up.** In your docs, pages and old replies.
-2. **It checks.** Not sure? It won’t guess.
-3. **It hands off.** Refunds and angry people go to you.
-
-## When you take over
-
-You reply from your Inbox. They get it anywhere.
-
-- **In the chat,** if they are still on your site.
-- **Or by email,** if they already left.
-- **A real wait time,** based on how fast you reply.
+- **Fewer emails.** Common questions get answered from your docs, pages and old replies.
+- **No made-up answers.** Not sure? It says so and hands over. It never guesses.
+- **Nobody left waiting.** Reply in the chat, or by email if they left. Refunds and upset people always come to you.
 
 ## Already done
 
@@ -286,25 +278,17 @@ ${waitlist}`,
     title: 'Bridle Chat: an AI chat for your WordPress site',
     description:
       'A chat for your WordPress site that answers visitors from your own docs. It never guesses, and it sends the hard questions to you. Free in Bridle.',
-    md: `# Bridle Chat: a chat that answers from what you wrote
+    md: `# Bridle Chat: answers your visitors now, even at 3 am
 
-It answers visitors from your docs. The rest come to you. Free in Bridle.
+Bridle Chat answers from your docs. Anything hard comes to you. Free in Bridle.
 
 ${waitlist}
 
-## How it works
+## What you get
 
-1. **It looks it up.** In your docs, pages and old replies.
-2. **It checks.** Not sure? It won’t guess.
-3. **It hands off.** Refunds and angry people go to you.
-
-## When you take over
-
-You reply from your Inbox. They get it anywhere.
-
-- **In the chat,** if they are still on your site.
-- **Or by email,** if they already left.
-- **A real wait time,** based on how fast you reply.
+- **Fewer emails.** Common questions get answered from your docs, pages and old replies.
+- **No made-up answers.** Not sure? It says so and hands over. It never guesses.
+- **Nobody left waiting.** Reply in the chat, or by email if they left. Refunds and upset people always come to you.
 
 ## Already done
 

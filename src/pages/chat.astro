@@ -4,43 +4,32 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Section from '../components/ui/Section.astro';
-import HeadingPair from '../components/ui/HeadingPair.astro';
 import Button from '../components/ui/Button.astro';
-import ChatDemo from '../components/ChatDemo.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 
 const page = PAGES.chat;
-// One list of what it does: icon, short name, one line (owner, 2026-11-11:
-// "make cleaner simple"). Facts from AGENTS.md §6.
-const does = [
-  { icon: 'i-book', name: 'Looks it up', text: 'In your docs, pages and old replies.' },
-  { icon: 'i-check-circle', name: 'Checks first', text: 'Not sure? It won’t guess.' },
-  { icon: 'i-user', name: 'Hands off', text: 'Refunds and angry people go to you.' },
-  { icon: 'i-message', name: 'You reply in the chat', text: 'If they are still on your site.' },
-  { icon: 'i-inbox', name: 'Or by email', text: 'If they already left.' },
-  { icon: 'i-clock', name: 'A real wait time', text: 'Based on how fast you reply.' },
+// Value first, three points (owner, 2026-11-11: "single feature page simple,
+// value first copy"). Facts from the plugin's AGENTS.md §6.
+const gets = [
+  { icon: 'i-inbox', name: 'Fewer emails', text: 'Common questions get answered from your docs, pages and old replies.' },
+  { icon: 'i-check-circle', name: 'No made-up answers', text: 'Not sure? It says so and hands over. It never guesses.' },
+  { icon: 'i-user', name: 'Nobody left waiting', text: 'Reply in the chat, or by email if they left. Refunds and upset people always come to you.' },
 ];
-const handled = 'Built in: it says it is an AI, blocks spam bots, and uses your colour and icon.';
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
   <PageHero
     eyebrow="Bridle Chat · free"
-    title={['A chat that answers', 'From what you wrote']}
-    lead="It answers visitors from your docs. The rest come to you."
+    title={['Answers your visitors now.', 'Even at 3 am.']}
+    lead="Bridle Chat answers from your docs. Anything hard comes to you."
     shot={{ name: 'chat-answer', width: 400, height: 680, alt: 'Bridle’s chat on a website, answering a question with a numbered source.' }}
-    more={{ href: '#demo', label: 'See it answer' }}
+    more={{ href: '/demo/', label: 'Try the live demo' }}
   />
 
-  <Section id="demo" labelledby="h-demo">
-    <HeadingPair id="h-demo" first="See it answer." class="opener" />
-    <ChatDemo />
-  </Section>
-
-  <Section labelledby="h-does" tone="tint">
-    <h2 class="h2 opener" id="h-does">What it does.</h2>
+  <Section labelledby="h-gets">
+    <h2 class="h2 opener" id="h-gets">What you get.</h2>
     <ul class="feats">
-      {does.map((f) => (
+      {gets.map((f) => (
         <li>
           <span class="fi"><svg class="i" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
           <h3>{f.name}</h3>
@@ -48,13 +37,12 @@ const handled = 'Built in: it says it is an AI, blocks spam bots, and uses your 
         </li>
       ))}
     </ul>
-    <p class="feats-note">{handled}</p>
   </Section>
 
   <Section labelledby="h-pro" inner="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto]">
     <div class="grid gap-4">
       <h2 class="h2" id="h-pro">More sites? Get Pro.</h2>
-      <p class="lead text-ink-2">Bridle Pro puts the chat on your other sites, one line of code each, and adds live chat.</p>
+      <p class="lead text-ink-2">Put the chat on all your sites and add live chat.</p>
     </div>
     <Button href="/pricing/" arrow>See pricing</Button>
   </Section>

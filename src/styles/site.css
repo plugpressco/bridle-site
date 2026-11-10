@@ -313,7 +313,9 @@
 	.bars i { display: block; height: 10px; min-width: 3px; border-radius: 3px; background: var(--color-input); transition: width 0.3s var(--ease-soft); }
 	.bars .me i { background: var(--color-brand-600); }
 	.bars > div > span:last-child { text-align: right; font-variant-numeric: tabular-nums; }
-	.counted { max-width: 60ch; margin-top: 24px; font-size: 14.5px; color: var(--color-muted-foreground); }
+	.counted { max-width: 60ch; margin-top: 28px; font-size: 14.5px; color: var(--color-muted-foreground); }
+	.counted summary { width: fit-content; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--color-foreground); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--color-input); }
+	.counted p { margin-top: 10px; }
 
 	/* ---------- Three steps ---------- */
 	.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -497,12 +499,22 @@
 	.fq .lnk { justify-self: start; font-size: 16px; }
 
 	/* Questions: every answer open, two columns (ui/Faq.astro). */
-	.faqhead { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 32px; margin-bottom: 40px; }
-	.faqhead .sub { margin-top: 0; }
-	.qa { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px; margin: 0; }
-	.qa > div { padding: 28px 0 30px; border-top: 1px solid var(--color-border); }
-	.qa dt { margin-bottom: 8px; font-size: 19px; line-height: 1.35; letter-spacing: -0.01em; font-weight: 600; color: var(--color-foreground); }
-	.qa dd { max-width: 54ch; margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--color-ink-2); }
+	.faq { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px 80px; align-items: start; }
+	.faqhead { position: sticky; top: 96px; display: grid; gap: 14px; }
+	.faqhead .sub { margin-top: 0; font-size: 18px; }
+	.qa { border-top: 1px solid var(--color-border); }
+	.qa details { border-bottom: 1px solid var(--color-border); }
+	.qa summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; list-style: none; cursor: pointer; font-size: 19px; line-height: 1.35; letter-spacing: -0.01em; font-weight: 600; color: var(--color-foreground); }
+	.qa summary::-webkit-details-marker { display: none; }
+	.qa summary:hover { color: var(--color-brand-600); }
+	.qa .pm { position: relative; flex: none; width: 28px; height: 28px; border-radius: 999px; background: var(--color-brand-50); transition: background 0.2s; }
+	.qa .pm::before, .qa .pm::after { content: ""; position: absolute; top: 50%; left: 50%; width: 11px; height: 1.5px; border-radius: 1px; background: var(--color-brand-600); transform: translate(-50%, -50%); transition: transform 0.2s ease-out; }
+	.qa .pm::after { transform: translate(-50%, -50%) rotate(90deg); }
+	.qa details[open] .pm { background: var(--color-brand-600); }
+	.qa details[open] .pm::before, .qa details[open] .pm::after { background: #fff; }
+	.qa details[open] .pm::after { transform: translate(-50%, -50%) rotate(0deg); }
+	.qa details > p { max-width: 58ch; margin: -6px 0 0; padding: 0 52px 24px 0; font-size: 17px; line-height: 1.6; color: var(--color-ink-2); }
+	@media (prefers-reduced-motion: reduce) { .qa .pm, .qa .pm::before, .qa .pm::after { transition: none; } }
 
 	/* The closing call, centred, with the dot art rising under it (Closing.astro). */
 	.closer { background: var(--color-background); }
@@ -554,7 +566,8 @@
 		.flist, .flist.four, .prolist { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 		.founder { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 		.fphoto { width: 88px; height: 88px; }
-		.qa { grid-template-columns: minmax(0, 1fr); }
+		.faq { grid-template-columns: minmax(0, 1fr); }
+		.faqhead { position: static; }
 		.closing { padding: 64px 24px 160px; }
 		.steps { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 		.steps > div { padding: 24px; }

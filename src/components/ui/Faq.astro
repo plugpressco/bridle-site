@@ -1,20 +1,32 @@
 ---
-// Questions: the title row, then every answer open in two columns (owner,
-// 2026-11-10: the box with closed rows looked "worried"; the answers are one
-// or two short lines, so nothing needs a click). Plain on the page by default,
-// so the sections around it keep their own colours. FAQPage JSON-LD on the
-// page carries the same text. A question with an id can be linked to.
+// Questions (owner, 2026-11-11: "better FAQs, a little modern"): the title on
+// the left, the questions on the right as clean rows that open with a plus.
+// The first one starts open. No box. FAQPage JSON-LD on the page carries the
+// same text, and the answers are in the HTML, so search and AI still read them.
 import type { QA } from '../../data/faq';
 import { SITE } from '../../data/site';
 interface Props { items: QA[]; title: string; id?: string; tone?: string }
 const { items, title, id = 'faq', tone = 'plain' } = Astro.props;
 ---
 <section class:list={['band', tone]} id={id} aria-labelledby={`h-${id}`}>
-  <div class="faqhead">
-    <h2 class="h2" id={`h-${id}`}>{title}</h2>
-    <p class="sub">Can’t find yours? <a class="lnk text-[length:inherit]" href={SITE.support}>Ask us.</a></p>
+  <div class="faq">
+    <div class="faqhead">
+      <h2 class="h2" id={`h-${id}`}>{title}</h2>
+      <p class="sub">Can’t find yours? <a class="lnk text-[length:inherit]" href={SITE.support}>Ask us.</a></p>
+    </div>
+    <div class="qa">
+      {items.map((f, i) => (
+        <details id={f.id} open={i === 0}>
+          <summary>{f.q}<span class="pm" aria-hidden="true"></span></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
   </div>
-  <dl class="qa">
-    {items.map((f) => <div id={f.id}><dt>{f.q}</dt><dd>{f.a}</dd></div>)}
-  </dl>
 </section>
+
+<script>
+  // A link to one question (/#ai-apps) opens it.
+  const open = () => { const d = location.hash && document.getElementById(location.hash.slice(1)); if (d instanceof HTMLDetailsElement) d.open = true; };
+  open(); addEventListener('hashchange', open);
+</script>
