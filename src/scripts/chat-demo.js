@@ -50,7 +50,7 @@ document.querySelectorAll('[data-chatdemo]').forEach(function (box) {
 	};
 	var thinking = function () { var t = say('bot thinking', 'Looking that up'); return t; };
 
-	var ANSWER = 'Yes. Lumen Slider works with WPML 4.6 and newer. Translate each slide under WPML → String Translation.';
+	var ANSWER = 'Yes. Fernleaf Gallery works with WPML 4.6 and newer. Translate captions under WPML → String Translation.';
 	var SENT = 'Thanks! We usually reply within 2 hours. You’ll see the reply here and at ' + EMAIL + '.';
 
 	var still = function () {
