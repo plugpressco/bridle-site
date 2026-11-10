@@ -62,7 +62,7 @@ export const AI = {
 // WordPress.org and the Polar variables are on the Space (see README): the
 // free buttons then go to WPORG_URL and the Pro buttons open a Polar checkout
 // at the current price.
-export const CHECKOUT_OPEN = false;
+export const CHECKOUT_OPEN = true;
 export const LAUNCHED = CHECKOUT_OPEN;
 // Bridle's page on WordPress.org (the slug we asked for; check it once the
 // plugin is approved).
