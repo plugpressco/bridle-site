@@ -1,6 +1,6 @@
 ---
 // The closing call (home 08-copy.md §9, and the end of the inner pages): one
-// centred call on sand, with the warm dot art rising under it (owner,
+// centred call on a full-bleed sand band, with the warm dot art rising under it (owner,
 // 2026-11-10: cleaner, more logical; the cut-off chat picture went). Before
 // launch the button is the waitlist form (id="join", the menu's target).
 import Button from './ui/Button.astro';
@@ -16,9 +16,9 @@ const {
   wrap = false,
 } = Astro.props;
 const Outer = wrap ? 'div' : Fragment;
-const outer = wrap ? { class: 'wrap pt-9 pb-[72px] md:pt-[60px] md:pb-[120px]' } : {};
+const outer = wrap ? { class: 'wrap pt-8 md:pt-12' } : {};
 ---
-<Outer {...outer}><section class="panel closer" id="join" aria-labelledby="h-close">
+<Outer {...outer}><section class="panel closer bleed" id="join" aria-labelledby="h-close">
   <Dither />
   <div class="closing">
     <h2 class="h2" id="h-close">{title}{second && <> <span class="soft">{second}</span></>}</h2>

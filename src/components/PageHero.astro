@@ -18,7 +18,7 @@ interface Props {
 const { eyebrow, title, lead, shot, more, cta } = Astro.props;
 const main = cta || (LAUNCHED ? { href: FREE_URL, label: 'Get Bridle free' } : { href: '#join', label: 'Join the waitlist' });
 ---
-<div class="wrap"><section class="hero pb-9 md:pb-[60px]" aria-labelledby="h-page">
+<div class="wrap"><section class="hero pb-8 md:pb-12" aria-labelledby="h-page">
   <div class="copy">
     <HeadingPair as="h1" id="h-page" size="title" eyebrow={eyebrow} first={title[0]} second={title[1]} lead={lead} />
     <div class="ctas"><Button size="lg" arrow href={main.href}>{main.label}</Button>{more && <Button size="lg" variant="soft" href={more.href}>{more.label}</Button>}</div>

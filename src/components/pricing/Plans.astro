@@ -7,7 +7,7 @@ import { AI, PRO, INBOXES, LAUNCHED, FREE_URL, WPORG_LIVE, money, count, sitesLa
 const one = PRO.plans[0];
 const packs = AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answers)}`).join(', ');
 ---
-<section class="pt-14 md:pt-[112px]" aria-labelledby="h-price">
+<section class="pt-10 md:pt-16" aria-labelledby="h-price">
   <h1 class="h1x" id="h-price">Free to use. <span class="soft">Pay once for Pro.</span></h1>
   <p class="lead mt-5 max-w-[52ch]">{WPORG_LIVE ? 'Bridle is free on WordPress.org.' : 'Bridle is free.'} Bridle Pro adds more, and until Cyber Monday you pay for it once.</p>
   <div class="plans" id="plans">

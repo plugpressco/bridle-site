@@ -32,12 +32,12 @@ const notes = [
   />
 
   <Section labelledby="h-try">
-    <HeadingPair id="h-try" eyebrow="What to try" first="Three things to try" second="A minute each" class="mb-10 md:mb-14" />
+    <HeadingPair id="h-try" eyebrow="What to try" first="Three things to try" second="A minute each" class="opener" />
     <Points items={tries} numbered />
   </Section>
 
   <Section labelledby="h-notes">
-    <HeadingPair id="h-notes" eyebrow="Good to know" first="A demo" second="Not your site" class="mb-10 md:mb-14" />
+    <HeadingPair id="h-notes" eyebrow="Good to know" first="A demo" second="Not your site" class="opener" />
     <ul class="grid gap-2.5">{notes.map((n) => <li class="text-[16.5px] leading-snug">{n}</li>)}</ul>
   </Section>
 

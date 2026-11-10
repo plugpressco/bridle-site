@@ -73,10 +73,10 @@
 	--text-display: clamp(3rem, 5.2vw, 4.625rem);
 	--text-display--line-height: 1.03;
 	--text-display--letter-spacing: -0.035em;
-	--text-title: clamp(2.5rem, 4.4vw, 3.75rem);
+	--text-title: clamp(2.375rem, 4vw, 3.25rem);
 	--text-title--line-height: 1.04;
 	--text-title--letter-spacing: -0.035em;
-	--text-section: clamp(2.25rem, 3.6vw, 3.5rem);
+	--text-section: clamp(1.875rem, 2.8vw, 2.5rem);
 	--text-section--line-height: 1.08;
 	--text-section--letter-spacing: -0.03em;
 	--text-lead: clamp(1.1875rem, 1.5vw, 1.375rem);
@@ -129,18 +129,20 @@
 	.wrap { max-width: calc(1200px + 48px); margin-inline: auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
 	/* Not `section + section`: a component's inline <script> can sit between two sections. */
 	.stack-sections > section:not(:first-of-type) { margin-top: var(--gap, 24px); }
-	.stack-sections { padding-bottom: 96px; --gap: 24px; }
-	/* One section style everywhere (owner, 2026-11-11: "dont force color and
-	   make site consistent design"). A section is a white, flat, 12 px panel
-	   with one hairline on the warm page; pictures and cards inside it sit on
-	   sand. Colour is for accents only: buttons, links, the one blue deal panel.
-	   Text-only sections (founder, questions) sit plain on the page. */
-	.stack-sections > section.band, .panel.lined { border-radius: var(--radius-panel); background: #fff; box-shadow: inset 0 0 0 1px var(--color-border); }
-	.stack-sections > section.band { padding: 96px 80px; }
-	.stack-sections > section.band.plain { background: none; box-shadow: none; padding-inline: 0; }
+	.stack-sections { padding-bottom: 96px; --gap: 96px; }
+	/* Open sections (owner, 2026-11-11, after helpscout.com: boxed sections
+	   looked "very big fat"). Sections sit on the page with no panel; space
+	   separates them (96 px, 64 on phones) and content lines up to one 1200 px
+	   container. Borders and sand only for real inner content: screens, tiles,
+	   plan cards, the table. At most two full-bleed bands: the blue deal and
+	   the sand closing. */
+	.stack-sections > section.band { padding: 0; }
 	.stack-sections > section.band .panel:not(.blue) { background: var(--color-background); }
-	.stack-sections > .hero + section, .stack-sections > .hero + script + section { margin-top: 72px; }
-	.opener { margin-bottom: 56px; }
+	.stack-sections > .hero + section, .stack-sections > .hero + script + section { margin-top: 96px; }
+	.opener { margin-bottom: 40px; }
+	.bleed { margin-inline: calc(50% - 50vw); border-radius: 0 !important; box-shadow: none !important; }
+	.bleed > .deal, .bleed > .closing { max-width: calc(1200px + 48px); margin-inline: auto; }
+	.stack-sections > .bleed:last-child { margin-bottom: -96px; }
 	.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
 	.ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 
@@ -203,10 +205,10 @@
 	.big > picture { position: relative; z-index: 1; }
 
 	/* ---------- Hero ---------- */
-	.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-top: 72px; }
+	.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-top: 48px; }
 	.hero .copy { display: grid; gap: 24px; align-content: center; min-width: 0; }
 	.by { font-size: 15px; color: var(--color-muted-foreground); }
-	.hero-pic { height: 620px; margin-right: calc(-1 * max(24px, (100vw - 1200px) / 2)); border-top-right-radius: 0; border-bottom-right-radius: 0; }
+	.hero-pic { height: 580px; margin-right: calc(-1 * max(24px, (100vw - 1200px) / 2)); border-top-right-radius: 0; border-bottom-right-radius: 0; }
 	.stage { position: absolute; left: 48px; top: 48px; width: 600px; display: grid; gap: 12px; }
 	.pause { position: absolute; z-index: 2; left: 14px; bottom: 14px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-border); border-radius: var(--radius-control); background: #fff; color: var(--color-foreground); cursor: pointer; }
 	.pause svg { width: 13px; height: 13px; }
@@ -285,12 +287,11 @@
 	.flist p, .prolist p { font-size: 16.5px; }
 
 	/* ---------- It checks before it speaks ---------- */
-	.checks { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 28px; min-height: 780px; }
-	.checks .txt { display: grid; gap: 18px; align-content: center; padding: 96px 0 96px 80px; }
-	.checks .txt .h2 { font-size: clamp(34px, 3vw, 44px); }
-	.checks .txt p.b { font-size: 16.5px; }
-	.checks .vis { position: relative; overflow: hidden; margin: 1px 1px 1px 0; border-radius: 0 11px 11px 0; background: var(--color-background); }
-	.checks .vis img { position: absolute; left: 48px; bottom: 0; width: 803px; }
+	.checks { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 56px; min-height: 600px; }
+	.checks .txt { display: grid; gap: 18px; align-content: center; }
+		.checks .txt p.b { font-size: 16.5px; }
+	.checks .vis { position: relative; overflow: hidden; border-radius: var(--radius-panel); background: var(--color-background); }
+	.checks .vis img { position: absolute; left: 40px; top: 40px; width: 803px; }
 
 	/* ---------- Cost ---------- */
 	.cost { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); gap: 72px; align-items: center; }
@@ -326,7 +327,7 @@
 	/* ---------- The deal: the flat blue panel ---------- */
 	/* The deal: the one blue panel, warm dots, a white card (Deal.astro). */
 	.panel.blue .deal { position: relative; z-index: 1; }
-	.deal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 64px; align-items: center; padding: 88px 80px; }
+	.deal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 64px; align-items: center; padding: 96px 24px; }
 	.dtext { display: grid; gap: 0; align-content: center; }
 	.bf { justify-self: start; margin-bottom: 20px; padding: 6px 12px; border-radius: 999px; background: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: var(--color-brand-700); }
 	.deal .sub { color: rgb(255 255 255 / 0.96); }
@@ -370,7 +371,7 @@
 	/* ---------- Closing ---------- */
 
 	/* ---------- Pricing ---------- */
-	.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; margin-top: 56px; }
+	.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; margin-top: 40px; }
 	.plan { position: relative; display: grid; gap: 16px; align-content: start; padding: 32px; border: 1px solid var(--color-border); border-radius: var(--radius-card); }
 	.plan.pro { padding: 31px; border: 2px solid var(--color-brand-600); }
 	.plan .badge { position: absolute; top: -13px; left: 30px; padding: 4px 10px; border-radius: 999px; background: var(--color-brand-600); font-size: 12.5px; font-weight: 500; color: #fff; }
@@ -504,8 +505,8 @@
 	.qa dd { max-width: 54ch; margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--color-ink-2); }
 
 	/* The closing call, centred, with the dot art rising under it (Closing.astro). */
-	.closer { background: #fff; box-shadow: inset 0 0 0 1px var(--color-border); }
-	.closing { position: relative; z-index: 1; display: grid; justify-items: center; gap: 28px; padding: 112px 24px 220px; text-align: center; }
+	.closer { background: var(--color-background); }
+	.closing { position: relative; z-index: 1; display: grid; justify-items: center; gap: 28px; padding: 96px 24px 200px; text-align: center; }
 	.closing .sub { margin-top: -12px; }
 	.closing > [data-form] { width: 100%; max-width: 470px; }
 
@@ -513,10 +514,10 @@
 	@media (max-width: 960px) {
 		.cap .links, .cap .acts { display: none; }
 		.menu-btn { display: inline-flex; }
-		.stack-sections { --gap: 12px; padding-bottom: 56px; }
-		.stack-sections > section.band { padding: 52px 22px; }
-		.opener { margin-bottom: 36px; }
-		.stack-sections > .hero + section, .stack-sections > .hero + script + section { margin-top: 40px; }
+		.stack-sections { --gap: 64px; padding-bottom: 64px; }
+		.stack-sections > .bleed:last-child { margin-bottom: -64px; }
+		.opener { margin-bottom: 28px; }
+		.stack-sections > .hero + section, .stack-sections > .hero + script + section { margin-top: 64px; }
 		.hero { grid-template-columns: minmax(0, 1fr); gap: 36px; padding-top: 40px; }
 		.hero-pic { height: 560px; margin-right: calc(-1 * max(24px, env(safe-area-inset-right, 0px))); }
 		.stage { left: 20px; top: 24px; width: 560px; }
@@ -526,14 +527,13 @@
 		.founder { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 		.fphoto { width: 88px; height: 88px; }
 		.qa { grid-template-columns: minmax(0, 1fr); }
-		.closing { padding: 64px 4px 160px; }
+		.closing { padding: 64px 24px 160px; }
 		.steps { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 		.steps > div { padding: 24px; }
 		.checks { grid-template-columns: minmax(0, 1fr); gap: 0; min-height: 0; }
-		.checks .txt { padding: 40px 24px 32px; }
-		.checks .vis { height: 520px; margin: 0 1px 1px; border-radius: 0 0 11px 11px; }
-		.checks .vis img { left: 24px; }
-		.deal { padding: 48px 20px; gap: 32px; }
+		.checks .vis { height: 480px; }
+		.checks .vis img { left: 24px; top: 24px; }
+		.deal { padding: 64px 24px; gap: 32px; }
 		.dcard { padding: 22px; }
 		.cd b { font-size: 26px; }
 		.dprice b { font-size: 52px; }
