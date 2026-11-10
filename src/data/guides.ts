@@ -244,6 +244,53 @@ export const GUIDES: Guide[] = [
       ] },
     ],
   },
+  {
+    slug: 'more-inboxes',
+    label: 'More inboxes',
+    title: ['One inbox per address', 'And more when you need them'],
+    seo: 'Inboxes in Bridle: 3 free, more with Pro',
+    description:
+      'Bridle gives every site 3 inboxes on its mail service for free, like support and sales. Bridle Pro raises it to 10, 25 or unlimited, by plan.',
+    summary: 'Three inboxes free on every site. More with Pro.',
+    lead: 'Each inbox is one support address you forward to Bridle. Most shops need one or two.',
+    parts: [
+      {
+        id: 'free',
+        title: 'Free: 3 inboxes per site',
+        body: [
+          { steps: [
+            'Open **Settings → Inboxes** and click **Connect an inbox**.',
+            'Give it a name and your address, like support@yourshop.com.',
+            'Forward that address to the Bridle address it shows you.',
+          ] },
+          'Settings → Inboxes shows how many you use, like “2 of 3”.',
+        ],
+      },
+      {
+        id: 'full',
+        title: 'At 3 already?',
+        body: [
+          { list: [
+            'Switch off an inbox you don’t use. That frees its place.',
+            'Or send two addresses to one inbox: forward sales@ to the same Bridle address as support@.',
+          ] },
+          'Inboxes you had before the limit keep working.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Does chat use an inbox?', a: 'The chat on your site uses an inbox you already have. With Pro, each of your other sites gets its own.' },
+      { q: 'Is the limit per site or per account?', a: 'Per site. Each WordPress site with Bridle gets its own 3.' },
+    ],
+    pro: [
+      'Bridle Pro raises the limit as soon as you add your key in **Settings → Bridle Pro**:',
+      { list: [
+        '1 site: 10 inboxes.',
+        '3 sites: 25 inboxes.',
+        '10 sites: as many as you like.',
+      ] },
+    ],
+  },
 ];
 
 export const GUIDES_INDEX = {

@@ -2,10 +2,11 @@
 // Pricing 5, compare plans (pricing/08-copy.md §5). Every row true to the
 // plugin's AGENTS.md and bridle-pro/README.md; support cells confirmed by the
 // owner on 10 November 2026.
-import { AI, PRO, money, count } from '../../data/site';
+import { AI, PRO, INBOXES, money, count } from '../../data/site';
 const Y = '✓';
 const groups: { name: string; rows: [string, string, string][] }[] = [
   { name: 'Email', rows: [
+    ['Inboxes on the Bridle mail service', `${INBOXES.free} per site`, '10, 25 or unlimited'],
     ['Sorts mail into Inbox, Updates and Spam', Y, Y],
     ['Reply drafts from your docs, pages, products and past replies', Y, Y],
     ['Every quote and link checked', Y, Y],

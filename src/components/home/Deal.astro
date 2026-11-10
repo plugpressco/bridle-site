@@ -8,7 +8,7 @@
 // Before launch the button joins the waitlist.
 import Button from '../ui/Button.astro';
 import Dither from '../Dither.astro';
-import { PRO, LAUNCHED, money, count, sitesLabel } from '../../data/site';
+import { PRO, LAUNCHED, money, count, sitesLabel, inboxesLabel } from '../../data/site';
 interface Props { join: string }
 const { join } = Astro.props;
 const one = PRO.plans[0];
@@ -30,6 +30,7 @@ const one = PRO.plans[0];
         <span><svg aria-hidden="true"><use href="#d-check" /></svg>Chat on your other sites</span>
         <span><svg aria-hidden="true"><use href="#d-check" /></svg>Live chat, with your hours</span>
         <span><svg aria-hidden="true"><use href="#d-check" /></svg>Order and licence lookups</span>
+        <span><svg aria-hidden="true"><use href="#d-check" /></svg>More inboxes</span>
       </div>
     </div>
     <div class="dcard">
@@ -37,7 +38,7 @@ const one = PRO.plans[0];
         {PRO.plans.map((p, i) => <button type="button" data-sites={p.key} aria-pressed={i === 0 ? 'true' : 'false'}>{sitesLabel(p.sites)}</button>)}
       </div>
       <div class="dprice"><b data-pro="price">{money(one.base)}</b><span data-pro="unit">pay once, for {sitesLabel(one.sites)}</span></div>
-      <p class="incl">With <span data-pro="answers">{count(one.answers)}</span> AI answers.</p>
+      <p class="incl">With <span data-pro="answers">{count(one.answers)}</span> AI answers and <span data-pro="inboxes">{inboxesLabel(one.inboxes)}</span>.</p>
       <ol class="steps-up" aria-label="The price goes up every 20 sales">
         <li class="now"><span>Now</span><b data-pro="price">{money(one.base)}</b></li>
         <li><span>Next</span><b data-pro="next">{money(one.base + PRO.rise)}</b></li>

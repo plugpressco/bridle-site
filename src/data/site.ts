@@ -23,7 +23,7 @@ export const SITE = {
   founder: 'Fahim Reza',
   saddle: 'https://saddle.to',
   requires: 'WordPress 7.0+ · PHP 8.1+',
-  updated: '9 November 2026',
+  updated: '10 November 2026',
   // The prices in the cost comparison were read on this day (src/data/cost.ts).
   pricesChecked: '10 November 2026',
 };
@@ -69,7 +69,7 @@ export const LAUNCHED = CHECKOUT_OPEN;
 export const WPORG_URL = 'https://wordpress.org/plugins/bridle/';
 
 export type Step = { from: number; to: number };
-export type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
+export type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number | null; productId: string };
 export const DEAL: { total: number; refundDays: number; rise: number; endsAt: string; endsLabel: string; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
 
 // A plan's price at step i (0 = the first 10 sales).
@@ -79,6 +79,10 @@ export const sitesLabel = (n: number) => (n === 1 ? '1 site' : `${n} sites`);
 // What each plan does: an icon, a short name, one short line.
 export type Feature = { icon: string; name: string; text: string };
 
+// Inboxes per site on the Bridle mail service (bridle#174): free, then each Pro plan's (deal.json).
+export const INBOXES = { free: 3 };
+export const inboxesLabel = (n: number | null) => (n === null ? 'unlimited inboxes' : `${n} inboxes`);
+
 export const PRO_FEATURES: Feature[] = [
   { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
   { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
@@ -86,6 +90,7 @@ export const PRO_FEATURES: Feature[] = [
   { icon: 'i-bag', name: 'Order lookups', text: 'Reads their orders before it replies.' },
   { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
   { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
+  { icon: 'i-inbox', name: 'More inboxes', text: '10, 25 or as many as you like.' },
 ];
 
 // Bridle Pro: three licences, every Pro feature in each, pay once.

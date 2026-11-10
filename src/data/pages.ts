@@ -1,7 +1,7 @@
 // Each page's title, description and Markdown copy, used by the HTML pages,
 // their .md copies, llms.txt and llms-full.txt. Keep each Markdown copy in
 // step with its page: it must say the same thing, in the same plain words.
-import { SITE, AI, PRO, DEMO, LAUNCHED, WPORG_URL, money, count, priceAt, sitesLabel, type Feature } from './site';
+import { SITE, AI, PRO, INBOXES, DEMO, LAUNCHED, WPORG_URL, money, count, priceAt, sitesLabel, type Feature } from './site';
 import { RIVALS, PEOPLE, CHECKED, monthly, money as cents } from './cost';
 import { FAQ, PRO_FAQ, type QA } from './faq';
 import { PRIVACY, TERMS, docMd } from './legal';
@@ -167,7 +167,7 @@ ${waitlist}
 
 ## Three ways to pay
 
-- **Bridle: $0, free for good.** Sorting, reply drafts, fact checks, Auto, the chat bubble and AI apps. On any number of sites.
+- **Bridle: $0, free for good.** Sorting, reply drafts, fact checks, Auto, the chat bubble and AI apps. On any number of sites, with ${INBOXES.free} inboxes each.
 - **Bridle AI: ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)} answers.** For Bridle without your own AI key. The first ${AI.free} answers each month are free. Bigger packs: ${AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answers)}`).join(', ')}. Packs never run out. Buy inside Bridle when you need more.
 - **Bridle Pro, pay once (Black Friday).** Everything in Bridle, plus chat on your other sites, live chat, order lookups, missing answers and workflows.
 
@@ -189,6 +189,7 @@ Updates and support for life. ${PRO.refundDays}-day refund. After the deal, Pro 
 - **Missing answers.** See what it couldn’t answer. Turn a question into a doc in one click.
 - **Workflows.** A nudge when someone waits too long. Quiet chats close by themselves.
 - **AI answers included.** ${PRO.plans.map((p) => count(p.answers)).join(', ').replace(/, ([^,]*)$/, ' or $1')} with your plan. Top up from ${money(AI.topUpFrom)}.
+- **More inboxes.** 10, 25 or unlimited with your plan.
 
 ## Compare plans.
 
@@ -196,6 +197,7 @@ Everything that answers your customers is free.
 
 | | Bridle | Bridle Pro |
 |---|---|---|
+| Inboxes on the Bridle mail service | ${INBOXES.free} per site | 10, 25 or unlimited |
 | Email: sorting, reply drafts, fact checks, Auto, rewrite and translate | Yes | Yes |
 | Chat bubble on this site | Yes | Yes |
 | Chat on your other sites | | Yes |

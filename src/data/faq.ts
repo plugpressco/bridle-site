@@ -1,7 +1,7 @@
 // The questions on the home and pricing pages (also their FAQPage JSON-LD and
 // the Markdown copies). Approved copy: planning/landing/pages/home/08-copy.md
 // §8 and pages/pricing/08-copy.md §7. Only what Bridle does today.
-import { AI, PRO, money, count } from './site';
+import { AI, PRO, INBOXES, money, count } from './site';
 
 export type QA = { q: string; a: string; id?: string };
 
@@ -34,6 +34,10 @@ export const FAQ: QA[] = [
     id: 'ai-apps',
     q: 'Does it work with Claude or ChatGPT?',
     a: 'Yes. They can read your inbox and write drafts. Sending needs your OK.',
+  },
+  {
+    q: 'How many inboxes can I connect?',
+    a: `${INBOXES.free} per site, free, like support@ and sales@. Bridle Pro gives 10, 25 or as many as you like.`,
   },
   {
     q: 'Is there a charge per person?',
