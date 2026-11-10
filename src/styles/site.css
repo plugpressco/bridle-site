@@ -510,6 +510,34 @@
 	.closing .sub { margin-top: -12px; }
 	.closing > [data-form] { width: 100%; max-width: 470px; }
 
+	/* Pricing: full-width tone bands (owner, 2026-11-11: "follow the Help Scout
+	   philosophy, cleaner, don't copy"). Each tinted section runs edge to edge
+	   with flat edges; content stays on the 1200 px container. The colour is a
+	   clipped box-shadow, so nothing widens the page. Cards on a band are white. */
+	.tones { --band-pad: 96px; }
+	.tones > section[class*="t-"] { position: relative; padding-block: var(--band-pad); background: var(--tone); box-shadow: 0 0 0 100vmax var(--tone); clip-path: inset(0 -100vmax); }
+	.tones > section[class*="t-"] + section[class*="t-"] { margin-top: 0; }
+	.t-sky { --tone: var(--color-brand-50); }
+	.t-white { --tone: #fff; }
+	.t-sand { --tone: var(--color-background); }
+	.tones .t-sky .dither { left: auto; right: calc(50% - 50vw); width: 55vw; opacity: 0.55; }
+	.tones .t-sky .ladder { position: relative; z-index: 1; }
+	.tones .plans { align-items: stretch; }
+	.tones .plan { background: #fff; }
+	.tones .plan { display: flex; flex-direction: column; }
+	.tones .plan > .btn { margin-top: auto; align-self: flex-start; }
+	.tones .lbox { background: #fff; border-color: transparent; }
+	.tones .lbox .counters { display: flex; gap: 32px; }
+	.tones .lbox .counters > div { display: flex; align-items: baseline; gap: 8px; }
+	.tones .lbox .counters b { font-size: 32px; line-height: 1; letter-spacing: -0.03em; font-weight: 600; }
+	.tones .t-white .feats .fi { background: var(--color-brand-50); }
+	.tones .t-sand .board { padding: 28px; border-radius: var(--radius-card); background: #fff; }
+	.tones .tbl thead th { font-size: 17px; font-weight: 600; }
+	.tones .tbl tbody tr:hover { background: rgb(0 0 0 / 0.015); }
+	.tones .tbl td:last-child { color: var(--color-foreground); }
+	.tones .tbl td.y:last-child { color: var(--color-brand-600); }
+	@media (max-width: 960px) { .tones { --band-pad: 64px; } .tones .t-sand .board { padding: 20px; } }
+
 	/* ---------- Phones and tablets ---------- */
 	@media (max-width: 960px) {
 		.cap .links, .cap .acts { display: none; }

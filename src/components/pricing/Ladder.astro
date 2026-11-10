@@ -4,11 +4,13 @@
 // counters beside it. Before launch the box holds the waitlist (id="join").
 import Button from '../ui/Button.astro';
 import Waitlist from '../Waitlist.astro';
+import Dither from '../Dither.astro';
 import { PRO, LAUNCHED, money } from '../../data/site';
 const one = PRO.plans[0];
 const top = one.base + PRO.rise * (PRO.steps.length - 1);
 ---
-<section class="band" aria-labelledby="h-ladder" data-ends={PRO.endsAt}>
+<section class="band t-sky" aria-labelledby="h-ladder" data-ends={PRO.endsAt}>
+  <Dither from="right" />
   <div class="ladder">
     <div>
       <div class="opener"><h2 class="h2" id="h-ladder">Pay once. Keep it for life.</h2><p class="sub">Until Cyber Monday, or until {PRO.total} are sold.</p></div>

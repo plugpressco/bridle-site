@@ -32,12 +32,12 @@ const jsonLd = [
 ];
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Pricing', path: page.path }]}>
-  <div class="wrap stack-sections">
+  <div class="wrap stack-sections tones">
     <Plans />
     <Ladder />
     <ProAdds />
     <Compare />
-    <Cost id="how" counted />
+    <Cost id="how" counted tone="t-sand" />
     <Faq items={PRO_FAQ} title="Questions about paying." id="questions" />
   </div>
 </Base>
