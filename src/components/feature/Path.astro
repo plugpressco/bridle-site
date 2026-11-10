@@ -1,0 +1,24 @@
+---
+// The page's path: one thing (an email, a chat, a doc) followed from start to
+// finish. A blue rein line runs down the left; each numbered step has a name,
+// two or three plain sentences, and a real Bridle screen or a piece of its UI.
+import Shot from '../Shot.astro';
+export interface Step { title: string; text: string; shot?: { name: string; width: number; height: number; alt: string; end?: boolean }; ui?: string }
+interface Props { id: string; title: string; steps: Step[] }
+const { id, title, steps } = Astro.props;
+---
+<section class="band" id={id} aria-labelledby={`h-${id}`}>
+  <h2 class="h2 opener" id={`h-${id}`}>{title}</h2>
+  <ol class="path">
+    {steps.map((s, i) => (
+      <li class="pstep" id={`step-${i + 1}`}>
+        <span class="pn" aria-hidden="true">{i + 1}</span>
+        <div class="ptext"><h3>{s.title}</h3><p>{s.text}</p></div>
+        <div class:list={['pvis', s.shot && 'is-shot', s.shot?.end && 'end']}>
+          {s.shot && <Shot name={s.shot.name} width={s.shot.width} height={s.shot.height} alt={s.shot.alt} />}
+          {s.ui && <div class="pui" aria-hidden="true"><Fragment set:html={s.ui} /></div>}
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

@@ -1,28 +1,19 @@
 ---
-// /knowledge-base/: Bridle KB, the free help center plugin. Explained part by part like /inbox/. The screen is a real Bridle KB help center (plugpress.io's Bridle docs).
+// /knowledge-base/: Bridle KB, the free help center plugin. One doc followed on the rein line, like /inbox/. The help center screen is a real Bridle KB (plugpress.io's Bridle docs).
 import Base from '../layouts/Base.astro';
 import Hero from '../components/feature/Hero.astro';
-import Story from '../components/feature/Story.astro';
-import AllList from '../components/feature/AllList.astro';
-import ProLine from '../components/feature/ProLine.astro';
+import Path from '../components/feature/Path.astro';
+import Checklist from '../components/feature/Checklist.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 const page = PAGES.kb;
-const cards = [{"title": "A help center people use", "text": "Clean pages that fit your theme, with your colour. A doc list on the side, a short summary for each, and search on the / key.", "ui": "<div class=\"mq\"><div class=\"mq-r\"><div class=\"mq-l\" style=\"color:var(--color-muted-foreground)\">Search docs…<span class=\"mkey\">/</span></div></div><div class=\"mq-r\"><b>Getting started</b><small>Install, set up, first reply</small></div><div class=\"mq-r\"><b>Forward your email</b><small>Gmail, Outlook or any host</small></div></div>"}, {"title": "Every doc makes Bridle smarter", "text": "Bridle reads your docs, pages, products and past replies. Add a doc today, and the next answer uses it.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Knowledge</div><div class=\"mq-r\"><div class=\"mq-l\">Help docs<span class=\"mq-t\"></span></div></div><div class=\"mq-r\"><div class=\"mq-l\">Pages<span class=\"mq-t\"></span></div></div><div class=\"mq-r\"><div class=\"mq-l\">WooCommerce products<span class=\"mq-t\"></span></div></div><div class=\"mq-r\"><div class=\"mq-l\">Past replies<span class=\"mq-t\"></span></div></div></div>"}, {"title": "See what it couldn’t answer", "text": "Bridle Pro lists the questions it couldn’t answer. Turn one into a doc in one click, and it won’t miss it again.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Knowledge gaps <span class=\"mpill blue\">Pro</span></div><div class=\"mq-r\"><div class=\"mq-l\">Is there a student discount?<span class=\"mpill\">Write a doc</span></div></div><div class=\"mq-r\"><div class=\"mq-l\">Do you ship to Canada?<span class=\"mpill\">Write a doc</span></div></div></div>"}];
-const all = [{"icon": "i-book", "label": "Help center"}, {"icon": "i-key", "label": "Search on /"}, {"icon": "i-file", "label": "Categories"}, {"icon": "i-globe", "label": "Your colour"}, {"icon": "i-text", "label": "Your theme’s font"}, {"icon": "i-inbox", "label": "Docs under the Bridle menu"}, {"icon": "i-archive", "label": "Bulk actions"}, {"icon": "i-sparkles", "label": "Read by Bridle"}, {"icon": "i-help", "label": "Missing answers", "pro": true}];
+const steps = [{"title": "You write a doc", "text": "Write it under Bridle → Docs, next to your inbox. Group docs into categories, and sort many at once.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Docs</div><div class=\"mq-r\"><small>Getting started</small>Install and first reply</div><div class=\"mq-r\"><small>Getting started</small>Forward your support email</div><div class=\"mq-r\"><small>Billing</small>Refunds and renewals</div></div>"}, {"title": "Customers find it", "text": "It shows up in a clean help center that fits your theme, with your colour. Press / to search.", "shot": {"name": "kb-help", "width": 1040, "height": 635, "alt": "A Bridle KB help center: a list of docs on the left and doc cards with a short summary each."}}, {"title": "Bridle answers with it", "text": "Email replies and chat answers use your docs, with the doc as the source. Add a doc today, and the next answer uses it.", "ui": "<div class=\"mq\"><div class=\"mq-r blue\"><small>Bridle · Draft</small>Staging and local sites don’t count against your licence.</div><div class=\"mq-r\"><small>Help doc</small>Use it on a staging site</div></div>"}, {"title": "Missing answers show up", "text": "With Bridle Pro, the questions it couldn’t answer are listed. Turn one into a doc in one click.", "shot": {"name": "pro-gaps", "width": 820, "height": 238, "alt": "Knowledge gaps in Bridle: questions it couldn’t answer, each with Write a doc."}}];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Knowledge base', path: page.path }]}>
-  <Hero
-    title={["Write it once.", "Bridle answers with it forever."]}
-    lead={"Bridle KB is a free help center for your site. Customers search it on their own, and Bridle reads every doc to answer email and chat."}
-    shot={{"name": "kb-help", "width": 1040, "height": 635, "alt": "A Bridle KB help center: a list of docs on the left and doc cards with a short summary each."}}
-    more={{ href: '/demo/', label: 'Try the live demo' }}
-  />
+  <Hero title={["Write it once.", "Bridle answers with it forever."]} lead={"Bridle KB is a free help center for your site. Customers search it on their own, and Bridle reads every doc to answer email and chat."} steps={steps.map((s) => s.title)} more={{ href: '/demo/', label: 'Try the live demo' }} />
   <div class="wrap stack-sections fpage">
-    <Story id="how" title={"How your docs work for you."} cards={cards.slice(0, 3)} />
-    {cards.length > 3 && <Story cards={cards.slice(3)} more />}
-    <AllList id="all" title={"Everything in Bridle KB."} items={all} />
-    <ProLine title={"Find the gaps. Get Pro."} text={"Missing answers, live chat and chat on all your sites."} />
+    <Path id="path" title={"Follow one doc."} steps={steps} />
+    <Checklist id="all" title={"Everything in Bridle KB."} free={["A help center on your site", "Search on the / key", "Categories", "Your colour, your theme’s font", "Docs under the Bridle menu", "Bulk actions", "Read by Bridle for every answer"]} pro={["Missing answers, with “write a doc”", "Live chat and chat on your other sites"]} />
   </div>
   <Closing title={"Write it once."} second={"Let Bridle answer."} source="kb" wrap />
 </Base>

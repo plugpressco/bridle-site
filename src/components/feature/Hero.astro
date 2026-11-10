@@ -1,30 +1,21 @@
 ---
-// A feature page's opening (owner, 2026-11-11, after helpscout.com/inbox): one
-// big real Bridle screen first, on a blue panel with the dot cloud, then the
-// headline on the left and a plain explanation with the buttons on the right.
+// A feature page's opening, Bridle's own (owner, 2026-11-11: "we need our
+// DNA"): the headline, one line and the buttons on the left; on the right the
+// path the page follows, four numbered steps on the blue rein line, each a
+// link down to its step.
 import Button from '../ui/Button.astro';
-import Shot from '../Shot.astro';
-import Dither from '../Dither.astro';
 import { LAUNCHED, FREE_URL } from '../../data/site';
-interface Props {
-  title: [string, string];
-  lead: string;
-  shot: { name: string; width: number; height: number; alt: string };
-  more?: { href: string; label: string };
-}
-const { title, lead, shot, more } = Astro.props;
+interface Props { title: [string, string]; lead: string; steps: string[]; more?: { href: string; label: string } }
+const { title, lead, steps, more } = Astro.props;
 const main = LAUNCHED ? { href: FREE_URL, label: 'Get Bridle free' } : { href: '#join', label: 'Join the waitlist' };
 ---
-<div class="wrap"><section class="fhero" aria-labelledby="h-page">
-  <div class="fstage">
-    <Dither from="right" />
-    <div class="fshot" style={`--w:${shot.width}px`}><Shot name={shot.name} width={shot.width} height={shot.height} alt={shot.alt} eager /></div>
-  </div>
-  <div class="fintro">
+<div class="wrap"><section class="phero" aria-labelledby="h-page">
+  <div class="pcopy">
     <h1 class="fh1" id="h-page">{title[0]} <span class="soft">{title[1]}</span></h1>
-    <div class="fside">
-      <p class="flead">{lead}</p>
-      <div class="ctas"><Button size="lg" arrow href={main.href}>{main.label}</Button>{more && <Button size="lg" variant="soft" href={more.href}>{more.label}</Button>}</div>
-    </div>
+    <p class="flead">{lead}</p>
+    <div class="ctas"><Button size="lg" arrow href={main.href}>{main.label}</Button>{more && <Button size="lg" variant="soft" href={more.href}>{more.label}</Button>}</div>
   </div>
+  <ol class="pmini" aria-label="What happens">
+    {steps.map((s, i) => <li><a href={`#step-${i + 1}`}><span class="pn">{i + 1}</span>{s}</a></li>)}
+  </ol>
 </section></div>
