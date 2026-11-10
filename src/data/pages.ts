@@ -65,12 +65,6 @@ ${costLines}
 
 ${counted}
 
-## Start in three steps.
-
-1. **Install Bridle.** ${FREE_FROM}
-2. **Forward your support email.** Keep your address. We show you how.
-3. **Turn on chat.** One switch adds it to your site.
-
 ## Pay once for Bridle Pro.
 
 Only until Cyber Monday. Pro adds chat on your other sites, live chat with your hours, and order and licence lookups. ${money(PRO.plans[0].base)}, pay once, for 1 site. The price goes up ${money(PRO.rise)} every 20 sales. ${PRO.refundDays}-day refund. All plans: ${SITE.url}/pricing/
@@ -224,12 +218,6 @@ At 300 AI answers a month, for ${PEOPLE} people:
 ${costLines}
 
 ${counted}
-
-## Start in three steps.
-
-1. **Install Bridle.** ${FREE_FROM}
-2. **Forward your support email.** Keep your address. We show you how.
-3. **Turn on chat.** One switch adds it to your site.
 
 ## Pay once for Bridle Pro.
 
