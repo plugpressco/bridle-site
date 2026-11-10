@@ -4,38 +4,23 @@
 // owner on 10 November 2026.
 import { AI, PRO, INBOXES, WPORG_LIVE, money, count } from '../../data/site';
 const Y = '✓';
-const groups: { name: string; rows: [string, string, string][] }[] = [
-  { name: 'Email', rows: [
-    ['Inboxes on the Bridle mail service', `${INBOXES.free} per site`, '10, 25 or unlimited'],
-    ['Sorts mail into Inbox, Updates and Spam', Y, Y],
-    ['Reply drafts from your docs, pages, products and past replies', Y, Y],
-    ['Every quote and link checked', Y, Y],
-    ['Auto: sure answers send after 15 minutes', Y, Y],
-    ['Rewrite and translate a reply', Y, Y],
-  ] },
-  { name: 'Chat', rows: [
-    ['Chat bubble on this site', Y, Y],
-    ['Chat on your other sites', '', Y],
-    ['Live chat and business hours', '', Y],
-  ] },
-  { name: 'Knowing your business', rows: [
-    ['Help docs (Bridle KB, free plugin)', Y, Y],
-    ['WooCommerce customer card', Y, 'Every order and subscription'],
-    ['Easy Digital Downloads, Polar and Freemius lookups', '', Y],
-    ['Missing answers, with “write a doc”', '', Y],
-  ] },
-  { name: 'Team and AI', rows: [
-    ['Teammates', 'As many as you like', 'As many as you like'],
-    ['AI apps (Claude, ChatGPT) over MCP', Y, Y],
-    ['Late-reply nudges, auto-resolve, share new mail', '', Y],
-    ['Your own AI key', 'No limit', 'No limit'],
-    ['Bridle AI answers', `${AI.free} free a month`, `${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included`],
-  ] },
-  { name: 'Help', rows: [
-    ['Updates', WPORG_LIVE ? 'From WordPress.org' : 'Free', 'For life'],
-    ['Support', WPORG_LIVE ? 'WordPress.org forum' : 'Help desk', 'Help desk, for life'],
-    ['Price', '$0', `${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once`],
-  ] },
+// One short list, no groups (owner, 2026-11-11: "simpler"). Free rows first,
+// then what Pro adds.
+const rows: [string, string, string][] = [
+  ['Inboxes on the Bridle mail service', `${INBOXES.free} per site`, '10, 25 or unlimited'],
+  ['Email: sorting, drafts, fact checks, Auto, rewrite', Y, Y],
+  ['Chat bubble on this site', Y, Y],
+  ['Help docs (Bridle KB, free plugin)', Y, Y],
+  ['AI apps (Claude, ChatGPT) over MCP', Y, Y],
+  ['Teammates and your own AI key', 'No limit', 'No limit'],
+  ['Bridle AI answers', `${AI.free} free a month`, `${count(PRO.plans[0].answers)} to ${count(PRO.plans[PRO.plans.length - 1].answers)} included`],
+  ['Chat on your other sites', '', Y],
+  ['Live chat and business hours', '', Y],
+  ['Order and licence lookups', 'WooCommerce card', 'Every order, plus EDD, Polar, Freemius'],
+  ['Missing answers, with “write a doc”', '', Y],
+  ['Late-reply nudges, auto-resolve, share new mail', '', Y],
+  ['Updates and support', WPORG_LIVE ? 'WordPress.org' : 'Free, help desk', 'For life, help desk'],
+  ['Price', '$0', `${PRO.plans.map((p) => money(p.base)).join(', ').replace(/, ([^,]*)$/, ' or $1')}, once`],
 ];
 ---
 <section class="band" aria-labelledby="h-compare">
@@ -43,12 +28,7 @@ const groups: { name: string; rows: [string, string, string][] }[] = [
   <div class="tbl"><table>
     <thead><tr><th scope="col">Feature</th><th scope="col">Bridle</th><th scope="col">Bridle Pro</th></tr></thead>
     <tbody>
-      {groups.map((g) => (
-        <>
-          <tr class="grp"><td colspan="3">{g.name}</td></tr>
-          {g.rows.map((r) => <tr><th scope="row" class="!font-normal !text-ink-2">{r[0]}</th>{r.slice(1).map((c) => c === Y ? <td class="y"><span aria-hidden="true">{Y}</span><span class="sr-only">Yes</span></td> : <td>{c || <span class="sr-only">No</span>}</td>)}</tr>)}
-        </>
-      ))}
+      {rows.map((r) => <tr><th scope="row" class="!font-normal !text-ink-2">{r[0]}</th>{r.slice(1).map((c) => c === Y ? <td class="y"><span aria-hidden="true">{Y}</span><span class="sr-only">Yes</span></td> : <td>{c || <span class="sr-only">No</span>}</td>)}</tr>)}
     </tbody>
   </table></div>
 </section>

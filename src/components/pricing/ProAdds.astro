@@ -1,22 +1,27 @@
 ---
-// Pricing 4, what Pro adds (pricing/08-copy.md §4): six plain lines and one
-// real Pro screen. Facts from bridle-pro/README.md features 2 to 6.
-import Shot from '../Shot.astro';
-import { AI, PRO, money, count } from '../../data/site';
+// Pricing: what Pro adds. One icon, a short name and one line each (owner,
+// 2026-11-11: "make cleaner simple"). Facts from bridle-pro/README.md; store
+// names and plan numbers are in the compare table below.
+import { PRO, count } from '../../data/site';
 const answers = PRO.plans.map((p) => count(p.answers));
 const items = [
-  { name: 'Chat on other sites', text: 'Paste one line on any site. Chats come to this inbox.' },
-  { name: 'Live chat', text: 'Jump into a chat while the visitor is still there. Set your hours.' },
-  { name: 'Orders and licences', text: 'Replies can say where an order is or if a licence is active. WooCommerce, Easy Digital Downloads, Polar and Freemius.' },
-  { name: 'Missing answers', text: 'See what it couldn’t answer. Turn a question into a doc in one click.' },
-  { name: 'Workflows', text: 'A nudge when someone waits too long. Quiet chats close by themselves.' },
-  { name: 'AI answers included', text: `${answers[0]}, ${answers[1]} or ${answers[2]} with your plan. Top up from ${money(AI.topUpFrom)}.` },
+  { icon: 'i-globe', name: 'Chat on other sites', text: 'Paste one line on any site. Chats come to this inbox.' },
+  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there. Set your hours.' },
+  { icon: 'i-bag', name: 'Orders and licences', text: 'Replies can say where an order is or if a licence is active.' },
+  { icon: 'i-help', name: 'Missing answers', text: 'Turn a question it couldn’t answer into a doc.' },
+  { icon: 'i-history', name: 'Workflows', text: 'A nudge when someone waits. Quiet chats close by themselves.' },
+  { icon: 'i-sparkles', name: 'AI answers included', text: `${answers[0]}, ${answers[1]} or ${answers[2]} with your plan.` },
 ];
 ---
 <section class="band" aria-labelledby="h-adds">
-  <div class="opener"><h2 class="h2" id="h-adds">What you get with Pro.</h2><p class="sub">Six things for people who sell online or run more than one site.</p></div>
-  <div class="prolist">
-    {items.map((i) => <div><h3>{i.name}</h3><p>{i.text}</p></div>)}
-  </div>
-  <div class="panel proshot"><Shot name="pro-gaps" width={820} height={238} alt="Missing answers in Bridle Pro: questions the chat couldn’t answer, each with Write a doc." /></div>
+  <h2 class="h2 opener" id="h-adds">What Pro adds.</h2>
+  <ul class="feats">
+    {items.map((i) => (
+      <li>
+        <span class="fi"><svg class="i" aria-hidden="true"><use href={`#${i.icon}`} /></svg></span>
+        <h3>{i.name}</h3>
+        <p>{i.text}</p>
+      </li>
+    ))}
+  </ul>
 </section>

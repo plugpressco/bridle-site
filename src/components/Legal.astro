@@ -1,6 +1,7 @@
 ---
-// A legal page from its data (src/data/legal.ts): contents on the left, the
-// text on the right. The Markdown copy renders from the same data.
+// A legal page from its data (src/data/legal.ts), easy to read (owner,
+// 2026-11-11): one 680 px column, an "In short" box, a contents list, then
+// short parts. The Markdown copy renders from the same data.
 import Section from './ui/Section.astro';
 import HeadingPair from './ui/HeadingPair.astro';
 import type { Doc } from '../data/legal';
@@ -8,21 +9,26 @@ import { SITE } from '../data/site';
 interface Props { doc: Doc }
 const { doc } = Astro.props;
 ---
-<Section pad="top" inner="grid gap-16 md:grid-cols-[220px_minmax(0,1fr)]">
-  <nav class="hidden content-start gap-0.5 self-start text-[15px] md:sticky md:top-24 md:grid" aria-label="On this page">
-    <b class="mb-2 text-[14px] font-medium">On this page</b>
-    {doc.parts.map((p) => <a class="py-1 text-muted-foreground no-underline hover:text-foreground" href={`#${p.id}`}>{p.title}</a>)}
-  </nav>
-  <article class="prose">
+<Section pad="top" inner="mx-auto max-w-[680px]">
+  <article class="prose doc">
     <HeadingPair as="h1" size="title" first={doc.title[0]} second={doc.title[1]} lead={doc.lead} />
     <p class="!mt-3.5 !text-[15px] !text-gray">Last updated {SITE.updated}.</p>
+    <aside class="short" aria-labelledby="h-short">
+      <h2 id="h-short">In short</h2>
+      <ul>{doc.summary.map((l) => <li>{l}</li>)}</ul>
+    </aside>
+    <nav class="toc" aria-labelledby="h-toc">
+      <h2 id="h-toc">Contents</h2>
+      <ol>{doc.parts.map((p) => <li><a href={`#${p.id}`}>{p.title}</a></li>)}</ol>
+    </nav>
     {doc.parts.map((p) => (
       <section id={p.id}>
         <h2>{p.title}</h2>
         {p.body.map((b) =>
           typeof b === 'string' ? <p>{b}</p>
+          : 'h' in b ? <h3>{b.h}</h3>
           : 'list' in b ? <ul>{b.list.map((l) => <li>{l}</li>)}</ul>
-          : <table><thead><tr>{b.table[0].map((c) => <th scope="col">{c}</th>)}</tr></thead><tbody>{b.table.slice(1).map((r) => <tr>{r.map((c, i) => i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>)}</tr>)}</tbody></table>
+          : <div class="tbl-wrap"><table><thead><tr>{b.table[0].map((c) => <th scope="col">{c}</th>)}</tr></thead><tbody>{b.table.slice(1).map((r) => <tr>{r.map((c, i) => i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>)}</tr>)}</tbody></table></div>
         )}
       </section>
     ))}
