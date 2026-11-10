@@ -1,57 +1,28 @@
 ---
-// /inbox/: Bridle's email replies, free. Value first (owner, 2026-11-11, after
-// helpscout.com/inbox: outcome headings, one line, a real screen, three
-// points). Facts from the plugin's AGENTS.md and the compare table.
+// /inbox/: Bridle's email replies, free. Explained part by part (owner, 2026-11-11, after helpscout.com/inbox). Facts from the plugin's AGENTS.md and the Bridle docs on plugpress.io.
 import Base from '../layouts/Base.astro';
-import PageHero from '../components/PageHero.astro';
-import Block from '../components/feature/Block.astro';
+import Hero from '../components/feature/Hero.astro';
+import Story from '../components/feature/Story.astro';
+import AllList from '../components/feature/AllList.astro';
 import ProLine from '../components/feature/ProLine.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 const page = PAGES.inbox;
+const cards = [{"title": "A reply waiting in every email", "text": "Bridle writes a draft as soon as mail lands. It answers the newest message from what you already wrote. Most replies need one click.", "ui": "<div class=\"mq\"><div class=\"mq-r\"><small>Priya Nair</small>Hi, my slider is blank on Safari 17. Any idea?</div><div class=\"mq-r blue\"><small>Bridle · Draft · High confidence</small>Clear your cache plugin and turn off “Lazy load images” under Acme Slider → Performance.</div><div class=\"mq-a\"><span class=\"mpill dark\">Send as is</span><span class=\"mpill\">Edit</span><span class=\"mpill\">Rewrite</span></div></div>"}, {"title": "Every fact checked first", "text": "Each quote and link in a draft is checked against where it came from. If something doesn’t hold up, Bridle tells you instead of guessing.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Sources <span class=\"mpill ok\">✓ Verified</span></div><div class=\"mq-r\"><small>Help doc</small>Slider not showing on Safari</div><div class=\"mq-r\"><small>Past reply</small>Lazy load and Safari, March</div><div class=\"mq-r\"><small>Page</small>Acme Slider → Performance</div></div>"}, {"title": "Hard ones wait for you", "text": "Refunds, billing and upset customers are marked and never sent by Bridle. They wait under Needs you, so a person always answers.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Needs you <small style=\"color:var(--color-muted-foreground)\">3</small></div><div class=\"mq-r\"><div class=\"mq-l\"><b>Daniel Okafor</b><span class=\"mpill warn\">! Upset customer</span></div><small>THIRD time asking, my site is DOWN</small></div><div class=\"mq-r\"><div class=\"mq-l\"><b>Hannah Lindqvist</b><span class=\"mpill warn\">! Refund</span></div><small>Refund for order 1187</small></div></div>"}, {"title": "Only customers in your Inbox", "text": "Receipts and newsletters go to Updates. Scams go to Spam. Your Inbox shows only the people who need an answer.", "ui": "<div class=\"mq\"><div class=\"mq-r\"><div class=\"mq-l\"><b>Inbox</b><span class=\"mpill blue\">6</span></div></div><div class=\"mq-r\"><div class=\"mq-l\">Updates<small>Receipts, newsletters</small></div></div><div class=\"mq-r\"><div class=\"mq-l\">Spam<small>Scams, junk</small></div></div></div>"}, {"title": "Auto, when you trust it", "text": "Pick Off, Draft or Auto for each inbox. With Auto, sure answers send after 15 minutes, and you can stop any of them.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Support inbox</div><div class=\"mq-seg\"><span>Off</span><span>Draft</span><span class=\"on\">Auto</span></div><div class=\"mq-r\"><div class=\"mq-l\">Sends in 15 min<span class=\"mpill\">Stop</span></div></div></div>"}, {"title": "Keep your support address", "text": "Forward support@ from Gmail, Outlook, Zoho or any host. Customers keep writing to the address they know.", "ui": "<div class=\"mq\"><div class=\"mq-r\"><small>Your address</small>support@yourshop.com</div><div class=\"mq-r\"><small>Forwards to</small>support-a3f2@bridle.to</div><div class=\"mq-r\"><div class=\"mq-l\">Receiving mail<span class=\"mpill ok\">✓ Working</span></div></div></div>"}];
+const all = [{"icon": "i-sparkles", "label": "Reply drafts"}, {"icon": "i-check-circle", "label": "Fact checks"}, {"icon": "i-clock", "label": "Auto"}, {"icon": "i-text", "label": "Rewrite and translate"}, {"icon": "i-inbox", "label": "Inbox, Updates, Spam"}, {"icon": "i-shield", "label": "Needs you"}, {"icon": "i-user", "label": "Teammates, no seat price"}, {"icon": "i-file", "label": "Notes"}, {"icon": "i-archive", "label": "Bulk actions"}, {"icon": "i-key", "label": "Keyboard shortcuts"}, {"icon": "i-book", "label": "Answers from your docs"}, {"icon": "i-history", "label": "Past replies"}, {"icon": "i-trash", "label": "Trash for 30 days"}, {"icon": "l-mcp", "label": "Claude and ChatGPT"}, {"icon": "i-key", "label": "Your own AI key"}, {"icon": "i-news", "label": "3 inboxes free"}, {"icon": "i-bag", "label": "Order lookups", "pro": true}, {"icon": "i-history", "label": "Workflows", "pro": true}];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Inbox', path: page.path }]}>
-  <PageHero
-    title={['Every email comes with a reply.', 'Read it, then send it.']}
-    lead="Bridle writes replies from your docs and past emails. You check and send."
-    shot={{ name: 'inbox-groups', width: 820, height: 566, alt: 'Ready to send in Bridle: four replies with Draft ready, and a refund under Needs you.' }}
+  <Hero
+    title={["Every email comes with a reply.", "Read it, then send it."]}
+    lead={"Bridle reads each new email, finds the answer in your docs, pages and past replies, and writes the reply. You read it and send it. The hard ones wait for you."}
+    shot={{"name": "app-inbox", "width": 1040, "height": 628, "alt": "The Bridle inbox: three replies under Ready to send, and three emails under Needs you, one marked Upset customer."}}
     more={{ href: '/demo/', label: 'Try the live demo' }}
   />
-  <div class="wrap stack-sections tones fpage">
-    <Block
-      id="drafts"
-      title="Replies that know your business."
-      sub="It reads your docs, pages, products and past replies, then writes the answer."
-      shot={{ name: 'conversation-draft', width: 803, height: 723, alt: 'A customer email in Bridle with a ready reply under it.' }}
-      items={[
-        { icon: 'i-check-circle', name: 'Every fact checked', text: 'Quotes and links are checked before you see the reply.' },
-        { icon: 'i-text', name: 'Rewrite or translate', text: 'Change the tone or the language in one click.' },
-        { icon: 'i-clock', name: 'Auto, when you trust it', text: 'Sure answers send after 15 minutes. You can stop them.' },
-      ]}
-    />
-    <Block
-      id="sorting"
-      title="Only customers in your Inbox."
-      sub="Receipts and newsletters go to Updates. Scams go to Spam."
-      items={[
-        { icon: 'i-inbox', name: 'Keep your address', text: 'Forward from Gmail, Outlook or any host.' },
-        { icon: 'i-user', name: 'Bring the team', text: 'Add as many teammates as you like. No seat price.' },
-        { icon: 'i-shield', name: 'Hard ones wait for you', text: 'Refunds, billing and upset customers always wait for a person.' },
-      ]}
-    />
-    <Block
-      id="ai-apps"
-      title="Work it from Claude or ChatGPT."
-      sub="Your AI app reads the inbox and writes drafts. Sending needs your OK."
-      link={{ href: '/guides/', label: 'See the guide' }}
-    >
-      <div class="appchat" aria-hidden="true">
-        <p class="me"><b>You, in Claude</b>Answer the easy ones in my Bridle inbox.</p>
-        <p><b>Claude</b>I wrote 3 drafts in Bridle. Sending needs your OK.</p>
-        <span class="ok">Review 3 drafts</span>
-      </div>
-    </Block>
-    <ProLine title="More inboxes? Get Pro." text="10, 25 or unlimited inboxes, order lookups and workflows." />
+  <div class="wrap stack-sections fpage">
+    <Story id="how" title={"How the Inbox works for you."} cards={cards.slice(0, 3)} />
+    {cards.length > 3 && <Story cards={cards.slice(3)} more />}
+    <AllList id="all" title={"Everything in the Inbox."} items={all} />
+    <ProLine title={"More inboxes? Get Pro."} text={"10, 25 or unlimited inboxes, order lookups and workflows."} />
   </div>
-  <Closing title="Let Bridle write the replies." second="You press send." source="inbox" wrap />
+  <Closing title={"Let Bridle write the replies."} second={"You press send."} source="inbox" wrap />
 </Base>

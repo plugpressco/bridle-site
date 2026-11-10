@@ -1,0 +1,13 @@
+---
+// Everything in one part of Bridle as a cloud of pills, icon and name. Pro
+// items say Pro in the pill.
+interface Item { icon: string; label: string; pro?: boolean }
+interface Props { id: string; title: string; items: Item[] }
+const { id, title, items } = Astro.props;
+---
+<section class="band" id={id} aria-labelledby={`h-${id}`}>
+  <h2 class="h2 opener" id={`h-${id}`}>{title}</h2>
+  <ul class="allp">
+    {items.map((i) => <li><svg class="i" aria-hidden="true"><use href={`#${i.icon}`} /></svg>{i.label}{i.pro && <span class="pro">Pro</span>}</li>)}
+  </ul>
+</section>
