@@ -95,5 +95,14 @@ const graph = [
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // Links to other sites open in a new tab. Same-site links, mailto and
+      // anchors stay as they are. Runs once; covers Markdown-rendered links too.
+      document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+        if (a.host === location.host || a.host === 'www.' + location.host) return;
+        a.target = '_blank';
+        a.rel = ((a.rel || '') + ' noopener').trim();
+      });
+    </script>
   </body>
 </html>
