@@ -1,0 +1,58 @@
+---
+// /inbox/: Bridle's email replies, free. Value first (owner, 2026-11-11, after
+// helpscout.com/inbox: outcome headings, one line, a real screen, three
+// points). Facts from the plugin's AGENTS.md and the compare table.
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Block from '../components/feature/Block.astro';
+import ProLine from '../components/feature/ProLine.astro';
+import Closing from '../components/Closing.astro';
+import { PAGES } from '../data/pages';
+const page = PAGES.inbox;
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Inbox', path: page.path }]}>
+  <PageHero
+    eyebrow="Bridle Inbox · free"
+    title={['Every email comes with a reply.', 'Read it, then send it.']}
+    lead="Bridle writes replies from your docs and past emails. You check and send."
+    shot={{ name: 'inbox-groups', width: 820, height: 566, alt: 'Ready to send in Bridle: four replies with Draft ready, and a refund under Needs you.' }}
+    more={{ href: '/demo/', label: 'Try the live demo' }}
+  />
+  <div class="wrap stack-sections tones fpage">
+    <Block
+      id="drafts"
+      title="Replies that know your business."
+      sub="It reads your docs, pages, products and past replies, then writes the answer."
+      shot={{ name: 'conversation-draft', width: 803, height: 723, alt: 'A customer email in Bridle with a ready reply under it.' }}
+      items={[
+        { icon: 'i-check-circle', name: 'Every fact checked', text: 'Quotes and links are checked before you see the reply.' },
+        { icon: 'i-text', name: 'Rewrite or translate', text: 'Change the tone or the language in one click.' },
+        { icon: 'i-clock', name: 'Auto, when you trust it', text: 'Sure answers send after 15 minutes. You can stop them.' },
+      ]}
+    />
+    <Block
+      id="sorting"
+      title="Only customers in your Inbox."
+      sub="Receipts and newsletters go to Updates. Scams go to Spam."
+      items={[
+        { icon: 'i-inbox', name: 'Keep your address', text: 'Forward from Gmail, Outlook or any host.' },
+        { icon: 'i-user', name: 'Bring the team', text: 'Add as many teammates as you like. No seat price.' },
+        { icon: 'i-shield', name: 'Hard ones wait for you', text: 'Refunds, billing and upset customers always wait for a person.' },
+      ]}
+    />
+    <Block
+      id="ai-apps"
+      title="Work it from Claude or ChatGPT."
+      sub="Your AI app reads the inbox and writes drafts. Sending needs your OK."
+      link={{ href: '/guides/', label: 'See the guide' }}
+    >
+      <div class="appchat" aria-hidden="true">
+        <p class="me"><b>You, in Claude</b>Answer the easy ones in my Bridle inbox.</p>
+        <p><b>Claude</b>I wrote 3 drafts in Bridle. Sending needs your OK.</p>
+        <span class="ok">Review 3 drafts</span>
+      </div>
+    </Block>
+    <ProLine title="More inboxes? Get Pro." text="10, 25 or unlimited inboxes, order lookups and workflows." />
+  </div>
+  <Closing title="Let Bridle write the replies." second="You press send." source="inbox" wrap />
+</Base>

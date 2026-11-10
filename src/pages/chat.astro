@@ -3,19 +3,12 @@
 // claim here is in the plugin's AGENTS.md §6 "Bridle Chat".
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import Section from '../components/ui/Section.astro';
-import Button from '../components/ui/Button.astro';
+import Block from '../components/feature/Block.astro';
+import ProLine from '../components/feature/ProLine.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
 
 const page = PAGES.chat;
-// Value first, three points (owner, 2026-11-11: "single feature page simple,
-// value first copy"). Facts from the plugin's AGENTS.md §6.
-const gets = [
-  { icon: 'i-inbox', name: 'Fewer emails', text: 'Common questions get answered from your docs, pages and old replies.' },
-  { icon: 'i-check-circle', name: 'No made-up answers', text: 'Not sure? It says so and hands over. It never guesses.' },
-  { icon: 'i-user', name: 'Nobody left waiting', text: 'Reply in the chat, or by email if they left. Refunds and upset people always come to you.' },
-];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
   <PageHero
@@ -26,26 +19,28 @@ const gets = [
     more={{ href: '/demo/', label: 'Try the live demo' }}
   />
 
-  <Section labelledby="h-gets">
-    <h2 class="h2 opener" id="h-gets">What you get.</h2>
-    <ul class="feats">
-      {gets.map((f) => (
-        <li>
-          <span class="fi"><svg class="i" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
-          <h3>{f.name}</h3>
-          <p>{f.text}</p>
-        </li>
-      ))}
-    </ul>
-  </Section>
-
-  <Section labelledby="h-pro" inner="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto]">
-    <div class="grid gap-4">
-      <h2 class="h2" id="h-pro">More sites? Get Pro.</h2>
-      <p class="lead text-ink-2">Put the chat on all your sites and add live chat.</p>
-    </div>
-    <Button href="/pricing/" arrow>See pricing</Button>
-  </Section>
-
+  <div class="wrap stack-sections tones fpage">
+    <Block
+      id="answers"
+      title="Answers with proof, not guesses."
+      sub="Every answer comes from your docs, pages and past replies, with its source."
+      items={[
+        { icon: 'i-book', name: 'Looks it up', text: 'In your docs, pages and old replies.' },
+        { icon: 'i-check-circle', name: 'Won’t guess', text: 'Not sure? It says so and hands over.' },
+        { icon: 'i-sparkles', name: 'Fits your site', text: 'Your colour and icon. It says it is an AI.' },
+      ]}
+    />
+    <Block
+      id="handoff"
+      title="When it can’t answer, you can."
+      sub="Hard questions come to your Inbox. You reply where they are."
+      items={[
+        { icon: 'i-message', name: 'In the chat', text: 'If they are still on your site.' },
+        { icon: 'i-inbox', name: 'Or by email', text: 'If they already left.' },
+        { icon: 'i-clock', name: 'A real wait time', text: 'Based on how fast you reply.' },
+      ]}
+    />
+    <ProLine title="More sites? Get Pro." text="Put the chat on all your sites and add live chat." />
+  </div>
   <Closing title="Let the chat answer." second="You take the hard ones." source="chat" wrap />
 </Base>

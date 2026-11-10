@@ -550,6 +550,41 @@
 	.tones .tbl td.y:last-child { color: var(--color-brand-600); }
 	@media (max-width: 960px) { .tones { --band-pad: 64px; } .tones .t-sand .board { padding: 20px; } }
 
+	/* Feature pages (/inbox/, /chat/, /knowledge-base/): blocks of outcome
+	   heading, one line, a big real screen, then two or three points. */
+	.ftag { width: fit-content; margin-bottom: 14px; padding: 4px 10px; border-radius: 999px; background: var(--color-brand-50); font-size: 13.5px; font-weight: 500; color: var(--color-brand-700); }
+	.fpanel { background: var(--color-background); }
+	.fpanel img { width: min(100%, 880px); }
+	.fpoints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 48px; margin: 48px 0 0; padding: 0; list-style: none; }
+	.fpoints.two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.fpoints li { display: grid; gap: 6px; align-content: start; }
+	.fpoints li > div { display: grid; gap: 6px; }
+	.fpoints .fi { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 10px; border-radius: var(--radius-card); background: var(--color-brand-50); color: var(--color-brand-600); }
+	.fpoints .fi svg { width: 19px; height: 19px; }
+	.fpoints h3 { font-size: 19px; line-height: 1.3; letter-spacing: -0.01em; font-weight: 600; }
+	.fpoints p { max-width: 36ch; font-size: 16.5px; line-height: 1.5; color: var(--color-muted-foreground); }
+	.fpage { padding-top: 64px; }
+	.fsplit { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px 80px; align-items: center; }
+	.fsplit .opener { margin-bottom: 0; }
+	.fsplit + .fsplit { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+	.fsplit + .fsplit > .opener { order: 2; }
+	.fpoints.fcard { grid-template-columns: minmax(0, 1fr); gap: 0; margin: 0; padding: 8px 28px; border: 1px solid var(--color-border); border-radius: var(--radius-card); background: #fff; }
+	.fcard li { grid-template-columns: 40px minmax(0, 1fr); gap: 18px; align-items: start; padding: 22px 0; }
+	.fcard li + li { border-top: 1px solid var(--color-border); }
+	.fcard .fi { margin-bottom: 0; }
+	.fcard p { max-width: none; }
+	.fstate { text-align: center; }
+	.fstate .opener { display: grid; justify-items: center; margin-bottom: 0; }
+	.fstate .h2 { font-size: clamp(2rem, 3.4vw, 3rem); max-width: 22ch; }
+	.fstate .sub { max-width: 46ch; }
+	.appchat { display: grid; gap: 12px; padding: 28px; border-radius: var(--radius-card); background: var(--color-background); }
+	.appchat p { display: grid; gap: 4px; max-width: 86%; padding: 14px 16px; border: 1px solid var(--color-border); border-radius: var(--radius-card); background: #fff; font-size: 16px; color: var(--color-foreground); }
+	.appchat p.me { justify-self: end; border-color: var(--color-brand-200); background: var(--color-brand-50); }
+	.appchat b { font-size: 13px; font-weight: 600; color: var(--color-muted-foreground); }
+	.appchat .ok { justify-self: start; display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: var(--color-brand-600); font-size: 14px; font-weight: 500; color: #fff; }
+	@media (max-width: 960px) { .fsplit, .fsplit + .fsplit { grid-template-columns: minmax(0, 1fr); } .fsplit + .fsplit > .opener { order: 0; } .fpage { padding-top: 40px; } }
+	@media (max-width: 960px) { .fpoints, .fpoints.two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+
 	/* ---------- Phones and tablets ---------- */
 	@media (max-width: 960px) {
 		.cap .links, .cap .acts { display: none; }

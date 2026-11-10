@@ -1,0 +1,48 @@
+---
+// /knowledge-base/: Bridle KB, the free help center plugin. Value first, the
+// same blocks as /inbox/ and /chat/. The screen is a real Bridle KB help
+// center (plugpress.io's Bridle docs).
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Block from '../components/feature/Block.astro';
+import ProLine from '../components/feature/ProLine.astro';
+import Closing from '../components/Closing.astro';
+import { PAGES } from '../data/pages';
+const page = PAGES.kb;
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Knowledge base', path: page.path }]}>
+  <PageHero
+    eyebrow="Bridle KB · free plugin"
+    title={['Write it once.', 'Bridle answers with it forever.']}
+    lead="A help center on your site. Customers search it, and Bridle answers from it."
+    shot={{ name: 'kb-help', width: 1040, height: 635, alt: 'A Bridle KB help center: a list of docs on the left and doc cards with a short summary each.' }}
+    more={{ href: '/demo/', label: 'Try the live demo' }}
+  />
+  <div class="wrap stack-sections tones fpage">
+    <Block
+      id="help-center"
+      title="A help center people actually use."
+      sub="Clean pages that fit your site, and search on one key."
+      items={[
+        { icon: 'i-book', name: 'Press / to search', text: 'Find any doc without leaving the page.' },
+        { icon: 'i-sparkles', name: 'Your look', text: 'Your theme’s font and your colour.' },
+        { icon: 'i-file', name: 'Next to your inbox', text: 'Write and sort docs under the Bridle menu.' },
+      ]}
+    />
+    <Block
+      id="smarter"
+      statement
+      title="Every doc makes Bridle smarter."
+      sub="Email replies and chat answers come from what you wrote. Add a doc, and the next answer uses it."
+    />
+    <Block
+      id="gaps"
+      tag="Bridle Pro"
+      title="See what it couldn’t answer."
+      sub="Turn a missed question into a doc in one click."
+      shot={{ name: 'pro-gaps', width: 820, height: 238, alt: 'Knowledge gaps in Bridle: questions it couldn’t answer, each with Write a doc.' }}
+    />
+    <ProLine title="Find the gaps. Get Pro." text="Missing answers, live chat and chat on all your sites." />
+  </div>
+  <Closing title="Write it once." second="Let Bridle answer." source="kb" wrap />
+</Base>
