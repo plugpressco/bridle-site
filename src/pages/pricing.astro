@@ -1,47 +1,56 @@
 ---
-// /pricing/ (design v3, approved 10 November 2026). Copy word for word from
-// planning/landing/pages/pricing/08-copy.md: three ways to pay, the deal,
-// what Pro adds, compare plans, the cost next to others, questions about
-// paying. Bridle Pro is pay once until Cyber Monday or sale 170
-// (src/data/deal.json); until launch every buy button joins the waitlist
-// (LAUNCHED in src/data/site.ts). /pro/ redirects here.
+// /pricing/. Kept short and plain (owner, 12 November 2026: "simple offer easy
+// understand", "more compact", "easy copy to read"): the price as one card on
+// the dot mountains (PricePanel), every tool in four cells, and the questions
+// about paying. AI packs are not shown here: they are sold inside
+// the plugin (owner, 12 November 2026). The buy button opens a Polar
+// checkout. /pro/ redirects here. This page never calls anything free.
 import Base from '../layouts/Base.astro';
-import Plans from '../components/pricing/Plans.astro';
-import Ladder from '../components/pricing/Ladder.astro';
-import ProAdds from '../components/pricing/ProAdds.astro';
-import Compare from '../components/pricing/Compare.astro';
-import Cost from '../components/Cost.astro';
-import Faq from '../components/ui/Faq.astro';
+import PricePanel from '../components/b/PricePanel.astro';
+import Qa from '../components/b/Qa.astro';
+import Fin from '../components/b/Fin.astro';
+import { TOOLS } from '../components/b/tools';
 import { PAGES } from '../data/pages';
-import { PRO_FAQ } from '../data/faq';
-import { SITE, PRO, sitesLabel } from '../data/site';
+import { PRICING_FAQ, faqLd } from '../data/faq';
+import { IN_THE_LICENCE, ALSO } from '../data/licence';
+import { SITE, PLAN, DEAL, OFFER_ON, PRICE } from '../data/site';
 
 const page = PAGES.pricing;
 const jsonLd = [
   {
     '@type': 'Product',
-    name: 'Bridle Pro',
-    description: 'Adds chat on your other sites, live chat, order and licence lookups, missing answers and workflows to Bridle, the AI support agent for WordPress.',
+    name: 'Bridle',
+    description: SITE.definition,
     brand: { '@type': 'Brand', name: SITE.name },
-    offers: PRO.plans.map((p) => ({ '@type': 'Offer', name: `Pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pricing/#plans` })),
+    offers: {
+      '@type': 'Offer', name: `Pay once, ${PLAN.sites} sites`, price: String(PRICE), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: `${SITE.url}/pricing/`,
+      ...(OFFER_ON ? { priceValidUntil: DEAL.endsAt.slice(0, 10) } : {}),
+    },
   },
-  {
-    '@type': 'FAQPage',
-    mainEntity: PRO_FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  },
+  faqLd(PRICING_FAQ),
 ];
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd} crumbs={[{ name: 'Pricing', path: page.path }]}>
-  <div class="wrap stack-sections tones">
-    <Plans />
-    <Ladder />
-    <ProAdds />
-    <Compare />
-    <Cost id="how" counted tone="t-sand" />
-    <Faq items={PRO_FAQ} title="Questions about paying." id="questions" />
+  <div class="wrap stack-sections">
+    <section class="b-hero b-flat b-ppsec" aria-labelledby="h-hero" id="plans">
+      <PricePanel as="h1" id="h-hero" seed={7} />
+    </section>
+
+    <section aria-labelledby="h-in">
+      <div class="shead"><h2 class="h2" id="h-in">Every tool is in it</h2><p class="lead">There is no bigger plan.</p></div>
+      <div class="b-in4">
+        {IN_THE_LICENCE.map((t) => (
+          <div>
+            <span class="b-pname"><i><svg class="i" aria-hidden="true"><use href={`#${TOOLS[t.tool].icon}`} /></svg></i>{TOOLS[t.tool].name}</span>
+            <ul>{t.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <p class="small b-after-note">Also in it: {ALSO}</p>
+    </section>
+
+    <Qa items={PRICING_FAQ} title="Questions about paying" />
+
+    <Fin title="Buy Bridle today" buy="#plans" />
   </div>
 </Base>
-
-<script>
-  import '../scripts/deal.js';
-</script>

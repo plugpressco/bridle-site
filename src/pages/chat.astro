@@ -1,20 +1,25 @@
 ---
-// /chat/: Bridle Chat, free in Bridle. Built only from the home page's own sections, like /inbox/. Facts from the plugin's AGENTS.md §6.
+// /chat/: the chat on your site (design: 02-pages.html).
 import Base from '../layouts/Base.astro';
-import Hero from '../components/feature/Hero.astro';
-import Overview from '../components/feature/Overview.astro';
-import Split from '../components/feature/Split.astro';
-import Closing from '../components/Closing.astro';
-import ChatDemo from '../components/ChatDemo.astro';
+import FeatureHero from '../components/b/FeatureHero.astro';
+import Facts from '../components/b/Facts.astro';
+import Prod from '../components/b/Prod.astro';
+import Next3 from '../components/b/Next3.astro';
+import Fin from '../components/b/Fin.astro';
 import { PAGES } from '../data/pages';
 const page = PAGES.chat;
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Chat', path: page.path }]}>
   <div class="wrap stack-sections">
-    <Hero title={["Answers your visitors now.", "Even at 3 am."]} lead={"Bridle Chat sits on your site and answers from your docs, pages and past replies. When it isn’t sure, it hands the chat to you."} shot={{"name": "chat-answer", "width": 400, "height": 680, "alt": "Bridle’s chat on a website, answering a question with a numbered source."}} center />
-    <Overview id="answers" title={"Answers with proof, not guesses."} sub={"Watch it answer, then hand over."} points={[{"name": "Looks it up", "text": "In your docs, pages and past replies."}, {"name": "Shows its source", "text": "A numbered source under each answer."}, {"name": "Won’t guess", "text": "Not sure? It says so and asks for a person."}]}><ChatDemo /></Overview>
-    <Split id="handoff" title={"You reply where they are."} sub={"The chat lands in your Inbox."} lines={["Reply in the chat if they are still on your site, or by email if they left.", "They see a real wait time, based on how fast you reply."]} ui={"<div class=\"mq\"><div class=\"mq-r\"><div class=\"mq-l\"><b>In the chat</b><span class=\"mpill ok\">Still on your site</span></div></div><div class=\"mq-r\"><div class=\"mq-l\"><b>By email</b><span class=\"mpill\">Left the site</span></div></div><div class=\"mq-r\"><small>Wait time</small>Based on how fast you reply</div></div>"} />
-    <Split id="pro" title={"More sites? Get Pro."} sub={"Live chat, hours and every site."} lines={["Bridle Pro puts the chat on your other sites with one line of code each.", "Jump into a chat while the visitor is still there, within your business hours."]} ui={"<div class=\"mq\"><div class=\"mq-h\">Bridle Pro</div><div class=\"mq-r\"><div class=\"mq-l\">Chat on other sites<span class=\"mpill blue\">Pro</span></div></div><div class=\"mq-r\"><div class=\"mq-l\">Live chat<span class=\"mpill blue\">Pro</span></div></div><div class=\"mq-r\"><div class=\"mq-l\">Business hours<span class=\"mpill blue\">Pro</span></div></div></div>"} flip />
+    <FeatureHero name="Chat" glyph="bubble" title="Answers visitors on your site, day and night" lead="A chat bubble that answers from your docs. When it is stuck, it hands over to you."
+      frames={['bubble', 'face', 'person']} steps={['A visitor asks', 'Bridle answers from your docs', 'Stuck? It hands over to you']} shot="chat-both" frame="duo" seed={31} />
+    <Facts items={['One 7 KB script', 'Works with any theme', 'Says it is an AI', 'Anyone can ask for a person']} />
+    <section aria-label="What Chat does"><div class="b-prods">
+      <Prod icon="i-book" name="Answers" claim="It answers from your docs." shot="tool-chat" points={['Shows the doc behind each answer', 'Does not guess when your docs are silent', 'Follows up by email if they leave']} />
+      <Prod icon="i-user" name="Handover" claim="It hands over when it is stuck." shot="chat-handover" points={['The chat lands in your inbox', 'You see everything already said', 'Answer it like any email']} />
+      <Prod icon="i-live" name="Live chat" claim="Jump in live, on every site." shot="chat-live" points={['Live chat while they are still there', 'Set your hours. It says when you are back.', 'One line of code adds chat to your other sites']} />
+    </div></section>
+    <Next3 not="chat" />
+    <Fin title="Put a chat on your site that knows your docs" />
   </div>
-  <Closing title={"Let the chat answer."} second={"You take the hard ones."} source="chat" wrap />
 </Base>

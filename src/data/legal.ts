@@ -2,7 +2,7 @@
 // here, so they always say the same. Facts come from the plugin's readme
 // ("External services"), the relay (bridle/worker) and Bridle AI
 // (bridle-ai/README.md, migrations/0001_init.sql). Plain words, no dashes.
-import { SITE, AI, PRO, INBOXES } from './site';
+import { SITE, AI, DEAL, PLAN, INBOXES } from './site';
 
 export type Block = string | { h: string } | { list: string[] } | { table: string[][] };
 export type Part = { id: string; title: string; body: Block[] };
@@ -41,7 +41,7 @@ export const PRIVACY: Doc = {
           'a list of each site’s inbox codes, to count them',
         ] },
         'Emails are not stored on the relay.',
-        { h: 'With Bridle Pro' },
+        { h: 'With a licence' },
         'Your site also sends its licence key with each registration. The relay checks it with Polar and keeps the answer for a day. It uses it only to set how many inboxes you may have.',
         { h: 'When mail can’t be delivered' },
         'Sometimes your site can’t be reached, or an email comes for an address no site has registered. Then the relay forwards it to PlugPress’s fallback mailbox, so it isn’t lost. We use those emails only to get them to you or to fix delivery. We delete them when that is done.',
@@ -93,7 +93,7 @@ export const PRIVACY: Doc = {
     },
     {
       id: 'pro',
-      title: 'Bridle Pro licences',
+      title: 'Licences',
       body: [
         'Bridle Pro checks its licence and its updates with updates.plugpress.io. It sends your site URL, the licence key and version numbers.',
         'Purchases go through Polar.',
@@ -153,10 +153,10 @@ export const TERMS: Doc = {
   lead: 'These terms cover bridle.to, the services PlugPress runs for Bridle (the email relay and Bridle AI) and Bridle Pro licences. If you use any of them, you agree to these terms.',
   summary: [
     'Bridle and Bridle Pro are GPL. They come as they are, without warranty.',
-    `The email relay is free for ${INBOXES.free} inboxes per site. Pro gives 10, 25 or unlimited.`,
+    `The email relay is free for ${INBOXES.free} inboxes per site. A licence gives ${INBOXES.licence}.`,
     `Every site gets ${AI.free} free AI answers a month. Packs never expire.`,
-    `Pay-once Pro is for the first ${PRO.total} customers. After that, Pro is yearly.`,
-    `A full refund within ${PRO.refundDays} days.`,
+    'A Bridle licence is paid once. It is not a subscription.',
+    `A full refund within ${DEAL.refundDays} days.`,
     `Questions? Ask at ${SITE.support}.`,
   ],
   parts: [
@@ -174,7 +174,7 @@ export const TERMS: Doc = {
       body: [
         { list: [
           `It is free for sites running Bridle, for up to ${INBOXES.free} inboxes per site.`,
-          'A Bridle Pro licence raises that to 10, 25 or unlimited, by plan.',
+          `A Bridle licence raises that to ${INBOXES.licence}.`,
           'Inboxes you had before a limit applied keep working.',
         ] },
         { h: 'Fair use' },
@@ -198,18 +198,17 @@ export const TERMS: Doc = {
     },
     {
       id: 'pro',
-      title: 'Bridle Pro',
+      title: 'The Bridle licence',
       body: [
         { list: [
-          'A Bridle Pro licence covers 1, 3 or 10 sites, as its plan says.',
-          `Pay-once licences are sold to the first ${PRO.total} customers only.`,
-          'The price goes up as they sell, as shown on the pricing page.',
+          `A Bridle licence covers ${PLAN.sites} sites. It turns on the Bridle Pro plugin.`,
+          'You pay once. The price is the one on the pricing page on the day you buy.',
           'Pay-once licences include updates and support for as long as we make Bridle Pro.',
         ] },
-        { h: 'After the deal' },
-        'Pro is sold by the year. Yearly licences renew each year until you cancel. If a licence ends, Pro keeps working. It stops getting updates and support.',
+        { h: 'If a licence can’t be checked' },
+        'Bridle keeps working. Only updates stop until the licence is checked again.',
         { h: 'AI answers' },
-        `Each Pro licence comes with Bridle AI answers, once: ${PRO.plans.map((p) => `${p.answers.toLocaleString('en-US')} with ${p.sites === 1 ? '1 site' : `${p.sites} sites`}`).join(', ')}. You can buy more as packs.`,
+        `Each licence comes with ${PLAN.answers.toLocaleString('en-US')} Bridle AI answers, once. You can buy more as packs.`,
       ],
     },
     {
@@ -217,8 +216,8 @@ export const TERMS: Doc = {
       title: 'Refunds',
       body: [
         { list: [
-          `Bridle Pro: a full refund within ${PRO.refundDays} days of buying.`,
-          `Bridle AI packs: a full refund within ${PRO.refundDays} days, if you haven’t used them.`,
+          `A Bridle licence: a full refund within ${DEAL.refundDays} days of buying.`,
+          `Bridle AI packs: a full refund within ${DEAL.refundDays} days, if you haven’t used them.`,
         ] },
         `Ask at ${SITE.support}.`,
       ],

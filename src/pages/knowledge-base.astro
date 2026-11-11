@@ -1,19 +1,21 @@
 ---
-// /knowledge-base/: Bridle KB, the free help center plugin. Built only from the home page's own sections, like /inbox/. Screens from the Fernleaf demo.
-import Base from '../layouts/Base.astro';
-import Hero from '../components/feature/Hero.astro';
-import Overview from '../components/feature/Overview.astro';
-import Split from '../components/feature/Split.astro';
-import Closing from '../components/Closing.astro';
-import { PAGES } from '../data/pages';
-const page = PAGES.kb;
+// /knowledge-base/ moved to /docs/ (12 November 2026). Older links still
+// point here, so this page sends them on at once, keeping any #section. Not
+// for search engines (noindex, out of the sitemap); the canonical names the
+// new address.
 ---
-<Base title={page.title} description={page.description} crumbs={[{ name: 'Knowledge base', path: page.path }]}>
-  <div class="wrap stack-sections">
-    <Hero title={["Write it once.", "Bridle answers with it."]} lead={"Bridle KB is a free help center for your site. Customers search it on their own, and Bridle reads every doc to answer email and chat."} shot={{"name": "kb-help", "width": 1040, "height": 450, "alt": "A Bridle KB help center: the doc list on the left and the docs in Getting started."}} />
-    <Overview id="docs" title={"A help center people use."} sub={"Clean pages that fit your site."} shot={{"name": "kb-doc", "width": 1040, "height": 450, "alt": "A doc in a Bridle KB help center, with the doc list and search on the left."}} points={[{"name": "Press / to search", "text": "Find any doc without leaving the page."}, {"name": "Your look", "text": "Your theme’s font and your colour."}, {"name": "Next to your inbox", "text": "Write and sort docs under the Bridle menu."}]} />
-    <Split id="smarter" title={"Every doc makes Bridle smarter."} sub={"The doc is the source."} lines={["Email replies and chat answers come from what you wrote, with the doc named under the reply.", "Add a doc today, and the next answer uses it."]} shot={{"name": "draft-sources", "width": 855, "height": 314, "alt": "A Bridle draft with its help doc source under it."}} center />
-    <Split id="gaps" title={"See what it couldn’t answer."} sub={"With Bridle Pro."} lines={["Bridle Pro lists the questions it couldn’t answer.", "Turn one into a doc in one click, and it won’t miss it again."]} shot={{"name": "pro-gaps", "width": 820, "height": 238, "alt": "Knowledge gaps in Bridle: questions it couldn’t answer, each with Write a doc."}} center flip />
-  </div>
-  <Closing title={"Write it once."} second={"Let Bridle answer."} source="kb" wrap />
-</Base>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bridle Docs</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://bridle.to/docs/" />
+    <meta http-equiv="refresh" content="0; url=/docs/" />
+    <script is:inline>location.replace('/docs/' + location.search + location.hash);</script>
+  </head>
+  <body>
+    <p>Bridle’s help center tool is on <a href="/docs/">bridle.to/docs/</a>.</p>
+  </body>
+</html>

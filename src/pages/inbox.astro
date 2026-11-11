@@ -1,19 +1,25 @@
 ---
-// /inbox/: Bridle's email replies, free. Built only from the home page's own sections (owner, 2026-11-11: one design system across the site).
+// /inbox/: the shared inbox (design: planning/landing/redesign/02-pages.html).
 import Base from '../layouts/Base.astro';
-import Hero from '../components/feature/Hero.astro';
-import Overview from '../components/feature/Overview.astro';
-import Split from '../components/feature/Split.astro';
-import Closing from '../components/Closing.astro';
+import FeatureHero from '../components/b/FeatureHero.astro';
+import Facts from '../components/b/Facts.astro';
+import Prod from '../components/b/Prod.astro';
+import Next3 from '../components/b/Next3.astro';
+import Fin from '../components/b/Fin.astro';
 import { PAGES } from '../data/pages';
 const page = PAGES.inbox;
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Inbox', path: page.path }]}>
   <div class="wrap stack-sections">
-    <Hero title={["Every email comes with a reply.", "Read it, then send it."]} lead={"Bridle reads each new email, finds the answer in your docs and past replies, and writes the reply. The hard ones wait for you."} shot={{"name": "app-inbox", "width": 1040, "height": 628, "alt": "The Bridle inbox: four replies under Ready to send, and two emails under Needs you."}} />
-    <Overview id="drafts" title={"Your inbox, mostly done."} sub={"Open an email and the reply is already there."} shot={{"name": "conversation-draft", "width": 875, "height": 724, "alt": "An email from Maya in Bridle, with a ready reply and its help doc source under it."}} points={[{"name": "Knows your business", "text": "It reads your docs, pages, products and past replies."}, {"name": "Every fact checked", "text": "Each quote and link must match its source."}, {"name": "Rewrite or redraft", "text": "Change the tone or the language in one click."}, {"name": "Bring the team", "text": "Add as many teammates as you like. No seat price."}]} />
-    <Split id="needs-you" title={"Hard ones wait for you."} sub={"Bridle never sends them."} lines={["Refunds, billing and upset customers are marked and wait under Needs you.", "Receipts go to Updates. Scams go to Spam. Your Inbox shows only people."]} shot={{"name": "inbox-needs", "width": 1112, "height": 220, "alt": "Needs you in Bridle: an email marked Upset customer, and one marked Refund."}} mid />
-    <Split id="auto" title={"Auto, when you trust it."} sub={"Off, Draft or Auto, for each inbox."} lines={["With Auto, sure replies send after 15 minutes. You can stop any of them.", "Want more inboxes? Bridle Pro gives 10, 25 or unlimited."]} ui={"<div class=\"mq\"><div class=\"mq-h\">Support inbox</div><div class=\"mq-seg\"><span>Off</span><span>Draft</span><span class=\"on\">Auto</span></div><div class=\"mq-r\"><small>Sure replies</small>Send after 15 minutes</div><div class=\"mq-r\"><small>Refunds, billing, upset customers</small>Always wait for you</div></div>"} flip />
+    <FeatureHero name="Inbox" glyph="envelope" title="All your support email, inside WordPress" lead="A shared inbox for your team, in the place you already work."
+      frames={['envelope', 'bars', 'check']} steps={['An email comes in', 'Bridle sorts it', 'A reply is ready']} shot="inbox-open" frame="conv" seed={17} />
+    <Facts items={['No limit on teammates', 'Keyboard shortcuts', 'Select many, like Gmail', 'Trash kept for 30 days']} />
+    <section aria-label="What the Inbox does"><div class="b-prods">
+      <Prod icon="i-check-circle" name="Sorting" claim="Sorted before you look." shot="inbox-sorted" points={['Ready to send: a reply is already written', 'Needs you: refunds, billing, upset customers', 'Receipts go to Updates. Scams go to Spam.']} />
+      <Prod icon="i-user" name="Team" claim="Work one inbox together." shot="tool-inbox" points={['Assign an email to a teammate', 'Leave a note and mention someone', 'Save the replies you send often']} />
+      <Prod icon="i-globe" name="Your address" claim="Keep the address your customers know." shot="inbox-address" points={['Forward your support address to Bridle', 'Customers keep writing where they always did', 'Ten inboxes in your licence']} />
+    </div></section>
+    <Next3 not="inbox" />
+    <Fin title="Put your inbox where your site is" />
   </div>
-  <Closing title={"Let Bridle write the replies."} second={"You press send."} source="inbox" wrap />
 </Base>

@@ -1,0 +1,22 @@
+---
+// The closing panel: one line, the price sentence, two buttons, and Bridle's dot face
+// saying goodbye with a wink over the dot mountains.
+import Art from './Art.astro';
+import { display } from './dots';
+import { PRICE_LINE } from '../../data/site';
+interface Props { title: string; line?: string; buy?: string; seed?: number }
+const { title, line, buy = '/pricing/', seed = 29 } = Astro.props;
+---
+<section class="b-fin" aria-labelledby="h-close">
+  <div>
+    <h2 class="h2" id="h-close">{title}.</h2>
+    <p class="lead">{line ?? <span data-deal="line">{PRICE_LINE}</span>}</p>
+    <div class="ctas"><a class="b1" href={buy}>Buy Bridle</a><a class="b2" href="/demo/">Try the live demo</a></div>
+  </div>
+  <Fragment set:html={display('wink', 'b-finface')} />
+  <Art seed={seed} />
+</section>
+
+<script>
+  import '../../scripts/deal.js';
+</script>

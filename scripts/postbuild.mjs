@@ -50,8 +50,15 @@ console.log('SEO check passed');
 mkdirSync(join(dist, 'functions'), { recursive: true });
 cpSync('spacefast/functions', join(dist, 'functions'), { recursive: true });
 cpSync('sf.jsonc', join(dist, 'sf.jsonc'));
-const dealJson = JSON.stringify(JSON.parse(readFileSync('src/data/deal.json', 'utf8')));
+const deal = JSON.parse(readFileSync('src/data/deal.json', 'utf8'));
+const dealJson = JSON.stringify(deal);
 const checkoutOpen = /export const CHECKOUT_OPEN = true;/.test(readFileSync('src/data/site.ts', 'utf8'));
+// The buy button needs the licence's Polar product. Without its id the
+// checkout sends buyers back to /pricing/ with "Checkout opens soon".
+const noProduct = deal.plans.filter((p) => !p.productId).map((p) => p.key);
+if (checkoutOpen && noProduct.length) {
+  console.warn(`\nWARNING: plan ${noProduct.join(', ')} has no Polar product id in src/data/deal.json. The buy button will not open a checkout. Do not publish until it is filled in.\n`);
+}
 for (const f of readdirSync(join(dist, 'functions', 'api'))) {
   const p = join(dist, 'functions', 'api', f);
   const src = readFileSync(p, 'utf8');

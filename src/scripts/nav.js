@@ -1,7 +1,7 @@
 /* The menu (src/components/Nav.astro). Product and Resources open on hover
    (with a fine pointer), click, or keyboard focus; a panel drops under the bar
    and the page behind dims a little. In Product, the item you point at or
-   focus shows its real Bridle screen on the right. Esc closes and gives focus back to
+   focus shows its picture on the right. Esc closes and gives focus back to
    the button; Tab walks into the open panel and out to the next item. On
    phones the Menu button
    opens a full-height sheet with the same groups (focus stays inside it). Also opens a question on
@@ -136,4 +136,22 @@ if (navwrap) {
 	var onScroll = function () { navwrap.classList.toggle('scrolled', window.scrollY > 4); };
 	window.addEventListener('scroll', onScroll, { passive: true });
 	onScroll();
+}
+
+// The menu's buy button stays hidden while the hero's own buttons (or the
+// offer card's) are on screen, so the first screen never says it twice. It
+// joins the bar once they have scrolled under it. Without this script the
+// button simply shows.
+var navbuy = document.querySelector('.navbuy');
+if (navbuy) {
+	document.documentElement.classList.add('navjs');
+	var tick = 0;
+	var check = function () {
+		tick = 0;
+		var el = [].slice.call(document.querySelectorAll('.b-hero .ctas, .b-hero .b-cbuy')).filter(function (e) { return e.offsetParent; })[0];
+		navbuy.classList.toggle('show', !el || el.getBoundingClientRect().bottom < 72);
+	};
+	window.addEventListener('scroll', function () { if (!tick) tick = requestAnimationFrame(check); }, { passive: true });
+	window.addEventListener('resize', check);
+	check();
 }

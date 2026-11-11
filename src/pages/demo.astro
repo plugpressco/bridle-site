@@ -1,11 +1,11 @@
 ---
-// /demo/: Bridle in WordPress Playground (public/demo/blueprint.json).
+// /demo/: Bridle in WordPress Playground (public/demo/blueprint.json), in the
+// site's own parts: a hero with the app picture, three things to try, and
+// what the demo is not.
 import Base from '../layouts/Base.astro';
-import PageHero from '../components/PageHero.astro';
-import Section from '../components/ui/Section.astro';
-import HeadingPair from '../components/ui/HeadingPair.astro';
-import Points from '../components/Points.astro';
-import Closing from '../components/Closing.astro';
+import Art from '../components/b/Art.astro';
+import Shot from '../components/b/Shot.astro';
+import Fin from '../components/b/Fin.astro';
 import { PAGES } from '../data/pages';
 import { DEMO } from '../data/site';
 
@@ -18,27 +18,32 @@ const tries = [
 const notes = [
   'The AI here is a stand-in. It answers from the demo’s docs.',
   'The sample mail is already in.',
-  'Free plugin only. It’s gone when you close the tab.',
+  'The demo has the core tools. Live chat and order lookups need a real site.',
+  'It runs in your browser and is gone when you close the tab.',
 ];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Live demo', path: page.path }]}>
-  <PageHero
-    title={['Try Bridle in your browser', 'Nothing to install']}
-    lead="A sample inbox and chat. Ready in about 30 seconds."
-    shot={{ name: 'inbox-groups', width: 820, height: 566, alt: 'The demo’s Inbox in Bridle: four replies ready to send.' }}
-    cta={{ href: DEMO.url, label: 'Open the live demo' }}
-    more={{ href: '#join', label: 'Join the waitlist' }}
-  />
+  <div class="wrap stack-sections">
+    <section class="b-hero" aria-labelledby="h-hero">
+      <div class="b-hpan b-inner">
+        <h1 class="h1" id="h-hero">Try Bridle in your browser.</h1>
+        <p class="lead">A sample inbox and chat. Nothing to install. Ready in about 30 seconds.</p>
+        <div class="ctas"><a class="b1" href={DEMO.url} target="_blank" rel="noopener">Open the live demo</a><a class="b2" href="/pricing/">Buy Bridle</a></div>
+        <Art seed={19} />
+      </div>
+      <div class="b-stage"><div class="b-wpwin b-shotimg"><Shot name="app-inbox-wide" eager /></div></div>
+    </section>
 
-  <Section labelledby="h-try">
-    <HeadingPair id="h-try" first="Three things to try" second="A minute each" class="opener" />
-    <Points items={tries} numbered />
-  </Section>
+    <section aria-labelledby="h-try">
+      <div class="shead"><h2 class="h2" id="h-try">Three things to try</h2><p class="lead">A minute each.</p></div>
+      <ol class="b-steps3">{tries.map((t) => <li><b>{t.title}</b><span>{t.text}</span></li>)}</ol>
+    </section>
 
-  <Section labelledby="h-notes">
-    <HeadingPair id="h-notes" first="A demo" second="Not your site" class="opener" />
-    <ul class="grid gap-2.5">{notes.map((n) => <li class="text-[16.5px] leading-snug">{n}</li>)}</ul>
-  </Section>
+    <section aria-labelledby="h-notes">
+      <div class="shead"><h2 class="h2" id="h-notes">Good to know</h2><p class="lead">It is a demo, not your site.</p></div>
+      <div class="b-facts">{notes.map((n) => <div>{n}</div>)}</div>
+    </section>
 
-  <Closing wrap />
+    <Fin title="Now put it on your own site" />
+  </div>
 </Base>

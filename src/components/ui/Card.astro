@@ -1,6 +1,0 @@
----
-// The one card: white, one hairline, 8 px corners, flat (no shadow).
-interface Props { class?: string; [attr: string]: unknown }
-const { class: cls, ...attrs } = Astro.props;
----
-<div class:list={['min-w-0 rounded-card border border-border bg-card p-6 md:p-8', cls]} {...attrs}><slot /></div>

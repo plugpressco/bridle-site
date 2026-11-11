@@ -1,0 +1,15 @@
+---
+// The end of a tool's page: the other three tools.
+import { TOOLS, type ToolKey } from './tools';
+interface Props { not: ToolKey }
+const { not } = Astro.props;
+const rest = (Object.keys(TOOLS) as ToolKey[]).filter((k) => k !== not);
+---
+<section aria-labelledby="h-next">
+  <div class="shead"><h2 class="h2" id="h-next">The other three tools</h2><p class="lead">They come in the same plugin.</p></div>
+  <div class="b-next3">
+    {rest.map((k) => (
+      <a href={TOOLS[k].href}><span class="b-pname"><i><svg class="i" aria-hidden="true"><use href={`#${TOOLS[k].icon}`} /></svg></i>{TOOLS[k].name}</span><b>{TOOLS[k].claim}</b></a>
+    ))}
+  </div>
+</section>

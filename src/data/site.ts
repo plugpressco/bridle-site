@@ -1,11 +1,9 @@
 // One place for facts that show up on more than one page. Change a number here
 // and every page, its Markdown copy, llms.txt and the JSON-LD follow.
-// Prices (Fahim, 9 November 2026): three Bridle Pro licences, 1, 3 and 10
-// sites, each with Bridle AI answers, sold to pay once as a Black Friday
-// deal. All three go up $20 every 20 sales, counting every Bridle Pro sale
-// together. The deal ends at endsAt (Cyber Monday, 11:59 pm New York) or
-// after sale 170, whichever comes first; then Pro is yearly. Plans, Polar
-// product ids, steps and the end live in deal.json.
+// The offer (owner, 12 November 2026): one licence. 5 sites, 10 inboxes, 1,000
+// AI answers, one payment. Black Friday price $99 until the end of Cyber
+// Monday (30 November, 11:59 pm New York), then $249. One price, one deadline.
+// The plan, its Polar product id and the deadline live in deal.json.
 import DEAL_DATA from './deal.json';
 
 export const SITE = {
@@ -13,7 +11,7 @@ export const SITE = {
   url: 'https://bridle.to',
   // The same sentence everywhere: home, llms.txt, the JSON-LD.
   definition:
-    'Bridle is an AI support agent for WordPress. It answers your support email and chat from your own docs. The hard ones come to you.',
+    'Bridle is the help desk that lives in your WordPress: a shared inbox, AI answers, chat and docs in one plugin.',
   // Mail to bridle.to goes through the email relay's catch-all, which hands
   // addresses no site registered to PlugPress's fallback mailbox. Give
   // hello@ its own Email Routing rule before launch.
@@ -27,7 +25,7 @@ export const SITE = {
   founder: 'Fahim Reza',
   saddle: 'https://saddle.to',
   requires: 'WordPress 7.0+ · PHP 8.1+',
-  updated: '10 November 2026',
+  updated: '12 November 2026',
   // The prices in the cost comparison were read on this day (src/data/cost.ts).
   pricesChecked: '10 November 2026',
 };
@@ -42,13 +40,6 @@ export const DEMO = {
   url: `https://playground.wordpress.net/?mode=seamless&blueprint-url=${encodeURIComponent(DEMO_BLUEPRINT)}`,
 };
 
-// Cloudflare Turnstile on the waitlist. Empty = off: the form posts without a
-// token and the function skips the check. To turn it on, put the widget's
-// site key here AND set TURNSTILE_SECRET and TURNSTILE_HOSTNAMES
-// (bridle.to,www.bridle.to) on the Space. With a secret on the Space and no
-// key here, every sign-up is refused.
-export const TURNSTILE_SITEKEY = '';
-
 // Bridle AI: for sites without their own AI key.
 export const AI = {
   free: 100,
@@ -60,66 +51,36 @@ export const AI = {
   topUpFrom: 10,
 };
 
-// Launch switch, one for the whole site: false shows the waitlist (an email
-// field and "Join the waitlist") wherever a button would say "Get Bridle
-// free" or buy Pro. Set it to true on launch day, once Bridle is live on
-// WordPress.org and the Polar variables are on the Space (see README): the
-// free buttons then go to WPORG_URL and the Pro buttons open a Polar checkout
-// at the current price.
+// Checkout switch. true: the buy buttons open a Polar checkout at the price
+// right now (spacefast/functions/api/checkout.ts). false: they go to /pricing/.
 export const CHECKOUT_OPEN = true;
-export const LAUNCHED = CHECKOUT_OPEN;
 // Bridle's page on WordPress.org (the slug we asked for; check it once the
 // plugin is approved).
 export const WPORG_URL = 'https://wordpress.org/plugins/bridle/';
-// Until WordPress.org approves Bridle (owner, 10 November 2026), "Get Bridle
-// free" downloads the zip from here. A zip install has the same slug, so it
-// updates from WordPress.org by itself once Bridle is listed. Set to true
-// then; the free buttons and words follow.
+// Until WordPress.org approves Bridle (owner, 10 November 2026), the thanks
+// page hands buyers the zip from here. A zip install has the same slug, so it
+// updates from WordPress.org by itself once Bridle is listed. Set to true then.
 export const WPORG_LIVE = false;
 export const ZIP_URL = '/download/bridle.zip';
-// A Bridle Pro buyer's Polar account: the licence key and the Pro download.
+// A buyer's Polar account: the licence key and the download.
 export const ACCOUNT_URL = 'https://polar.sh/bridle/portal';
 export const FREE_URL = WPORG_LIVE ? WPORG_URL : ZIP_URL;
-// Where the free plugin comes from, in words.
-export const FREE_FROM = WPORG_LIVE ? 'Free from WordPress.org.' : 'Free download. Soon on WordPress.org.';
 
-export type Step = { from: number; to: number };
-export type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number | null; productId: string };
-export const DEAL: { total: number; refundDays: number; rise: number; endsAt: string; endsLabel: string; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
-
-// A plan's price at step i (0 = the first 10 sales).
-export const priceAt = (plan: Plan, i: number) => plan.base + DEAL.rise * i;
-export const sitesLabel = (n: number) => (n === 1 ? '1 site' : `${n} sites`);
-
-// What each plan does: an icon, a short name, one short line.
-export type Feature = { icon: string; name: string; text: string };
-
-// Inboxes per site on the Bridle mail service (bridle#174): free, then each Pro plan's (deal.json).
-export const INBOXES = { free: 3 };
-export const inboxesLabel = (n: number | null) => (n === null ? 'unlimited inboxes' : `${n} inboxes`);
-
-export const PRO_FEATURES: Feature[] = [
-  { icon: 'i-globe', name: 'Chat on other sites', text: 'One line of code per site.' },
-  { icon: 'i-live', name: 'Live chat', text: 'Jump in while they are still there.' },
-  { icon: 'i-clock', name: 'Business hours', text: 'Tells people when you are back.' },
-  { icon: 'i-bag', name: 'Order lookups', text: 'Reads their orders before it replies.' },
-  { icon: 'i-help', name: 'Missing answers', text: 'Shows what it couldn’t answer.' },
-  { icon: 'i-history', name: 'Team reminders', text: 'A nudge when someone waits too long.' },
-  { icon: 'i-inbox', name: 'More inboxes', text: '10, 25 or as many as you like.' },
-];
-
-// Bridle Pro: three licences, every Pro feature in each, pay once.
-export const PRO = {
-  total: DEAL.total,
-  refundDays: DEAL.refundDays,
-  rise: DEAL.rise,
-  endsAt: DEAL.endsAt,
-  endsLabel: DEAL.endsLabel,
-  steps: DEAL.steps,
-  first: DEAL.steps[0],
-  plans: DEAL.plans,
-  features: PRO_FEATURES,
-};
+export type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number; productId: string };
+export const DEAL: { refundDays: number; after: number; endsAt: string; endsLabel: string; orgId: string; plans: Plan[] } = DEAL_DATA;
 
 export const money = (n: number) => '$' + n.toLocaleString('en-US');
 export const count = (n: number) => n.toLocaleString('en-US');
+
+// The one licence. While the Black Friday offer runs (decided when the site
+// is built; src/scripts/deal.js switches a page that is still open when the
+// offer ends) the price is the plan's base, then DEAL.after.
+export const PLAN = DEAL.plans[0];
+export const OFFER_ON = Date.now() < Date.parse(DEAL.endsAt);
+export const PRICE = OFFER_ON ? PLAN.base : DEAL.after;
+// "$99 once until 30 November. Then $249." or "$249 once."
+export const PRICE_LINE = OFFER_ON ? `${money(PLAN.base)} once until ${DEAL.endsLabel}. Then ${money(DEAL.after)}.` : `${money(DEAL.after)} once.`;
+export const BUY_URL = CHECKOUT_OPEN ? `/api/checkout?plan=${PLAN.key}` : '/pricing/#plans';
+
+// Inboxes per site on the Bridle mail service: without a licence, and with one.
+export const INBOXES = { free: 3, licence: PLAN.inboxes };

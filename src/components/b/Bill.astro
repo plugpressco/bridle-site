@@ -1,0 +1,31 @@
+---
+// The bill: what two people and 300 AI answers cost in a year, as twelve
+// dots. Help Scout pays twelve times; Bridle pays once. Help Scout's prices
+// come from src/data/cost.ts (read on its pricing page; the day is in the note).
+import { RIVALS, PEOPLE, CHECKED } from '../../data/cost';
+import { PLAN, DEAL, OFFER_ON, PRICE, money, count } from '../../data/site';
+const hs = RIVALS.find((r) => r.key === 'hs')!;
+const answers = 300;
+const monthly = PEOPLE * hs.seat + answers * hs.perAnswer;
+const twelve = Array.from({ length: 12 });
+---
+<section aria-labelledby="h-bill">
+  <div class="shead"><h2 class="h2" id="h-bill">Two people. {answers} AI answers.</h2><p class="lead">Help Scout bills every month, by the person and by the answer. Bridle is one payment.</p></div>
+  <div class="b-pay">
+    <div class="b-payrow b-them">
+      <div class="b-pwho"><b>Help Scout</b><small>{PEOPLE} people at {money(hs.seat)}, and {answers} AI answers at ${hs.perAnswer.toFixed(2)}</small></div>
+      <div class="b-months" aria-hidden="true"><div>{twelve.map(() => <i></i>)}</div><span>Paid 12 times a year</span></div>
+      <div class="b-sum"><b>{money(monthly)}</b><span>every month</span></div>
+    </div>
+    <div class="b-payrow b-us">
+      <div class="b-pwho"><b>Bridle</b><small>No charge per person, and {count(PLAN.answers)} AI answers included</small></div>
+      <div class="b-months" aria-hidden="true"><div>{twelve.map((_, i) => <i class:list={[i === 0 && 'b-on']}></i>)}</div><span>Paid once</span></div>
+      <div class="b-sum"><b data-deal="price">{money(PRICE)}</b><span>once, for {PLAN.sites} sites</span></div>
+    </div>
+  </div>
+  <p class="small billnote">Help Scout {hs.plan}, billed yearly, after its 3 free months of AI. It counts resolutions and Bridle counts answers. Read on helpscout.com/pricing, {CHECKED}.{OFFER_ON && ` Bridle is ${money(PLAN.base)} until ${DEAL.endsLabel} 2026, then ${money(DEAL.after)}.`}</p>
+</section>
+
+<script>
+  import '../../scripts/deal.js';
+</script>

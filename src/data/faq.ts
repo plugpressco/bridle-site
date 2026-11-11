@@ -1,81 +1,58 @@
-// The questions on the home and pricing pages (also their FAQPage JSON-LD and
-// the Markdown copies). Approved copy: planning/landing/pages/home/08-copy.md
-// §8 and pages/pricing/08-copy.md §7. Only what Bridle does today.
-import { AI, PRO, INBOXES, money, count } from './site';
+// The questions on the pricing and Help Scout pages (also their FAQPage
+// JSON-LD and the Markdown copies). Only what Bridle does today.
+import { DEAL, PLAN, OFFER_ON, money, count } from './site';
 
 export type QA = { q: string; a: string; id?: string };
 
-export const FAQ: QA[] = [
-  {
-    q: 'Will my customers know it’s an AI?',
-    a: 'Yes. The chat says so, and anyone can ask for a person.',
-  },
-  {
-    q: 'Can it send replies by itself?',
-    a: 'Only if you turn on Auto. Each reply waits 15 minutes, so you can stop it. Refunds, billing and upset customers always wait for you.',
-  },
-  {
-    q: 'What if it doesn’t know the answer?',
-    a: 'It doesn’t guess. The reply is yours to write.',
-  },
-  {
-    q: 'Do I need an AI key?',
-    a: `No. You get ${AI.free} free answers a month, then ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}. Or use your own key.`,
-  },
-  {
-    q: 'Will it slow down my site?',
-    a: 'No. Visitors load one small script, only when chat is on.',
-  },
-  {
-    q: 'Where is my data kept?',
-    a: 'In your WordPress. Our mail relay passes mail on and keeps nothing.',
-  },
-  {
-    id: 'ai-apps',
-    q: 'Does it work with Claude or ChatGPT?',
-    a: 'Yes. They can read your inbox and write drafts. Sending needs your OK.',
-  },
-  {
-    q: 'How many inboxes can I connect?',
-    a: `${INBOXES.free} per site, free, like support@ and sales@. Bridle Pro gives 10, 25 or as many as you like.`,
-  },
-  {
-    q: 'Is there a charge per person?',
-    a: 'No. Add as many teammates as you like.',
-  },
-];
-
-export const PRO_FAQ: QA[] = [
+export const PRICING_FAQ: QA[] = [
   {
     q: 'Is this a subscription?',
-    a: 'No. During the Black Friday deal you pay once and Pro is yours. You get updates and support for as long as we make Bridle Pro.',
+    a: 'No. You pay once and Bridle is yours. Updates and support come with it for as long as we make Bridle.',
   },
+  ...(OFFER_ON
+    ? [{
+        q: `What happens after ${DEAL.endsLabel}?`,
+        a: `The Black Friday price ends and Bridle costs ${money(DEAL.after)}. If you already bought, nothing changes for you.`,
+      }]
+    : []),
   {
-    q: 'What happens after Cyber Monday?',
-    a: 'Pay once ends and Pro is sold by the year. If you bought in the deal, nothing changes for you.',
-  },
-  {
-    q: 'What is an AI answer?',
-    a: 'One reply draft or one chat answer written by Bridle AI. With your own AI key, Bridle AI isn’t used and nothing is counted.',
+    q: 'How many sites can I use it on?',
+    a: `${PLAN.sites}. Staging and local copies of those sites don’t count.`,
   },
   {
     q: 'What if my AI answers run out?',
-    a: `Buy a pack inside Bridle, from ${money(AI.topUpFrom)} for ${count(AI.packs[0].answers)}. Packs never run out. Or connect your own AI key.`,
-  },
-  {
-    q: 'Can I move Pro to another site?',
-    a: 'Yes. Click “Remove from this site” in Settings, then add your key on the new site.',
-  },
-  {
-    q: 'What if Pro stops working one day?',
-    a: 'It won’t stop. A licence that can’t be checked only stops updates, never a feature. Bridle Pro is GPL.',
+    a: 'You can add more inside Bridle. Or connect your own AI key, with no limit.',
   },
   {
     q: 'Can I get my money back?',
-    a: `Yes. A full refund within ${PRO.refundDays} days of buying. Unused AI packs too.`,
+    a: `Yes. A full refund within ${DEAL.refundDays} days of buying. Unused AI packs too.`,
   },
   {
-    q: 'Who handles the payment?',
-    a: 'Polar. They take the card; we only see the order.',
+    q: 'Who takes the payment?',
+    a: 'Polar. They take your card. We only see the order.',
   },
 ];
+
+export const HS_FAQ: QA[] = [
+  {
+    q: 'Will Bridle slow my site?',
+    a: 'No. Email comes in through Bridle’s mail service, not your web server. Visitors load one 7 KB chat script, and only when chat is on.',
+  },
+  {
+    q: 'Do I need my own AI key?',
+    a: `No. Your licence comes with ${count(PLAN.answers)} AI answers. Your own Anthropic, OpenAI or Google key also works, with no limit.`,
+  },
+  {
+    q: 'Is Bridle a subscription?',
+    a: 'No. You pay once and it is yours.',
+  },
+  {
+    q: 'Is there a phone app?',
+    a: 'Not yet. If you answer support from your phone all day, Help Scout is the better pick today.',
+  },
+];
+
+export const faqLd = (items: QA[]) => ({
+  '@type': 'FAQPage',
+  mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});

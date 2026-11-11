@@ -1,0 +1,32 @@
+---
+// A tool page's hero: the home page's recipe in a shorter panel (the tool's
+// name, the headline, one line, two buttons, the dot mountains), then the
+// stage. There Bridle's dot display plays a three-step story of the tool, in step with three short lines, next to a picture of the screen.
+// The animation is CSS only and stops for people who ask for less motion.
+import Art from './Art.astro';
+import Cta from './Cta.astro';
+import Shot from './Shot.astro';
+import { badge, display, type Glyph } from './dots';
+interface Props {
+  name: string; glyph: Glyph; title: string; lead: string;
+  frames: [Glyph, Glyph, Glyph]; steps: [string, string, string];
+  shot: string; frame: 'conv' | 'brow' | 'duo'; seed: number;
+}
+const { name, glyph, title, lead, frames, steps, shot, frame, seed } = Astro.props;
+---
+<section class="b-hero" aria-labelledby="h-hero">
+  <div class="b-hpan b-inner">
+    <span class="b-say"><Fragment set:html={badge(glyph)} />{name}</span>
+    <h1 class="h1" id="h-hero">{title}.</h1>
+    <p class="lead">{lead}</p>
+    <Cta />
+    <Art seed={seed} />
+  </div>
+  <div class="b-cstage">
+    <div class="b-cface">
+      <div class="b-disp"><Fragment set:html={frames.map((f) => display(f)).join('')} /></div>
+      <ol class="b-fsteps">{steps.map((s) => <li>{s}</li>)}</ol>
+    </div>
+    <div class:list={[`b-${frame}`, 'b-shotimg']}><Shot name={shot as any} eager /></div>
+  </div>
+</section>

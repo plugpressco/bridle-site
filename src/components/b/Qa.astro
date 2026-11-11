@@ -1,0 +1,19 @@
+---
+// Questions: white rows that open with a plus. The first one starts open.
+// The page's FAQPage JSON-LD carries the same text.
+import type { QA } from '../../data/faq';
+import { SITE } from '../../data/site';
+interface Props { items: QA[]; title: string; id?: string }
+const { items, title, id = 'questions' } = Astro.props;
+---
+<section class="b-fq" id={id} aria-labelledby={`h-${id}`}>
+  <div class="shead"><h2 class="h2" id={`h-${id}`}>{title}</h2><p class="lead">Can’t find yours? <a class="b-tl" href={SITE.support}>Ask us.</a></p></div>
+  <div class="faq"><div class="qa">
+    {items.map((f, i) => (
+      <details id={f.id} open={i === 0}>
+        <summary>{f.q}<span class="pm" aria-hidden="true"></span></summary>
+        <p>{f.a}</p>
+      </details>
+    ))}
+  </div></div>
+</section>

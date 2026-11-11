@@ -3,23 +3,21 @@
 // ending in a slash, Open Graph and Twitter cards, JSON-LD, the Markdown copy
 // for AI apps, then the menu, the page and the footer.
 import '../styles/site.css';
+import '../styles/b.css';
 import Symbols from '../components/Symbols.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { SITE, TURNSTILE_SITEKEY } from '../data/site';
+import { SITE } from '../data/site';
 
 interface Props {
   title: string;
   description: string;
   jsonLd?: object[];
   noindex?: boolean;
-  // Pages with a waitlist form load Turnstile (when a site key is set) and
-  // point the menu's button at their own form (#join).
-  waitlist?: boolean;
   crumbs?: { name: string; path: string }[];
 }
 
-const { title, description, jsonLd = [], noindex = false, waitlist = true, crumbs = [] } = Astro.props;
+const { title, description, jsonLd = [], noindex = false, crumbs = [] } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const isHome = Astro.url.pathname === '/';
 const md = isHome ? '/index.md' : Astro.url.pathname.replace(/\/$/, '') + '.md';
@@ -64,8 +62,8 @@ const graph = [
     <!-- Not /apple-touch-icon.png: the host answers that path with its own default. -->
     <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <meta name="theme-color" content="#faf8f5" />
+    <link rel="preload" href="/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
@@ -74,23 +72,17 @@ const graph = [
     <meta property="og:image" content={og} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Bridle: your support email answers itself. You check the hard ones." />
+    <meta property="og:image:alt" content="Bridle: the help desk that lives in your WordPress." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
-    {waitlist && TURNSTILE_SITEKEY && (
-      <>
-        <script is:inline>window.bridleTurnstile = []; window.bridleTurnstileReady = function () { window.bridleTurnstile.forEach(function (render) { render(); }); };</script>
-        <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=bridleTurnstileReady" async defer></script>
-      </>
-    )}
     <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
   <body>
     <a class="absolute -top-16 left-4 z-[80] rounded-control bg-foreground px-4 py-2.5 text-white no-underline focus:top-3" href="#main">Skip to the content</a>
     <Symbols />
-    <Nav join={waitlist ? '#join' : '/#join'} />
+    <Nav />
     <main id="main">
       <slot />
     </main>
