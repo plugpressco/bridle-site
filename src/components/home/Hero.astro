@@ -1,60 +1,40 @@
 ---
-// 1 Hero (08-copy.md §1, headline A): the copy on the left; on the right the
-// one moving picture, the product working: an email arrives, the reply writes
-// itself with two checked sources, Send, then a refund goes to Needs you.
-// Drawn at the app's own size from its styles; flat; a pause button; with
-// reduced motion it rests on its last frame (src/scripts/hero.js).
+// 1 Hero ("tack" design, owner's pick 2026-11-11): the headline, one line
+// and two buttons on the left; on the right the product itself, drawn as
+// crisp cards on a soft blue panel: the Inbox with replies ready and a refund
+// that needs you, and in front the reply to Maya with its checked source.
+// Names are the made-up Fernleaf business used across the site.
 import Button from '../ui/Button.astro';
-import Waitlist from '../Waitlist.astro';
-import Dither from '../Dither.astro';
 import { LAUNCHED, FREE_URL } from '../../data/site';
-const use = (id: string) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
+const ready = [
+  { i: 'MC', c: '#5bb88a', n: 'Maya Chen', s: 'Gallery is blank on Safari 17' },
+  { i: 'LM', c: '#b276c9', n: 'Lucas Moreau', s: 'Can I use it on a staging site?' },
+  { i: 'BT', c: '#6a9e5a', n: 'Ben Turner', s: 'Do updates come with Pro?' },
+];
 ---
-<section class="hero" aria-labelledby="h-hero">
+<section class="thero" aria-labelledby="h-hero">
   <div class="copy">
     <h1 class="h1" id="h-hero">Your support email answers itself. <span class="soft">You check the hard ones.</span></h1>
-    <p class="lead">Bridle writes each reply from your docs, checks every fact and hands you the ones it can’t answer.</p>
-    {LAUNCHED ? (
-      <>
-        <div class="ctas"><Button size="lg" arrow href={FREE_URL}>Get Bridle free</Button><Button size="lg" variant="soft" href="/demo/">Try the live demo</Button></div>
-        <p class="by">Built by the team behind Saddle.</p>
-      </>
-    ) : (
-      <>
-        <Waitlist source="hero" />
-        <p class="by">Built by the team behind Saddle.</p>
-      </>
-    )}
-  </div>
-  <div class="panel hero-pic" role="img" aria-label="An email comes in, Bridle drafts a reply with its sources, and a refund question goes to a person.">
-    <Dither />
-    <div class="stage ui loop" id="loop" aria-hidden="true">
-      <div class="letter m1">
-        <div class="lhead"><svg class="face" data-seed="maya@example.com" viewBox="0 0 32 32"></svg><div class="who"><b>Maya Chen</b><span>to support@fernleaf.co</span></div><span class="when">9:12 AM</span></div>
-        <p class="lbody">Hi! Where is my order? I bought it on Monday.</p>
-      </div>
-      <div class="draft d1">
-        <div class="dhead"><svg class="face sm" data-bot viewBox="0 0 32 32"></svg><div><b>Bridle</b><span class="meta">Draft · High confidence · Verified</span></div><span class="chips"><span class="chip ready c-ready"><Fragment set:html={use('d-spark')} />Draft ready</span><span class="chip sent c-sent"><Fragment set:html={use('d-check')} />Sent</span></span></div>
-        <div class="typing"><i></i><i></i><i></i></div>
-        <p class="dbody">Hi Maya, orders ship within 2 working days<sup>1</sup>. You can track yours from the link in your receipt<sup>2</sup>.</p>
-        <div class="srcs-wrap grid gap-2"><span class="hide-src">Hide sources</span>
-          <div class="srcs">
-            <div class="src"><span class="n">1</span><b>Help doc <small>· Shipping times</small></b><em>✓ Checked</em></div>
-            <div class="src"><span class="n">2</span><b>Help doc <small>· Where is my order?</small></b><em>✓ Checked</em></div>
-          </div>
-        </div>
-        <div class="dacts"><span class="send"><Fragment set:html={use('d-send')} />Send as is</span><span><Fragment set:html={use('d-edit')} />Edit</span><span><Fragment set:html={use('d-wand')} />Rewrite</span><span><Fragment set:html={use('d-redo')} />Redraft</span><span class="right"><Fragment set:html={use('d-trash')} />Discard</span></div>
-      </div>
-      <div class="m2">
-        <p class="glabel">Needs you <span>1</span></p>
-        <div class="irow"><svg class="face" data-seed="jonas@bergphoto.se" viewBox="0 0 32 32"></svg><div class="t"><b>Jonas Berg<small>Refund for order 2187</small></b><span><span class="chip need c-need"><Fragment set:html={use('d-alert')} />Refund</span>I bought the 5-site plan by mistake.</span></div><time>2m</time></div>
-      </div>
+    <p class="lead">Bridle writes each reply from your docs and checks every fact. Refunds, billing and upset customers always wait for you.</p>
+    <div class="ctas">
+      {LAUNCHED ? <Button size="lg" arrow href={FREE_URL}>Get Bridle free</Button> : <Button size="lg" arrow href="#join">Join the waitlist</Button>}
+      <Button size="lg" variant="line" href="/demo/">Try the live demo</Button>
     </div>
-    <button type="button" class="pause" id="pause" aria-label="Pause the animation"><svg aria-hidden="true"><use href="#d-pause" /></svg></button>
+    <p class="small">Free for WordPress · Built by the team behind Saddle</p>
+  </div>
+  <div class="tstage" role="img" aria-label="The Bridle inbox: three replies ready to send and a refund that needs you. In front, the reply to Maya with its checked help doc source.">
+    <div class="pcard tinbox" aria-hidden="true">
+      <div class="tibar">Inbox <span>Support</span></div>
+      <div class="tglabel">Ready to send <i>3</i></div>
+      {ready.map((r) => <div class="prow"><span class="pava" style={`background:${r.c}`}>{r.i}</span><div class="pt"><b>{r.n}</b><span>{r.s}</span></div><span class="ptag blue">Draft ready</span></div>)}
+      <div class="tglabel">Needs you <i>1</i></div>
+      <div class="prow"><span class="pava" style="background:#c98a5b">JB</span><div class="pt"><b>Jonas Berg</b><span>Refund for order 2187</span></div><span class="ptag amber">Refund</span></div>
+    </div>
+    <div class="pcard pdraft tfront" aria-hidden="true">
+      <div class="ptop"><span class="pava sm">B</span><b>Reply to Maya</b><span class="ptag green">✓ Facts checked</span></div>
+      <p>Hi Maya, clear your cache plugin and turn off “Lazy load images” under Fernleaf → Performance.<sup>1</sup> Version 3.4.2 fixes it for good.<sup>1</sup></p>
+      <div class="psrc"><span class="n">1</span><span><b>Help doc</b> · Gallery not showing on Safari</span></div>
+      <div class="pacts"><span class="go">Send</span><span>Edit</span><span>Rewrite</span></div>
+    </div>
   </div>
 </section>
-
-<script>
-  import '../../scripts/faces.js';
-  import '../../scripts/hero.js';
-</script>

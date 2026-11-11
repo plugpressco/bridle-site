@@ -1,0 +1,79 @@
+---
+// The pricing table (owner, 2026-11-11: "make proper pricing table"): Free
+// and Pro for 1, 3 and 10 sites side by side, then the features row by row.
+// Prices, inboxes and AI answers come from src/data (deal.json, site.ts);
+// "Next price" is the price after the next 20 sales. Buttons follow the
+// launch switch.
+import Button from '../ui/Button.astro';
+import { AI, PRO, INBOXES, LAUNCHED, FREE_URL, WPORG_LIVE, money, count, sitesLabel } from '../../data/site';
+interface Props { id?: string; title?: [string, string] }
+const { id = 'plans', title = ['Free for good.', 'Pay once for Pro.'] } = Astro.props;
+const Y = '✓';
+const pro = PRO.plans;
+const pick = '3';
+type Cell = string | boolean;
+const groups: { name: string; rows: [string, Cell, ...Cell[]][] }[] = [
+  { name: 'Email', rows: [
+    ['Inboxes', `${INBOXES.free} per site`, ...pro.map((p) => (p.inboxes == null ? 'Unlimited' : String(p.inboxes)))],
+    ['Reply drafts, fact checks, Auto', true, ...pro.map(() => true)],
+    ['Teammates', 'No limit', ...pro.map(() => 'No limit')],
+  ] },
+  { name: 'Chat and docs', rows: [
+    ['Chat on this site', true, ...pro.map(() => true)],
+    ['Chat on your other sites', false, ...pro.map(() => true)],
+    ['Live chat and business hours', false, ...pro.map(() => true)],
+    ['Help center (Bridle KB)', true, ...pro.map(() => true)],
+    ['Missing answers, “write a doc”', false, ...pro.map(() => true)],
+  ] },
+  { name: 'AI and orders', rows: [
+    ['Bridle AI answers', `${AI.free} a month`, ...pro.map((p) => `${count(p.answers)} included`)],
+    ['Your own AI key', 'No limit', ...pro.map(() => 'No limit')],
+    ['Order and licence lookups', 'WooCommerce card', ...pro.map(() => 'All stores')],
+    ['Updates and support', 'Free', ...pro.map(() => 'For life')],
+  ] },
+];
+const cell = (c: Cell) => (c === true ? Y : c === false ? '—' : c);
+---
+<section class="band" id={id} aria-labelledby={`h-${id}`}>
+  <div class="opener">
+    <h2 class="h2" id={`h-${id}`}>{title[0]} <span class="soft">{title[1]}</span></h2>
+    <p class="dealnote"><b>Black Friday</b>Pay once until Cyber Monday. Then Pro is yearly. The price goes up {money(PRO.rise)} every 20 sales.</p>
+  </div>
+  <div class="ptable">
+    <table>
+      <colgroup><col class="feat" /><col />{pro.map((p) => <col class:list={[p.key === pick && 'pk']} />)}</colgroup>
+      <thead>
+        <tr>
+          <td></td>
+          <th scope="col" class="pcol">
+            <div class="name">Bridle</div>
+            <div class="price"><b>$0</b><span>forever</span></div>
+            <div class="was">{WPORG_LIVE ? 'Free on WordPress.org' : 'Free download'}</div>
+            <Button variant="line" href={LAUNCHED ? FREE_URL : '#join'}>{LAUNCHED ? 'Get Bridle free' : 'Join the waitlist'}</Button>
+          </th>
+          {pro.map((p) => (
+            <th scope="col" class:list={['pcol', p.key === pick && 'pick']}>
+              {p.key === pick && <span class="picktab">Our pick</span>}
+              <div class="name">Pro · {sitesLabel(p.sites)}</div>
+              <div class="price"><b>{money(p.base)}</b><span>once</span></div>
+              <div class="was">Next price {money(p.base + PRO.rise)}</div>
+              <Button variant={p.key === pick ? 'primary' : 'line'} href={LAUNCHED ? `/api/checkout?plan=${p.key}` : '#join'}>{LAUNCHED ? 'Get Pro' : 'Join the waitlist'}</Button>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      {groups.map((g) => (
+        <tbody>
+          <tr class="grp"><th scope="rowgroup" colspan={2 + pro.length}>{g.name}</th></tr>
+          {g.rows.map(([name, ...cells]) => (
+            <tr>
+              <th scope="row">{name}</th>
+              {cells.map((c, i) => <td class:list={[c === true && 'y', c === false && 'no', i > 0 && pro[i - 1].key === pick && 'pick']}>{c === true ? <><span aria-hidden="true">{Y}</span><span class="sr-only">Yes</span></> : c === false ? <><span aria-hidden="true">—</span><span class="sr-only">No</span></> : cell(c)}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      ))}
+      <tfoot><tr><td colspan={2 + pro.length}><a class="pfull" href="/pricing/#compare">Compare every feature ›</a> {PRO.refundDays}-day refund on Pro. No subscription during the deal. More AI answers: {money(AI.packs[0].price)} for {count(AI.packs[0].answers)}, and packs never run out.</td></tr></tfoot>
+    </table>
+  </div>
+</section>

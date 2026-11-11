@@ -1,20 +1,15 @@
 ---
-// The home page (design v3, approved 10 November 2026:
-// planning/landing/pages/home/11-design.html). Copy word for word from
-// planning/landing/pages/home/08-copy.md, in its order: hero, what it does,
-// checks, cost, three steps, the deal, the founder's note, questions,
-// closing. One moving picture (the hero), one navy panel, one blue panel.
+// The home page, "tack" design (owner's pick 2026-11-11:
+// planning/landing/pages/home/15-home.html): hero with the product, three
+// ways every email goes, chat and docs on your site, the pricing table, the
+// closing. Serif headings, cream page, crisp product cards.
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
-import Does from '../components/home/Does.astro';
-import Checks from '../components/home/Checks.astro';
-import Cost from '../components/Cost.astro';
-import Deal from '../components/home/Deal.astro';
-import Founder from '../components/home/Founder.astro';
-import Faq from '../components/ui/Faq.astro';
+import Ways from '../components/home/Ways.astro';
+import OnSite from '../components/home/OnSite.astro';
+import Table from '../components/pricing/Table.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
-import { FAQ } from '../data/faq';
 import { SITE, AI, PRO, sitesLabel } from '../data/site';
 
 const page = PAGES.home;
@@ -35,21 +30,14 @@ const jsonLd = [
       ...PRO.plans.map((p) => ({ '@type': 'Offer', name: `Bridle Pro, pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pricing/#plans` })),
     ],
   },
-  {
-    '@type': 'FAQPage',
-    mainEntity: FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  },
 ];
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd}>
   <div class="wrap stack-sections">
     <Hero />
-    <Does />
-    <Checks />
-    <Cost id="cost" />
-    <Deal join="#join" />
-    <Founder />
-    <Faq items={FAQ} title="Questions, answered." />
-    <Closing source="footer" />
+    <Ways />
+    <OnSite />
+    <Table />
+    <Closing title="Let Bridle write." second="You check the hard ones." sub="Free for WordPress. Your support address stays the same." source="footer" />
   </div>
 </Base>

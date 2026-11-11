@@ -4,7 +4,7 @@
 // text link. The arrow (›) moves 2 px on hover.
 interface Props {
   href?: string;
-  variant?: 'primary' | 'soft' | 'white' | 'link';
+  variant?: 'primary' | 'soft' | 'line' | 'dark' | 'white' | 'link';
   size?: 'sm' | 'md' | 'lg';
   arrow?: boolean;
   class?: string;
@@ -15,6 +15,8 @@ const { href, variant = 'primary', size = 'md', arrow = false, class: cls, type 
 const look = {
   primary: 'bg-brand-600 text-white hover:bg-brand-700',
   soft: 'bg-brand-100 text-brand-700 hover:bg-brand-200',
+  line: 'bg-card text-foreground shadow-[inset_0_0_0_1px_var(--color-input)] hover:bg-white',
+  dark: 'bg-transparent text-white shadow-[inset_0_0_0_1px_#4a443b] hover:shadow-[inset_0_0_0_1px_#7d7468]',
   white: 'bg-white text-foreground hover:bg-brand-50',
   link: 'text-foreground underline decoration-input underline-offset-4 hover:decoration-current',
 }[variant];

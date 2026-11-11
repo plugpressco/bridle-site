@@ -5,6 +5,7 @@ The page's own code, copy, mark and photo are © 2026 PlugPress, all rights rese
 | What | Where | Licence |
 |---|---|---|
 | Geist, © 2024 The Geist Project Authors (from `@fontsource-variable/geist` 5.3.0) | `public/fonts/geist-latin.woff2` | SIL Open Font License 1.1, see `public/fonts/OFL-geist.txt` |
+| Fraunces, © 2018 The Fraunces Project Authors (from Google Fonts) | `public/fonts/fraunces-latin.woff2`, `public/fonts/fraunces-italic-latin.woff2` | SIL Open Font License 1.1, see `public/fonts/OFL-fraunces.txt` |
 | Geist Mono, © 2024 The Geist Project Authors | `public/fonts/geist-mono-latin.woff2` | SIL Open Font License 1.1, see `public/fonts/OFL-geist-mono.txt` |
 | Agent logo paths (OpenAI, Claude, Codex, Cursor, MCP) from LobeHub Icons, © LobeHub | `src/components/Symbols.astro` | MIT, below |
 | Interface icons from Lucide, © Lucide Contributors | `src/components/Symbols.astro` | ISC |

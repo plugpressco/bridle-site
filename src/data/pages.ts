@@ -30,52 +30,47 @@ export const PAGES: Record<string, PageInfo> = {
       'Bridle answers your support email and site chat from your own docs, checks every fact and hands the hard ones to you. Free for WordPress.',
     md: `# Your support email answers itself. You check the hard ones.
 
-AI support agent for WordPress. Bridle writes each reply from your docs, checks every fact and hands you the ones it can’t answer.
+AI support agent for WordPress. Bridle writes each reply from your docs and checks every fact. Refunds, billing and upset customers always wait for you.
 
 ${waitlist}
 
-Built by the team behind Saddle (${SITE.saddle}).
+Free for WordPress. Built by the team behind Saddle (${SITE.saddle}).
 
-## Every email comes with a reply.
+## Every email goes one of three ways.
 
-Read it, then send it.
+Bridle reads each one and picks the way. You always see where it went.
 
-- **Ready to send.** Replies wait for you, already written.
-- **Knows your business.** It reads your docs, pages, products and past replies.
-- **Sorts your mail.** Receipts go to Updates. Scams go to Spam.
-- **Chat on your site.** It answers visitors from the same docs.
+- **Ready to send.** The reply is written from your docs, every fact checked. Read it, then send it.
+- **Needs you.** Refunds, billing and upset customers. Bridle never sends these. A person answers.
+- **Filed away.** Receipts go to Updates. Scams go to Spam. Your Inbox shows only people.
 
-## It checks before it speaks.
+## The same answers, on your site.
 
-No fact without a source.
+- **Chat.** Answers visitors from your docs, day and night. Refunds and hard questions go straight to you. ${SITE.url}/chat/
+- **Knowledge base.** A free help center for your site. Customers search it, and Bridle answers from it. ${SITE.url}/knowledge-base/
 
-Every quote and link must match your docs. If one doesn’t, the reply waits for you.
+## Free for good. Pay once for Pro.
 
-Refunds, billing and upset customers always go to you.
+Black Friday: pay once until Cyber Monday. Then Pro is yearly. The price goes up ${money(PRO.rise)} every 20 sales.
 
-## About a cent an answer.
+| | Bridle | ${PRO.plans.map((p) => `Pro, ${sitesLabel(p.sites)}`).join(' | ')} |
+|---|---|${PRO.plans.map(() => '---').join('|')}|
+| Price | $0, forever | ${PRO.plans.map((p) => `${money(p.base)} once`).join(' | ')} |
+| Inboxes | ${INBOXES.free} per site | ${PRO.plans.map((p) => (p.inboxes == null ? 'Unlimited' : String(p.inboxes))).join(' | ')} |
+| Reply drafts, fact checks, Auto | Yes | ${PRO.plans.map(() => 'Yes').join(' | ')} |
+| Chat on this site | Yes | ${PRO.plans.map(() => 'Yes').join(' | ')} |
+| Chat on your other sites, live chat | No | ${PRO.plans.map(() => 'Yes').join(' | ')} |
+| Help center (Bridle KB) | Yes | ${PRO.plans.map(() => 'Yes').join(' | ')} |
+| Missing answers, “write a doc” | No | ${PRO.plans.map(() => 'Yes').join(' | ')} |
+| Bridle AI answers | ${AI.free} a month | ${PRO.plans.map((p) => `${count(p.answers)} included`).join(' | ')} |
+| Order and licence lookups | WooCommerce card | ${PRO.plans.map(() => 'All stores').join(' | ')} |
+| Updates and support | Free | ${PRO.plans.map(() => 'For life').join(' | ')} |
 
-Or free with your own AI key.
+${PRO.refundDays}-day refund on Pro. More AI answers: ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}, and packs never run out. All plans: ${SITE.url}/pricing/
 
-Other help desks charge up to $2 each time their AI answers, plus a price per person.
+## Let Bridle write. You check the hard ones.
 
-At 300 AI answers a month, for ${PEOPLE} people:
-
-${costLines}
-
-${counted}
-
-## Pay once for Bridle Pro.
-
-Only until Cyber Monday. Pro adds chat on your other sites, live chat with your hours, and order and licence lookups. ${money(PRO.plans[0].base)}, pay once, for 1 site. The price goes up ${money(PRO.rise)} every 20 sales. ${PRO.refundDays}-day refund. All plans: ${SITE.url}/pricing/
-
-## A note from the founder.
-
-“Every day we answer the same questions by email. So we built Bridle for our own inbox.” It writes the reply. We check it and send it. Bridle is free, and it stays free. Fahim Reza, founder, PlugPress (${SITE.email})
-
-## Questions, answered.
-
-${qa(FAQ)}
+Free for WordPress. Your support address stays the same.
 
 ## Links
 
