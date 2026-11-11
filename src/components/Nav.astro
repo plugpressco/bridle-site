@@ -11,10 +11,10 @@ interface Props { join?: string }
 const { join = '/#join' } = Astro.props;
 const path = Astro.url.pathname;
 const product = [
-  { key: 'email', label: 'Email', text: 'Answers your support email', href: '/#email' },
+  { key: 'email', label: 'Inbox', text: 'Every email comes with a reply', href: '/inbox/' },
   { key: 'chat', label: 'Chat', text: 'Answers visitors on your site', href: '/chat/' },
-  { key: 'docs', label: 'Docs', text: 'A help center your AI reads', href: '/guides/knowledge-gaps/' },
-  { key: 'apps', label: 'AI apps', text: 'Claude and ChatGPT work your inbox', href: '/#ai-apps' },
+  { key: 'docs', label: 'Knowledge base', text: 'A help center Bridle answers from', href: '/knowledge-base/' },
+  { key: 'apps', label: 'AI apps', text: 'Claude and ChatGPT work your inbox', href: '/inbox/#ai-apps' },
 ];
 const shot = (name: string, w: number, h: number) => `<picture><source srcset="/img/${name}.avif" type="image/avif" /><img class="screen" src="/img/${name}.webp" width="${w}" height="${h}" alt="" loading="lazy" decoding="async" /></picture>`;
 const resources = [
@@ -56,7 +56,7 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
           <div class="mprev" aria-hidden="true">
             <figure class="on" data-pane="email"><Fragment set:html={shot('inbox-groups', 820, 566)} /></figure>
             <figure data-pane="chat"><Fragment set:html={shot('chat-answer', 400, 680)} /></figure>
-            <figure data-pane="docs"><Fragment set:html={shot('conversation-draft', 803, 723)} /></figure>
+            <figure data-pane="docs"><Fragment set:html={shot('kb-help', 1040, 450)} /></figure>
             <figure data-pane="apps"><div class="apps"><p class="q"><b>You, in Claude</b>Answer the easy ones in my Bridle inbox.</p><p class="a"><b>Claude</b>I wrote 3 drafts in Bridle. Sending needs your OK.</p></div></figure>
           </div>
         </div>

@@ -8,7 +8,7 @@ import Button from './ui/Button.astro';
 import Shot from './Shot.astro';
 import { LAUNCHED, FREE_URL } from '../data/site';
 interface Props {
-  eyebrow: string;
+  eyebrow?: string;
   title: [string, string];
   lead: string;
   shot: { name: string; width: number; height: number; alt: string };

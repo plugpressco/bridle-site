@@ -1,63 +1,19 @@
 ---
-// /chat/: Bridle Chat, free in Bridle (plugin #114, follow-up #120). Every
-// claim here is in the plugin's AGENTS.md §6 "Bridle Chat".
+// /chat/: Bridle Chat, free in Bridle. Big screen rows like /inbox/. Facts from the plugin's AGENTS.md §6.
 import Base from '../layouts/Base.astro';
-import PageHero from '../components/PageHero.astro';
-import Section from '../components/ui/Section.astro';
-import HeadingPair from '../components/ui/HeadingPair.astro';
-import Button from '../components/ui/Button.astro';
-import ChatDemo from '../components/ChatDemo.astro';
+import Hero from '../components/feature/Hero.astro';
+import Rows from '../components/feature/Rows.astro';
+import Checklist from '../components/feature/Checklist.astro';
 import Closing from '../components/Closing.astro';
 import { PAGES } from '../data/pages';
-
 const page = PAGES.chat;
-// One list of what it does: icon, short name, one line (owner, 2026-11-11:
-// "make cleaner simple"). Facts from AGENTS.md §6.
-const does = [
-  { icon: 'i-book', name: 'Looks it up', text: 'In your docs, pages and old replies.' },
-  { icon: 'i-check-circle', name: 'Checks first', text: 'Not sure? It won’t guess.' },
-  { icon: 'i-user', name: 'Hands off', text: 'Refunds and angry people go to you.' },
-  { icon: 'i-message', name: 'You reply in the chat', text: 'If they are still on your site.' },
-  { icon: 'i-inbox', name: 'Or by email', text: 'If they already left.' },
-  { icon: 'i-clock', name: 'A real wait time', text: 'Based on how fast you reply.' },
-];
-const handled = 'Built in: it says it is an AI, blocks spam bots, and uses your colour and icon.';
+const rows = [{"id": "sources", "title": "Answers with its source.", "text": "Every answer comes from what you wrote and shows where it came from. Visitors can check it, and so can you.", "points": ["Your docs, pages and past replies", "A numbered source under each answer", "Says it is an AI"], "ui": "<div class=\"mq\" style=\"padding:18px;gap:12px\"><div class=\"mq-b us\">Can I use it on a staging site?</div><div class=\"mq-b them\">Staging and local sites don’t count against your licence.<br><small style=\"color:var(--color-muted-foreground)\">1 · Use it on a staging site</small></div></div>"}, {"id": "no-guess", "title": "It won’t guess.", "text": "When the answer isn’t in your docs, Bridle says so and asks for a person. Refunds and upset people go straight to you.", "ui": "<div class=\"mq\" style=\"padding:18px;gap:12px\"><div class=\"mq-b us\">Do you ship to Canada?</div><div class=\"mq-b them\">I’m not sure. A person will reply here.</div></div>"}, {"id": "handoff", "title": "You reply where they are.", "text": "The chat lands in your Inbox. Reply in the chat if they are still on your site, or by email if they left. They see a real wait time.", "points": ["Reply in the chat", "Or by email", "A wait time based on how fast you reply"], "ui": "<div class=\"mq\"><div class=\"mq-r\"><div class=\"mq-l\"><b>In the chat</b><span class=\"mpill ok\">Still on your site</span></div></div><div class=\"mq-r\"><div class=\"mq-l\"><b>By email</b><span class=\"mpill\">Left the site</span></div></div></div>"}];
 ---
-<Base title={page.title} description={page.description} crumbs={[{ name: 'Bridle Chat', path: page.path }]}>
-  <PageHero
-    eyebrow="Bridle Chat · free"
-    title={['A chat that answers', 'From what you wrote']}
-    lead="It answers visitors from your docs. The rest come to you."
-    shot={{ name: 'chat-answer', width: 400, height: 680, alt: 'Bridle’s chat on a website, answering a question with a numbered source.' }}
-    more={{ href: '#demo', label: 'See it answer' }}
-  />
-
-  <Section id="demo" labelledby="h-demo">
-    <HeadingPair id="h-demo" first="See it answer." class="opener" />
-    <ChatDemo />
-  </Section>
-
-  <Section labelledby="h-does" tone="tint">
-    <h2 class="h2 opener" id="h-does">What it does.</h2>
-    <ul class="feats">
-      {does.map((f) => (
-        <li>
-          <span class="fi"><svg class="i" aria-hidden="true"><use href={`#${f.icon}`} /></svg></span>
-          <h3>{f.name}</h3>
-          <p>{f.text}</p>
-        </li>
-      ))}
-    </ul>
-    <p class="feats-note">{handled}</p>
-  </Section>
-
-  <Section labelledby="h-pro" inner="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto]">
-    <div class="grid gap-4">
-      <h2 class="h2" id="h-pro">More sites? Get Pro.</h2>
-      <p class="lead text-ink-2">Bridle Pro puts the chat on your other sites, one line of code each, and adds live chat.</p>
-    </div>
-    <Button href="/pricing/" arrow>See pricing</Button>
-  </Section>
-
-  <Closing title="Let the chat answer." second="You take the hard ones." source="chat" wrap />
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Chat', path: page.path }]}>
+  <Hero title={["Answers your visitors now.", "Even at 3 am."]} lead={"Bridle Chat sits on your site and answers from your docs, pages and past replies. When it isn’t sure, it hands the chat to you."} shot={{"name": "chat-answer", "width": 400, "height": 680, "alt": "Bridle’s chat on a website, answering a question with a numbered source."}} center more={{ href: '/demo/', label: 'Try the live demo' }} />
+  <div class="wrap stack-sections fpage">
+    <Rows rows={rows} />
+    <Checklist id="all" title={"Everything in the chat."} free={["Answers from your docs, pages and past replies", "Shows the source of each answer", "Never guesses, hands over to a person", "Reply in the chat or by email", "A real wait time", "Says it is an AI, blocks spam bots", "Your colour and icon"]} pro={["Chat on your other sites", "Live chat while they are still there", "Business hours", "1,000 to 10,000 AI answers included"]} />
+  </div>
+  <Closing title={"Let the chat answer."} second={"You take the hard ones."} source="chat" wrap />
 </Base>

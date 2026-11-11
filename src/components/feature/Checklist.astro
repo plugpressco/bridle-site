@@ -1,0 +1,12 @@
+---
+// Everything in one part of Bridle, as two plain lists: free, and what Pro adds.
+interface Props { id: string; title: string; free: string[]; pro: string[] }
+const { id, title, free, pro } = Astro.props;
+---
+<section class="band" id={id} aria-labelledby={`h-${id}`}>
+  <h2 class="h2 opener" id={`h-${id}`}>{title}</h2>
+  <div class="clist">
+    <div><h3>Free</h3><ul>{free.map((f) => <li>{f}</li>)}</ul></div>
+    <div class="pro"><h3>With Bridle Pro</h3><ul>{pro.map((f) => <li>{f}</li>)}</ul><a class="lnk" href="/pricing/">See pricing ›</a></div>
+  </div>
+</section>

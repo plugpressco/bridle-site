@@ -65,12 +65,6 @@ ${costLines}
 
 ${counted}
 
-## Start in three steps.
-
-1. **Install Bridle.** ${FREE_FROM}
-2. **Forward your support email.** Keep your address. We show you how.
-3. **Turn on chat.** One switch adds it to your site.
-
 ## Pay once for Bridle Pro.
 
 Only until Cyber Monday. Pro adds chat on your other sites, live chat with your hours, and order and licence lookups. ${money(PRO.plans[0].base)}, pay once, for 1 site. The price goes up ${money(PRO.rise)} every 20 sales. ${PRO.refundDays}-day refund. All plans: ${SITE.url}/pricing/
@@ -86,7 +80,9 @@ ${qa(FAQ)}
 ## Links
 
 - Live demo: ${SITE.url}/demo/
+- Inbox: ${SITE.url}/inbox/
 - Bridle Chat: ${SITE.url}/chat/
+- Knowledge base: ${SITE.url}/knowledge-base/
 - Pricing: ${SITE.url}/pricing/
 - Guides: ${SITE.url}/guides/
 - Docs: ${SITE.docs}
@@ -124,31 +120,27 @@ ${waitlist}`,
     title: 'Bridle Chat: an AI chat for your WordPress site',
     description:
       'A chat for your WordPress site that answers visitors from your own docs. It never guesses, and it sends the hard questions to you. Free in Bridle.',
-    md: `# Bridle Chat: a chat that answers from what you wrote
+    md: `# Bridle Chat: answers your visitors now, even at 3 am
 
-It answers visitors from your docs. The rest come to you. Free in Bridle.
+Bridle Chat answers from your docs. Anything hard comes to you. Free in Bridle.
 
 ${waitlist}
 
-## How it works
+## Answers with proof, not guesses
 
-1. **It looks it up.** In your docs, pages and old replies.
-2. **It checks.** Not sure? It won’t guess.
-3. **It hands off.** Refunds and angry people go to you.
+Every answer comes from your docs, pages and past replies, with its source.
 
-## When you take over
+- **Looks it up.** In your docs, pages and old replies.
+- **Won’t guess.** Not sure? It says so and hands over.
+- **Fits your site.** Your colour and icon. It says it is an AI.
 
-You reply from your Inbox. They get it anywhere.
+## When it can’t answer, you can
+
+Hard questions come to your Inbox. You reply where they are.
 
 - **In the chat,** if they are still on your site.
 - **Or by email,** if they already left.
 - **A real wait time,** based on how fast you reply.
-
-## Already done
-
-- Says it is an AI
-- Blocks spam bots
-- Your colour, your icon
 
 ## With Bridle Pro
 
@@ -227,12 +219,6 @@ ${costLines}
 
 ${counted}
 
-## Start in three steps.
-
-1. **Install Bridle.** ${FREE_FROM}
-2. **Forward your support email.** Keep your address. We show you how.
-3. **Turn on chat.** One switch adds it to your site.
-
 ## Pay once for Bridle Pro.
 
 Only until Cyber Monday. Pro adds chat on your other sites, live chat with your hours, and order and licence lookups. ${money(PRO.plans[0].base)}, pay once, for 1 site. The price goes up ${money(PRO.rise)} every 20 sales. ${PRO.refundDays}-day refund. All plans: ${SITE.url}/pricing/
@@ -248,7 +234,9 @@ ${qa(FAQ)}
 ## Links
 
 - Live demo: ${SITE.url}/demo/
+- Inbox: ${SITE.url}/inbox/
 - Bridle Chat: ${SITE.url}/chat/
+- Knowledge base: ${SITE.url}/knowledge-base/
 - Pricing: ${SITE.url}/pricing/
 - Guides: ${SITE.url}/guides/
 - Docs: ${SITE.docs}
@@ -286,31 +274,27 @@ ${waitlist}`,
     title: 'Bridle Chat: an AI chat for your WordPress site',
     description:
       'A chat for your WordPress site that answers visitors from your own docs. It never guesses, and it sends the hard questions to you. Free in Bridle.',
-    md: `# Bridle Chat: a chat that answers from what you wrote
+    md: `# Bridle Chat: answers your visitors now, even at 3 am
 
-It answers visitors from your docs. The rest come to you. Free in Bridle.
+Bridle Chat answers from your docs. Anything hard comes to you. Free in Bridle.
 
 ${waitlist}
 
-## How it works
+## Answers with proof, not guesses
 
-1. **It looks it up.** In your docs, pages and old replies.
-2. **It checks.** Not sure? It won’t guess.
-3. **It hands off.** Refunds and angry people go to you.
+Every answer comes from your docs, pages and past replies, with its source.
 
-## When you take over
+- **Looks it up.** In your docs, pages and old replies.
+- **Won’t guess.** Not sure? It says so and hands over.
+- **Fits your site.** Your colour and icon. It says it is an AI.
 
-You reply from your Inbox. They get it anywhere.
+## When it can’t answer, you can
+
+Hard questions come to your Inbox. You reply where they are.
 
 - **In the chat,** if they are still on your site.
 - **Or by email,** if they already left.
 - **A real wait time,** based on how fast you reply.
-
-## Already done
-
-- Says it is an AI
-- Blocks spam bots
-- Your colour, your icon
 
 ## With Bridle Pro
 
@@ -391,6 +375,70 @@ How we counted: ${counted}
 ## Questions about paying.
 
 ${qa(PRO_FAQ)}
+`,
+  },
+  inbox: {
+    path: '/inbox/',
+    title: 'Bridle Inbox: AI email replies for WordPress',
+    description:
+      'Every support email comes with a reply written from your docs and past emails. Every fact checked. You read it, then send it. Free in Bridle.',
+    md: `# Bridle Inbox: every email comes with a reply
+
+Bridle writes replies from your docs and past emails. You check and send. Free in Bridle.
+
+${waitlist}
+
+## Replies that know your business
+
+It reads your docs, pages, products and past replies, then writes the answer.
+
+- **Every fact checked.** Quotes and links are checked before you see the reply.
+- **Rewrite or translate.** Change the tone or the language in one click.
+- **Auto, when you trust it.** Sure answers send after 15 minutes. You can stop them.
+
+## Only customers in your Inbox
+
+Receipts and newsletters go to Updates. Scams go to Spam.
+
+- **Keep your address.** Forward from Gmail, Outlook or any host.
+- **Bring the team.** Add as many teammates as you like. No seat price.
+- **Hard ones wait for you.** Refunds, billing and upset customers always wait for a person.
+
+## Work it from Claude or ChatGPT
+
+Your AI app reads the inbox and writes drafts. Sending needs your OK.
+
+## More inboxes? Get Pro
+
+${INBOXES.free} inboxes per site are free. Bridle Pro gives 10, 25 or unlimited inboxes, order lookups and workflows: ${SITE.url}/pricing/
+`,
+  },
+  kb: {
+    path: '/knowledge-base/',
+    title: 'Bridle KB: a free help center that your AI answers from',
+    description:
+      'A free help center plugin for WordPress. Customers search it, and Bridle answers your support email and site chat from it. Write each answer once.',
+    md: `# Bridle KB: write it once, Bridle answers with it forever
+
+A help center on your site. Customers search it, and Bridle answers from it. Free plugin.
+
+${waitlist}
+
+## A help center people actually use
+
+Clean pages that fit your site, and search on one key.
+
+- **Press / to search.** Find any doc without leaving the page.
+- **Your look.** Your theme’s font and your colour.
+- **Next to your inbox.** Write and sort docs under the Bridle menu.
+
+## Every doc makes Bridle smarter
+
+Email replies and chat answers come from what you wrote. Add a doc, and the next answer uses it.
+
+## See what it couldn’t answer (Bridle Pro)
+
+Turn a missed question into a doc in one click: ${SITE.url}/pricing/
 `,
   },
   privacy: {

@@ -3,9 +3,8 @@
 // Bridle Pro has the 1 · 3 · 10 sites switch (src/scripts/deal.js); prices
 // start at deal.json's first step and follow /api/deal once it is live.
 import Button from '../ui/Button.astro';
-import { AI, PRO, INBOXES, LAUNCHED, FREE_URL, WPORG_LIVE, money, count, sitesLabel, inboxesLabel } from '../../data/site';
+import { AI, PRO, LAUNCHED, FREE_URL, WPORG_LIVE, money, count, sitesLabel } from '../../data/site';
 const one = PRO.plans[0];
-const packs = AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answers)}`).join(', ');
 ---
 <section class="pt-10 md:pt-16" aria-labelledby="h-price">
   <h1 class="h1x" id="h-price">Free to use. <span class="soft">Pay once for Pro.</span></h1>
@@ -14,15 +13,13 @@ const packs = AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answ
     <div class="plan">
       <h3>Bridle</h3>
       <div class="price"><b>$0</b><span>free, for good</span></div>
-      <p>Sorting, reply drafts, fact checks, Auto, chat and AI apps.</p>
-      <p class="small">Any number of sites, {INBOXES.free} inboxes each.</p>
+      <p>Email replies, chat and help docs, on any number of sites.</p>
       {LAUNCHED ? <Button variant="soft" href={FREE_URL}>Get Bridle free</Button> : <Button variant="soft" href="#join">Join the waitlist</Button>}
     </div>
     <div class="plan">
       <h3>Bridle AI</h3>
       <div class="price"><b>{money(AI.packs[0].price)}</b><span>for {count(AI.packs[0].answers)} answers</span></div>
-      <p>For Bridle without your own AI key. The first {AI.free} answers each month are free.</p>
-      <p class="small">Bigger packs: {packs}. Packs never run out. Buy inside Bridle.</p>
+      <p>No AI key? Use ours. {AI.free} answers a month are free, and packs never run out.</p>
     </div>
     <div class="plan pro">
       <span class="badge">Black Friday</span>
@@ -31,8 +28,7 @@ const packs = AI.packs.slice(1).map((p) => `${money(p.price)} for ${count(p.answ
         {PRO.plans.map((p, i) => <button type="button" data-sites={p.key} aria-pressed={i === 0 ? 'true' : 'false'}>{sitesLabel(p.sites)}</button>)}
       </div>
       <div class="price"><b data-pro="price">{money(one.base)}</b><span data-pro="unit">pay once, for {sitesLabel(one.sites)}</span></div>
-      <p>Everything in Bridle, plus chat on your other sites, live chat, order lookups, missing answers and workflows.</p>
-      <p class="small">With <span data-pro="answers">{count(one.answers)}</span> AI answers and <span data-pro="inboxes">{inboxesLabel(one.inboxes)}</span>.</p>
+      <p>Everything in Bridle, plus live chat, order lookups and chat on more sites. With <span data-pro="answers">{count(one.answers)}</span> AI answers.</p>
       {LAUNCHED
         ? <Button arrow href={`/api/checkout?plan=${one.key}`} data-buy="follow" data-buy-label="Get Pro for {sites}, {price}">Get Pro for {sitesLabel(one.sites)}, {money(one.base)}</Button>
         : <Button arrow href="#join">Join the waitlist</Button>}
