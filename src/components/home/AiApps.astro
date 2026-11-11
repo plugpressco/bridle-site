@@ -1,0 +1,40 @@
+---
+// 4 AI answers and AI apps: Bridle AI (100 free a month, packs, or your own
+// key) and MCP (Claude, ChatGPT and other AI apps can read the inbox and
+// write drafts; sending needs your OK). Facts from the plugin and site data.
+import SecHead from '../ui/SecHead.astro';
+import { AI, money, count } from '../../data/site';
+const use = (id: string) => `<svg class="i" aria-hidden="true"><use href="#${id}"/></svg>`;
+---
+<section class="band" aria-labelledby="h-ai">
+  <SecHead id="ai" title="AI answers, your way" line="Use Bridle AI with no setup, bring your own AI key, or work your inbox from Claude and ChatGPT." />
+  <div class="ai2">
+    <div class="fcard">
+      <div class="fvis" aria-hidden="true">
+        <div class="pcard fmeter">
+          <div class="mrow"><b>Bridle AI</b><span>This month</span></div>
+          <div class="mbar"><i style="width:64%"></i></div>
+          <div class="mrow"><span>64 of {AI.free} free answers used</span></div>
+          <div class="mown"><span>Your own key</span><b>No limit</b></div>
+        </div>
+      </div>
+      <div class="fbody">
+        <h3><span class="ficon"><Fragment set:html={use('i-sparkles')} /></span>Bridle AI answers</h3>
+        <p>{AI.free} free answers every month, no key needed. Then {money(AI.packs[0].price)} for {count(AI.packs[0].answers)}, and packs never run out. Or use your own Anthropic, OpenAI or Google key with no limit.</p>
+      </div>
+    </div>
+    <div class="fcard">
+      <div class="fvis" aria-hidden="true">
+        <div class="pcard fmcp">
+          <div class="bub v">Answer the easy ones in my Bridle inbox.</div>
+          <div class="bub b"><b class="who"><Fragment set:html={use('l-claude')} />Claude</b>I wrote 3 drafts in Bridle. Sending needs your OK.</div>
+          <div class="apps"><span><Fragment set:html={use('l-claude')} />Claude</span><span><Fragment set:html={use('l-openai')} />ChatGPT</span><span><Fragment set:html={use('l-cursor')} />Cursor</span><span><Fragment set:html={use('l-mcp')} />Any MCP app</span></div>
+        </div>
+      </div>
+      <div class="fbody">
+        <h3><span class="ficon"><Fragment set:html={use('l-mcp')} /></span>Works with Claude and ChatGPT</h3>
+        <p>Connect your AI app over MCP. It can read your inbox, search your docs and write drafts. Nothing is sent without your OK.</p>
+      </div>
+    </div>
+  </div>
+</section>

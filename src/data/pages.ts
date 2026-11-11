@@ -36,6 +36,14 @@ ${waitlist}
 
 Free for WordPress. Built by the team behind Saddle (${SITE.saddle}).
 
+## Inbox, chat and help center in one plugin
+
+Bridle answers your support email, your website chat and your help docs, all from what you already wrote.
+
+- **Inbox.** Every support email comes with a reply written from your docs. You read it and press Send. ${SITE.url}/inbox/
+- **Chat.** A chat bubble on your site that answers visitors day and night. Hard questions come to you. ${SITE.url}/chat/
+- **Knowledge base.** A free help center on your site. Customers search it, and Bridle answers from it. ${SITE.url}/knowledge-base/
+
 ## What happens when an email comes in
 
 A real example from Fernleaf, a shop that sells a photo gallery plugin.
@@ -44,12 +52,10 @@ A real example from Fernleaf, a shop that sells a photo gallery plugin.
 2. **Bridle writes the reply.** “Clear your cache plugin and turn off Lazy load images under Fernleaf → Performance.” From your help doc: Gallery not showing on Safari. Facts checked.
 3. **You read it and press Send.** Refunds and upset customers never get an automatic reply. They wait for you.
 
-## It also answers on your website
+## AI answers, your way
 
-The same answers, in a chat bubble and in a help center your customers can search.
-
-- **Chat on your site.** Answers visitors from your docs, day and night. Refunds and hard questions go to you. ${SITE.url}/chat/
-- **A help center.** Write your docs once. Customers search them, and Bridle answers from them. ${SITE.url}/knowledge-base/
+- **Bridle AI answers.** ${AI.free} free answers every month, no key needed. Then ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}, and packs never run out. Or use your own Anthropic, OpenAI or Google key with no limit.
+- **Works with Claude and ChatGPT.** Connect your AI app over MCP. It can read your inbox, search your docs and write drafts. Nothing is sent without your OK.
 
 ## Pay once. Keep it for life.
 

@@ -1,0 +1,57 @@
+---
+// 2 The core features (owner, 2026-11-11: "Inbox / Chat / KB are our core
+// features"): three big cards, each with a short real example from the
+// Fernleaf shop, one line, and a link to its page.
+import SecHead from '../ui/SecHead.astro';
+const use = (id: string) => `<svg class="i" aria-hidden="true"><use href="#${id}"/></svg>`;
+---
+<section class="band" aria-labelledby="h-features">
+  <SecHead id="features" title="Inbox, chat and help center in one plugin" line="Bridle answers your support email, your website chat and your help docs, all from what you already wrote." />
+  <div class="feat3">
+    <a class="fcard" href="/inbox/">
+      <div class="fvis" aria-hidden="true">
+        <div class="pcard">
+          <div class="prow"><span class="pava" style="background:#5bb88a">MC</span><div class="pt"><b>Maya Chen</b><span>Gallery is blank on Safari 17</span></div><span class="ptag blue">Draft ready</span></div>
+          <div class="prow"><span class="pava" style="background:#b276c9">LM</span><div class="pt"><b>Lucas Moreau</b><span>Can I use it on staging?</span></div><span class="ptag blue">Draft ready</span></div>
+          <div class="prow"><span class="pava" style="background:#c98a5b">JB</span><div class="pt"><b>Jonas Berg</b><span>Refund for order 2187</span></div><span class="ptag amber">Needs you</span></div>
+        </div>
+      </div>
+      <div class="fbody">
+        <h3><span class="ficon"><Fragment set:html={use('i-inbox')} /></span>Inbox</h3>
+        <p>Every support email comes with a reply written from your docs. You read it and press Send.</p>
+        <span class="fmore">See the Inbox</span>
+      </div>
+    </a>
+    <a class="fcard" href="/chat/">
+      <div class="fvis" aria-hidden="true">
+        <div class="pcard fchat">
+          <div class="cbar"><span class="pava sm" style="background:rgb(255 255 255 / 0.2)">F</span><div><b>Fernleaf</b><small>AI assistant · a person can help</small></div></div>
+          <div class="cbody">
+            <div class="bub v">Can I use it on staging?</div>
+            <div class="bub b">Yes. Staging sites don’t count against your licence.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fbody">
+        <h3><span class="ficon"><Fragment set:html={use('i-message')} /></span>Chat</h3>
+        <p>A chat bubble on your site that answers visitors day and night. Hard questions come to you.</p>
+        <span class="fmore">See the Chat</span>
+      </div>
+    </a>
+    <a class="fcard" href="/knowledge-base/">
+      <div class="fvis" aria-hidden="true">
+        <div class="pcard fdocs">
+          <div class="q"><span>Search docs</span><span>/</span></div>
+          <div class="prow"><div class="pt"><b>Install Fernleaf Gallery</b><span>Getting started</span></div></div>
+          <div class="prow"><div class="pt"><b>Use it on a staging site</b><span>Getting started</span></div></div>
+          <div class="prow"><div class="pt"><b>Refunds</b><span>Billing</span></div></div>
+        </div>
+      </div>
+      <div class="fbody">
+        <h3><span class="ficon"><Fragment set:html={use('i-book')} /></span>Knowledge base</h3>
+        <p>A free help center on your site. Customers search it, and Bridle answers from it.</p>
+        <span class="fmore">See the Knowledge base</span>
+      </div>
+    </a>
+  </div>
+</section>

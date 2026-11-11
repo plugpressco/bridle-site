@@ -701,6 +701,33 @@
 	.exnote { margin: 16px 0 6px; font-size: 14.5px; color: var(--color-ink-2); }
 	.exsend .prow { margin: 0 -20px -18px; border-top: 1px solid var(--color-border); }
 
+	/* Core features and AI cards */
+	.feat3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+	.ai2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+	.fcard { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--color-border); border-radius: 20px; background: var(--color-card); color: inherit; text-decoration: none; transition: border-color 0.15s; }
+	a.fcard:hover { border-color: var(--color-input); }
+	.fvis { display: grid; align-items: center; height: 280px; padding: 28px; background: var(--color-background); }
+	.fbody { display: grid; gap: 10px; padding: 28px; }
+	.fbody h3 { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+	.ficon { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--color-brand-100); color: var(--color-brand-600); }
+	.ficon svg { width: 18px; height: 18px; }
+	.fbody p { color: var(--color-ink-2); }
+	.fmore { margin-top: 6px; font-weight: 600; color: var(--color-brand-600); }
+	.fchat .cbody { gap: 8px; }
+	.fdocs .q { display: flex; justify-content: space-between; margin: 14px 16px 6px; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px; color: var(--color-muted-foreground); }
+	.fmeter { display: grid; gap: 12px; padding: 20px; }
+	.mrow { display: flex; justify-content: space-between; font-size: 14px; color: var(--color-muted-foreground); }
+	.mrow b { font-size: 16px; color: var(--color-foreground); }
+	.mbar { height: 8px; overflow: hidden; border-radius: 4px; background: var(--color-background); }
+	.mbar i { display: block; height: 100%; border-radius: 4px; background: var(--color-brand-600); }
+	.mown { display: flex; justify-content: space-between; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--color-border); font-size: 14px; color: var(--color-ink-2); }
+	.mown b { color: var(--color-ok); }
+	.fmcp { display: grid; gap: 10px; padding: 18px; }
+	.fmcp .who { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 13px; }
+	.fmcp .who svg, .fmcp .apps svg { width: 14px; height: 14px; }
+	.fmcp .apps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+	.fmcp .apps span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--color-ink-2); }
+
 	/* 3 On your site */
 	.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 	.duo .h3 { margin-top: 32px; }
@@ -759,7 +786,8 @@
 		.thero .top { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 		.hpanel { height: 440px; margin-top: 40px; border-radius: 16px; }
 		.hwin { left: 24px; top: 32px; width: 900px; height: 520px; transform: none; }
-		.ways, .duo, .ex, .shead { grid-template-columns: minmax(0, 1fr); }
+		.ways, .duo, .ex, .shead, .feat3, .ai2 { grid-template-columns: minmax(0, 1fr); }
+		.fvis { height: auto; min-height: 220px; }
 		.shead { gap: 16px; }
 		.exvis { height: auto; }
 		.way { padding: 24px; }
