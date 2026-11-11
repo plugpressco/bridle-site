@@ -2,7 +2,7 @@
    few sine waves, faded in from one edge, turned into dots with a 4x4 Bayer
    pattern, one canvas pixel per 3 CSS pixels (scaled up crisp). It drifts
    slowly while on screen; with reduced motion it is drawn once and stays. */
-var CELL = 3;
+var CELL_DEFAULT = 3;
 var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(function (n) { return (n + 0.5) / 16; });
 // Ramps, low to high, in Bridle's one blue only (owner, 2026-11-11: "dont
 // force color"): pale blue into brand blue on light panels; on the blue deal
@@ -10,6 +10,9 @@ var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(function 
 var RAMPS = {
 	warm: [[229, 237, 253], [200, 218, 251], [157, 188, 247], [106, 155, 242], [31, 99, 230]],
 	night: [[63, 124, 236], [106, 155, 242], [157, 188, 247], [200, 218, 251], [255, 255, 255]],
+	// The home hero's blue panel: the whole panel in dots, lighter blues on
+	// Bridle blue (owner's pick 2026-11-11).
+	panel: [[52, 116, 214], [63, 127, 230], [93, 151, 238], [143, 185, 244], [201, 220, 250]],
 };
 var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -18,6 +21,7 @@ function hash(x, y) { var h = (x * 374761393 + y * 668265263) | 0; h = (h ^ (h >
 function setup(cv) {
 	var from = cv.getAttribute('data-from') || 'bottom';
 	var ramp = RAMPS[cv.getAttribute('data-tone')] || RAMPS.warm;
+	var CELL = +cv.getAttribute('data-cell') || CELL_DEFAULT;
 	var ctx = cv.getContext('2d');
 	var img = null, W = 0, H = 0, visible = false, raf = 0, last = 0, t = Math.random() * 100;
 	function size() {
@@ -32,9 +36,9 @@ function setup(cv) {
 			for (var x = 0; x < W; x++) {
 				var i = (y * W + x) * 4;
 				var u = x / W, w = y / H;
-				var edge = from === 'right' ? (u - 0.3) / 0.7 : (w - 0.3) / 0.7;
+				var edge = from === 'all' ? 0.8 : from === 'right' ? (u - 0.3) / 0.7 : (w - 0.3) / 0.7;
 				edge = edge <= 0 ? 0 : Math.pow(Math.min(1, edge), 1.5);
-				var side = from === 'right' ? 0.75 + 0.25 * w : 0.55 + 0.45 * u;
+				var side = from === 'all' ? 0.78 + 0.22 * Math.abs(u - 0.5) * 2 : from === 'right' ? 0.75 + 0.25 * w : 0.55 + 0.45 * u;
 				var f = 0.55 + 0.22 * Math.sin(x * 0.045 + t * 0.5) * Math.cos(y * 0.07 - t * 0.35) + 0.23 * Math.sin((x + y * 0.6) * 0.022 + t * 0.25);
 				var v = f * edge * side * 1.45;
 				if (v <= BAYER[(y & 3) * 4 + (x & 3)]) { d[i + 3] = 0; continue; }

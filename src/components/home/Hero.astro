@@ -1,40 +1,51 @@
 ---
-// 1 Hero ("tack" design, owner's pick 2026-11-11): the headline, one line
-// and two buttons on the left; on the right the product itself, drawn as
-// crisp cards on a soft blue panel: the Inbox with replies ready and a refund
-// that needs you, and in front the reply to Maya with its checked source.
-// Names are the made-up Fernleaf business used across the site.
+// 1 Hero (owner's picks 2026-11-11, board planning/landing/pages/home/
+// 16-hero-fonts.html): the headline on the left, a short line and the
+// buttons on the right, then one Bridle window on the blue dot panel. The
+// window is drawn in placeholder bars; only the words that tell the story
+// are real: Inbox, Ready to send, Draft ready, Needs you, Refund, Facts
+// checked, Send.
 import Button from '../ui/Button.astro';
+import Dither from '../Dither.astro';
 import { LAUNCHED, FREE_URL } from '../../data/site';
-const ready = [
-  { i: 'MC', c: '#5bb88a', n: 'Maya Chen', s: 'Gallery is blank on Safari 17' },
-  { i: 'LM', c: '#b276c9', n: 'Lucas Moreau', s: 'Can I use it on a staging site?' },
-  { i: 'BT', c: '#6a9e5a', n: 'Ben Turner', s: 'Do updates come with Pro?' },
-];
+const ready = [['#7fb0f3', 46, 78, true], ['#c9b8ec', 38, 70, false], ['#a9d6b8', 42, 62, false]] as const;
+const logo = '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="50" fill="url(#g-icon)"/><path transform="translate(20.36 19.15) scale(0.95)" fill="#fff" fill-rule="evenodd" d="M13.31 41.92L5.18 3.67L13.97 1.8L18.57 23.43A20.56 20.56 0 1 1 13.31 41.92ZM22.27 37.64a11.15 11.36 0 1 0 22.3 0a11.15 11.36 0 1 0 -22.3 0Z"/></svg>';
 ---
 <section class="thero" aria-labelledby="h-hero">
-  <div class="copy">
+  <div class="top">
     <h1 class="h1" id="h-hero">Your support email answers itself. <span class="soft">You check the hard ones.</span></h1>
-    <p class="lead">Bridle writes each reply from your docs and checks every fact. Refunds, billing and upset customers always wait for you.</p>
-    <div class="ctas">
-      {LAUNCHED ? <Button size="lg" arrow href={FREE_URL}>Get Bridle free</Button> : <Button size="lg" arrow href="#join">Join the waitlist</Button>}
-      <Button size="lg" variant="line" href="/demo/">Try the live demo</Button>
+    <div class="side">
+      <p class="lead">Bridle writes each reply from your docs and checks every fact. Refunds, billing and upset customers always wait for you.</p>
+      <div class="ctas">
+        {LAUNCHED ? <Button size="lg" arrow href={FREE_URL}>Get Bridle free</Button> : <Button size="lg" arrow href="#join">Join the waitlist</Button>}
+        <Button size="lg" variant="line" href="/demo/">Try the live demo</Button>
+      </div>
+      <p class="small">Free for WordPress · Built by the team behind Saddle</p>
     </div>
-    <p class="small">Free for WordPress · Built by the team behind Saddle</p>
   </div>
-  <div class="tstage" role="img" aria-label="The Bridle inbox: three replies ready to send and a refund that needs you. In front, the reply to Maya with its checked help doc source.">
-    <div class="pcard tinbox" aria-hidden="true">
-      <div class="tibar">Inbox <span>Support</span></div>
-      <div class="tglabel">Ready to send <i>3</i></div>
-      {ready.map((r) => <div class="prow"><span class="pava" style={`background:${r.c}`}>{r.i}</span><div class="pt"><b>{r.n}</b><span>{r.s}</span></div><span class="ptag blue">Draft ready</span></div>)}
-      <div class="tglabel">Needs you <i>1</i></div>
-      <div class="prow"><span class="pava" style="background:#c98a5b">JB</span><div class="pt"><b>Jonas Berg</b><span>Refund for order 2187</span></div><span class="ptag amber">Refund</span></div>
-    </div>
-    <div class="pcard pdraft tfront" aria-hidden="true">
-      <div class="ptop"><span class="pava sm">B</span><b>Reply to Maya</b><span class="ptag green">✓ Facts checked</span></div>
-      <p>Hi Maya, clear your cache plugin and turn off “Lazy load images” under Fernleaf → Performance.<sup>1</sup> Version 3.4.2 fixes it for good.<sup>1</sup></p>
-      <div class="psrc"><span class="n">1</span><span><b>Help doc</b> · Gallery not showing on Safari</span></div>
-      <div class="pacts"><span class="go">Send</span><span>Edit</span><span>Rewrite</span></div>
+  <div class="hpanel" role="img" aria-label="The Bridle inbox: replies ready to send and a refund that needs you. The open reply shows Facts checked, its source, and a Send button.">
+    <Dither from="all" tone="panel" cell={5} />
+    <div class="hwin" aria-hidden="true">
+      <div class="hwbar"><Fragment set:html={logo} />Bridle<span class="q"></span></div>
+      <div class="hwbody">
+        <div class="hwlist">
+          <h4>Inbox</h4>
+          <div class="hglab">Ready to send</div>
+          {ready.map(([c, a, b, on]) => <div class:list={['hrow', on && 'on']}><span class="hava" style={`background:${c}`}></span><div class="ht"><i class="sk d" style={`width:${a}%`}></i><i class="sk" style={`width:${b}%`}></i></div><span class="ptag blue">Draft ready</span></div>)}
+          <div class="hglab">Needs you</div>
+          <div class="hrow"><span class="hava" style="background:#f0c9a8"></span><div class="ht"><i class="sk d" style="width:40%"></i><i class="sk" style="width:66%"></i></div><span class="ptag amber">Refund</span></div>
+        </div>
+        <div class="hconv">
+          <i class="sk d" style="width:46%"></i>
+          <div class="hmsg"><div class="hwho"><span class="hava" style="background:#7fb0f3"></span><i class="sk d" style="width:120px"></i></div><i class="sk" style="width:92%"></i><i class="sk" style="width:64%"></i></div>
+          <div class="hdraft">
+            <div class="hdtop"><Fragment set:html={logo} />Bridle<span class="ptag green">✓ Facts checked</span></div>
+            <i class="sk b" style="width:96%"></i><i class="sk b" style="width:88%"></i><i class="sk b" style="width:52%"></i>
+            <div class="hsrc"><span class="n">1</span><i class="sk"></i><em>✓ Checked</em></div>
+            <div class="hacts"><span class="go">Send</span><span><i class="sk" style="width:34px"></i></span><span><i class="sk" style="width:48px"></i></span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

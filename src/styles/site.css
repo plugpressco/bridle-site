@@ -24,17 +24,10 @@
 	font-display: swap;
 }
 @font-face {
-	font-family: "Fraunces";
-	src: url("/fonts/fraunces-latin.woff2") format("woff2");
-	font-weight: 300 600;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: "Fraunces";
-	src: url("/fonts/fraunces-italic-latin.woff2") format("woff2");
-	font-weight: 300 600;
-	font-style: italic;
+	font-family: "Mona Sans";
+	src: url("/fonts/mona-sans-latin.woff2") format("woff2");
+	font-weight: 200 900;
+	font-stretch: 75% 125%;
 	font-display: swap;
 }
 @font-face {
@@ -45,34 +38,33 @@
 }
 
 @theme {
-	--font-sans: "Geist", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--font-sans: "Mona Sans", "Geist", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-	--font-serif: "Fraunces", Georgia, "Times New Roman", serif;
 
 	/* Warm page, one strong blue (owner, 2026-11-10, on helpscout.com: "the blue
 	   of branding color and other warm bg other color suit nice ... try achieve
 	   it with bridle also"). Contrast checked: ink on page 15.3, body 7.3, muted
 	   on sand 5.0, white on blue-600 5.3, blue-600 on page 5.0. */
-	--color-page: #f6f1e7; /* the page */
-	--color-background: #efe7d8; /* sand: panels and section containers */
-	--color-band: #efe7d8;
-	--color-foreground: #1d1a15; /* warm ink: headings, primary text */
-	--color-card: #fffdf8;
-	--color-secondary: #efe7d8;
-	--color-ink-2: #4a443b; /* body text */
-	--color-muted-foreground: #756c60; /* small print, captions */
-	--color-soft: #8f887e; /* the grey half of a heading (large text only) */
+	--color-page: #fafaf9; /* the page */
+	--color-background: #f1f0ec; /* sand: panels and section containers */
+	--color-band: #f1f0ec;
+	--color-foreground: #141414; /* warm ink: headings, primary text */
+	--color-card: #ffffff;
+	--color-secondary: #f1f0ec;
+	--color-ink-2: #4b4b4b; /* body text */
+	--color-muted-foreground: #6e6e6e; /* small print, captions */
+	--color-soft: #8d8d8a; /* the grey half of a heading (large text only) */
 	--color-gray: #8f887e;
 	--color-accent: #e5edfd;
-	--color-border: #e4dbcb; /* the one hairline */
-	--color-input: #d6ccba;
+	--color-border: #e7e5df; /* the one hairline */
+	--color-input: #d5d3cc;
 	--color-ring: #6a9bf2;
 	--color-app: #f5f5f2; /* the Bridle app's own page, behind its screens */
 	--color-note: #fff8e1;
 	--color-note-foreground: #6b5200;
 	--color-ok: #17784b;
 	--color-ok-bg: #e3f4ea;
-	--color-night: #1d1a15; /* the ink sections: closing and footer */
+	--color-night: #141414; /* the ink sections: closing and footer */
 	--color-sun: #ffd166; /* warm accents: art, the Black Friday label */
 	--color-coral: #ff8a65;
 
@@ -136,12 +128,12 @@
 @layer components {
 	/* ---------- Type ---------- */
 	.kicker { font-size: 16px; font-weight: 600; color: var(--color-muted-foreground); }
-	/* Headings in Fraunces (owner's pick 2026-11-11, "tack" design): the
-	   second sentence in blue italic. */
-	.h1, .h1x { font-family: var(--font-serif); font-size: var(--text-display); line-height: 1.02; letter-spacing: -0.03em; font-weight: 380; font-variation-settings: "SOFT" 50, "opsz" 144; }
-	.h2 { font-family: var(--font-serif); font-size: var(--text-section); line-height: 1.06; letter-spacing: -0.025em; font-weight: 380; font-variation-settings: "SOFT" 50, "opsz" 144; }
-	.h1 .soft, .h1x .soft, .h2 .soft { font-style: italic; font-weight: 380; color: var(--color-brand-ink); }
-	.ink .h2 .soft, .closer .h2 .soft { color: #7fb0f3; }
+	/* Headings in Mona Sans, Bridle's brand font (owner's pick 2026-11-11):
+	   bold and tight, the second sentence in grey. */
+	.h1, .h1x { font-size: var(--text-display); line-height: 1.0; letter-spacing: -0.045em; font-weight: 720; }
+	.h2 { font-size: var(--text-section); line-height: 1.05; letter-spacing: -0.04em; font-weight: 700; }
+	.h1 .soft, .h1x .soft, .h2 .soft { font-weight: inherit; color: var(--color-soft); }
+	.ink .h2 .soft, .closer .h2 .soft { color: #7d7d7a; }
 	.h3 { font-size: 20px; line-height: 1.3; letter-spacing: -0.015em; font-weight: 600; color: var(--color-foreground); }
 	.soft { color: var(--color-soft); font-weight: 600; }
 	.lead { font-size: 20px; line-height: 1.55; max-width: 44ch; }
@@ -180,7 +172,7 @@
 	.screen.flush { border-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 
 	/* ---------- The menu: a plain bar, a panel with a live preview ---------- */
-	.navwrap { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgb(246 241 231 / 0.94); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+	.navwrap { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgb(250 250 249 / 0.94); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
 	.navwrap.scrolled { border-bottom-color: var(--color-border); }
 	.cap { position: relative; max-width: calc(1200px + 48px); margin-inline: auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
 	.cap .bar { display: flex; align-items: center; gap: 4px; height: 68px; }
@@ -447,14 +439,14 @@
 	.tbl tr.grp td { padding-top: 28px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-muted-foreground); }
 
 	/* ---------- Footer ---------- */
-	.foot { background: var(--color-night); color: #a79e8f; }
-	.foot .wrap { border-top: 1px solid #332e26; }
+	.foot { background: var(--color-night); color: #a3a3a0; }
+	.foot .wrap { border-top: 1px solid #2a2a2a; }
 	.foot .mk { color: #fff; }
-	.foot .small { color: #a79e8f; }
+	.foot .small { color: #a3a3a0; }
 	.foot .wrap { display: grid; grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr)); gap: 24px; padding-block: 48px; font-size: 16px; }
 	.foot .wrap > div, .foot nav { display: grid; gap: 8px; align-content: start; }
 	.foot b, .foot h2 { font-size: 16px; font-weight: 500; color: #fff; }
-	.foot a { color: #a79e8f; text-decoration: none; }
+	.foot a { color: #a3a3a0; text-decoration: none; }
 	.foot a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 
 	/* ---------- Long-form text: privacy, terms and the guides ---------- */
@@ -547,7 +539,7 @@
 	/* The closing call, centred, with the dot art rising under it (Closing.astro). */
 	.closer { background: var(--color-night); color: #fff; }
 	.closer .h2 { color: #fff; }
-	.closer .sub { color: #c9c1b3; }
+	.closer .sub { color: #b5b5b0; }
 	.closing { position: relative; z-index: 1; display: grid; justify-items: center; gap: 32px; padding: 144px 24px 128px; text-align: center; }
 	.closing .sub { margin-top: -16px; }
 	.closing > [data-form] { width: 100%; max-width: 470px; }
@@ -633,19 +625,50 @@
 	.pacts span { padding: 6px 12px; border-radius: var(--radius-control); box-shadow: inset 0 0 0 1px var(--color-border); background: #fff; }
 	.pacts span.go { background: var(--color-foreground); color: #fff; box-shadow: none; }
 
-	/* 1 Hero */
-	.thero { display: grid; grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 48px; align-items: center; padding-top: 64px; }
-	.thero .copy { display: grid; gap: 32px; align-content: center; }
-	.thero .lead { max-width: 25em; color: var(--color-ink-2); }
-	.tstage { position: relative; height: 600px; border-radius: var(--radius-panel); background: linear-gradient(160deg, #dfeafc 0%, #eef3fb 55%, #f3efe6 100%); overflow: hidden; }
-	.tinbox { position: absolute; left: 40px; top: 40px; width: min(500px, calc(100% - 80px)); padding-bottom: 8px; }
-	.tibar { display: flex; align-items: baseline; gap: 12px; padding: 18px 20px 4px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
-	.tibar span { font-size: 14px; font-weight: 500; color: var(--color-muted-foreground); letter-spacing: 0; }
-	.tglabel { padding: 14px 20px 4px; font-size: 13px; font-weight: 600; color: var(--color-muted-foreground); }
-	.tglabel i { margin-left: 4px; font-style: normal; font-weight: 500; }
-	.tinbox .prow { padding: 10px 20px; }
-	.tinbox .prow + .prow { border-top: 0; }
-	.tfront { position: absolute; left: 120px; top: 318px; width: min(450px, calc(100% - 140px)); }
+	/* 1 Hero: the headline and a short line with the buttons, then one Bridle
+	   window in placeholder bars on the blue dot panel (owner, 2026-11-11:
+	   "more professional with placeholder textbox"). */
+	.thero { padding-top: 88px; }
+	.thero .top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 56px; align-items: end; }
+	.thero .side { display: grid; gap: 28px; }
+	.thero .side .lead { color: var(--color-ink-2); }
+	.hpanel { position: relative; height: 640px; margin-top: 56px; overflow: hidden; border-radius: 20px; background: #2d6fcd; }
+	.hpanel .dither { opacity: 1; }
+	.hwin { position: absolute; z-index: 1; left: 50%; top: 64px; width: min(1120px, calc(100% - 96px)); height: 640px; transform: translateX(-50%); overflow: hidden; border-radius: 14px 14px 0 0; background: #f5f5f2; box-shadow: 0 30px 80px -30px rgb(10 30 80 / 0.55); }
+	.hwbar { display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 20px; border-bottom: 1px solid var(--color-border); background: #fcfcfa; font-size: 16px; font-weight: 700; }
+	.hwbar svg { width: 26px; height: 26px; }
+	.hwbar .q { margin-left: auto; width: 280px; padding: 13px 14px; border-radius: 999px; background: #efefeb; }
+	.hwbody { display: grid; grid-template-columns: 400px 1fr; height: calc(100% - 56px); }
+	.hwlist { padding: 20px 16px; border-right: 1px solid var(--color-border); }
+	.hwlist h4 { padding: 0 8px; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; }
+	.hglab { margin: 18px 8px 8px; font-size: 13px; font-weight: 600; color: var(--color-muted-foreground); }
+	.hrow { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 10px; }
+	.hrow.on { background: #fff; box-shadow: 0 0 0 1px var(--color-border); }
+	.hava { flex: none; width: 34px; height: 34px; border-radius: 50%; }
+	.ht { flex: 1; min-width: 0; }
+	.sk { display: block; height: 10px; border-radius: 6px; background: #e4e3de; }
+	.sk.d { background: #cfcdc6; }
+	.sk.b { background: #c9dbf6; }
+	.ht .sk + .sk { margin-top: 7px; }
+	.hconv { padding: 32px 40px; }
+	.hconv > .sk { height: 16px; border-radius: 8px; }
+	.hmsg { margin-top: 20px; padding: 18px 20px; border: 1px solid var(--color-border); border-radius: 12px; background: #fff; }
+	.hmsg .sk, .hdraft .sk { height: 11px; margin-top: 12px; }
+	.hwho { display: flex; align-items: center; gap: 10px; }
+	.hwho .hava { width: 28px; height: 28px; }
+	.hwho .sk { margin: 0; }
+	.hdraft { margin-top: 14px; padding: 18px 20px; border: 1px solid #cfdcf3; border-radius: 12px; background: #f4f8ff; }
+	.hdtop { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+	.hdtop svg { width: 22px; height: 22px; }
+	.hdtop .ptag { margin-left: auto; }
+	.hsrc { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 9px 12px; border: 1px solid var(--color-border); border-radius: 8px; background: #fff; font-size: 13px; }
+	.hsrc .n { display: grid; place-items: center; flex: none; width: 20px; height: 20px; border-radius: 6px; background: var(--color-brand-100); font-size: 11px; font-weight: 700; color: var(--color-brand-ink); }
+	.hsrc .sk { width: 160px; margin: 0; }
+	.hsrc em { margin-left: auto; font-style: normal; font-weight: 600; color: var(--color-ok); }
+	.hacts { display: flex; gap: 8px; margin-top: 14px; font-size: 13.5px; font-weight: 600; }
+	.hacts span { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--color-border); background: #fff; }
+	.hacts span.go { background: var(--color-foreground); color: #fff; box-shadow: none; }
+	.hacts .sk { margin: 0; }
 
 	/* 2 Three ways */
 	.ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
@@ -683,7 +706,7 @@
 	.ddocs aside span.on { font-weight: 500; color: var(--color-brand-ink); }
 	.dmain { padding: 24px; }
 	.dmain small { font-size: 13px; font-weight: 600; color: var(--color-brand-ink); }
-	.dmain h4 { margin-top: 6px; font-family: var(--font-serif); font-size: 30px; line-height: 1.1; font-weight: 400; letter-spacing: -0.02em; }
+	.dmain h4 { margin-top: 6px; font-size: 28px; line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; }
 	.dmain p { margin-top: 12px; color: var(--color-ink-2); }
 
 	/* 4 The pricing table */
@@ -696,7 +719,7 @@
 	.ptable .pcol { position: relative; padding: 32px 24px 28px; font-weight: 400; }
 	.ptable .pcol .name { font-size: 16px; font-weight: 600; }
 	.ptable .pcol .price { display: flex; align-items: baseline; gap: 6px; margin-top: 12px; }
-	.ptable .pcol .price b { font-family: var(--font-serif); font-size: 52px; line-height: 1; font-weight: 400; letter-spacing: -0.03em; }
+	.ptable .pcol .price b { font-size: 52px; line-height: 1; font-weight: 700; letter-spacing: -0.045em; }
 	.ptable .pcol .price span { font-size: 14px; color: var(--color-muted-foreground); }
 	.ptable .pcol .was { margin-top: 6px; font-size: 14px; color: var(--color-muted-foreground); }
 	.ptable .pcol .btn { width: 100%; height: 44px; margin-top: 20px; }
@@ -715,10 +738,10 @@
 	/* ---------- Phones and tablets ---------- */
 	@media (max-width: 960px) {
 		.cap .links, .cap .acts { display: none; }
-		.thero { grid-template-columns: minmax(0, 1fr); padding-top: 32px; }
-		.tstage { height: 520px; margin-right: -24px; border-radius: var(--radius-panel) 0 0 var(--radius-panel); }
-		.tinbox { left: 20px; top: 20px; width: 420px; }
-		.tfront { left: 40px; top: 300px; width: 360px; }
+		.thero { padding-top: 40px; }
+		.thero .top { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+		.hpanel { height: 440px; margin-top: 40px; border-radius: 16px; }
+		.hwin { left: 24px; top: 32px; width: 900px; height: 520px; transform: none; }
 		.ways, .duo { grid-template-columns: minmax(0, 1fr); }
 		.way { padding: 24px; }
 		.ddocs { left: 20px; width: 560px; }
