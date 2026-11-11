@@ -32,7 +32,7 @@ document.querySelectorAll('[data-chatdemo]').forEach(function (box) {
 		var node = m;
 		if (/bot/.test(cls) && !/thinking/.test(cls)) {
 			node = el('div', 'bc-turn');
-			node.append(el('span', 'bc-ava sm', 'L'), m);
+			node.append(el('span', 'bc-ava sm', 'F'), m);
 		}
 		log.appendChild(node); scroll();
 		return node;

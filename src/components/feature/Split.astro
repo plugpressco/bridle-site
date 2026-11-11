@@ -1,0 +1,22 @@
+---
+// The home page's "it checks before it speaks" shape: the heading, one line
+// and two short paragraphs on one side; a real screen (or a piece of Bridle's
+// UI) on the panel at the other.
+import Shot from '../Shot.astro';
+import Dither from '../Dither.astro';
+interface Props { id: string; title: string; sub: string; lines: string[]; shot?: { name: string; width: number; height: number; alt: string }; ui?: string; center?: boolean; mid?: boolean; flip?: boolean }
+const { id, title, sub, lines, shot, ui, center = false, mid = false, flip = false } = Astro.props;
+---
+<section class="band" id={id} aria-labelledby={`h-${id}`}>
+  <div class:list={['checks', flip && 'flip']}>
+    <div class="txt">
+      <div><h2 class="h2" id={`h-${id}`}>{title}</h2><p class="sub">{sub}</p></div>
+      {lines.map((l) => <p class="b">{l}</p>)}
+    </div>
+    <div class:list={['vis', (center || ui) && 'center', mid && 'mid']}>
+      <Dither from={flip ? 'bottom' : 'right'} />
+      {shot && <Shot name={shot.name} width={shot.width} height={shot.height} alt={shot.alt} />}
+      {ui && <div class="vin" aria-hidden="true" style="width:min(440px, calc(100% - 48px))"><Fragment set:html={ui} /></div>}
+    </div>
+  </div>
+</section>

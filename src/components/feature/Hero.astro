@@ -1,23 +1,22 @@
 ---
-// A feature page's opening: the headline, a plain line and the buttons on the
-// left; on the right a big real Bridle screen on a soft blue panel with
-// Bridle's dot cloud, running off the panel's edge.
+// A feature page's opening: the home page's hero shape, the copy on the left
+// and one real Bridle screen on the panel at the right, running off its edge.
 import Button from '../ui/Button.astro';
 import Shot from '../Shot.astro';
 import Dither from '../Dither.astro';
 import { LAUNCHED, FREE_URL } from '../../data/site';
-interface Props { title: [string, string]; lead: string; shot: { name: string; width: number; height: number; alt: string }; center?: boolean; more?: { href: string; label: string } }
-const { title, lead, shot, center = false, more } = Astro.props;
+interface Props { title: [string, string]; lead: string; shot: { name: string; width: number; height: number; alt: string }; center?: boolean }
+const { title, lead, shot, center = false } = Astro.props;
 const main = LAUNCHED ? { href: FREE_URL, label: 'Get Bridle free' } : { href: '#join', label: 'Join the waitlist' };
 ---
-<div class="wrap"><section class="rhero" aria-labelledby="h-page">
-  <div>
-    <h1 class="fh1" id="h-page">{title[0]} <span class="soft">{title[1]}</span></h1>
-    <p class="flead">{lead}</p>
-    <div class="ctas"><Button size="lg" arrow href={main.href}>{main.label}</Button>{more && <Button size="lg" variant="soft" href={more.href}>{more.label}</Button>}</div>
+<section class="hero" aria-labelledby="h-page">
+  <div class="copy">
+    <h1 class="h1" id="h-page">{title[0]} <span class="soft">{title[1]}</span></h1>
+    <p class="lead">{lead}</p>
+    <div class="ctas"><Button size="lg" arrow href={main.href}>{main.label}</Button><Button size="lg" variant="soft" href="/demo/">Try the live demo</Button></div>
   </div>
-  <div class:list={['rpanel tall', center && 'center']}>
-    <Dither from="right" />
-    <div class="rshot"><Shot name={shot.name} width={shot.width} height={shot.height} alt={shot.alt} eager /></div>
+  <div class="panel hero-pic">
+    <Dither />
+    <div class:list={['hero-shot', center && 'center']}><Shot name={shot.name} width={shot.width} height={shot.height} alt={shot.alt} eager /></div>
   </div>
-</section></div>
+</section>

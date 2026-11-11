@@ -20,7 +20,7 @@ const look = {
 }[variant];
 const sized = variant === 'link'
   ? 'min-h-11 text-[16px]'
-  : { sm: 'h-10 px-3.5 text-[15px]', md: 'h-12 px-5 text-[16px]', lg: 'h-[52px] px-[22px] text-[16.5px]' }[size];
+  : { sm: 'h-10 px-4 text-[15px]', md: 'h-12 px-5 text-[16px]', lg: 'h-12 px-6 text-[16px]' }[size];
 const external = typeof href === 'string' && /^https?:/.test(href) && !href.startsWith('https://bridle.to');
 const classes = ['btn group/btn inline-flex items-center gap-2 whitespace-nowrap font-medium leading-none transition-colors duration-150 cursor-pointer disabled:opacity-60', variant !== 'link' && 'justify-center rounded-control no-underline', look, sized, cls];
 ---
