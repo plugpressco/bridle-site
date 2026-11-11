@@ -12,7 +12,7 @@ var RAMPS = {
 	night: [[63, 124, 236], [106, 155, 242], [157, 188, 247], [200, 218, 251], [255, 255, 255]],
 	// The home hero's blue panel: the whole panel in dots, lighter blues on
 	// Bridle blue (owner's pick 2026-11-11).
-	panel: [[52, 116, 214], [63, 127, 230], [93, 151, 238], [143, 185, 244], [201, 220, 250]],
+	panel: [[52, 116, 214], [60, 124, 224], [78, 139, 232], [104, 158, 238], [140, 182, 243]],
 };
 var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

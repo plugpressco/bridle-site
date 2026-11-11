@@ -1,10 +1,10 @@
 ---
 // The one button set (design v3): solid Bridle blue and soft blue, 8 px
 // corners, 40 / 48 / 52 px tall; a white one for the blue deal panel; and the
-// text link. The arrow (›) moves 2 px on hover.
+// text link. No arrows (owner, 2026-11-11).
 interface Props {
   href?: string;
-  variant?: 'primary' | 'soft' | 'line' | 'dark' | 'white' | 'link';
+  variant?: 'primary' | 'soft' | 'line' | 'dark' | 'glass' | 'white' | 'link';
   size?: 'sm' | 'md' | 'lg';
   arrow?: boolean;
   class?: string;
@@ -17,6 +17,7 @@ const look = {
   soft: 'bg-brand-100 text-brand-700 hover:bg-brand-200',
   line: 'bg-card text-foreground shadow-[inset_0_0_0_1px_var(--color-input)] hover:bg-white',
   dark: 'bg-transparent text-white shadow-[inset_0_0_0_1px_#4a443b] hover:shadow-[inset_0_0_0_1px_#7d7468]',
+  glass: 'bg-white/10 text-white shadow-[inset_0_0_0_1px_rgb(255_255_255/0.45)] hover:bg-white/20',
   white: 'bg-white text-foreground hover:bg-brand-50',
   link: 'text-foreground underline decoration-input underline-offset-4 hover:decoration-current',
 }[variant];
@@ -27,7 +28,7 @@ const external = typeof href === 'string' && /^https?:/.test(href) && !href.star
 const classes = ['btn group/btn inline-flex items-center gap-2 whitespace-nowrap font-medium leading-none transition-colors duration-150 cursor-pointer disabled:opacity-60', variant !== 'link' && 'justify-center rounded-control no-underline', look, sized, cls];
 ---
 {href ? (
-  <a href={href} class:list={classes} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} {...attrs}><slot />{arrow && <span class="transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true">›</span>}</a>
+  <a href={href} class:list={classes} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} {...attrs}><slot /></a>
 ) : (
-  <button type={type} class:list={classes} {...attrs}><slot />{arrow && <span class="transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true">›</span>}</button>
+  <button type={type} class:list={classes} {...attrs}><slot /></button>
 )}

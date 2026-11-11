@@ -30,43 +30,40 @@ export const PAGES: Record<string, PageInfo> = {
       'Bridle answers your support email and site chat from your own docs, checks every fact and hands the hard ones to you. Free for WordPress.',
     md: `# Your support email answers itself. You check the hard ones.
 
-AI support agent for WordPress. Bridle writes each reply from your docs and checks every fact. Refunds, billing and upset customers always wait for you.
+AI support agent for WordPress. Bridle writes the reply to every support email from your docs and checks each fact. You read it and press Send.
 
 ${waitlist}
 
 Free for WordPress. Built by the team behind Saddle (${SITE.saddle}).
 
-## Every email goes one of three ways.
+## What happens when an email comes in
 
-Bridle reads each one and picks the way. You always see where it went.
+A real example from Fernleaf, a shop that sells a photo gallery plugin.
 
-- **Ready to send.** The reply is written from your docs, every fact checked. Read it, then send it.
-- **Needs you.** Refunds, billing and upset customers. Bridle never sends these. A person answers.
-- **Filed away.** Receipts go to Updates. Scams go to Spam. Your Inbox shows only people.
+1. **A customer writes in.** Maya: “Hi, the gallery on my homepage is blank in Safari 17. Any idea?”
+2. **Bridle writes the reply.** “Clear your cache plugin and turn off Lazy load images under Fernleaf → Performance.” From your help doc: Gallery not showing on Safari. Facts checked.
+3. **You read it and press Send.** Refunds and upset customers never get an automatic reply. They wait for you.
 
-## The same answers, on your site.
+## It also answers on your website
 
-- **Chat.** Answers visitors from your docs, day and night. Refunds and hard questions go straight to you. ${SITE.url}/chat/
-- **Knowledge base.** A free help center for your site. Customers search it, and Bridle answers from it. ${SITE.url}/knowledge-base/
+The same answers, in a chat bubble and in a help center your customers can search.
 
-## Free for good. Pay once for Pro.
+- **Chat on your site.** Answers visitors from your docs, day and night. Refunds and hard questions go to you. ${SITE.url}/chat/
+- **A help center.** Write your docs once. Customers search them, and Bridle answers from them. ${SITE.url}/knowledge-base/
 
-Black Friday: pay once until Cyber Monday. Then Pro is yearly. The price goes up ${money(PRO.rise)} every 20 sales.
+## Pay once. Keep it for life.
 
-| | Bridle | ${PRO.plans.map((p) => `Pro, ${sitesLabel(p.sites)}`).join(' | ')} |
-|---|---|${PRO.plans.map(() => '---').join('|')}|
-| Price | $0, forever | ${PRO.plans.map((p) => `${money(p.base)} once`).join(' | ')} |
-| Inboxes | ${INBOXES.free} per site | ${PRO.plans.map((p) => (p.inboxes == null ? 'Unlimited' : String(p.inboxes))).join(' | ')} |
-| Reply drafts, fact checks, Auto | Yes | ${PRO.plans.map(() => 'Yes').join(' | ')} |
-| Chat on this site | Yes | ${PRO.plans.map(() => 'Yes').join(' | ')} |
-| Chat on your other sites, live chat | No | ${PRO.plans.map(() => 'Yes').join(' | ')} |
-| Help center (Bridle KB) | Yes | ${PRO.plans.map(() => 'Yes').join(' | ')} |
-| Missing answers, “write a doc” | No | ${PRO.plans.map(() => 'Yes').join(' | ')} |
-| Bridle AI answers | ${AI.free} a month | ${PRO.plans.map((p) => `${count(p.answers)} included`).join(' | ')} |
-| Order and licence lookups | WooCommerce card | ${PRO.plans.map(() => 'All stores').join(' | ')} |
-| Updates and support | Free | ${PRO.plans.map(() => 'For life').join(' | ')} |
+Black Friday price until Cyber Monday. Then Pro is yearly, and the price goes up ${money(PRO.rise)} every 20 sales.
 
-${PRO.refundDays}-day refund on Pro. More AI answers: ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}, and packs never run out. All plans: ${SITE.url}/pricing/
+| | ${PRO.plans.map((p) => `Pro, ${sitesLabel(p.sites)}`).join(' | ')} |
+|---|${PRO.plans.map(() => '---').join('|')}|
+| Price | ${PRO.plans.map((p) => `${money(p.base)} once`).join(' | ')} |
+| Inboxes | ${PRO.plans.map((p) => (p.inboxes == null ? 'Unlimited' : String(p.inboxes))).join(' | ')} |
+| Bridle AI answers included | ${PRO.plans.map((p) => count(p.answers)).join(' | ')} |
+
+Every plan: chat on all your sites, live chat and business hours, order and licence lookups (WooCommerce, EDD, Polar, Freemius), missing answers with “write a doc”, late-reply nudges and auto-resolve, reply drafts, fact checks and Auto, no limit on teammates or your own AI key, updates and support for life.
+
+${PRO.refundDays}-day refund. More AI answers: ${money(AI.packs[0].price)} for ${count(AI.packs[0].answers)}, and packs never run out. All plans: ${SITE.url}/pricing/
 
 ## Let Bridle write. You check the hard ones.
 

@@ -1,0 +1,11 @@
+---
+// A section's heading, in the hero's shape: one short, one-colour title on
+// the left and one plain line on the right (owner, 2026-11-11: titles must
+// read confident and simple).
+interface Props { id: string; title: string; line?: string }
+const { id, title, line } = Astro.props;
+---
+<div class="shead">
+  <h2 class="h2" id={`h-${id}`}>{title}</h2>
+  {line && <p class="lead">{line}</p>}
+</div>

@@ -1,0 +1,41 @@
+---
+// 2 One real example, start to finish (owner, 2026-11-11: explain the
+// product so anyone understands it, no slogans): a customer writes in,
+// Bridle writes the reply from your help doc, you press Send. Refunds and
+// upset customers wait for you. Fernleaf is the made-up shop used site-wide.
+import SecHead from '../ui/SecHead.astro';
+---
+<section class="band" aria-labelledby="h-example">
+  <SecHead id="example" title="What happens when an email comes in" line="A real example from Fernleaf, a shop that sells a photo gallery plugin." />
+  <ol class="ex">
+    <li>
+      <p class="exstep"><span>1</span>A customer writes in</p>
+      <div class="exvis">
+        <div class="pcard exmail">
+          <div class="ptop"><span class="pava" style="background:#5bb88a">MC</span><div><b>Maya Chen</b><small>to support@fernleaf.co</small></div></div>
+          <p>Hi, the gallery on my homepage is blank in Safari 17. Any idea?</p>
+        </div>
+      </div>
+    </li>
+    <li>
+      <p class="exstep"><span>2</span>Bridle writes the reply</p>
+      <div class="exvis">
+        <div class="pcard pdraft">
+          <div class="ptop"><b>Reply to Maya</b><span class="ptag green">✓ Facts checked</span></div>
+          <p>Clear your cache plugin and turn off “Lazy load images” under Fernleaf → Performance.</p>
+          <div class="psrc"><span class="n">1</span><span>From your help doc: <b>Gallery not showing on Safari</b></span></div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <p class="exstep"><span>3</span>You read it and press Send</p>
+      <div class="exvis">
+        <div class="pcard exsend">
+          <div class="pacts"><span class="go">Send</span><span>Edit</span></div>
+          <p class="exnote">Refunds and upset customers never get an automatic reply. They wait for you:</p>
+          <div class="prow"><span class="pava" style="background:#c98a5b">JB</span><div class="pt"><b>Jonas Berg</b><span>Refund for order 2187</span></div><span class="ptag amber">Needs you</span></div>
+        </div>
+      </div>
+    </li>
+  </ol>
+</section>

@@ -5,7 +5,7 @@
 // closing. Serif headings, cream page, crisp product cards.
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
-import Ways from '../components/home/Ways.astro';
+import Example from '../components/home/Example.astro';
 import OnSite from '../components/home/OnSite.astro';
 import Table from '../components/pricing/Table.astro';
 import Closing from '../components/Closing.astro';
@@ -35,7 +35,7 @@ const jsonLd = [
 <Base title={page.title} description={page.description} jsonLd={jsonLd}>
   <div class="wrap stack-sections">
     <Hero />
-    <Ways />
+    <Example />
     <OnSite />
     <Table />
     <Closing title="Let Bridle write." second="You check the hard ones." sub="Free for WordPress. Your support address stays the same." source="footer" />

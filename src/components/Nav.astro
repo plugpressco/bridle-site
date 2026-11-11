@@ -42,7 +42,7 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
       </div>
       <div class="acts">
         <a class="btn inline-flex h-10 items-center rounded-control bg-brand-100 px-3.5 text-[15px] font-medium text-brand-700 no-underline hover:bg-brand-200" href="/demo/">Try the demo</a>
-        <a class="btn group/btn inline-flex h-10 items-center gap-2 rounded-control bg-brand-600 px-3.5 text-[15px] font-medium text-white no-underline hover:bg-brand-700" href={get.href}>{get.label} <span class="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true">›</span></a>
+        <a class="btn group/btn inline-flex h-10 items-center gap-2 rounded-control bg-brand-600 px-3.5 text-[15px] font-medium text-white no-underline hover:bg-brand-700" href={get.href}>{get.label}</a>
       </div>
       <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="sheet">Menu</button>
     </div>
@@ -51,7 +51,7 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
         <div class="mprod">
           <div class="mlist">
             {product.map((i, n) => <a class:list={['mitem', n === 0 && 'on']} href={i.href} data-prev={i.key}><b>{i.label}</b><span>{i.text}</span></a>)}
-            <div class="mfoot"><a href="/demo/">Try the live demo ›</a><a href="/pricing/">Bridle Pro ›</a></div>
+            <div class="mfoot"><a href="/demo/">Try the live demo</a><a href="/pricing/">Pricing</a></div>
           </div>
           <div class="mprev" aria-hidden="true">
             <figure class="on" data-pane="email"><Fragment set:html={shot('inbox-groups', 820, 566)} /></figure>
@@ -78,7 +78,7 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
   <div><h4>Pricing</h4><a class="mitem" href="/pricing/"><b>Bridle Pro</b><span>Pay once for Bridle Pro. Only until Cyber Monday.</span></a></div>
   <div><h4>Resources</h4>{resources.flat().map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
   <div class="grid gap-2.5">
-    <a class="btn inline-flex h-12 items-center justify-center gap-2 rounded-control bg-brand-600 text-[16px] font-medium text-white no-underline" href={get.href}>{get.label} <span aria-hidden="true">›</span></a>
+    <a class="btn inline-flex h-12 items-center justify-center gap-2 rounded-control bg-brand-600 text-[16px] font-medium text-white no-underline" href={get.href}>{get.label}</a>
     <a class="btn inline-flex h-12 items-center justify-center rounded-control bg-brand-100 text-[16px] font-medium text-brand-700 no-underline" href="/demo/">Try the demo</a>
   </div>
 </div>
