@@ -1,0 +1,25 @@
+---
+// /docs/: the help center (design: 02-pages.html). /knowledge-base/ moved here.
+import Base from '../layouts/Base.astro';
+import FeatureHero from '../components/b/FeatureHero.astro';
+import Facts from '../components/b/Facts.astro';
+import Prod from '../components/b/Prod.astro';
+import Next3 from '../components/b/Next3.astro';
+import Fin from '../components/b/Fin.astro';
+import { PAGES } from '../data/pages';
+const page = PAGES.docs;
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Docs', path: page.path }]}>
+  <div class="wrap stack-sections">
+    <FeatureHero name="Docs" glyph="doc" title="A help center your customers and Bridle both read" lead="Write a doc once. Customers find it, and Bridle answers from it."
+      frames={['doc', 'face', 'check']} steps={['You write a doc once', 'Bridle reads it', 'Every answer uses it']} shot="docs-center" frame="brow" seed={41} />
+    <Facts items={['On your own site', 'Search built in', 'Sorted into categories', 'Import from Help Scout, Intercom or Notion']} />
+    <section aria-label="What Docs does"><div class="b-prods">
+      <Prod icon="i-file" name="Write" claim="Write it once, inside WordPress." shot="docs-list" points={['The editor you already know', 'Sort docs into categories', 'Drafts stay hidden until you publish']} />
+      <Prod icon="i-sparkles" name="Answers" claim="Bridle answers from every page." shot="docs-used" points={['Email replies name the doc they used', 'Chat answers link to it', 'Change the doc and the answers follow']} />
+      <Prod icon="i-help" name="Missing answers" claim="See what is missing." shot="docs-missing" points={['A list of questions with no doc yet', 'Sorted by how often people ask', 'Start the doc from the question']} />
+    </div></section>
+    <Next3 not="docs" />
+    <Fin title="Give your customers a place to find answers" />
+  </div>
+</Base>

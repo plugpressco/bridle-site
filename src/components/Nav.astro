@@ -1,34 +1,31 @@
 ---
-// The menu: Bridle's own (owner, 2026-11-10: the capsule "look copy helpscout
-// make it better"). A plain full-width bar that gets a hairline once you
-// scroll. Product opens a panel under it: the four parts of Bridle on the left,
-// and on the right a real Bridle screen that changes with the item you point
-// at. Resources is a short plain list. On phones a Menu button opens a
-// full-height sheet. Esc closes; focus stays inside (src/scripts/nav.js).
+// The menu: a plain full-width bar that gets a hairline once you scroll.
+// Product opens a panel under it: the four tools on the left and, on the
+// right, a picture of the tool you point at. Resources is a short plain list.
+// The right side holds the account link and the price; the buy button
+// joins them once the hero's own buttons have scrolled away, so nothing is
+// said twice in the first screen (owner, 2026-11-11). On phones a Menu button
+// opens a full-height sheet. Esc closes; focus stays inside (src/scripts/nav.js).
 import Mark from './Brand.astro';
-import { SITE, LAUNCHED, FREE_URL } from '../data/site';
-interface Props { join?: string }
-const { join = '/#join' } = Astro.props;
+import Shot from './b/Shot.astro';
+import { TOOLS, type ToolKey } from './b/tools';
+import { SITE, ACCOUNT_URL, OFFER_ON, PRICE, DEAL, money } from '../data/site';
 const path = Astro.url.pathname;
-const product = [
-  { key: 'email', label: 'Inbox', text: 'Every email comes with a reply', href: '/inbox/' },
-  { key: 'chat', label: 'Chat', text: 'Answers visitors on your site', href: '/chat/' },
-  { key: 'docs', label: 'Knowledge base', text: 'A help center Bridle answers from', href: '/knowledge-base/' },
-  { key: 'apps', label: 'AI apps', text: 'Claude and ChatGPT work your inbox', href: '/inbox/#ai-apps' },
-];
-const shot = (name: string, w: number, h: number) => `<picture><source srcset="/img/${name}.avif" type="image/avif" /><img class="screen" src="/img/${name}.webp" width="${w}" height="${h}" alt="" loading="lazy" decoding="async" /></picture>`;
+const keys = Object.keys(TOOLS) as ToolKey[];
+const previews: Record<ToolKey, string> = { inbox: 'tool-inbox', ai: 'tool-ai', chat: 'tool-chat', docs: 'tool-docs' };
 const resources = [
   [
     { label: 'Guides', text: 'Set up each part, step by step', href: '/guides/' },
-    { label: 'Docs', text: 'Every setting, explained', href: SITE.docs },
+    { label: 'Help docs', text: 'Every setting, explained', href: SITE.docs },
     { label: 'Live demo', text: 'Try Bridle in your browser', href: '/demo/' },
+    { label: 'Bridle and Help Scout', text: 'The two, side by side', href: '/compare/help-scout/' },
   ],
   [
     { label: 'About PlugPress', text: 'The team behind Saddle and Mailpuff', href: SITE.companyUrl },
     { label: 'Support', text: 'Ask us. A person answers.', href: SITE.support },
+    { label: 'Account', text: 'Your licence key and downloads', href: ACCOUNT_URL },
   ],
 ];
-const get = LAUNCHED ? { label: 'Get Bridle free', href: FREE_URL } : { label: 'Join the waitlist', href: join };
 const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ---
 <header class="navwrap">
@@ -40,9 +37,10 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
         <a href="/pricing/" aria-current={path.startsWith('/pricing/') ? 'page' : undefined}>Pricing</a>
         <button type="button" class="trig" id="t-resources" aria-expanded="false" aria-controls="m-resources">Resources <Fragment set:html={down} /></button>
       </div>
-      <div class="acts">
-        <a class="btn inline-flex h-10 items-center rounded-control bg-brand-100 px-3.5 text-[15px] font-medium text-brand-700 no-underline hover:bg-brand-200" href="/demo/">Try the demo</a>
-        <a class="btn group/btn inline-flex h-10 items-center gap-2 rounded-control bg-brand-600 px-3.5 text-[15px] font-medium text-white no-underline hover:bg-brand-700" href={get.href}>{get.label} <span class="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true">›</span></a>
+      <div class="navright">
+        <a class="navlink" href={ACCOUNT_URL}>Account</a>
+        <a class="navnote" href="/pricing/"><span class="navwords" data-deal="tag">{OFFER_ON ? 'Black Friday' : 'Price'}</span> <b><span data-deal="price">{money(PRICE)}</span> once</b></a>
+        <div class="acts navbuy"><a class="b1 sm" href="/pricing/">Buy Bridle</a></div>
       </div>
       <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="sheet">Menu</button>
     </div>
@@ -50,14 +48,11 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
       <div class="mpanel" id="m-product" hidden>
         <div class="mprod">
           <div class="mlist">
-            {product.map((i, n) => <a class:list={['mitem', n === 0 && 'on']} href={i.href} data-prev={i.key}><b>{i.label}</b><span>{i.text}</span></a>)}
-            <div class="mfoot"><a href="/demo/">Try the live demo ›</a><a href="/pricing/">Bridle Pro ›</a></div>
+            {keys.map((k, n) => <a class:list={['mitem', n === 0 && 'on']} href={TOOLS[k].href} data-prev={k}><b>{TOOLS[k].name}</b><span>{TOOLS[k].line}</span></a>)}
+            <div class="mfoot"><a href="/demo/">Try the live demo</a><a href="/pricing/">Pricing</a></div>
           </div>
           <div class="mprev" aria-hidden="true">
-            <figure class="on" data-pane="email"><Fragment set:html={shot('inbox-groups', 820, 566)} /></figure>
-            <figure data-pane="chat"><Fragment set:html={shot('chat-answer', 400, 680)} /></figure>
-            <figure data-pane="docs"><Fragment set:html={shot('kb-help', 1040, 450)} /></figure>
-            <figure data-pane="apps"><div class="apps"><p class="q"><b>You, in Claude</b>Answer the easy ones in my Bridle inbox.</p><p class="a"><b>Claude</b>I wrote 3 drafts in Bridle. Sending needs your OK.</p></div></figure>
+            {keys.map((k, n) => <figure class:list={[n === 0 && 'on']} data-pane={k}><Shot name={previews[k] as any} alt="" /></figure>)}
           </div>
         </div>
       </div>
@@ -74,15 +69,16 @@ const down = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <div class="sheet-top"><Mark /><button type="button" class="close-btn" id="sheet-close">Close</button></div>
-  <div><h4>Product</h4>{product.map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
-  <div><h4>Pricing</h4><a class="mitem" href="/pricing/"><b>Bridle Pro</b><span>Pay once for Bridle Pro. Only until Cyber Monday.</span></a></div>
+  <div><h4>Product</h4>{keys.map((k) => <a class="mitem" href={TOOLS[k].href}><b>{TOOLS[k].name}</b><span>{TOOLS[k].line}</span></a>)}</div>
+  <div><h4>Pricing</h4><a class="mitem" href="/pricing/"><b>One licence</b><span>{OFFER_ON ? `Pay once. ${money(PRICE)} until ${DEAL.endsLabel}.` : `Pay once. ${money(PRICE)}.`}</span></a></div>
   <div><h4>Resources</h4>{resources.flat().map((i) => <a class="mitem" href={i.href}><b>{i.label}</b><span>{i.text}</span></a>)}</div>
   <div class="grid gap-2.5">
-    <a class="btn inline-flex h-12 items-center justify-center gap-2 rounded-control bg-brand-600 text-[16px] font-medium text-white no-underline" href={get.href}>{get.label} <span aria-hidden="true">›</span></a>
-    <a class="btn inline-flex h-12 items-center justify-center rounded-control bg-brand-100 text-[16px] font-medium text-brand-700 no-underline" href="/demo/">Try the demo</a>
+    <a class="b1" href="/pricing/">Buy Bridle</a>
+    <a class="b2" href="/demo/">Try the live demo</a>
   </div>
 </div>
 
 <script>
   import '../scripts/nav.js';
+  import '../scripts/deal.js';
 </script>

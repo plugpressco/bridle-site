@@ -1,0 +1,6 @@
+---
+// The two buttons under a hero: buy, and the live demo.
+interface Props { buy?: string }
+const { buy = '/pricing/' } = Astro.props;
+---
+<div class="ctas"><a class="b1" href={buy}>Buy Bridle</a><a class="b2" href="/demo/">Try the live demo</a></div>

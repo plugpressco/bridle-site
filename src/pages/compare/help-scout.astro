@@ -1,0 +1,72 @@
+---
+// /compare/help-scout/ (design: planning/landing/redesign/02-pages.html):
+// the bill, the two side by side (with the rows where Help Scout wins), who
+// each one fits, how to move, and the questions before switching.
+// Help Scout's prices and features were read on helpscout.com on the day in
+// src/data/cost.ts (CHECKED); change them there and in the table together.
+import Base from '../../layouts/Base.astro';
+import Art from '../../components/b/Art.astro';
+import Cta from '../../components/b/Cta.astro';
+import Shot from '../../components/b/Shot.astro';
+import Facts from '../../components/b/Facts.astro';
+import Bill from '../../components/b/Bill.astro';
+import Qa from '../../components/b/Qa.astro';
+import Fin from '../../components/b/Fin.astro';
+import { PAGES } from '../../data/pages';
+import { HS_FAQ, faqLd } from '../../data/faq';
+import { HS_ROWS } from '../../data/cost';
+
+const page = PAGES.helpScout;
+const cell = (v: string | boolean) => v === true ? '<td class="y"><span aria-hidden="true">✓</span><span class="sr-only">Yes</span></td>' : v === false ? '<td class="n">No</td>' : `<td>${v}</td>`;
+const tick = '<svg class="tk" aria-hidden="true"><use href="#b-tick"/></svg>';
+const pick = {
+  bridle: ['Your business runs on WordPress', 'You answer support yourself, or with a small team', 'You want AI answers without a bill for each one'],
+  helpScout: ['You have ten or more people answering', 'You need a phone app, WhatsApp or Instagram', 'You need HIPAA'],
+};
+---
+<Base title={page.title} description={page.description} jsonLd={[faqLd(HS_FAQ)]} crumbs={[{ name: 'Bridle and Help Scout', path: page.path }]}>
+  <div class="wrap stack-sections">
+    <section class="b-hero" aria-labelledby="h-hero">
+      <div class="b-hpan b-inner">
+        <h1 class="h1" id="h-hero">The Help Scout alternative that lives in WordPress.</h1>
+        <p class="lead">Inbox, chat, docs and AI answers in one plugin.</p>
+        <Cta />
+        <Art seed={13} />
+      </div>
+      <div class="b-stage"><div class="b-wpwin b-shotimg"><Shot name="app-inbox-wide" eager /></div></div>
+    </section>
+
+    <Facts items={['Lives in your WordPress', 'No fee per person', 'About a cent an AI answer', 'Imports your Help Scout Docs']} />
+
+    <Bill />
+
+    <section class="b-plans" aria-labelledby="h-vs">
+      <div class="shead"><h2 class="h2" id="h-vs">Side by side</h2><p class="lead">The rows where Help Scout wins are here too.</p></div>
+      <div class="tbl"><table>
+        <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col">Help Scout</th><th scope="col">Bridle</th></tr></thead>
+        <tbody>{HS_ROWS.map((r) => <tr><th scope="row" class="!font-normal !text-ink-2">{r[0]}</th><Fragment set:html={cell(r[1]) + cell(r[2])} /></tr>)}</tbody>
+      </table></div>
+    </section>
+
+    <section aria-label="Which one fits you">
+      <div class="b-doors">
+        <div class="b-door"><small>Pick Bridle if</small><ul class="b-pickul">{pick.bridle.map((t) => <li><Fragment set:html={tick} /><span>{t}</span></li>)}</ul></div>
+        <div class="b-door"><small>Pick Help Scout if</small><ul class="b-pickul">{pick.helpScout.map((t) => <li><Fragment set:html={tick} /><span>{t}</span></li>)}</ul></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-move">
+      <div class="shead"><h2 class="h2" id="h-move">Moving from Help Scout</h2><p class="lead">Three steps. Your support address stays the same.</p></div>
+      <ol class="b-steps3">
+        <li><b>Install Bridle</b><span>It opens inside your WordPress admin, next to your posts and pages.</span></li>
+        <li><b>Forward your support address</b><span>Customers keep writing to the address they know.</span></li>
+        <li><b>Bring your docs</b><span>Bridle imports your Help Scout Docs and answers from them right away.</span></li>
+      </ol>
+      <p class="small b-after-note">Old conversations stay in Help Scout. Bridle starts with new email.</p>
+    </section>
+
+    <Qa items={HS_FAQ} title="Questions before you switch" />
+
+    <Fin title="Move your help desk into WordPress" />
+  </div>
+</Base>

@@ -1,20 +1,22 @@
 ---
-// The footer (design v3): the mark and the fine print, then four short
-// columns of plain links.
+// The footer: the mark and the fine print, then four short columns of plain
+// links, on white.
 import Mark from './Brand.astro';
 import { SITE } from '../data/site';
 const year = new Date().getFullYear();
 const cols = [
   { title: 'Product', links: [
     { href: '/inbox/', label: 'Inbox' },
+    { href: '/ai-answers/', label: 'AI answers' },
     { href: '/chat/', label: 'Chat' },
-    { href: '/knowledge-base/', label: 'Knowledge base' },
-    { href: '/demo/', label: 'Live demo' },
+    { href: '/docs/', label: 'Docs' },
     { href: '/pricing/', label: 'Pricing' },
   ] },
   { title: 'Resources', links: [
+    { href: '/demo/', label: 'Live demo' },
     { href: '/guides/', label: 'Guides' },
-    { href: SITE.docs, label: 'Docs' },
+    { href: SITE.docs, label: 'Help docs' },
+    { href: '/compare/help-scout/', label: 'Bridle and Help Scout' },
     { href: '/llms.txt', label: 'llms.txt' },
   ] },
   { title: 'Company', links: [
@@ -31,7 +33,7 @@ const cols = [
 ---
 <footer class="foot">
   <div class="wrap">
-    <div><Mark /><p class="small mt-2.5">© {year} {SITE.company}. Bridle is GPL.</p></div>
+    <div><Mark /><p class="small mt-2.5">© {year} {SITE.company}</p></div>
     {cols.map((c) => (
       <nav aria-label={c.title}>
         <h2>{c.title}</h2>

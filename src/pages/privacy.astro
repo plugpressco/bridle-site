@@ -6,6 +6,6 @@ import { PAGES } from '../data/pages';
 import { PRIVACY } from '../data/legal';
 const page = PAGES.privacy;
 ---
-<Base title={page.title} description={page.description} waitlist={false} crumbs={[{ name: 'Privacy', path: page.path }]}>
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Privacy', path: page.path }]}>
   <Legal doc={PRIVACY} />
 </Base>

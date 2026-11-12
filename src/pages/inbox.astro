@@ -1,19 +1,25 @@
 ---
-// /inbox/: Bridle's email replies, free. Big screen rows (owner's pick, 2026-11-11): each part a wide row with a real Bridle screen. Facts from the plugin's AGENTS.md and the Bridle docs.
+// /inbox/: the shared inbox (design: planning/landing/redesign/02-pages.html).
 import Base from '../layouts/Base.astro';
-import Hero from '../components/feature/Hero.astro';
-import Rows from '../components/feature/Rows.astro';
-import Checklist from '../components/feature/Checklist.astro';
-import Closing from '../components/Closing.astro';
+import FeatureHero from '../components/b/FeatureHero.astro';
+import Facts from '../components/b/Facts.astro';
+import Prod from '../components/b/Prod.astro';
+import Next3 from '../components/b/Next3.astro';
+import Fin from '../components/b/Fin.astro';
 import { PAGES } from '../data/pages';
 const page = PAGES.inbox;
-const rows = [{"id": "drafts", "title": "Replies that know your business.", "text": "Bridle writes a reply for each email from your docs, pages, products and past replies. Open your inbox and the answers are already there.", "points": ["A draft on every email", "Written in plain words", "Rewrite or redraft in one click"], "bottom": true, "shot": {"name": "conversation-draft", "width": 875, "height": 724, "alt": "A customer email in Bridle with a ready reply under it."}}, {"id": "facts", "title": "Every fact checked.", "text": "Each quote and link is checked against where it came from, and the source sits right under the reply. Not sure? Bridle says so instead of guessing.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Sources <span class=\"mpill ok\">✓ Verified</span></div><div class=\"mq-r\"><small>Help doc</small>Gallery not showing on Safari</div><div class=\"mq-r\"><small>Page</small>Fernleaf → Performance</div><div class=\"mq-r\"><small>Link</small>fernleaf.co/docs/safari</div></div>"}, {"id": "needs-you", "title": "Hard ones wait for you.", "text": "Refunds, billing and upset customers are marked and never sent by Bridle. They wait under Needs you, so a person always answers.", "points": ["Upset customer and Refund marks", "Auto never sends them", "Receipts go to Updates, scams to Spam"], "shot": {"name": "inbox-needs", "width": 1112, "height": 220, "alt": "Needs you in Bridle: an email marked Upset customer, and one marked Refund."}}, {"id": "auto", "title": "Auto, when you trust it.", "text": "Choose Off, Draft or Auto for each inbox. With Auto, sure replies send after 15 minutes, and you can stop any of them.", "ui": "<div class=\"mq\"><div class=\"mq-h\">Support inbox</div><div class=\"mq-seg\"><span>Off</span><span>Draft</span><span class=\"on\">Auto</span></div><div class=\"mq-r\"><small>Sure replies</small>Send after 15 minutes</div><div class=\"mq-r\"><small>Refunds, billing, upset customers</small>Always wait for you</div></div>"}];
 ---
 <Base title={page.title} description={page.description} crumbs={[{ name: 'Inbox', path: page.path }]}>
-  <Hero title={["Every email comes with a reply.", "Read it, then send it."]} lead={"Bridle reads each new email, finds the answer in your docs, pages and past replies, and writes the reply. The hard ones wait for you."} shot={{"name": "app-inbox", "width": 1040, "height": 628, "alt": "The Bridle inbox: four replies under Ready to send, and two emails under Needs you."}} more={{ href: '/demo/', label: 'Try the live demo' }} />
-  <div class="wrap stack-sections fpage">
-    <Rows rows={rows} />
-    <Checklist id="all" title={"Everything in the Inbox."} free={["Reply drafts from your docs, pages and past replies", "Fact checks on every quote and link", "Auto, with 15 minutes to stop it", "Rewrite and translate", "Inbox, Updates and Spam", "Teammates, notes, bulk actions, shortcuts", "Claude and ChatGPT can draft for you", "3 inboxes per site, your own AI key"]} pro={["10, 25 or unlimited inboxes", "Order and licence lookups", "Late-reply nudges and auto-resolve", "1,000 to 10,000 AI answers included"]} />
+  <div class="wrap stack-sections">
+    <FeatureHero name="Inbox" glyph="envelope" title="All your support email, inside WordPress" lead="A shared inbox for your team, in the place you already work."
+      frames={['envelope', 'bars', 'check']} steps={['An email comes in', 'Bridle sorts it', 'A reply is ready']} shot="inbox-open" frame="conv" seed={17} />
+    <Facts items={['No limit on teammates', 'Keyboard shortcuts', 'Select many, like Gmail', 'Trash kept for 30 days']} />
+    <section aria-label="What the Inbox does"><div class="b-prods">
+      <Prod icon="i-check-circle" name="Sorting" claim="Sorted before you look." shot="inbox-sorted" points={['Ready to send: a reply is already written', 'Needs you: refunds, billing, upset customers', 'Receipts go to Updates. Scams go to Spam.']} />
+      <Prod icon="i-user" name="Team" claim="Work one inbox together." shot="tool-inbox" points={['Assign an email to a teammate', 'Leave a note and mention someone', 'Save the replies you send often']} />
+      <Prod icon="i-globe" name="Your address" claim="Keep the address your customers know." shot="inbox-address" points={['Forward your support address to Bridle', 'Customers keep writing where they always did', 'Ten inboxes in your licence']} />
+    </div></section>
+    <Next3 not="inbox" />
+    <Fin title="Put your inbox where your site is" />
   </div>
-  <Closing title={"Let Bridle write the replies."} second={"You press send."} source="inbox" wrap />
 </Base>

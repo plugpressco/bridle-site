@@ -1,0 +1,10 @@
+---
+// The dot mountains behind a panel (src/scripts/art.js draws them).
+interface Props { seed: number }
+const { seed } = Astro.props;
+---
+<canvas class="b-art" data-art data-seed={seed} aria-hidden="true"></canvas>
+
+<script>
+  import '../../scripts/art.js';
+</script>

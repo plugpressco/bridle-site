@@ -1,0 +1,18 @@
+---
+// One tool card: its name, a claim, three points and a picture of the app.
+// Cards inside .b-prods stack as you scroll on tall, wide screens (b.css).
+import Shot from './Shot.astro';
+interface Props { icon: string; name: string; claim: string; points: string[]; shot: string; link?: { href: string; label: string } }
+const { icon, name, claim, points, shot, link } = Astro.props;
+---
+<article class="b-prod">
+  <div>
+    <span class="b-pname"><i><svg class="i" aria-hidden="true"><use href={`#${icon}`} /></svg></i>{name}</span>
+    <h3>{claim}</h3>
+    <ul class="b-pts">
+      {points.map((p) => <li><svg class="tk" aria-hidden="true"><use href="#b-tick" /></svg><span>{p}</span></li>)}
+    </ul>
+    {link && <a class="b-tl" href={link.href}>{link.label}</a>}
+  </div>
+  <div class="b-shot"><div class="b-shotimg"><Shot name={shot as any} /></div></div>
+</article>

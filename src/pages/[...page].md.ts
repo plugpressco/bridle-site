@@ -1,7 +1,7 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { PAGES } from '../data/pages';
 
-// The Markdown copy of every inner page (/chat.md, /pro.md, /privacy.md, /terms.md).
+// The Markdown copy of every inner page (/chat.md, /pricing.md, /compare/help-scout.md, /privacy.md).
 export const getStaticPaths: GetStaticPaths = () =>
   Object.values(PAGES)
     .filter((p) => p.path !== '/')

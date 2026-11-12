@@ -1,0 +1,28 @@
+---
+// /ai-answers/: replies written from your docs (design: 02-pages.html).
+import Base from '../layouts/Base.astro';
+import FeatureHero from '../components/b/FeatureHero.astro';
+import Facts from '../components/b/Facts.astro';
+import Prod from '../components/b/Prod.astro';
+import Agent from '../components/b/Agent.astro';
+import Next3 from '../components/b/Next3.astro';
+import Fin from '../components/b/Fin.astro';
+import { PAGES } from '../data/pages';
+import { PLAN, count } from '../data/site';
+const page = PAGES.ai;
+---
+<Base title={page.title} description={page.description} crumbs={[{ name: 'AI answers', path: page.path }]}>
+  <div class="wrap stack-sections">
+    <FeatureHero name="AI answers" glyph="face" title="The answer is written before you open the email" lead="Bridle reads each email, finds the answer in your docs and writes the reply. You read it and press Send."
+      frames={['envelope', 'face', 'check']} steps={['Bridle reads the email', 'It writes from your docs', 'Every fact is checked']} shot="ai-draft" frame="conv" seed={23} />
+    <Facts items={[`${count(PLAN.answers)} AI answers included`, 'Your own AI key works too', 'Shows where each fact came from', 'You can always edit']} />
+    <section aria-label="How AI answers work"><div class="b-prods">
+      <Prod icon="i-book" name="Sources" claim="Written from what you already wrote." shot="ai-sources" points={['Your docs, pages and products', 'How your team answered before', 'Nothing in your docs? It does not guess.']} />
+      <Prod icon="i-shield" name="Checks" claim="The hard ones always wait for you." shot="ai-needs" points={['Every quote and link is checked first', 'Refunds, billing and upset customers go to you', 'They never get an automatic reply']} />
+      <Prod icon="i-clock" name="Auto" claim="It can send by itself, when you trust it." shot="ai-auto" points={['Off, Draft or Auto, for each inbox', 'Auto waits 15 minutes, so you can stop it', 'Only replies it is sure about']} />
+    </div></section>
+    <Agent />
+    <Next3 not="ai" />
+    <Fin title="Let Bridle write. You press Send" />
+  </div>
+</Base>

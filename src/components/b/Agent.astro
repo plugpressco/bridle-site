@@ -1,0 +1,18 @@
+---
+// AI apps: one Claude session shown as it happens (a picture), and two cards:
+// any MCP app, and deeper with Saddle.
+import Shot from './Shot.astro';
+import { SITE } from '../../data/site';
+const apps = [['l-claude', 'Claude'], ['l-openai', 'ChatGPT'], ['l-cursor', 'Cursor'], ['l-mcp', 'Any MCP app']];
+---
+<section aria-labelledby="h-agent" id="ai-apps">
+  <div class="shead"><h2 class="h2" id="h-agent">Run it from Claude or ChatGPT.</h2><p class="lead">Bridle works with any app that speaks MCP. Nothing is sent without your OK.</p></div>
+  <div class="b-agent2">
+    <div class="b-term b-shotimg"><Shot name="claude-session" /></div>
+    <div class="b-aside">
+      <div class="b-acard"><h3>Any MCP app</h3><p>Claude, ChatGPT, Cursor and others can read your inbox, search your docs and write drafts.</p>
+        <div class="b-apps">{apps.map(([id, name]) => <span><svg aria-hidden="true"><use href={`#${id}`} /></svg>{name}</span>)}</div></div>
+      <div class="b-acard"><h3>Deeper with Saddle</h3><p>Add Saddle, our free plugin, and the same app runs your whole site. It writes the missing doc and fixes the page.</p><a class="b-tl" href={SITE.saddle}>See Saddle</a></div>
+    </div>
+  </div>
+</section>

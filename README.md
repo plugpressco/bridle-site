@@ -1,8 +1,8 @@
 # bridle.to
 
-The website for Bridle (free, launching on WordPress.org) and Bridle Pro (sold here from launch day). A static Astro site with one server function (the waitlist), hosted on Spacefast (Space `bridle`, team `fahim-team`), served at https://bridle.to.
+The website for Bridle, the help desk that lives in your WordPress: a shared inbox, AI answers, chat and docs in one plugin. One licence is sold here, paid once. A static Astro site with two small server functions (the live price and the checkout), hosted on Spacefast (Space `bridle`, team `fahim-team`), served at https://bridle.to.
 
-Plan: `../planning/BRIDLE-NEXT.md` §5 (site) and `../planning/BRIDLE-PRO.md` §10–12 (prices). Brand: `../rebrand/BRAND.md`, the same tokens as the plugin app.
+Design: `../planning/landing/redesign/` (the approved boards, 11 and 12 November 2026). Positioning: `../planning/POSITIONING.md`.
 
 ## Run it
 
@@ -10,27 +10,42 @@ Plan: `../planning/BRIDLE-NEXT.md` §5 (site) and `../planning/BRIDLE-PRO.md` §
 npm install
 npm run dev        # http://localhost:4321
 npm run build      # astro build, then scripts/postbuild.mjs: writes dist/
-npm run preview    # serves dist/ (without the waitlist function)
+npm run preview    # serves dist/ (without the server functions, so the price stays at the first step)
 ```
 
 ## Where things live
 
 | Path | What |
 |---|---|
-| `src/pages/` | `index` (home), `pricing`, `chat`, `demo`, `guides`, `privacy`, `terms`, `thanks` (the no-JavaScript waitlist landing, noindex), `404`, and `pro` (noindex: sends `/pro/` on to `/pricing/`, out of the sitemap); plus `llms.txt`, `llms-full.txt`, `robots.txt` and a `.md` copy of every page |
-| `src/data/site.ts` | Shared facts: the one-sentence definition, contact, Turnstile site key, Bridle AI packs, Pro plans and prices. Change a number here and every page, Markdown copy and JSON-LD follows |
+| `src/pages/` | `index` (home), `inbox`, `ai-answers`, `chat`, `docs`, `pricing`, `compare/help-scout`, `demo`, `guides`, `privacy`, `terms`, `thanks` (after a checkout, noindex), `404`; `pro` and `knowledge-base` send old links on to `/pricing/` and `/docs/` (noindex, out of the sitemap); plus `llms.txt`, `llms-full.txt`, `robots.txt` and a `.md` copy of every page |
+| `src/data/site.ts` | Shared facts: the one-sentence definition, contact, Bridle AI packs, the licence and its price steps. Change a number here and every page, Markdown copy and JSON-LD follows |
+| `src/data/deal.json` | The licence (sites, inboxes, AI answers, first price, Polar product id) and the price steps. The pages, the client script and both server functions read it |
 | `src/data/pages.ts` | Each page's title, description and Markdown copy. The Markdown must say what the page says |
-| `src/data/faq.ts`, `src/data/legal.ts`, `src/data/cost.ts` | Questions; privacy and terms as data (the pages and their Markdown copies render from it); the cost comparison's prices, sources and the day they were checked |
-| `src/components/ui/` | The primitives every page is built from: `Container` (the one content width), `Section`, `HeadingPair`, `Button` (primary, soft, white, link), `Card`, `Faq` |
-| `src/components/` | The menu (a floating capsule that grows into a panel; a phone sheet), footer, waitlist form, closing call, cost comparison, real screens (`Shot`), chat demo; home sections in `home/`, pricing sections in `pricing/` |
-| `src/scripts/` | `nav.js` (the menu), `hero.js` (the hero loop's pause), `faces.js` (the plugin's dot-matrix faces), `cost.js` (the slider), `deal.js` (live deal: counters, sites switch, price chart, buy buttons), `waitlist.js`, `util.js` |
-| `src/scripts/chat-demo.js` | Bridle Chat, played, in the plugin's own words |
-| `src/styles/site.css` | The one stylesheet: Tailwind v4 (`@tailwindcss/vite`, pinned), the `@theme` tokens of design v3 (mirrored in `planning/landing/brand/tokens.css`), the landing sections' pieces, the prose for privacy, terms and guides |
-| `spacefast/functions/api/waitlist.ts` | `POST /api/waitlist`: stores sign-ups in the Space's MySQL (table `waitlist`) |
-| `sf.jsonc` | Declares the Functions runtime with `database: true` (that's what gives the function `env.DB`). Copied into `dist/` by the build |
-| `public/` | Fonts (Geist, Geist Mono, OFL), real Bridle screens in `img/` (AVIF and WebP), icons, `og.png`, `fahim.jpg` |
+| `src/data/faq.ts`, `src/data/legal.ts`, `src/data/cost.ts` | Questions; privacy and terms as data; Help Scout's prices and the side-by-side table, with the day they were read |
+| `src/data/shots.json` | The app pictures: size and alt text of each (written by the export, see below) |
+| `src/components/b/` | The parts the marketing pages are built from: `FeatureHero`, `Facts`, `Prod` (a tool card), `Agent` (AI apps), `Bill`, `Offer`, `Qa`, `Next3`, `Fin` (the closing), `Shot` (an app picture), `Art` (the dot mountains), `dots.ts` (the dot face and glyphs) |
+| `src/components/ui/` | Older primitives, still used by the guides, legal pages, thanks and 404: `Container`, `Section`, `HeadingPair`, `Button` |
+| `src/components/` | The menu (a bar, a panel under Product and Resources, a phone sheet), footer, the mark, the icon sprite, a guide, a legal page |
+| `src/scripts/` | `nav.js` (the menu, and the bar's buy button that shows after the hero's own buttons scroll away), `deal.js` (the live price), `art.js` (the dot mountains on a canvas) |
+| `src/styles/site.css` | The base: Tailwind v4 (`@tailwindcss/vite`, pinned), the `@theme` tokens, the menu, footer, tables, questions, and the prose for privacy, terms and guides |
+| `src/styles/b.css` | The design's own parts, every class starting `b-`. Exported from the boards; hand-written additions sit below the marker at the end of the file and survive a new export. The last block there, "White page, framed", sets the layout: a white page, two hairlines framing the content column, a line between sections, boxes flush against the frame |
+| `spacefast/functions/api/` | `deal.ts` (`GET /api/deal`, the price right now), `checkout.ts` (`/api/checkout`, opens a Polar checkout), `waitlist.ts` (the old waitlist, no longer on any page) |
+| `sf.jsonc` | Declares the Functions runtime with `database: true`. Copied into `dist/` by the build |
+| `public/` | Fonts (Mona Sans, Geist, Geist Mono, OFL), app pictures in `img/b/` (WebP, desktop and phone), icons, `og.png` |
 | `public/touch-icon-180.png` | 180×180, full bleed; iOS rounds the corners. Not `/apple-touch-icon.png`: the host answers that path with its own default |
 | `NOTICE.md` | Third-party licences: fonts (OFL), agent logos (MIT), interface icons (ISC) |
+
+## App pictures
+
+Every picture of the Bridle app on this site is an image, never live mock text, so no made-up email text sits on a page for search engines to read (owner, 11 November 2026). The pictures are drawn as HTML in the design boards and rendered from there:
+
+```bash
+cd ../planning/landing/redesign
+python3 build-home.py 01-home.text.html && python3 build-pages.py 02-pages.text.html
+python3 export-site.py          # writes public/img/b/*.webp, src/data/shots.json and the design part of src/styles/b.css
+```
+
+The made-up business on every picture is Fernleaf. Alt texts live in `export-site.py`. Icons and `og.png` are drawn in the same look: the white mark on an orange disc (`#ff4500`).
 
 ## Search and AI answers
 
@@ -38,7 +53,7 @@ Every build writes `sitemap-index.xml`, `robots.txt` (all crawlers allowed; `/ap
 
 ## Writing rules
 
-Sentence case, like the app. Words a 12-year-old knows, one idea per line, no explaining how it works inside (Fahim, 9 November 2026). No dashes as punctuation, no filler words (seamless, leverage, unlock and friends). Each feature is an icon, a 2 to 4 word name and one short line (`FREE_FEATURES`, `PRO_FEATURES` in `src/data/site.ts`). Claim only what Bridle does today, or what ships on launch day. Credit "the team behind Saddle", never Divi Torque.
+Sentence case, like the app. Words a 12-year-old knows, one idea per line, no explaining how it works inside (Fahim, 9 November 2026). No dashes as punctuation, no filler words (seamless, leverage, unlock and friends). Each tool is an icon, a short name and one short line (`src/components/b/tools.ts`). Claim only what Bridle does today, or what ships on launch day. Credit "the team behind Saddle", never Divi Torque.
 
 ## Publish (owner)
 
@@ -47,62 +62,43 @@ npm run build
 npx -y spacefast@0.4.1 publish dist --prebuilt --space bridle --team fahim-team -m "what changed"
 ```
 
-`postbuild.mjs` copies `spacefast/functions/` and `sf.jsonc` into `dist/`, and turns each Markdown copy into a small function (Spacefast turns uploaded `.md` files into pages). Pinned to CLI 0.4.1 on purpose: 0.5.0's local validator drops `runtime.database`, which would disconnect the waitlist from its database. Re-check before moving to a newer CLI.
+`postbuild.mjs` copies `spacefast/functions/` and `sf.jsonc` into `dist/`, and turns each Markdown copy into a small function (Spacefast turns uploaded `.md` files into pages). Pinned to CLI 0.4.1 on purpose: 0.5.0's local validator drops `runtime.database`, which would disconnect the old waitlist table. Re-check before moving to a newer CLI.
 
-After a publish, check the form still saves and the pages answer:
+After a publish, check the price and the pages answer:
 
 ```bash
-curl -s -X POST https://bridle.to/api/waitlist -H 'content-type: application/json' -d '{"email":"smoke-test@example.com","source":"smoke-test"}'
-# {"ok":true}  (a 500 means env.DB is missing)
-for p in / /pricing/ /chat/ /pro/ /privacy/ /terms/ /index.md /pricing.md /llms.txt /robots.txt /sitemap-index.xml; do printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "https://bridle.to$p"; done
+curl -s https://bridle.to/api/deal        # {"state":"offer","price":99,...} until the deadline
+for p in / /inbox/ /ai-answers/ /chat/ /docs/ /pricing/ /compare/help-scout/ /demo/ /pro/ /knowledge-base/ /privacy/ /terms/ /index.md /pricing.md /llms.txt /robots.txt /sitemap-index.xml; do printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "https://bridle.to$p"; done
 curl -sI https://bridle.to | grep -i x-spacefast-version
 ```
 
-The first publish of this Astro build replaces the single-page v11 site (one `index.html`). If anything is off, roll back to the previous version in the Spacefast dashboard.
+If anything is off after a publish, roll back to the previous version in the Spacefast dashboard.
 
-## Turnstile
+## Price (Polar)
 
-Off until both halves are set: the widget's site key in `TURNSTILE_SITEKEY` (`src/data/site.ts`) and `TURNSTILE_SECRET` plus `TURNSTILE_HOSTNAMES` (`bridle.to,www.bridle.to`) on the Space. Without the secret the function skips the check; the honeypot, the too-fast check and the per-visitor rate limit always run. A secret on the Space with no site key in the page refuses every sign-up, so set them together.
+One licence (Fahim, 12 November 2026): 5 sites, 10 inboxes, 1,000 Bridle AI answers, paid once. Black Friday offer: $99 until the end of Cyber Monday (30 November 2026, 11:59 pm New York), then $249. One price, one deadline, no customer counting. A 7-day refund. The licence, its Polar product id, both prices, the deadline and the refund days live in `src/data/deal.json`. The site calls the product Bridle, never Bridle Pro (the second plugin a buyer installs is still named Bridle Pro; only the thanks page says so). AI packs are sold inside the plugin and are not shown on the pricing page.
 
-## Bridle Pro price (Polar)
+- `src/scripts/deal.js` runs the countdown and, at the deadline, switches an open page to the later price. Pages built after the deadline show the later price from the start (`OFFER_ON` in `src/data/site.ts`). Rebuild and publish after the deadline so the Markdown copies and the questions follow.
+- `GET` or `POST /api/checkout?plan=5` (`checkout.ts`) opens a Polar checkout for the licence at the price right now, by the server's clock (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`. When it cannot (no token, no product id, a Polar error) it goes back to `/pricing/?checkout=soon|error#plans` and the offer card says why.
+- `GET /api/deal` (`deal.ts`) answers `{ state, price, after, endsAt }` by the server's clock.
+- `CHECKOUT_OPEN` in `src/data/site.ts` switches the buy buttons between the checkout and `/pricing/`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout never disagree. It warns when a plan has no Polar product id.
 
-Three licences, every Pro feature in each, pay once (Fahim, 9 November 2026). Plans, Polar product ids and steps live in `src/data/deal.json`:
+**Polar setup (owner):** Bridle's own Polar organization (slug `bridle`, `48c10ba8-ba09-435f-ba30-75ce00a4cf82`, also in `deal.json`).
 
-| Licence | First price | Bridle AI answers | Polar product |
-| --- | --- | --- | --- |
-| 1 site | $49 | 1,000 | `0cd62812-7220-414d-b915-5bb2973530e8` |
-| 3 sites | $79 | 3,000 | `ecfdec26-784a-4d25-bc3a-abd39aeeb443` |
-| 10 sites | $149 | 10,000 | `2f6e2605-4cbc-4e3d-b582-5739eb8c7e0d` |
+1. Create the product for this licence: private, one-time, with a licence-key benefit of 5 activations (prefix `BRIDLE`, never expires) and the Bridle Pro zip as a downloadable file. Put its id in `deal.json` (`plans[0].productId`). The three older products (1, 3 and 10 sites) are no longer sold here.
+2. On the Spacefast Space `bridle`, `POLAR_TOKEN` (scope `checkouts:write`) is the only variable.
+3. Build, publish, buy once with a real card, check the email, key and download, then refund it in Polar.
 
-All three go up $20 every 20 sales, counting every Bridle Pro sale together: sales 1 to 10 pay the first prices, 11 to 30 pay $69 / $99 / $169, and so on. Pay once ends after sale 170; then Pro is yearly. When the answers run out, buyers top up inside the plugin (from $10); the site only says so.
+## Before publishing this design
 
-- `GET /api/deal` (`spacefast/functions/api/deal.ts`) counts paid orders across the three products on Polar (cached 60 seconds) and answers `{ state, sold, total, step, from, to, left, rise, plans: [{ key, sites, answers, price, next }], live }`. The pricing page and the home deal panel (`src/scripts/deal.js`) show it once Polar answers; until then they show the first prices from the build and only the days left (from `endsAt`), never a made-up count.
-- `GET` or `POST /api/checkout?plan=1|3|10` (`checkout.ts`) opens a Polar checkout for that plan's product at the current step's price (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`.
-- `CHECKOUT_OPEN` in `src/data/site.ts` (also exported as `LAUNCHED`) is the one launch switch. While it is `false` every "Get Bridle free" and price button is the waitlist and `/api/checkout` sends people back to `/pricing/#plans`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout always agree.
+1. The Polar product above, and its id in `deal.json`. Until then the build prints a warning and the buy button answers "Checkout opens soon".
+2. The licence has to mean the same thing in the other repos: 5 site activations, 10 inboxes on the mail service, 1,000 AI answers on first activation (`bridle-ai`, the mail worker, `plugpress-updates`). They still know the three older plans.
+3. `public/download/bridle.zip` is what the thanks page links to until WordPress.org lists Bridle (`WPORG_LIVE = false`); copy it from `npm run zip` in `../bridle` after each release.
+4. Give `hello@bridle.to` its own Email Routing rule (today it falls through the relay's catch-all to the fallback mailbox).
 
-**Polar setup (owner):** the three products already exist in Bridle's own Polar organization (slug `bridle`, `48c10ba8-ba09-435f-ba30-75ce00a4cf82`, also in `deal.json`; its own org so Bridle can be sold apart from Mailpuff). Keep them private, with their licence-key benefits.
+## Old waitlist
 
-1. Create an **organization access token** with the scopes `orders:read` and `checkouts:write`.
-2. On the Spacefast Space `bridle`, set `POLAR_TOKEN` as a secret. That's the only variable (`POLAR_ORG_ID` is optional; the id is in `deal.json`). Check it: `curl -s https://bridle.to/api/deal` says `"live":true`.
-3. On launch day set `CHECKOUT_OPEN = true`, build and publish.
-
-## At launch
-
-Checklist (10 November 2026). Owner first:
-
-1. Merge bridle#175, bridle-pro#22 and this PR.
-2. Polar: attach `bridle-pro-1.0.0.zip` as a downloadable file benefit to all three Pro products (the thanks page sends buyers to `ACCOUNT_URL` for it).
-3. Spacefast Space `bridle`: set `POLAR_TOKEN` (`orders:read`, `checkouts:write`). Check `curl -s https://bridle.to/api/deal` says `"live":true`.
-4. Set `CHECKOUT_OPEN = true`, build, publish. Buy the 1 site plan once with a real card, check the email, key and download, then refund it in Polar.
-
-Until WordPress.org approves Bridle, `WPORG_LIVE = false` makes every "Get Bridle free" download `public/download/bridle.zip` (copy it from `npm run zip` in `../bridle` after each release). A zip install updates from WordPress.org by itself once Bridle is listed; then set `WPORG_LIVE = true`.
-
-- Set `CHECKOUT_OPEN = true` (above): every waitlist form becomes "Get Bridle free" (to `WPORG_URL`, check the slug once approved) and the Pro buttons open checkout.
-- Give `hello@bridle.to` its own Email Routing rule (today it falls through the relay's catch-all to the fallback mailbox).
-
-## Signups
-
-Rows live in the `waitlist` table: email (unique), source (`hero` / `footer` / `chat` / `pro`), referrer, user agent, created_at. Open them from the Space's database console in the Spacefast dashboard. Duplicate emails and honeypot hits get the same success reply, so the endpoint never reveals who signed up. `smoke-test@example.com` is a test row.
+The waitlist form is gone from the pages (Bridle is on sale). Its function and table stay: rows live in the `waitlist` table (email, source, referrer, user agent, created_at). Open them from the Space's database console in the Spacefast dashboard.
 
 ## DNS
 
@@ -114,7 +110,7 @@ bridle.to is on Cloudflare (Dotyard account). The apex A records and the verific
 
 `/demo/` opens WordPress Playground with `public/demo/blueprint.json`, which Playground fetches from
 `raw.githubusercontent.com/plugpressco/bridle-site/main/public/demo/` (GitHub sends the CORS header
-Playground needs). It installs the free Bridle and Bridle KB from the zips beside it, adds two
+Playground needs). It installs Bridle and Bridle KB from the zips beside it, adds two
 mu-plugins (`demo-ai.php`, a stand-in AI provider that answers with the best matching doc passage,
 not a real model; `demo-relay.php`, so nothing registers on the real email relay) and runs
 `seed.php` (a made-up shop, docs, an inbox, six emails, drafts, Chat on). Bridle Pro is never in it.

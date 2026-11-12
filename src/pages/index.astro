@@ -1,21 +1,23 @@
 ---
-// The home page (design v3, approved 10 November 2026:
-// planning/landing/pages/home/11-design.html). Copy word for word from
-// planning/landing/pages/home/08-copy.md, in its order: hero, what it does,
-// checks, cost, three steps, the deal, the founder's note, questions,
-// closing. One moving picture (the hero), one navy panel, one blue panel.
+// The home page (owner's design, 11 and 12 November 2026:
+// planning/landing/redesign/01-home.html). One panel hero with the dot
+// mountains, the app picture, four facts, the four tools as stacking cards, AI
+// apps, only in WordPress, the bill next to Help Scout, switching, the offer
+// and the closing.
 import Base from '../layouts/Base.astro';
-import Hero from '../components/home/Hero.astro';
-import Does from '../components/home/Does.astro';
-import Checks from '../components/home/Checks.astro';
-import Cost from '../components/Cost.astro';
-import Deal from '../components/home/Deal.astro';
-import Founder from '../components/home/Founder.astro';
-import Faq from '../components/ui/Faq.astro';
-import Closing from '../components/Closing.astro';
+import Art from '../components/b/Art.astro';
+import Cta from '../components/b/Cta.astro';
+import Shot from '../components/b/Shot.astro';
+import Facts from '../components/b/Facts.astro';
+import Prod from '../components/b/Prod.astro';
+import Agent from '../components/b/Agent.astro';
+import Bill from '../components/b/Bill.astro';
+import PricePanel from '../components/b/PricePanel.astro';
+import Fin from '../components/b/Fin.astro';
+import { display } from '../components/b/dots';
+import { TOOLS } from '../components/b/tools';
 import { PAGES } from '../data/pages';
-import { FAQ } from '../data/faq';
-import { SITE, AI, PRO, sitesLabel } from '../data/site';
+import { SITE, AI, PLAN, PRICE } from '../data/site';
 
 const page = PAGES.home;
 const jsonLd = [
@@ -30,26 +32,67 @@ const jsonLd = [
     license: 'https://www.gnu.org/licenses/gpl-2.0.html',
     publisher: { '@id': `${SITE.companyUrl}/#org` },
     offers: [
-      { '@type': 'Offer', name: 'Bridle', price: '0', priceCurrency: 'USD' },
+      { '@type': 'Offer', name: `Bridle, pay once, ${PLAN.sites} sites`, price: String(PRICE), priceCurrency: 'USD', url: `${SITE.url}/pricing/` },
       ...AI.packs.map((p) => ({ '@type': 'Offer', name: `Bridle AI, ${p.answers} answers`, price: String(p.price), priceCurrency: 'USD' })),
-      ...PRO.plans.map((p) => ({ '@type': 'Offer', name: `Bridle Pro, pay once, ${sitesLabel(p.sites)}`, price: String(p.base), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', priceValidUntil: PRO.endsAt.slice(0, 10), url: `${SITE.url}/pricing/#plans` })),
     ],
-  },
-  {
-    '@type': 'FAQPage',
-    mainEntity: FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   },
 ];
 ---
 <Base title={page.title} description={page.description} jsonLd={jsonLd}>
   <div class="wrap stack-sections">
-    <Hero />
-    <Does />
-    <Checks />
-    <Cost id="cost" />
-    <Deal join="#join" />
-    <Founder />
-    <Faq items={FAQ} title="Questions, answered." />
-    <Closing source="footer" />
+    <section class="b-hero" aria-labelledby="h-hero">
+      <div class="b-hpan">
+        <h1 class="h1" id="h-hero">The help desk that lives in your WordPress.</h1>
+        <p class="lead">Bridle writes the reply to every support email from your own docs. You read it and press Send.</p>
+        <Cta />
+        <Art seed={11} />
+      </div>
+      <div class="b-cstage">
+        <div class="b-cface"><Fragment set:html={display('face', 'b-bigface')} /><p>3 replies are ready.<br />2 emails need you.<small>Every fact checked before you see it.</small></p></div>
+        <div class="b-wpwin b-shotimg"><Shot name="app-inbox" eager /></div>
+      </div>
+    </section>
+
+    <Facts items={['No fee per person', 'AI answers included', 'Open source', 'By the team behind Saddle']} />
+
+    <section aria-labelledby="h-prod">
+      <div class="shead"><h2 class="h2" id="h-prod">Four tools. One plugin.</h2><p class="lead">Everything a help desk does, without leaving WordPress.</p></div>
+      <div class="b-prods">
+        <Prod {...TOOLS.inbox} shot="tool-inbox" points={['Sorted for you: ready to send, or needs you', 'Assign, leave notes, save replies', 'Your support address stays the same']} link={{ href: TOOLS.inbox.href, label: 'See the Inbox' }} />
+        <Prod {...TOOLS.ai} shot="tool-ai" points={['Written from your docs and past replies', 'Every quote and link checked', 'Refunds and upset customers wait for you']} link={{ href: TOOLS.ai.href, label: 'See AI answers' }} />
+        <Prod {...TOOLS.chat} shot="tool-chat" points={['Shows the doc behind each answer', 'Hands over to you when it is stuck', 'One 7 KB script']} link={{ href: TOOLS.chat.href, label: 'See the Chat' }} />
+        <Prod {...TOOLS.docs} shot="tool-docs" points={['Lives on your own site', 'Import from Help Scout, Intercom or Notion', 'Bridle answers from every page']} link={{ href: TOOLS.docs.href, label: 'See Docs' }} />
+      </div>
+    </section>
+
+    <Agent />
+
+    <section class="b-only" aria-labelledby="h-only">
+      <span class="b-lab"><span class="b-w">W</span>Only in WordPress</span>
+      <h2 class="h2" id="h-only">It already knows your store and your team.</h2>
+      <div class="b-only3">
+        <div><div class="b-ui b-shotimg"><Shot name="wp-order" /></div>
+          <h3>The order, next to the email</h3><p>No tab to open and no order number to ask for. Works with WooCommerce, EDD, Polar and Freemius.</p></div>
+        <div><div class="b-ui b-shotimg"><Shot name="wp-team" /></div>
+          <h3>Your WordPress users are your team</h3><p>Anyone with a login can answer. There are no seats to buy.</p></div>
+        <div><div class="b-ui b-shotimg"><Shot name="wp-site" /></div>
+          <h3>Your emails stay on your site</h3><p>Not on our servers. Leave any time and keep everything.</p></div>
+      </div>
+    </section>
+
+    <Bill />
+
+    <section aria-label="Switching">
+      <div class="b-doors">
+        <div class="b-door"><small>Coming from Help Scout</small><h3>Keep your address. Bring your docs.</h3><p>Forward your support email to Bridle and import your help center in one go.</p><a class="b-tl" href="/compare/help-scout/">Bridle and Help Scout, side by side</a></div>
+        <div class="b-door"><small>Coming from a Gmail inbox</small><h3>One inbox for the whole team.</h3><p>Everyone sees who has which email, and what was already said.</p><a class="b-tl" href="/inbox/">See the Inbox</a></div>
+      </div>
+    </section>
+
+    <section class="b-ppsec" aria-labelledby="h-plans" id="plans">
+      <PricePanel id="h-plans" />
+    </section>
+
+    <Fin title="Move your help desk into WordPress" />
   </div>
 </Base>

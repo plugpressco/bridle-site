@@ -30,10 +30,10 @@ const html = (b: GuideBlock) =>
       {guide.faq.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
     </section>
     <section id="pro">
-      <h2>With Bridle Pro</h2>
+      <h2>With a Bridle licence</h2>
       <div class="rounded-card border border-border bg-card px-6 py-5.5 [&_p]:text-[16px]">
         <Fragment set:html={guide.pro.map(html).join('')} />
-        <p><Button variant="link" href="/pricing/">Bridle Pro and pricing ›</Button></p>
+        <p><Button variant="link" href="/pricing/">See the price</Button></p>
       </div>
     </section>
     <section aria-labelledby="h-more">

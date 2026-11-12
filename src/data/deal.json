@@ -1,24 +1,10 @@
 {
-  "total": 170,
-  "refundDays": 30,
-  "rise": 20,
+  "refundDays": 7,
+  "after": 249,
   "endsAt": "2026-12-01T04:59:59Z",
-  "endsLabel": "November 30",
+  "endsLabel": "30 November",
   "orgId": "48c10ba8-ba09-435f-ba30-75ce00a4cf82",
-  "steps": [
-    { "from": 1, "to": 10 },
-    { "from": 11, "to": 30 },
-    { "from": 31, "to": 50 },
-    { "from": 51, "to": 70 },
-    { "from": 71, "to": 90 },
-    { "from": 91, "to": 110 },
-    { "from": 111, "to": 130 },
-    { "from": 131, "to": 150 },
-    { "from": 151, "to": 170 }
-  ],
   "plans": [
-    { "key": "1", "sites": 1, "base": 49, "answers": 1000, "productId": "0cd62812-7220-414d-b915-5bb2973530e8", "inboxes": 10 },
-    { "key": "3", "sites": 3, "base": 79, "answers": 3000, "productId": "ecfdec26-784a-4d25-bc3a-abd39aeeb443", "inboxes": 25 },
-    { "key": "10", "sites": 10, "base": 149, "answers": 10000, "productId": "2f6e2605-4cbc-4e3d-b582-5739eb8c7e0d", "inboxes": null }
+    { "key": "5", "sites": 5, "base": 99, "answers": 1000, "inboxes": 10, "productId": "" }
   ]
 }

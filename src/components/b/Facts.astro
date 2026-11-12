@@ -1,0 +1,8 @@
+---
+// Four short facts in a row, under a hero.
+interface Props { items: string[] }
+const { items } = Astro.props;
+---
+<section class="b-facts" aria-label="In short">
+  {items.map((t) => <div>{t}</div>)}
+</section>

@@ -1,0 +1,758 @@
+/* bridle.to: ink, off-white and one orange accent (owner's design, 11 and 12
+   November 2026). The parts every page is built from: hero, facts strip, tool
+   cards, the offer, tables, the closing panel. Every class starts with b- so
+   nothing collides with site.css, which this file is loaded after.
+   Exported from the approved boards by planning/landing/redesign/export-site.py;
+   the hand-written additions live at the end of the file, below the marker. */
+/* ============ Ink and brass. One accent, used little. ============ */
+:root{
+  --ink:#141414; --accent:#ff4500; --brass-deep:#e3a31c; --brass-tint:#fff3cf; --brass-line:#f1dfae; --brass-ink:#6b4a00;
+  --coral-bg:#fff1cc; --coral:#7a4b00; --ok:#17784b; --ok-bg:#e3f4ea;
+  --pg:#fafaf9; --sand:#f1f0ec; --ln:#e7e5df; --ln2:#d5d3cc; --tx:#4b4b4b; --mu:#6e6e6e;
+  /* Colour rule. Ink does the work: buttons, links, icons, ticks. The accent (orange-red) marks three
+     things only: the logo, one word in the headline, Bridle's row in the WordPress
+     menu. Green = checked. Amber = needs you. */
+  --field:#f1f0ec; --field-dot:rgb(20 20 20 / .10); --field-edge:var(--ln); --field-shadow:rgb(40 35 20 / .28);
+  --hl:transparent; --hl-line:var(--accent);
+}
+::selection{background:#ffd9c9}
+:focus-visible{outline-color:var(--ink)}
+.b1,.b2{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 22px;border-radius:8px;font:550 16px/1 var(--font-sans);text-decoration:none;white-space:nowrap}
+.b1{background:var(--ink);color:#fff}
+.b1:hover{background:#2c2c2c}
+.b2{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ln2)}
+.b2:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.b1.sm,.b2.sm{height:40px;padding:0 14px;font-size:15px}
+.b-tl{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--ln2);text-decoration-thickness:1.5px;text-underline-offset:5px}
+.b-tl:hover{text-decoration-color:var(--ink)}
+svg.tk{width:20px;height:20px;flex:none}
+.face{width:36px;height:36px;flex:none;display:block}
+.face.b-s{width:26px;height:26px}
+/* ---- 1 Hero ---- */
+.b-hero{padding-top:88px}
+.b-hero .b-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:56px;align-items:end}
+.b-hero .b-side{display:grid;gap:28px}
+.b-hero .b-side .lead{color:var(--tx)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.b-stage{margin-top:56px;height:680px;border-radius:20px;background:var(--field);background-image:radial-gradient(circle at 1.5px 1.5px,var(--field-dot) 1.5px,transparent 2px);background-size:14px 14px;position:relative;overflow:hidden}
+.b-wpwin{position:absolute;left:50%;top:56px;transform:translateX(-50%);width:min(1120px,100% - 96px);height:680px;border-radius:14px 14px 0 0;overflow:hidden;background:#f5f5f2;display:flex;flex-direction:column;box-shadow:0 0 0 1px var(--field-edge),0 30px 80px -30px var(--field-shadow)}
+/* ---- 2 Facts strip ---- */
+.b-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--ln);margin-top:64px!important}
+.b-facts div{padding:22px 24px;display:flex;align-items:center;gap:12px;color:var(--ink);font-size:17px;font-weight:600;letter-spacing:-.01em}
+.b-facts div+div{border-left:1px solid var(--ln)}
+.b-facts i{display:none}
+/* ---- 3 Products ---- */
+.b-prods{border-top:1px solid var(--ln)}
+.b-prod{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:center;padding:56px 0;border-bottom:1px solid var(--ln)}
+.b-pname{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:650;color:var(--ink)}
+.b-pname i{width:28px;height:28px;border-radius:8px;background:#fff;box-shadow:inset 0 0 0 1px var(--ln2);display:grid;place-items:center;color:var(--ink)}
+.b-pname i svg{width:15px;height:15px;stroke-width:2.2}
+.b-prod h3{font-size:clamp(1.75rem,2.6vw,2.25rem);line-height:1.08;letter-spacing:-.035em;font-weight:700;margin-top:16px;max-width:15ch}
+.b-pts{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:12px}
+.b-pts li{display:flex;gap:12px;align-items:flex-start;color:var(--tx);font-size:17px}
+.b-pts svg{margin-top:3px;color:var(--ink)}
+.b-prod .b-tl{display:inline-block;margin-top:28px}
+.b-shot>div{min-width:0}
+.b-shot{background:var(--sand);border-radius:20px;padding:40px;display:grid;align-items:center;min-height:440px}
+.b-ui{background:#fff;border:1px solid var(--ln);border-radius:14px;color:var(--ink);font-size:15px;line-height:1.5;overflow:hidden;box-shadow:0 1px 1px rgb(60 45 20 / .04),0 18px 40px -24px rgb(60 45 20 / .28)}
+.b-ui+.b-ui{margin-top:14px}
+.b-ui h5{font-size:21px;font-weight:650;letter-spacing:-.02em;margin:0 0 14px}
+.b-apps{display:flex;gap:8px;flex-wrap:wrap}
+.b-apps span{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ln);border-radius:999px;padding:7px 14px;font-size:14.5px;font-weight:600;color:var(--ink)}
+.b-apps svg{width:16px;height:16px;filter:grayscale(1)}
+/* ---- 4 Only in WordPress ---- */
+.b-only{background:var(--sand);border-radius:24px;padding:64px 56px 56px}
+.b-only .b-lab{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:650;color:var(--ink)}
+.b-only .b-lab .b-w{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--ink);font:700 13px/22px Georgia,serif;text-align:center}
+.b-only h2{margin-top:16px;max-width:18ch}
+.b-only3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:48px;border-top:1px solid var(--ln2)}
+.b-only3>div{padding:32px 32px 0 0}
+.b-only3>div+div{border-left:1px solid var(--ln2);padding-left:32px}
+.b-only3 .b-ui{margin-bottom:24px;min-height:150px;display:grid;align-content:center}
+.b-only3 h3{font-size:20px;font-weight:650;letter-spacing:-.015em}
+.b-only3 p{margin-top:8px;color:var(--tx)}
+/* ---- 5 The bill ---- */
+.billnote{margin-top:20px;max-width:86ch}
+/* ---- 6 Switching ---- */
+.b-doors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--ln);border-radius:20px;background:#fff;overflow:hidden}
+.b-door{padding:48px;display:grid;gap:14px;align-content:start}
+.b-door+.b-door{border-left:1px solid var(--ln)}
+.b-door small{font-size:15px;font-weight:650;color:var(--mu)}
+.b-door h3{font-size:clamp(1.5rem,2.3vw,2rem);line-height:1.1;letter-spacing:-.03em;font-weight:700;max-width:16ch}
+.b-door p{color:var(--tx);max-width:40ch}
+.b-door .b-tl{justify-self:start;margin-top:10px}
+/* ---- 7 Plans ---- */
+.b-plans .tbl td.y{color:var(--ink)}
+.b-plans .tbl thead th{font-size:17px;font-weight:650}
+.b-plans .tbl thead th small{display:block;color:var(--mu);font-size:14px;font-weight:500}
+.b-plans .tbl td:last-child{color:var(--ink)}
+.b-plans .tbl td.n{color:var(--ln2)}
+/* ---- 8 Closing ---- */
+@media (width<=960px){
+.b-hero .b-top{grid-template-columns:minmax(0,1fr);gap:28px}
+.b-prod{grid-template-columns:minmax(0,1fr);gap:32px;padding:40px 0}
+.b-prod h3{max-width:none}
+.b-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+.b-facts div:nth-child(3){border-left:0}
+.b-facts div:nth-child(n+3){border-top:1px solid var(--ln)}
+.b-only{padding:40px 24px 32px}
+.b-only3{grid-template-columns:minmax(0,1fr)}
+.b-only3>div{padding:28px 0 0}
+.b-only3>div+div{border-left:0;padding-left:0;border-top:1px solid var(--ln2);margin-top:28px}
+.b-doors{grid-template-columns:minmax(0,1fr)}
+.b-door{padding:32px 24px}
+.b-door+.b-door{border-left:0;border-top:1px solid var(--ln)}
+.b-shot{padding:20px;min-height:0}
+.b-stage{height:520px}
+.b-wpwin{left:20px;transform:none;top:28px;width:920px}
+}
+@media (width<=560px){
+.b-hero{padding-top:48px}
+.b-facts{grid-template-columns:minmax(0,1fr)}
+.b-facts div+div{border-left:0;border-top:1px solid var(--ln)}
+.b-plans .tbl table{min-width:0;font-size:15px}
+.b-plans .tbl td:nth-child(n+2),.b-plans .tbl th:nth-child(n+2){width:30%}
+}
+/* ============ Surfaces, not lines (owner, 2026-11-11, on browserbase.com/pricing:
+   "too much border", "separate section or part bg color balance").
+   Three tones do the separating: the page (--t0), white blocks on it, and a
+   deeper tone (--t2) for a picture's ground or a block that should step back.
+   No borders around blocks, no rules between sections. ============ */
+:root{--t0:#f4f4f1;--t2:#e9e9e5;--hair:rgb(20 20 20 / .06);
+  --field:var(--t2); --field-dot:rgb(20 20 20 / .09); --field-edge:transparent; --field-shadow:rgb(40 35 20 / .30)}
+body{background:var(--t0)}
+.navwrap{background:rgb(244 244 241 / .94)}
+.foot{background:#fff}
+.foot .wrap{border-top:0}
+.b2{background:rgb(20 20 20 / .07);box-shadow:none}
+.b2:hover{background:rgb(20 20 20 / .12);box-shadow:none}
+.b-pname i{background:rgb(20 20 20 / .07);box-shadow:none}
+.b-facts{border:0;gap:8px}
+.b-facts div{background:#fff;border-radius:12px}
+.b-facts div+div{border-left:0}
+.b-prods{border-top:0;display:grid;gap:16px}
+.b-prod{background:#fff;border-radius:24px;border-bottom:0;padding:16px 16px 16px 48px;gap:48px}
+.b-shot{background:var(--t0);border-radius:16px}
+.b-ui{border:0;box-shadow:none}
+.b-apps span{border:0;background:var(--t0)}
+.b-only{background:#fff}
+.b-only3{border-top:0;gap:16px;margin-top:40px}
+.b-only3>div{padding:0}
+.b-only3>div+div{border-left:0;padding-left:0}
+.b-only3 .b-ui{background:var(--t0);border-radius:16px;min-height:170px}
+.b-only3 h3,.b-only3 p{padding-right:16px}
+.b-doors{border:0;background:none;gap:16px;overflow:visible}
+.b-door{background:#fff;border-radius:24px}
+.b-door+.b-door{border-left:0}
+/* A table is a table (owner, 2026-11-11: "less border ... doesn't mean you
+   can't use border"): one white block, thin lines between its rows. */
+.b-plans .tbl{border-top:0;background:#fff;border-radius:20px;padding:8px 32px}
+.b-plans .tbl table{border-collapse:collapse}
+.b-plans .tbl th,.b-plans .tbl td{border-bottom:1px solid var(--ln);padding:17px 16px 17px 0}
+.b-plans .tbl thead th{padding:20px 16px 16px 0}
+.b-plans .tbl tbody tr:last-child th,.b-plans .tbl tbody tr:last-child td{border-bottom:0}
+.b-plans .tbl tr.b-grp td{font-size:17px;font-weight:700;letter-spacing:-.01em;text-transform:none;color:var(--ink);padding-top:30px}
+.b-plans .tbl td.n{color:#a3a3a0}
+.b-plans.b-three .tbl td{color:var(--ink)}
+.b-plans.b-three .tbl td b{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.b-plans.b-three .tbl td:nth-child(n+2),.b-plans.b-three .tbl th:nth-child(n+2){width:20%}
+.b-stage{background-image:none}
+/* ---- The tools stack as you scroll (owner, 2026-11-11: "when scroll it
+   stacking feature you highlight"). Each card sticks under the menu and the
+   next one slides over it; the strip left showing is that tool's name, so the
+   pile reads Inbox, AI answers, Chat, Docs. Sticky only: no script, nothing
+   moves on its own. Off on small screens, where cards are taller than the view. ---- */
+@media (width>960px) and (height>=700px){
+.b-prods{--peek:14px}
+.b-prod{position:sticky;top:calc(84px + var(--i,0) * var(--peek));min-height:560px;align-items:stretch;box-shadow:0 -18px 40px -28px rgb(20 20 20 / .28)}
+.b-prod:nth-child(1){--i:0;box-shadow:none}
+.b-prod:nth-child(2){--i:1}
+.b-prod:nth-child(3){--i:2}
+.b-prod:nth-child(4){--i:3}
+.b-prod>div:first-child{display:grid;grid-template-rows:auto auto auto 1fr;align-content:start;padding:10px 0 28px}
+.b-prod>div:first-child .b-pname{justify-self:start}
+.b-prod h3{margin-top:28px}
+.b-prod .b-tl{justify-self:start;align-self:end;margin-top:0}
+.b-prods{padding-bottom:120px}
+.b-shot{min-height:0}
+}
+@media (width>960px) and (height>=860px){
+.b-prods{--peek:56px}
+}
+@media (width<=960px){
+.b-prod{padding:28px 16px 16px;gap:28px}
+.b-prod>div:first-child{padding:0 12px}
+.b-only3>div+div{border-top:0;margin-top:16px}
+.b-door+.b-door{border-top:0}
+}
+@media (width<=560px){
+.b-facts div+div{border-top:0}
+.b-plans .tbl{padding:4px 18px}
+}
+/* ---- Lettering: Mona Sans in its narrow cut, very heavy, standing tall. The
+   headline's full stop is an orange dot, from Bridle's dot face. ---- */
+.h1{font-size:clamp(3rem,6.6vw,6.25rem);line-height:.94;letter-spacing:-.035em;font-weight:780;font-stretch:88%}
+.h2{font-stretch:90%;font-weight:760;letter-spacing:-.03em;line-height:1}
+/* The headline gets the full width, so it sits on two lines, never three
+   (owner, 2026-11-11: three lines is "very bad"). The line and the buttons
+   go in one row under it. */
+.b-hero .b-top{display:block}
+.b-hero .h1{font-size:clamp(2.75rem,7.3vw,6.5rem);max-width:none;text-wrap:balance}
+.b-hero .b-side{display:flex;justify-content:space-between;align-items:center;gap:20px 48px;flex-wrap:wrap;margin-top:32px}
+.b-hero .b-side .lead{max-width:44ch;margin:0}
+/* ---- Hero C ---- */
+.b-say{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:999px;padding:6px 16px 6px 6px;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:24px}
+.b-minibot{width:28px;height:28px;flex:none}
+.b-cstage{margin-top:56px;height:620px;border-radius:24px;background:var(--t2);position:relative;overflow:hidden}
+.b-cface{position:absolute;left:56px;top:56px;width:272px;display:grid;gap:22px}
+.b-bigface{width:272px;height:272px}
+.b-cface p{color:var(--ink);font-size:22px;line-height:1.25;letter-spacing:-.02em;font-weight:650}
+.b-cface p small{display:block;color:var(--tx);font-size:16px;font-weight:400;letter-spacing:0;margin-top:8px}
+.b-cstage .b-wpwin{left:392px;transform:none;width:1040px;top:56px}
+/* ---- AI apps: one session, shown as it happens ---- */
+.b-agent2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:16px;align-items:stretch}
+.b-term{background:#17181a;border-radius:24px;padding:22px 28px 26px;color:#e9e9e5;font-size:17px;line-height:1.5;display:flex;flex-direction:column;gap:20px}
+.b-term p{display:grid;grid-template-columns:74px minmax(0,1fr);gap:12px}
+.b-term p b{color:#8d8d8a;font-weight:500}
+.b-aside{display:grid;gap:16px}
+.b-acard{background:#fff;border-radius:24px;padding:28px;display:grid;gap:10px;align-content:start}
+.b-acard h3{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.b-acard p{color:var(--tx)}
+.b-acard .b-apps{margin-top:6px}
+.b-acard .b-tl{justify-self:start;margin-top:6px}
+/* ---- The bill: twelve months as twelve dots ---- */
+.b-pay{background:#fff;border-radius:24px;padding:8px 40px}
+.b-payrow{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(190px,auto);gap:24px 40px;align-items:center;padding:36px 0}
+.b-payrow+.b-payrow{border-top:1px solid var(--ln)}
+.b-pwho b{display:block;color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.02em}
+.b-pwho small{display:block;color:var(--tx);font-size:16px;margin-top:4px;max-width:30ch}
+.b-months{display:grid;gap:10px;justify-items:start}
+.b-months div{display:flex;gap:9px}
+.b-months i{width:22px;height:22px;border-radius:50%;background:var(--t2);display:block}
+.b-them .b-months i{background:#8d8d8a}
+.b-us .b-months i.b-on{background:var(--accent)}
+.b-months span{font-size:14px;color:var(--mu)}
+.b-sum{text-align:right}
+.b-sum b{display:block;font-size:clamp(3.25rem,6vw,5.5rem);line-height:.9;letter-spacing:-.04em;font-weight:780;font-stretch:88%;color:var(--ink)}
+.b-them .b-sum b{color:#8d8d8a}
+.b-sum span{color:var(--tx);font-size:17px}
+/* ---- Closing: the face says goodbye with a wink ---- */
+.b-fin{background:#fff;border-radius:28px;padding:72px 64px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:48px;align-items:center;overflow:hidden;position:relative}
+.b-fin .h2{font-size:clamp(2.5rem,5vw,4.75rem);max-width:12ch}
+.b-fin .lead{margin:20px 0 28px}
+.b-finface{width:min(360px,100%);height:auto;justify-self:end;margin-bottom:-150px}
+@media (width<=960px){
+.b-cface{position:static;padding:28px 24px 0;width:auto;grid-template-columns:110px minmax(0,1fr);align-items:center}
+.b-bigface{width:110px;height:110px}
+.b-cface p{font-size:19px}
+.b-cstage{height:auto}
+.b-cstage .b-wpwin{position:relative;left:20px;top:24px;width:900px;height:420px}
+.b-agent2{grid-template-columns:minmax(0,1fr)}
+.b-term p{grid-template-columns:minmax(0,1fr);gap:2px}
+.b-pay{padding:4px 24px}
+.b-payrow{grid-template-columns:minmax(0,1fr);gap:18px;padding:28px 0}
+.b-months i{width:17px;height:17px}
+.b-months div{gap:6px}
+.b-sum{text-align:left}
+.b-fin{grid-template-columns:minmax(0,1fr);padding:48px 28px 0}
+.b-finface{justify-self:center;width:240px;margin-bottom:-90px}
+}
+/* ---- The offer: one dark card, and the 200 licences as 200 dots ---- */
+.b-offer{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:16px;align-items:stretch}
+.b-ocard{background:#17181a;color:#e9e9e5;border-radius:28px;padding:44px 44px 36px;display:flex;flex-direction:column}
+.b-ocard .b-op{font-size:clamp(4.5rem,9vw,7.75rem);line-height:.88;letter-spacing:-.045em;font-weight:780;font-stretch:88%;color:#fff;margin-top:14px}
+.b-ocard .b-os{color:#9a9a96;margin-top:16px;font-size:17px;max-width:34ch}
+.b-ocard ul{list-style:none;margin:28px 0 0;padding:0}
+.b-ocard li{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-top:1px solid #2c2d30;font-size:17px;color:#e9e9e5}
+.b-ocard li b{color:#fff;font-weight:650}
+.b-ocard li svg{width:20px;height:20px;flex:none;margin-top:3px;color:#fff}
+.b-buy{display:flex;align-items:center;justify-content:center;height:60px;border-radius:999px;background:var(--accent);color:#fff;font:650 19px/1 var(--font-sans);text-decoration:none;margin-top:auto}
+.b-ocard ul+.b-buy{margin-top:28px}
+.b-buy:hover{background:#e63e00}
+.b-ocard .b-or{color:#9a9a96;font-size:14.5px;text-align:center;margin-top:14px}
+.b-oside{display:grid;gap:16px;grid-template-rows:1fr auto}
+@media (width<=960px){
+.b-offer{grid-template-columns:minmax(0,1fr)}
+.b-ocard{padding:32px 28px 28px}
+}
+.b-art{position:absolute;left:0;right:0;bottom:0;width:100%;height:200px;z-index:0;pointer-events:none;display:block}
+.b-cstage .b-wpwin{z-index:1}
+.b-hero{padding-top:24px}
+.b-hpan{position:relative;overflow:hidden;border-radius:28px;background:#e7e8e6;text-align:center;padding:104px 32px 0;min-height:840px}
+.b-hpan>*{position:relative;z-index:1}
+.b-hpan .h1{margin:0 auto}
+.b-hpan .lead{margin:28px auto 0;max-width:46ch;color:var(--ink)}
+.b-hpan .ctas{justify-content:center;margin-top:32px}
+.b-hpan .b2{background:#fff}
+.b-hpan .b-art{position:absolute;height:420px;z-index:0}
+.b-hpan+.b-cstage{margin-top:16px}
+@media (width<=960px){
+.b-hpan{padding:64px 20px 0;min-height:640px}
+.b-hpan .b-art{height:240px}
+}
+.b-fin>div{position:relative;z-index:1}
+.b-cface{z-index:4}
+.b-bigface{width:136px;height:136px}
+.b-cface{gap:18px}
+.b-cface p{font-size:20px}
+.b-fin{padding-bottom:230px;align-items:start}
+.b-fin .b-art{height:200px}
+.b-finface{width:150px;margin-bottom:0}
+@media (width<=960px){
+.b-art{height:170px}
+.b-fin{padding-bottom:190px}
+.b-fin .b-art{height:170px}
+.b-finface{width:110px;margin-bottom:0}
+.b-bigface{width:96px;height:96px}
+}
+/* The menu's right side: an Account link and the launch price, which the hero does not
+   show; the buy button joins them once the hero's own buttons have scrolled away. */
+.navright{display:flex;align-items:center;gap:6px}
+.navlink{display:inline-flex;align-items:center;height:40px;padding:0 12px;border-radius:8px;font:500 16px/1 var(--font-sans);color:var(--tx);text-decoration:none}
+.navlink:hover{color:var(--ink);background:rgb(20 20 20 / .06)}
+.navnote{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 14px;border-radius:999px;background:#fff;color:var(--tx);font-size:15px;text-decoration:none;white-space:nowrap}
+.navnote b{color:var(--ink);font-weight:650}
+.navnote:hover{color:var(--ink)}
+.cap .navbuy{margin-left:2px}
+.navjs .navbuy{display:none}
+.navjs .navbuy.show{display:flex;animation:navin .2s ease-out}
+@keyframes navin{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+.navjs .navbuy.show{animation:none}
+}
+@media (width<=860px){
+.navright{margin-left:auto}
+.navlink{display:none}
+}
+@media (width<=560px){
+.navright:has(.navbuy.show) .navnote{display:none}
+}
+/* ---- the page switch on the board (not part of the site) ---- */
+/* ---- page hero: a label over the headline ---- */
+.b-hero .b-pname{margin-bottom:20px}
+.b-hero .h1{font-size:clamp(2.5rem,6vw,5.5rem)}
+.b-hero.b-flat{padding-bottom:0}
+.b-hero.b-flat .b-top{align-items:end}
+.b-conv{position:absolute;left:50%;top:56px;transform:translateX(-50%);width:min(880px,100% - 96px);height:680px;border-radius:14px 14px 0 0;overflow:hidden;background:#f5f5f2;box-shadow:0 0 0 1px var(--field-edge),0 30px 80px -30px var(--field-shadow);color:var(--ink)}
+.b-conv .b-ui+.b-ui{margin-top:14px}
+/* ---- next tools ---- */
+.b-next3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--ln);border-radius:20px;background:#fff;overflow:hidden}
+.b-next3 a{padding:32px;display:grid;gap:10px;align-content:start;text-decoration:none;color:var(--tx)}
+.b-next3 a+a{border-left:1px solid var(--ln)}
+.b-next3 a:hover{background:#fcfcfa}
+.b-next3 b{color:var(--ink);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.b-next3 .b-pname{font-size:15px}
+/* ---- settings fragment ---- */
+/* ---- pricing ---- */
+.b-packs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--ln)}
+.b-packs div{padding:28px 24px;display:grid;gap:4px}
+.b-packs.b-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.b-cmp .tbl td:nth-child(n+2),.b-cmp .tbl th:nth-child(n+2){width:19%}
+.b-cmp .tbl td{color:var(--ink)}
+.b-cmp .tbl thead th:first-child{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.b-cmp.b-one .tbl td:nth-child(n+2),.b-cmp.b-one .tbl th:nth-child(n+2){width:32%}
+.b-packs div+div{border-left:1px solid var(--ln)}
+.b-packs b{color:var(--ink);font-size:40px;line-height:1;letter-spacing:-.04em;font-weight:720}
+.b-packs span{color:var(--tx)}
+/* ---- questions (the site's part, in ink) ---- */
+.b-fq .qa summary:hover{color:var(--ink)}
+.b-fq .qa .pm{background:var(--sand)}
+.b-fq .qa .pm:before,.b-fq .qa .pm:after{background:var(--ink)}
+.b-fq .qa details[open] .pm{background:var(--ink)}
+.b-fq .qa details[open] .pm:before,.b-fq .qa details[open] .pm:after{background:#fff}
+/* ---- compare ---- */
+.b-pickul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:12px}
+.b-pickul li{display:flex;gap:10px;color:var(--tx)}
+.b-pickul svg{color:var(--ink);margin-top:3px}
+.b-steps3{counter-reset:st;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--ln);list-style:none;margin:0;padding:0}
+.b-steps3 li{counter-increment:st;padding:32px 32px 32px 0;display:grid;gap:10px;align-content:start}
+.b-steps3 li+li{border-left:1px solid var(--ln);padding-left:32px}
+.b-steps3 li:before{content:counter(st);width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px;margin-bottom:8px}
+.b-steps3 b{color:var(--ink);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.b-steps3 span{color:var(--tx)}
+.b-after-note{margin-top:20px}
+/* ---- feature page fragments ---- */
+.b-duo{position:absolute;inset:56px 48px 0;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start;justify-content:center;max-width:980px;margin-inline:auto}
+.b-duo h6{font-size:15px;font-weight:650;margin:0 0 10px;color:var(--ink)}
+.b-brow{position:absolute;left:50%;top:56px;transform:translateX(-50%);width:min(960px,100% - 96px);height:680px;border-radius:14px 14px 0 0;overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--field-edge),0 30px 80px -30px var(--field-shadow);color:var(--ink)}
+.b-brow .b-ui{border:0;border-radius:0;box-shadow:none}
+@media (width<=960px){
+.b-duo{grid-template-columns:minmax(0,1fr);inset:28px 20px 0}
+.b-duo>div:first-child{display:none}
+.b-brow{left:20px;transform:none;top:28px;width:760px}
+.b-next3,.b-steps3{grid-template-columns:minmax(0,1fr)}
+.b-next3 a+a{border-left:0;border-top:1px solid var(--ln)}
+.b-steps3 li{padding:28px 0}
+.b-steps3 li+li{border-left:0;padding-left:0;border-top:1px solid var(--ln)}
+.b-packs{grid-template-columns:repeat(2,minmax(0,1fr))}
+.b-packs div:nth-child(3){border-left:0}
+.b-packs div:nth-child(n+3){border-top:1px solid var(--ln)}
+.b-conv{left:20px;transform:none;top:28px;width:760px}
+}
+@media (width<=560px){
+.b-fq .qa{grid-template-columns:minmax(0,1fr)}
+.b-plans .tbl td:nth-child(n+2),.b-plans .tbl th:nth-child(n+2){width:31%}
+}
+/* ---- surfaces, not lines: the page-only parts ---- */
+.b-conv,.b-brow{box-shadow:0 30px 80px -30px var(--field-shadow)}
+.b-next3{border:0;background:none;gap:16px;overflow:visible}
+.b-next3 a{background:#fff;border-radius:20px}
+.b-next3 a+a{border-left:0}
+.b-next3 a:hover{background:#fff}
+.b-packs{border-block:0;gap:16px}
+.b-packs div{background:#fff;border-radius:20px}
+.b-packs div+div{border-left:0}
+.b-fq .qa{gap:8px}
+.b-fq .qa>details{border-top:0;background:#fff;border-radius:14px;padding:0 24px}
+.b-fq .qa summary{padding:20px 0}
+.b-fq .qa details>p{padding:0 40px 20px 0}
+.b-fq .qa .pm{background:var(--t0)}
+.b-steps3{border-block:0;gap:16px}
+.b-steps3 li{background:#fff;border-radius:20px;padding:28px}
+.b-steps3 li+li{border-left:0;padding-left:28px}
+.b-pickul{margin-top:10px}
+@media (width<=960px){
+.b-next3 a+a,.b-steps3 li+li{border-top:0}
+.b-steps3 li,.b-steps3 li+li{padding:24px}
+.b-packs div:nth-child(n+3){border-top:0}
+}
+/* ---- the dot display plays three frames, in step with three lines ---- */
+.b-disp{position:relative;width:124px;height:124px}
+.b-disp svg{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+.b-disp svg:first-child{opacity:1}
+.b-fsteps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:fs}
+.b-fsteps li{counter-increment:fs;display:flex;gap:12px;align-items:baseline;color:var(--ink);font-size:19px;line-height:1.25;letter-spacing:-.015em;font-weight:650}
+.b-fsteps li:before{content:counter(fs);width:24px;height:24px;border-radius:50%;background:rgb(20 20 20 / .1);color:var(--ink);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;transform:translateY(-1px)}
+@media (prefers-reduced-motion:no-preference){
+.b-disp svg,.b-disp svg:first-child{opacity:0;animation:dframe 7.5s steps(1,end) infinite}
+.b-disp svg:nth-child(2){animation-delay:2.5s}
+.b-disp svg:nth-child(3){animation-delay:5s}
+.b-fsteps li{color:#a3a3a0;animation:dstep 7.5s steps(1,end) infinite}
+.b-fsteps li:before{animation:dnum 7.5s steps(1,end) infinite}
+.b-fsteps li:nth-child(2),.b-fsteps li:nth-child(2):before{animation-delay:2.5s}
+.b-fsteps li:nth-child(3),.b-fsteps li:nth-child(3):before{animation-delay:5s}
+}
+@keyframes dframe{0%{opacity:1}33.34%{opacity:0}100%{opacity:0}}
+@keyframes dstep{0%{color:var(--ink)}33.34%{color:#a3a3a0}100%{color:#a3a3a0}}
+@keyframes dnum{0%{background:var(--ink);color:#fff}33.34%{background:rgb(20 20 20 / .1);color:var(--ink)}100%{background:rgb(20 20 20 / .1);color:var(--ink)}}
+.b-cstage .b-conv{left:392px;transform:none;width:900px;top:56px}
+.b-cstage .b-conv,.b-cstage .b-brow,.b-cstage .b-duo{z-index:1}
+.b-cstage .b-brow{left:392px;transform:none;width:980px;top:56px}
+.b-cstage .b-duo{inset:56px 48px 0 392px;max-width:none;margin:0;grid-template-columns:minmax(0,1fr) 340px;gap:24px}
+@media (width<=960px){
+.b-disp{width:96px;height:96px}
+.b-fsteps li{font-size:16px}
+.b-cstage .b-conv,.b-cstage .b-brow{position:relative;left:20px;top:24px;width:760px;height:420px}
+.b-cstage .b-duo{position:static;padding:24px 20px 0;grid-template-columns:minmax(0,1fr)}
+}
+
+/* ==== hand-written from here: kept when the export runs again ==== */
+
+/* ---- Pictures of the app. Every mock screen is an image (Shot.astro), put
+   in the frame the design drew it in: the frame keeps its place and size,
+   the picture fills it. ---- */
+.b-shotimg{padding:0!important;background:none!important;display:block!important;overflow:hidden}
+.b-shotimg picture{display:block}
+.b-shotimg img{display:block;width:100%;height:auto;max-width:none}
+/* in a tool card the picture keeps its own size and never grows past it */
+.b-shot .b-shotimg img{width:auto;max-width:100%;margin-inline:auto}
+/* the Claude session keeps its dark ground, so the card can be taller than the picture */
+.b-term.b-shotimg{background:#17181a!important}
+
+/* ---- Pricing: the offer sits right under the headline ---- */
+
+/* ---- The menu in ink ---- */
+.navwrap.scrolled{border-bottom-color:var(--hair)}
+.mpanel{border:0;box-shadow:0 24px 60px -30px rgb(20 20 20 / .35)}
+.mitem.on b,.mfoot a:hover{color:var(--ink)}
+.mfoot{border-top-color:var(--ln)}
+.mprev{background:var(--t0);display:grid}
+.mprev figure{padding:28px;display:grid;place-items:center}
+.mprev figure img{max-height:300px;width:auto;max-width:100%;border-radius:12px}
+.menu-btn,.close-btn{border:0;background:#fff}
+.sheet{border:0;background:var(--t0)}
+.sheet .b1,.sheet .b2{width:100%}
+
+/* On tablets and phones the links move into the Menu sheet. The price pill
+   stays, without its two words on phones, next to the Menu button. */
+@media (width<=960px){
+  .navright{margin-left:auto}
+  .navright+.menu-btn{margin-left:6px}
+}
+@media (width<=560px){
+  .navwords{display:none}
+  .navnote,.navright:has(.navbuy.show) .navnote{display:inline-flex;padding:0 12px}
+  .mk{margin-right:8px}
+}
+/* on phones the buy button lives in the Menu sheet, never in the bar */
+@media (width<=560px){.navjs .navbuy.show{display:none}}
+/* AI packs on phones: one row each, the price then what it buys */
+@media (width<=560px){
+  .b-packs.b-three{grid-template-columns:minmax(0,1fr);gap:8px}
+  .b-packs.b-three div{display:flex;align-items:baseline;gap:12px;padding:20px 24px}
+  .b-packs.b-three b{font-size:32px}
+}
+
+/* ==== White page, framed (owner, 2026-11-12: "white bg ... a box border layout
+   around make a professional vibe: like browserbase.com or jetpack.com", and
+   "make sure other box/section change with a respective way").
+   The page is white. Two hairlines frame the content column from top to
+   bottom, and a hairline runs between sections. Boxes no longer float as
+   rounded white cards: they sit flush against the frame as cells divided by
+   lines, with square corners. Pictures keep a tinted ground (--t0, --t2), so
+   they still read as pictures. This block overrides the exported design above. ==== */
+:root{--gut:24px;--pad:88px}
+body{background:#fff}
+/* The frame is drawn on top of the page (under the menu bar), so a hero panel
+   that fills the column never hides its side lines. On laptop windows it stays,
+   24px in from the window edge, and the content moves in with it; phones have
+   no frame (owner, 2026-11-12: "the box around we choose that gone?"). */
+body::before{content:"";position:fixed;z-index:30;top:0;bottom:0;left:50%;width:min(1248px,calc(100vw - 48px));transform:translateX(-50%);border-inline:1px solid var(--ln);pointer-events:none}
+@media (width<1296px){.wrap,.cap{padding-inline:48px}}
+@media (width<760px){body::before{display:none}.wrap,.cap{padding-inline:24px}}
+.navwrap{background:rgb(255 255 255 / .94);border-bottom:1px solid var(--ln)}
+.navwrap.scrolled{border-bottom-color:var(--ln)}
+.navnote,.b-say{background:var(--t0)}
+.mpanel{border:1px solid var(--ln);border-radius:16px;box-shadow:0 24px 50px -34px rgb(20 20 20 / .3)}
+.menu-btn,.close-btn{background:var(--t0)}
+.sheet{background:#fff;box-shadow:0 0 0 1px var(--ln)}
+.foot{background:#fff;border-top:1px solid var(--ln)}
+
+/* sections: no gaps, a line between them that runs the full width of the window */
+.stack-sections{--gap:0px;padding-bottom:0}
+.stack-sections>section{position:relative;margin-top:0!important;padding-block:var(--pad)}
+.stack-sections>section:not(:first-of-type)::before{content:"";position:absolute;top:0;left:50%;width:100vw;height:1px;transform:translateX(-50%);background:var(--ln);pointer-events:none;z-index:2}
+/* a section that ends in a flush grid ends at the grid; one that is only a grid has no padding */
+.stack-sections>section:has(>.b-next3:last-child,>.b-steps3:last-child,>.b-only3:last-child,>.b-prods:last-child,>.b-facts:last-child,>.b-doors:last-child){padding-bottom:0}
+.stack-sections>section:has(>.b-doors:only-child,>.b-prods:only-child){padding-top:0}
+
+/* hero: the panel and the app picture fill the frame */
+.stack-sections>.b-hero{padding:56px 0 0}
+.stack-sections>.b-hero:has(>.b-hpan){padding-top:0}
+.stack-sections>.b-hero.b-flat{padding-bottom:var(--pad)}
+.b-hpan,.b-cstage,.b-stage{margin-inline:calc(-1 * var(--gut));border-radius:0}
+.b-hpan+.b-cstage{margin-top:0;box-shadow:inset 0 1px 0 rgb(20 20 20 / .07)}
+
+/* facts: four cells in a row */
+.stack-sections>.b-facts,.b-facts{gap:0;padding:0}
+.stack-sections>.b-facts{margin-inline:calc(-1 * var(--gut));width:auto}
+div.b-facts{margin-inline:calc(-1 * var(--gut));border-top:1px solid var(--ln)}
+.b-facts div{background:none;border-radius:0;padding:26px var(--gut)}
+.b-facts div+div{border-left:1px solid var(--ln)}
+
+/* tool cards: full rows, text on the left, the picture on a tinted ground on the right */
+.b-prods{gap:0;margin-inline:calc(-1 * var(--gut))}
+.b-prod{border-radius:0;border-top:1px solid var(--ln);padding:0 0 0 var(--gut);gap:48px;background:#fff}
+.b-prod>div:first-child{padding-block:40px}
+.b-shot{border-radius:0;border-left:1px solid var(--ln);padding:48px}
+.stack-sections>section:has(>.b-prods:only-child) .b-prod:first-child{border-top:0}
+@media (width>960px) and (height>=700px){
+  .b-prod{top:calc(69px + var(--i,0) * var(--peek));box-shadow:0 -14px 30px -26px rgb(20 20 20 / .3)}
+  .b-prod>div:first-child{padding:22px 0 40px}
+}
+
+/* AI apps */
+.b-term{border-radius:16px}
+.b-acard{border:1px solid var(--ln);border-radius:16px}
+
+/* only in WordPress: three cells */
+.stack-sections>.b-only{background:none;border-radius:0;padding:var(--pad) 0 0}
+.b-only3{gap:0;margin:48px calc(-1 * var(--gut)) 0;border-top:1px solid var(--ln)}
+.b-only3>div{padding:32px var(--gut) 40px}
+.b-only3>div+div{border-left:1px solid var(--ln);padding-left:var(--gut)}
+
+/* the bill: two rows between lines */
+.b-pay{background:none;border-radius:0;padding:0;margin-inline:calc(-1 * var(--gut));border-block:1px solid var(--ln)}
+.b-payrow{padding:40px var(--gut)}
+
+/* doors, next tools, steps, packs: cells divided by lines */
+.b-doors,.b-next3,.b-steps3,.b-packs{gap:0;margin-inline:calc(-1 * var(--gut));border-top:1px solid var(--ln)}
+.b-door,.b-next3 a,.b-steps3 li,.b-packs div{background:none;border-radius:0}
+.b-door{padding:56px 48px}
+.b-door+.b-door,.b-next3 a+a,.b-steps3 li+li,.b-packs div+div{border-left:1px solid var(--ln)}
+.b-next3 a{padding:36px var(--gut) 44px}
+.b-next3 a:hover{background:var(--t0)}
+.b-steps3 li,.b-steps3 li+li{padding:32px var(--gut) 40px}
+.b-packs{border-bottom:1px solid var(--ln)}
+.b-packs div{padding:32px var(--gut)}
+.stack-sections>section:has(>.b-doors:only-child) .b-doors{border-top:0}
+
+/* the offer */
+
+/* tables and questions: lines only */
+.b-plans .tbl{background:none;border-radius:0;padding:0;border-top:1px solid var(--ln)}
+.b-fq .qa{gap:0 48px}
+.b-fq .qa>details{background:none;border-radius:0;padding:0;border-top:1px solid var(--ln)}
+
+/* the closing fills the frame */
+.stack-sections>.b-fin{border-radius:0;margin-inline:calc(-1 * var(--gut));padding:var(--pad) 64px 250px;overflow:visible}
+
+@media (width<=960px){
+  :root{--pad:64px}
+  .b-prod{padding:0;gap:0}
+  .b-prod>div:first-child{padding:36px var(--gut) 28px}
+  .b-shot{border-left:0;border-top:1px solid var(--ln);padding:24px var(--gut)}
+  .b-only3>div+div,.b-door+.b-door,.b-next3 a+a,.b-steps3 li+li{border-left:0;border-top:1px solid var(--ln);margin-top:0}
+  .b-only3>div+div{padding-left:var(--gut)}
+  .b-door{padding:40px var(--gut)}
+  .b-facts div:nth-child(3){border-left:0}
+  .b-facts div:nth-child(n+3){border-top:1px solid var(--ln)}
+  .stack-sections>.b-fin{padding:var(--pad) var(--gut) 200px}
+}
+@media (width<=560px){
+  .b-facts div+div{border-left:0;border-top:1px solid var(--ln)}
+  .b-packs.b-three{gap:0}
+  .b-packs.b-three div+div{border-left:0;border-top:1px solid var(--ln)}
+}
+/* text in flush cells lines up with the headings above it */
+@media (width>960px){
+  .stack-sections>.b-fin{padding-inline:var(--gut)}
+  .b-door{padding:56px 48px 56px var(--gut)}
+  .b-door+.b-door{padding-left:48px}
+}
+
+/* ---- Fixes after the owner's check of the pricing page (2026-11-12) ---- */
+/* the menu bar is solid: nothing shows through it while the page scrolls under */
+.navwrap{background:#fff}
+
+
+.stack-sections>.b-hero.b-flat{padding-bottom:0}
+
+
+/* questions: two independent columns, so an open answer never leaves a hole beside it */
+.b-fq .qa{display:block;columns:2;column-gap:48px;border-bottom:0}
+.b-fq .qa>details{break-inside:avoid}
+
+@media (width<=960px){
+  .b-fq .qa{columns:1}
+}
+
+/* ---- The price, as one card (owner picked "A. One card", 2026-11-12, from
+   planning/landing/redesign/04-pricing-a.html; components/b/PricePanel.astro).
+   A panel with a small pill (the offer, its end, the countdown), the
+   headline, and one white card standing on the dot mountains: the price, what
+   the licence holds, the buy button. Then four reasons to trust it, as cells.
+   The buy button is ink; orange stays in the mountains. ---- */
+.stack-sections>section.b-ppsec{padding-block:0}
+.b-hpan.b-pp{min-height:0;padding:56px 32px 96px}
+.b-hpan.b-pp.b-pp-plain{padding-bottom:72px}
+.b-hpan.b-pp .b-art{height:400px}
+.b-hpan.b-pp .h1,.b-hpan.b-pp .h2{margin:0 auto;max-width:none;font-size:clamp(2.5rem,5.4vw,4.75rem);line-height:.94;letter-spacing:-.035em;font-weight:780;font-stretch:88%}
+.b-chip{display:inline-flex;align-items:center;gap:14px;margin:0 0 28px;padding:9px 18px;border-radius:999px;background:#fff;color:var(--tx);font-size:15px}
+.b-chip>b{color:var(--ink);font-weight:650}
+.b-count{display:inline-flex;align-items:baseline;gap:12px;padding-left:14px;border-left:1px solid var(--ln2)}
+.b-count span{display:inline-flex;align-items:baseline;gap:6px;color:var(--tx);font-size:14px}
+.b-count b{color:var(--ink);font:600 16px/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.b-card{width:min(560px,100%);margin:40px auto 0;padding:36px 36px 28px;display:grid;gap:24px;background:#fff;border-radius:20px;text-align:left;box-shadow:0 1px 1px rgb(20 20 20 / .05),0 30px 60px -30px rgb(20 20 20 / .45)}
+.b-ctop{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.b-cprice{display:flex;align-items:flex-end;gap:14px;color:var(--ink)}
+.b-cprice b{font-size:104px;line-height:.82;letter-spacing:-.045em;font-weight:780;font-stretch:88%}
+.b-cprice>span{display:grid;gap:2px;padding-bottom:4px;font-size:19px;font-weight:650;line-height:1.2}
+.b-cprice s{color:var(--mu);font-weight:500}
+.b-cwhat{text-align:right;color:var(--tx);font-size:16px;line-height:1.35}
+.b-nums{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--ln)}
+.b-nums li{display:grid;gap:2px;padding:16px 0 16px 20px}
+.b-nums li:first-child{padding-left:0}
+.b-nums li+li{border-left:1px solid var(--ln)}
+.b-nums b{font-size:30px;line-height:1;letter-spacing:-.03em;font-weight:760;font-stretch:90%;color:var(--ink)}
+.b-nums span{color:var(--tx);font-size:15px}
+.b-ticks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.b-ticks li{display:flex;gap:12px;align-items:flex-start;color:var(--ink);font-size:16px;line-height:1.4}
+.b-ticks svg{width:16px;height:16px;flex:none;margin-top:3px}
+.b-cbuy{width:100%;height:56px;border-radius:10px;font-size:17px}
+.b-cbuy[aria-disabled="true"]{background:#3a3b3e;color:#c9c9c4;cursor:default}
+.b-cnote{text-align:center;color:var(--mu);font-size:14.5px}
+
+/* four reasons to trust it: cells flush under the panel, an icon each */
+.b-trust{list-style:none;margin:0 calc(-1 * var(--gut));padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.b-trust li{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:14px;row-gap:3px;align-content:start;padding:24px var(--gut) 28px}
+.b-trust li+li{border-left:1px solid var(--ln)}
+.b-trust i{grid-row:1 / span 2;width:32px;height:32px;border-radius:9px;background:var(--t0);display:grid;place-items:center;color:var(--ink);font-style:normal}
+.b-trust i svg{width:17px;height:17px;stroke-width:2.1}
+.b-trust b{color:var(--ink);font-size:17px;font-weight:650;letter-spacing:-.01em}
+.b-trust span{grid-column:2;color:var(--tx);font-size:15px;line-height:1.45}
+
+/* every tool in four cells, three short lines each */
+.b-in4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-inline:calc(-1 * var(--gut));border-block:1px solid var(--ln)}
+.b-in4>div{padding:28px var(--gut) 32px}
+.b-in4>div+div{border-left:1px solid var(--ln)}
+.b-in4 ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
+.b-in4 li{color:var(--tx);font-size:16px;line-height:1.4}
+
+@media (width<=960px){
+  .b-trust,.b-in4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .b-trust li:nth-child(3),.b-in4>div:nth-child(3){border-left:0}
+  .b-trust li:nth-child(n+3),.b-in4>div:nth-child(n+3){border-top:1px solid var(--ln)}
+}
+@media (width<=560px){
+  .b-hpan.b-pp{padding:36px 16px 72px}
+  .b-hpan.b-pp.b-pp-plain{padding-bottom:40px}
+  .b-hpan.b-pp .b-art{height:260px}
+  .b-chip{flex-wrap:wrap;justify-content:center;gap:6px 12px;border-radius:16px}
+  .b-count{flex-basis:100%;justify-content:center;padding-left:0;border-left:0}
+  .b-card{margin-top:28px;padding:26px 22px 22px}
+  .b-cprice b{font-size:80px}
+  .b-cwhat{display:none}
+  .b-nums b{font-size:24px}
+  .b-nums li{padding-left:12px}
+  .b-trust,.b-in4{grid-template-columns:minmax(0,1fr)}
+  .b-trust li+li,.b-in4>div+div{border-left:0;border-top:1px solid var(--ln)}
+}
+
+/* ---- The signature on every page (owner, 2026-11-12: "use the signature
+   pattern, why only in homepage?"). Inner pages open like the home page, in
+   a shorter panel: headline, one line, buttons, and the dot mountains. ---- */
+.b-hpan.b-inner{min-height:0;padding:72px 32px 250px}
+.b-hpan.b-inner .b-art{height:210px}
+.b-hero .b-hpan.b-inner .h1{font-size:clamp(2.5rem,6vw,5.5rem);max-width:17ch}
+.b-hpan .b-say{background:#fff;margin-bottom:22px}
+.stack-sections>.b-hero:has(>.b-hpan){padding-top:0}
+.b-hpan.b-inner+.b-stage{margin-top:0;box-shadow:inset 0 1px 0 rgb(20 20 20 / .07)}
+@media (width<=960px){
+  .b-hpan.b-inner{padding:56px var(--gut) 200px}
+  .b-hpan.b-inner .b-art{height:170px}
+}
+
+/* ---- Quiet (owner, 2026-11-12). Asked which parts of the built site looked
+   weird, the owner ticked all four: the dot mountains, lines and boxes, the
+   grey hero panel, text and spacing. Out of three boards
+   (planning/landing/redesign/05-style-*.html) the owner picked "1. Quiet":
+   a white hero, the mountains printed in ink dots (scripts/art.js), section
+   lines that stop at the frame, flat tool rows, headings one step smaller with
+   their side line under them, and less empty space. ---- */
+:root{--pad:72px}
+
+/* the hero is white; what stood on the grey panel gets its own light ground or a line */
+.b-hpan{background:#fff}
+.b-hpan .b2{background:rgb(20 20 20 / .07)}
+.b-hpan .b2:hover{background:rgb(20 20 20 / .12)}
+.b-chip,.b-hpan .b-say{background:var(--t0)}
+.b-card{box-shadow:0 0 0 1px var(--ln2),0 30px 60px -34px rgb(20 20 20 / .35)}
+.b-cstage,.b-stage{background:var(--t0)}
+.b-hpan+.b-cstage,.b-hpan.b-inner+.b-stage{box-shadow:none;border-top:1px solid var(--ln)}
+
+/* section lines stop at the frame, as every cell does */
+.stack-sections>section:not(:first-of-type)::before{width:calc(100% + 2 * var(--gut))}
+/* a section that is already flush with the frame needs no extra width */
+.stack-sections>section.b-fin::before,.stack-sections>section.b-facts::before{width:100%}
+
+/* tool rows lie flat: no sticky stack, no shadow, no forced height */
+.b-prod{position:static;min-height:0;box-shadow:none}
+.b-prod .b-tl{margin-top:28px}
+@media (width>960px){
+  .b-prod>div:first-child{padding-block:48px}
+  .b-shot{padding:40px}
+}
+
+/* headings one step smaller; the side line sits under its heading */
+.b-hero .b-hpan .h1{font-size:clamp(2.75rem,5.8vw,5.25rem)}
+.b-hero .b-hpan.b-inner .h1,.b-hpan.b-pp .h1,.b-hpan.b-pp .h2{font-size:clamp(2.5rem,4.8vw,4.25rem)}
+.h2{font-size:clamp(2rem,3.5vw,3rem)}
+.b-prod h3{font-size:clamp(1.6rem,2.4vw,2rem)}
+.b-fin .h2{font-size:clamp(2.25rem,4.2vw,3.75rem)}
+.shead{display:block;margin-bottom:40px}
+.shead .lead{margin-top:14px;max-width:52ch;color:var(--tx)}
+
+/* small grey text one step larger and darker */
+.small,.b-after-note,.b-cnote{font-size:15px;color:#5a5a5a}
+.b-trust span{font-size:15.5px}

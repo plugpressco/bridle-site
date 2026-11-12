@@ -1,51 +1,31 @@
-// GET or POST /api/checkout?plan=1|3|10: sends the buyer to a Polar checkout
-// for that Bridle Pro licence at the price right now. The products stay
-// private on Polar, so this is the only way to buy them; each checkout sets
-// the step's price itself (an ad-hoc price). The step comes from all Bridle
-// Pro sales together. Before launch (CHECKOUT_OPEN false in
-// src/data/site.ts), without POLAR_TOKEN, for an unknown plan, after the
-// Black Friday deal ends (endsAt) or after sale 170, it goes back to the
-// prices on /pricing/.
+// GET or POST /api/checkout?plan=5: sends the buyer to a Polar checkout for
+// the Bridle licence at the price right now: the Black Friday price until
+// endsAt (deal.json), then the regular one. The product stays private on
+// Polar, so this is the only way to buy it; each checkout sets the price
+// itself (an ad-hoc price). When checkout is switched off (CHECKOUT_OPEN false
+// in src/data/site.ts), without POLAR_TOKEN, for an unknown plan or before the
+// plan has a Polar product id, it goes back to /pricing/ with the reason in
+// ?checkout=.
 //
-// Space variables: POLAR_TOKEN (secret). POLAR_ORG_ID is optional.
+// Space variables: POLAR_TOKEN (secret, scope checkouts:write).
 
 type Env = Record<string, string | undefined>;
-type Step = { from: number; to: number };
-type Plan = { key: string; sites: number; base: number; answers: number; productId: string };
-const DEAL = /*DEAL_JSON*/ null as unknown as { total: number; rise: number; endsAt: string; orgId: string; steps: Step[]; plans: Plan[] };
+type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number; productId: string };
+const DEAL = /*DEAL_JSON*/ null as unknown as { after: number; endsAt: string; orgId: string; plans: Plan[] };
 const OPEN = /*CHECKOUT_OPEN*/ false;
 
 const back = (request: Request, why = '') =>
   Response.redirect(new URL(`/pricing/${why ? `?checkout=${why}` : ''}#plans`, request.url).toString(), 303);
 
-async function countSold(env: Env): Promise<number> {
-  const url = new URL('/v1/orders/', env.POLAR_API || 'https://api.polar.sh');
-  url.searchParams.set('organization_id', env.POLAR_ORG_ID || DEAL.orgId);
-  for (const plan of DEAL.plans) url.searchParams.append('product_id', plan.productId);
-  url.searchParams.append('status', 'paid');
-  url.searchParams.append('status', 'partially_refunded');
-  url.searchParams.set('limit', '1');
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${(env.POLAR_TOKEN || '').trim()}`, Accept: 'application/json' } });
-  if (!res.ok) throw new Error(`polar ${res.status}`);
-  return ((await res.json()) as { pagination: { total_count: number } }).pagination.total_count;
-}
-
 export async function GET(request: Request, context: { env: Env }) {
   const env = context.env || {};
   const url = new URL(request.url);
-  const plan = DEAL.plans.find((p) => p.key === url.searchParams.get('plan'));
-  if (!OPEN || !env.POLAR_TOKEN || !plan) return back(request);
-  if (Date.now() > Date.parse(DEAL.endsAt)) return back(request, 'closed');
+  const plan = DEAL.plans.find((p) => p.key === url.searchParams.get('plan')) || (url.searchParams.has('plan') ? undefined : DEAL.plans[0]);
+  if (!OPEN || !plan) return back(request);
+  if (!env.POLAR_TOKEN || !plan.productId) return back(request, 'soon');
 
-  let sold: number;
-  try {
-    sold = await countSold(env);
-  } catch {
-    return back(request, 'error');
-  }
-  const i = DEAL.steps.findIndex((s) => sold < s.to);
-  if (i < 0 || sold >= DEAL.total) return back(request, 'closed');
-  const price = plan.base + DEAL.rise * i;
+  const offer = Date.now() <= Date.parse(DEAL.endsAt);
+  const price = offer ? plan.base : DEAL.after;
 
   const res = await fetch(new URL('/v1/checkouts/', env.POLAR_API || 'https://api.polar.sh'), {
     method: 'POST',
@@ -56,7 +36,7 @@ export async function GET(request: Request, context: { env: Env }) {
       allow_discount_codes: false,
       success_url: `${url.origin}/thanks/?checkout_id={CHECKOUT_ID}`,
       return_url: `${url.origin}/pricing/#plans`,
-      metadata: { deal: 'bridle-pro-pay-once', plan: plan.key, sites: plan.sites, answers: plan.answers, step_price: price, licences_sold_before: sold },
+      metadata: { deal: offer ? 'black-friday-2026' : 'regular', plan: plan.key, sites: plan.sites, inboxes: plan.inboxes, answers: plan.answers, price },
     }),
   });
   if (!res.ok) return back(request, 'error');

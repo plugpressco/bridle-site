@@ -1,0 +1,14 @@
+---
+// One picture of the Bridle app. The app screens on this site are images made
+// from the design's mock screens (planning/landing/redesign/export-site.py), so
+// no made-up email text sits on the page for search engines to read. Each has
+// a real alt text, and most have a second render for phones.
+import SHOTS from '../../data/shots.json';
+interface Props { name: keyof typeof SHOTS; eager?: boolean; alt?: string }
+const { name, eager = false, alt } = Astro.props;
+const s = SHOTS[name] as { w: number; h: number; mw?: number; mh?: number; alt: string };
+---
+<picture>
+  {s.mw && <source media="(max-width: 560px)" srcset={`/img/b/${name}-m.webp`} width={s.mw} height={s.mh} />}
+  <img src={`/img/b/${name}.webp`} width={s.w} height={s.h} alt={alt ?? s.alt} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} />
+</picture>

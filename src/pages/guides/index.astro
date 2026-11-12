@@ -7,9 +7,9 @@ import { GUIDES } from '../../data/guides';
 import { PAGES } from '../../data/pages';
 const page = PAGES.guides;
 ---
-<Base title={page.title} description={page.description} waitlist={false} crumbs={[{ name: 'Guides', path: page.path }]}>
+<Base title={page.title} description={page.description} crumbs={[{ name: 'Guides', path: page.path }]}>
   <Section pad="top">
-    <HeadingPair as="h1" size="title" first="Answer support with Bridle" second="One job at a time" lead={`${GUIDES.length} short guides. What free Bridle does, how to set it up, and what Pro adds.`} />
+    <HeadingPair as="h1" size="title" first="Answer support with Bridle" second="One job at a time" lead={`${GUIDES.length} short guides. What Bridle does and how to set it up.`} />
     <ul class="mt-10 max-w-[880px] border-t border-border md:mt-14">
       {GUIDES.map((g, i) => (
         <li class="border-b border-border">

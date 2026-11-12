@@ -1,0 +1,160 @@
+{
+  "ai-auto": {
+    "w": 555,
+    "h": 249,
+    "mw": 310,
+    "mh": 249,
+    "alt": "The setting for one inbox: Off, Draft or Auto. Auto sends sure replies after 15 minutes."
+  },
+  "ai-draft": {
+    "w": 900,
+    "h": 681,
+    "alt": "An email in Bridle with the reply Bridle wrote, and the three sources it checked: a help doc, a past reply and a product."
+  },
+  "ai-needs": {
+    "w": 555,
+    "h": 236,
+    "mw": 310,
+    "mh": 303,
+    "alt": "Three emails that wait for a person: an upset customer, a refund and a billing question."
+  },
+  "ai-sources": {
+    "w": 555,
+    "h": 215,
+    "mw": 310,
+    "mh": 344,
+    "alt": "The three sources behind a reply, each marked as checked: a help doc, a past reply and a product."
+  },
+  "app-inbox": {
+    "w": 1040,
+    "h": 681,
+    "alt": "The Bridle inbox inside the WordPress admin. Three replies are ready to send and two emails need you."
+  },
+  "app-inbox-wide": {
+    "w": 1104,
+    "h": 681,
+    "alt": "The Bridle inbox inside the WordPress admin, between Comments and WooCommerce in the menu."
+  },
+  "chat-both": {
+    "w": 760,
+    "h": 565,
+    "mw": 382,
+    "mh": 453,
+    "alt": "Two chats in the Bridle inbox, one answered by Bridle and one asking for a person, next to the chat window a visitor sees."
+  },
+  "chat-handover": {
+    "w": 555,
+    "h": 218,
+    "mw": 310,
+    "mh": 261,
+    "alt": "Two chats in the Bridle inbox. Bridle answered one. The other wants a person."
+  },
+  "chat-live": {
+    "w": 555,
+    "h": 222,
+    "mw": 310,
+    "mh": 245,
+    "alt": "Chat settings in Bridle: live chat on, hours from Monday to Friday, and chat on two more sites."
+  },
+  "claude-session": {
+    "w": 740,
+    "h": 497,
+    "mw": 382,
+    "mh": 634,
+    "alt": "A Claude session running the Bridle inbox in five steps. It ends with a draft that waits for your OK."
+  },
+  "docs-center": {
+    "w": 980,
+    "h": 681,
+    "alt": "A help center on a site’s own address, with categories on the left and three articles."
+  },
+  "docs-list": {
+    "w": 555,
+    "h": 281,
+    "mw": 310,
+    "mh": 281,
+    "alt": "The list of docs in Bridle: two published and one draft."
+  },
+  "docs-missing": {
+    "w": 555,
+    "h": 282,
+    "mw": 310,
+    "mh": 350,
+    "alt": "A list of three questions that have no doc yet, each with a Write a doc button."
+  },
+  "docs-used": {
+    "w": 555,
+    "h": 264,
+    "mw": 310,
+    "mh": 344,
+    "alt": "A Bridle reply that names the help doc it used, and a chat answer that links to a doc."
+  },
+  "inbox-address": {
+    "w": 555,
+    "h": 188,
+    "mw": 310,
+    "mh": 188,
+    "alt": "Two support addresses connected to Bridle, and a count of 2 of 10 inboxes used."
+  },
+  "inbox-open": {
+    "w": 900,
+    "h": 681,
+    "alt": "An open email in Bridle with a note from a teammate, and under it a reply Bridle already wrote."
+  },
+  "inbox-sorted": {
+    "w": 555,
+    "h": 437,
+    "mw": 310,
+    "mh": 523,
+    "alt": "The Bridle inbox sorted in two groups: two replies ready to send, and two emails that need you."
+  },
+  "tool-ai": {
+    "w": 555,
+    "h": 343,
+    "mw": 310,
+    "mh": 516,
+    "alt": "A reply written by Bridle with its facts checked and the help doc it used. A refund email waits for you."
+  },
+  "tool-chat": {
+    "w": 555,
+    "h": 395,
+    "mw": 310,
+    "mh": 396,
+    "alt": "The Bridle chat window on a site. It answers a visitor and shows the doc behind the answer."
+  },
+  "tool-docs": {
+    "w": 555,
+    "h": 375,
+    "mw": 310,
+    "mh": 317,
+    "alt": "A help center made with Bridle: a search box, categories and three articles."
+  },
+  "tool-inbox": {
+    "w": 555,
+    "h": 311,
+    "mw": 310,
+    "mh": 442,
+    "alt": "An email open in Bridle, assigned to a teammate, with a team note and saved replies under it."
+  },
+  "wp-order": {
+    "w": 352,
+    "h": 171,
+    "mw": 334,
+    "mh": 171,
+    "alt": "A customer’s order shown next to their email: the product, the price and the store it came from."
+  },
+  "wp-site": {
+    "w": 352,
+    "h": 171,
+    "mw": 334,
+    "mh": 171,
+    "alt": "A WordPress admin address, with a note that every email and reply is kept in the site’s own database."
+  },
+  "wp-team": {
+    "w": 352,
+    "h": 171,
+    "mw": 334,
+    "mh": 171,
+    "alt": "Three WordPress users listed as the support team: a shop manager, an administrator and an editor."
+  }
+}
