@@ -1,9 +1,9 @@
 // One place for facts that show up on more than one page. Change a number here
 // and every page, its Markdown copy, llms.txt and the JSON-LD follow.
 // The offer (owner, 12 November 2026): one licence. 5 sites, 10 inboxes, 1,000
-// AI answers, one payment. Black Friday price $99 until the end of Cyber
-// Monday (30 November, 11:59 pm New York), then $249. One price, one deadline.
-// The plan, its Polar product id and the deadline live in deal.json.
+// AI answers, one payment. The price goes up as people buy: $99 for buyers 1
+// to 50, then $149, $199 and $249, 50 buyers a step. No date.
+// The plan, its Polar product id and the steps live in deal.json.
 import DEAL_DATA from './deal.json';
 
 export const SITE = {
@@ -66,20 +66,33 @@ export const ZIP_URL = '/download/bridle.zip';
 export const ACCOUNT_URL = 'https://polar.sh/bridle/portal';
 export const FREE_URL = WPORG_LIVE ? WPORG_URL : ZIP_URL;
 
-export type Plan = { key: string; sites: number; base: number; answers: number; inboxes: number; productId: string };
-export const DEAL: { refundDays: number; after: number; endsAt: string; endsLabel: string; orgId: string; plans: Plan[] } = DEAL_DATA;
+export type Plan = { key: string; sites: number; answers: number; inboxes: number; productId: string };
+// One price step: `price` for buyers up to number `to`. The last step has no
+// `to`: it is the regular price.
+export type Step = { price: number; to?: number };
+export const DEAL: { refundDays: number; orgId: string; steps: Step[]; plans: Plan[] } = DEAL_DATA;
 
 export const money = (n: number) => '$' + n.toLocaleString('en-US');
 export const count = (n: number) => n.toLocaleString('en-US');
 
-// The one licence. While the Black Friday offer runs (decided when the site
-// is built; src/scripts/deal.js switches a page that is still open when the
-// offer ends) the price is the plan's base, then DEAL.after.
+// The one licence, and its price steps (owner, 12 November 2026: "Steps: 99,
+// 149, 199, 249"): the price goes up as people buy, 50 buyers a step. Pages
+// are built with the first step. src/scripts/deal.js asks /api/deal, which
+// counts paid orders on Polar, and moves an open page to the step of the
+// moment; the checkout charges that same step. Rebuild and publish when a step
+// sells out, so the static copy follows.
 export const PLAN = DEAL.plans[0];
-export const OFFER_ON = Date.now() < Date.parse(DEAL.endsAt);
-export const PRICE = OFFER_ON ? PLAN.base : DEAL.after;
-// "$99 once until 30 November. Then $249." or "$249 once."
-export const PRICE_LINE = OFFER_ON ? `${money(PLAN.base)} once until ${DEAL.endsLabel}. Then ${money(DEAL.after)}.` : `${money(DEAL.after)} once.`;
+export const STEPS = DEAL.steps;
+export const PRICE = STEPS[0].price;
+export const NEXT_PRICE = STEPS[1]?.price ?? null;
+export const REGULAR = STEPS[STEPS.length - 1].price;
+export const OFFER_ON = STEPS.length > 1;
+// "$99 for the first 50 buyers. Then $149."
+export const RULE = OFFER_ON ? `${money(PRICE)} for the first ${STEPS[0].to} buyers. Then ${money(NEXT_PRICE!)}.` : '';
+// "$99 once for the first 50 buyers. Then $149." or "$249 once."
+export const PRICE_LINE = OFFER_ON ? `${money(PRICE)} once for the first ${STEPS[0].to} buyers. Then ${money(NEXT_PRICE!)}.` : `${money(PRICE)} once.`;
+// Every step in one sentence: "$99 for buyers 1 to 50, $149 for buyers 51 to 100, $199 for buyers 101 to 150, then $249."
+export const LADDER = STEPS.map((st, i) => (st.to ? `${money(st.price)} for buyers ${(STEPS[i - 1]?.to ?? 0) + 1} to ${st.to}` : `then ${money(st.price)}`)).join(', ') + '.';
 export const BUY_URL = CHECKOUT_OPEN ? `/api/checkout?plan=${PLAN.key}` : '/pricing/#plans';
 
 // Inboxes per site on the Bridle mail service: without a licence, and with one.

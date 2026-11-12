@@ -640,9 +640,20 @@ div.b-facts{margin-inline:calc(-1 * var(--gut));border-top:1px solid var(--ln)}
 .b-hpan.b-pp .h1,.b-hpan.b-pp .h2{margin:0 auto;max-width:none;font-size:clamp(2.5rem,5.4vw,4.75rem);line-height:.94;letter-spacing:-.035em;font-weight:780;font-stretch:88%}
 .b-chip{display:inline-flex;align-items:center;gap:14px;margin:0 0 28px;padding:9px 18px;border-radius:999px;background:#fff;color:var(--tx);font-size:15px}
 .b-chip>b{color:var(--ink);font-weight:650}
-.b-count{display:inline-flex;align-items:baseline;gap:12px;padding-left:14px;border-left:1px solid var(--ln2)}
-.b-count span{display:inline-flex;align-items:baseline;gap:6px;color:var(--tx);font-size:14px}
-.b-count b{color:var(--ink);font:600 16px/1 var(--font-mono);font-variant-numeric:tabular-nums}
+/* how many are left at this price: shown only with a live count from Polar */
+.b-count{display:inline-flex;align-items:baseline;gap:6px;padding-left:14px;border-left:1px solid var(--ln2);color:var(--ink);font-weight:650}
+.b-count[hidden]{display:none}
+.b-count b{font:600 16px/1 var(--font-mono);font-variant-numeric:tabular-nums}
+/* the four price steps: the one of the moment is the white cell with an ink
+   edge, sold-out steps are struck through, later ones wait in grey */
+.b-steps{list-style:none;margin:0;padding:4px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;border-radius:12px;background:var(--t0)}
+.b-steps[hidden]{display:none}
+.b-steps li{display:grid;gap:3px;justify-items:center;padding:10px 4px 9px;border-radius:9px;color:var(--mu)}
+.b-steps b{font-size:18px;line-height:1;font-weight:700;font-stretch:90%;letter-spacing:-.02em}
+.b-steps span{font-size:13px;line-height:1.2}
+.b-steps .is-now{background:#fff;color:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
+.b-steps .is-now span{font-weight:600}
+.b-steps .is-done b{text-decoration:line-through}
 .b-card{width:min(560px,100%);margin:40px auto 0;padding:36px 36px 28px;display:grid;gap:24px;background:#fff;border-radius:20px;text-align:left;box-shadow:0 1px 1px rgb(20 20 20 / .05),0 30px 60px -30px rgb(20 20 20 / .45)}
 .b-ctop{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
 .b-cprice{display:flex;align-items:flex-end;gap:14px;color:var(--ink)}
@@ -690,6 +701,8 @@ div.b-facts{margin-inline:calc(-1 * var(--gut));border-top:1px solid var(--ln)}
   .b-hpan.b-pp .b-art{height:260px}
   .b-chip{flex-wrap:wrap;justify-content:center;gap:6px 12px;border-radius:16px}
   .b-count{flex-basis:100%;justify-content:center;padding-left:0;border-left:0}
+  .b-steps b{font-size:16px}
+  .b-steps span{font-size:12px}
   .b-card{margin-top:28px;padding:26px 22px 22px}
   .b-cprice b{font-size:80px}
   .b-cwhat{display:none}

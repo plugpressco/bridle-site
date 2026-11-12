@@ -76,17 +76,18 @@ If anything is off after a publish, roll back to the previous version in the Spa
 
 ## Price (Polar)
 
-One licence (Fahim, 12 November 2026): 5 sites, 10 inboxes, 1,000 Bridle AI answers, paid once. Black Friday offer: $99 until the end of Cyber Monday (30 November 2026, 11:59 pm New York), then $249. One price, one deadline, no customer counting. A 7-day refund. The licence, its Polar product id, both prices, the deadline and the refund days live in `src/data/deal.json`. The site calls the product Bridle, never Bridle Pro (the second plugin a buyer installs is still named Bridle Pro; only the thanks page says so). AI packs are sold inside the plugin and are not shown on the pricing page.
+One licence (Fahim, 12 November 2026): 5 sites, 10 inboxes, 1,000 Bridle AI answers, paid once. **The price goes up as people buy:** $99 for buyers 1 to 50, $149 for 51 to 100, $199 for 101 to 150, then $249. No date and no countdown (this replaced the "$99 until 30 November" offer the same day). A 7-day refund. The licence, its Polar product id, the steps and the refund days live in `src/data/deal.json`. The site calls the product Bridle, never Bridle Pro (the second plugin a buyer installs is still named Bridle Pro; only the thanks page says so). AI packs are sold inside the plugin and are not shown on the pricing page.
 
-- `src/scripts/deal.js` runs the countdown and, at the deadline, switches an open page to the later price. Pages built after the deadline show the later price from the start (`OFFER_ON` in `src/data/site.ts`). Rebuild and publish after the deadline so the Markdown copies and the questions follow.
-- `GET` or `POST /api/checkout?plan=5` (`checkout.ts`) opens a Polar checkout for the licence at the price right now, by the server's clock (an ad-hoc price on the private product), and sends buyers back to `/thanks/?checkout_id=…`. When it cannot (no token, no product id, a Polar error) it goes back to `/pricing/?checkout=soon|error#plans` and the offer card says why.
-- `GET /api/deal` (`deal.ts`) answers `{ state, price, after, endsAt }` by the server's clock.
+
+- Pages are built with the first step. `src/scripts/deal.js` asks `/api/deal` and moves an open page to the step of the moment: the price, the buy button, the pill ("$99 for the first 50 buyers. Then $149." plus "37 left"), the steps row in the price card and the closing line. With no live count it changes nothing and shows no "left" number. Rebuild and publish when a step sells out, so the static copy, the Markdown copies and the questions follow (move the sold-out step out of `steps` in `deal.json`, or leave it and let the script do it).
+- `GET /api/deal` (`deal.ts`) counts the licence's paid orders on Polar (cached 60 seconds) and answers `{ sold, step, price, next, left, to, regular, live }`. `live` is false without `POLAR_TOKEN`, before the plan has a product id, or when Polar does not answer.
+- `GET` or `POST /api/checkout?plan=5` (`checkout.ts`) counts the same orders and opens a Polar checkout at that step's price (an ad-hoc price on the private product), then sends buyers back to `/thanks/?checkout_id=…`. When it cannot (no token, no product id, a Polar error, the count failed) it goes back to `/pricing/?checkout=soon|error#plans` and the price card says why. Two buyers at the edge of a step may both get the lower price; that is fine.
 - `CHECKOUT_OPEN` in `src/data/site.ts` switches the buy buttons between the checkout and `/pricing/`. `scripts/postbuild.mjs` copies the switch and `deal.json` into both functions, so the page and the checkout never disagree. It warns when a plan has no Polar product id.
 
 **Polar setup (owner):** Bridle's own Polar organization (slug `bridle`, `48c10ba8-ba09-435f-ba30-75ce00a4cf82`, also in `deal.json`).
 
 1. Create the product for this licence: private, one-time, with a licence-key benefit of 5 activations (prefix `BRIDLE`, never expires) and the Bridle Pro zip as a downloadable file. Put its id in `deal.json` (`plans[0].productId`). The three older products (1, 3 and 10 sites) are no longer sold here.
-2. On the Spacefast Space `bridle`, `POLAR_TOKEN` (scope `checkouts:write`) is the only variable.
+2. On the Spacefast Space `bridle`, `POLAR_TOKEN` (scopes `orders:read` and `checkouts:write`) is the only variable.
 3. Build, publish, buy once with a real card, check the email, key and download, then refund it in Polar.
 
 ## Before publishing this design

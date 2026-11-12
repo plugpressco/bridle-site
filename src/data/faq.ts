@@ -1,6 +1,6 @@
 // The questions on the pricing and Help Scout pages (also their FAQPage
 // JSON-LD and the Markdown copies). Only what Bridle does today.
-import { DEAL, PLAN, OFFER_ON, money, count } from './site';
+import { DEAL, PLAN, OFFER_ON, LADDER, money, count } from './site';
 
 export type QA = { q: string; a: string; id?: string };
 
@@ -11,8 +11,8 @@ export const PRICING_FAQ: QA[] = [
   },
   ...(OFFER_ON
     ? [{
-        q: `What happens after ${DEAL.endsLabel}?`,
-        a: `The Black Friday price ends and Bridle costs ${money(DEAL.after)}. If you already bought, nothing changes for you.`,
+        q: 'When does the price go up?',
+        a: `As people buy. Bridle is ${LADDER} If you already bought, nothing changes for you.`,
       }]
     : []),
   {
