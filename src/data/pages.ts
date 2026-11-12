@@ -1,7 +1,7 @@
 // Each page's title, description and Markdown copy, used by the HTML pages,
 // their .md copies, llms.txt and llms-full.txt. Keep each Markdown copy in
 // step with its page: it must say the same thing, in the same plain words.
-import { SITE, AI, PLAN, DEAL, OFFER_ON, PRICE, PRICE_LINE, DEMO, money, count } from './site';
+import { SITE, AI, PLAN, DEAL, OFFER_ON, PRICE, PRICE_LINE, RULE, LADDER, DEMO, money, count } from './site';
 import { IN_THE_LICENCE, ALSO } from './licence';
 import { TOOLS } from '../components/b/tools';
 import { RIVALS, PEOPLE, CHECKED, HS_ROWS } from './cost';
@@ -14,7 +14,7 @@ const price = money(PRICE);
 const hs = RIVALS[0];
 const hsMonthly = money(PEOPLE * hs.seat + 300 * hs.perAnswer);
 const buy = `Buy Bridle: ${SITE.url}/pricing/ (${PRICE_LINE}) Try the live demo: ${SITE.url}/demo/`;
-const offer = `${OFFER_ON ? `**Black Friday offer: ${price} once.** Until ${DEAL.endsLabel}. After that, ${money(DEAL.after)}.` : `**${price} once.** One payment. Yours for life.`}
+const offer = `${OFFER_ON ? `**Launch price: ${price} once.** ${RULE} The price goes up as people buy: ${LADDER}` : `**${price} once.** One payment. Yours for life.`}
 
 One licence. You get:
 
@@ -36,7 +36,7 @@ const bill = `Help Scout bills every month, by the person and by the answer. Bri
 - **Help Scout:** ${hsMonthly} every month. ${PEOPLE} people at ${money(hs.seat)}, and 300 AI answers at $${hs.perAnswer.toFixed(2)}. Paid 12 times a year.
 - **Bridle:** ${price} once, for ${PLAN.sites} sites. No charge per person, and ${count(PLAN.answers)} AI answers included.
 
-Help Scout ${hs.plan}, billed yearly, after its 3 free months of AI. It counts resolutions and Bridle counts answers. Read on helpscout.com/pricing, ${CHECKED}.${OFFER_ON ? ` Bridle is ${money(PLAN.base)} until ${DEAL.endsLabel} 2026, then ${money(DEAL.after)}.` : ''}`;
+Help Scout ${hs.plan}, billed yearly, after its 3 free months of AI. It counts resolutions and Bridle counts answers. Read on helpscout.com/pricing, ${CHECKED}.${OFFER_ON ? ` Bridle is ${LADDER}` : ''}`;
 const mcp = `## Run it from Claude or ChatGPT
 
 Bridle works with any app that speaks MCP. Nothing is sent without your OK.
@@ -304,7 +304,7 @@ ${others('docs')}
     path: '/pricing/',
     title: 'Bridle pricing: pay once, yours for life',
     description: OFFER_ON
-      ? `One Bridle licence: ${PLAN.sites} sites, ${PLAN.inboxes} inboxes and ${count(PLAN.answers)} AI answers. Black Friday offer: ${price} once until ${DEAL.endsLabel}. A ${DEAL.refundDays}-day refund.`
+      ? `One Bridle licence: ${PLAN.sites} sites, ${PLAN.inboxes} inboxes and ${count(PLAN.answers)} AI answers. Launch price: ${price} once for the first buyers. A ${DEAL.refundDays}-day refund.`
       : `One Bridle licence: ${PLAN.sites} sites, ${PLAN.inboxes} inboxes and ${count(PLAN.answers)} AI answers for one payment of ${price}. No subscription. A ${DEAL.refundDays}-day refund.`,
     md: `# Pay once. Yours for life.
 

@@ -13,7 +13,7 @@ import { TOOLS } from '../components/b/tools';
 import { PAGES } from '../data/pages';
 import { PRICING_FAQ, faqLd } from '../data/faq';
 import { IN_THE_LICENCE, ALSO } from '../data/licence';
-import { SITE, PLAN, DEAL, OFFER_ON, PRICE } from '../data/site';
+import { SITE, PLAN, PRICE } from '../data/site';
 
 const page = PAGES.pricing;
 const jsonLd = [
@@ -24,7 +24,6 @@ const jsonLd = [
     brand: { '@type': 'Brand', name: SITE.name },
     offers: {
       '@type': 'Offer', name: `Pay once, ${PLAN.sites} sites`, price: String(PRICE), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: `${SITE.url}/pricing/`,
-      ...(OFFER_ON ? { priceValidUntil: DEAL.endsAt.slice(0, 10) } : {}),
     },
   },
   faqLd(PRICING_FAQ),

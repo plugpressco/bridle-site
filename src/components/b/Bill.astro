@@ -3,7 +3,7 @@
 // dots. Help Scout pays twelve times; Bridle pays once. Help Scout's prices
 // come from src/data/cost.ts (read on its pricing page; the day is in the note).
 import { RIVALS, PEOPLE, CHECKED } from '../../data/cost';
-import { PLAN, DEAL, OFFER_ON, PRICE, money, count } from '../../data/site';
+import { PLAN, OFFER_ON, PRICE, LADDER, money, count } from '../../data/site';
 const hs = RIVALS.find((r) => r.key === 'hs')!;
 const answers = 300;
 const monthly = PEOPLE * hs.seat + answers * hs.perAnswer;
@@ -23,7 +23,7 @@ const twelve = Array.from({ length: 12 });
       <div class="b-sum"><b data-deal="price">{money(PRICE)}</b><span>once, for {PLAN.sites} sites</span></div>
     </div>
   </div>
-  <p class="small billnote">Help Scout {hs.plan}, billed yearly, after its 3 free months of AI. It counts resolutions and Bridle counts answers. Read on helpscout.com/pricing, {CHECKED}.{OFFER_ON && ` Bridle is ${money(PLAN.base)} until ${DEAL.endsLabel} 2026, then ${money(DEAL.after)}.`}</p>
+  <p class="small billnote">Help Scout {hs.plan}, billed yearly, after its 3 free months of AI. It counts resolutions and Bridle counts answers. Read on helpscout.com/pricing, {CHECKED}.{OFFER_ON && ` Bridle is ${LADDER}`}</p>
 </section>
 
 <script>

@@ -1,17 +1,19 @@
 ---
 // The price, as one card (owner picked direction "A. One card" on 12 November
 // 2026, from planning/landing/redesign/04-pricing-a.html). A panel with a small
-// pill that names the Black Friday offer and counts down to its real end, the
-// headline, and one white card: the price, the later price struck through,
+// pill that names the launch price and its rule, the headline, and one white
+// card: the price, the regular price struck through, the four price steps,
 // what the licence holds, and the buy button. Under the panel, four short
-// reasons to trust the purchase. The countdown stays out of the card (owner:
-// "countdown position is very bad" inside it).
-// Every claim is true today: the refund days and the deadline come from
-// deal.json; checkout.ts charges the same price by the server's clock.
-// src/scripts/deal.js runs the countdown and switches to the later price when
-// the offer ends.
+// reasons to trust the purchase.
+// The price goes up as people buy (owner, 12 November 2026: "Steps: 99, 149,
+// 199, 249", 50 buyers a step; this replaced the $99-until-30-November
+// offer of the same day). Every claim is true: the steps and the refund days
+// come from deal.json, the page is built with the first step, and
+// src/scripts/deal.js asks /api/deal (a count of paid orders on Polar) for the
+// step of the moment and how many are left at it. Without a live count no
+// "left" number shows. checkout.ts charges the same step.
 import Art from './Art.astro';
-import { PLAN, DEAL, OFFER_ON, PRICE, BUY_URL, money, count } from '../../data/site';
+import { PLAN, DEAL, STEPS, OFFER_ON, PRICE, REGULAR, RULE, BUY_URL, money, count } from '../../data/site';
 
 interface Props {
   /** heading level: h1 on /pricing/, h2 on the home page */
@@ -30,6 +32,12 @@ const nums = [
   [count(PLAN.answers), 'AI answers'],
 ];
 const lines = ['All four tools: Inbox, AI answers, Chat, Docs', 'Every update, for life', 'As many teammates as you like'];
+// The steps row: "first 50", "next 50", "next 50", "after that".
+const stepNote = (i: number) => {
+  const to = STEPS[i].to;
+  if (!to) return 'after that';
+  return i === 0 ? `first ${to}` : `next ${to - (STEPS[i - 1].to ?? 0)}`;
+};
 const trust = [
   ['i-refund', `${DEAL.refundDays}-day refund`, 'Not happy? Get all your money back.'],
   ['i-infinity', 'Pay once', 'No subscription. No fee per person.'],
@@ -40,19 +48,26 @@ const trust = [
 <div class:list={['b-hpan', 'b-pp', seed === undefined && 'b-pp-plain']}>
   {OFFER_ON && (
     <p class="b-chip" data-offer>
-      <b>Black Friday offer</b>
-      <span>Ends {DEAL.endsLabel}. Then {money(DEAL.after)}.</span>
-      <span class="b-count" data-count hidden role="timer" aria-label="Time left in the Black Friday offer">
-        <span><b data-d>00</b>days</span><span><b data-h>00</b>hours</span><span><b data-m>00</b>min</span><span><b data-s>00</b>sec</span>
-      </span>
+      <b>Launch price</b>
+      <span data-deal="rule">{RULE}</span>
+      <span class="b-count" data-left hidden><b data-deal="left">{STEPS[0].to}</b> left</span>
     </p>
   )}
   <H class={H === 'h1' ? 'h1' : 'h2'} id={id}>Pay once. Yours for life.</H>
   <div class="b-card">
     <div class="b-ctop">
-      <p class="b-cprice"><b data-deal="price">{money(PRICE)}</b><span>once{OFFER_ON && <s data-offer><span class="sr-only">Later </span>{money(DEAL.after)}</s>}</span></p>
+      <p class="b-cprice"><b data-deal="price">{money(PRICE)}</b><span>once{OFFER_ON && <s data-offer><span class="sr-only">Regular price </span>{money(REGULAR)}</s>}</span></p>
       <p class="b-cwhat">One licence.<br />Everything is in it.</p>
     </div>
+    {OFFER_ON && (
+      <ol class="b-steps" data-offer aria-label="The price goes up as people buy">
+        {STEPS.map((st, i) => (
+          <li class:list={[i === 0 && 'is-now']} data-step={i} aria-current={i === 0 ? 'step' : undefined}>
+            <b>{money(st.price)}</b><span data-step-note>{stepNote(i)}</span>
+          </li>
+        ))}
+      </ol>
+    )}
     <ul class="b-nums">{nums.map(([n, what]) => <li><b>{n}</b><span>{what}</span></li>)}</ul>
     <ul class="b-ticks">{lines.map((t) => <li><Fragment set:html={tick} /><span>{t}</span></li>)}</ul>
     <a class="b1 b-cbuy" href={BUY_URL} data-deal="buy" rel="nofollow">Buy Bridle for {money(PRICE)}</a>
